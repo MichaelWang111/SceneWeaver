@@ -1,0 +1,38 @@
+{
+  "scene_id": "scene_001",
+  "time_range": {
+    "start": "00:00:03.200",
+    "end": "00:00:07.800",
+    "duration_seconds": 4.6
+  },
+  "visual_observation": {
+    "setting": "办公室或工位环境",
+    "characters": "年轻员工或团队成员",
+    "action_change": "从独立工作转向团队互动",
+    "composition": "中近景为主，强调人物状态",
+    "lighting": "自然光或柔和人工光",
+    "color": "低饱和、真实感",
+    "camera_motion": "无法从三帧确定，可能为静态或轻微移动",
+    "confidence_notes": "三帧不足以确认完整镜头运动"
+  },
+  "director_interpretation": {
+    "narrative_function": "建立真实工作状态",
+    "emotional_function": "降低广告感，建立可信度",
+    "brand_personality_signal": "真实、温暖、可靠",
+    "underlying_emotion": "我可以在这里被看见并参与真实工作",
+    "audience_projection": "年轻人可以成为团队中被需要的一员",
+    "shooting_techniques": ["中近景", "自然光", "生活化动作"],
+    "why_it_works": "通过真实工作细节替代口号，使观众更容易相信品牌表达"
+  },
+  "experience_candidates": [
+    {
+      "keywords": ["真实感", "青年", "团队"],
+      "emotion": "被需要",
+      "narrative_logic": "先建立真实日常，再导向团队归属",
+      "techniques": ["自然光", "中近景", "微行为"],
+      "reuse_condition": "适合需要弱化广告感、强调真实工作氛围的招聘宣传片"
+    }
+  ],
+  "emotion_temperature": 0.45
+}
+

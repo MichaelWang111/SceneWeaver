@@ -1,0 +1,36 @@
+{
+  "video_id": "bilibili_BVxxxx",
+  "atmosphere": "真实、温暖、轻度热血",
+  "tone": "纪录片式招聘宣传片",
+  "rhythm": {
+    "overall": "前慢后快",
+    "description": "前半段建立真实感，后半段释放团队能量"
+  },
+  "emotional_curve": [
+    {
+      "phase": "start",
+      "emotion": "好奇",
+      "function": "引入人物和场景"
+    },
+    {
+      "phase": "middle",
+      "emotion": "归属",
+      "function": "建立团队关系"
+    },
+    {
+      "phase": "ending",
+      "emotion": "未来感",
+      "function": "完成品牌召唤"
+    }
+  ],
+  "visual_language": {
+    "camera": ["手持", "中近景", "群像剪辑"],
+    "lighting": ["自然光", "晨光", "低饱和"],
+    "symbolism": ["团队协作", "工作空间", "城市生活"]
+  },
+  "narrative_structure": "真实日常 -> 团队协作 -> 未来召唤",
+  "brand_personality": ["真实", "年轻", "可信", "温暖"],
+  "audience_projection": "年轻人可以在这里成为被需要、有成长空间的团队成员",
+  "director_language_summary": "影片通过生活化工作细节和群像推进，避免空泛口号，用真实感建立雇主品牌信任"
+}
+

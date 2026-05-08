@@ -1,0 +1,37 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "sceneweaver"
+version = "0.1.0"
+description = "Director experience analysis pipeline for commercial videos."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+authors = [
+  { name = "SceneWeaver Contributors" }
+]
+dependencies = [
+  "pydantic>=2.7",
+  "typer>=0.9",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+]
+video = [
+  "yt-dlp>=2024.0",
+  "scenedetect[opencv]>=0.6.4",
+  "httpx>=0.27",
+  "openai>=1.0",
+]
+
+[project.scripts]
+sceneweaver = "sceneweaver.cli:app"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+

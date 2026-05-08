@@ -1,0 +1,24 @@
+{
+  "scene_id": "scene_001",
+  "source_video_id": "bilibili_BVxxxx",
+  "time_range": {
+    "start": "00:00:03.200",
+    "end": "00:00:07.800",
+    "duration_seconds": 4.6
+  },
+  "frames": {
+    "start": "frames/scene_001_start.jpg",
+    "middle": "frames/scene_001_middle.jpg",
+    "end": "frames/scene_001_end.jpg"
+  },
+  "subtitle_segment": {
+    "text": "这里是字幕片段",
+    "items": []
+  },
+  "metadata": {
+    "scene_index": 1,
+    "source_url": "https://www.bilibili.com/video/...",
+    "language": "zh-CN"
+  }
+}
+

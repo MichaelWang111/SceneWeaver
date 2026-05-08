@@ -39,14 +39,15 @@ SceneWeaver 要建立一条从视频案例到导演经验记忆的生产线。
 
 交付物：
 
-1. Bilibili 视频下载。
-2. scene 切分。
-3. 前、中、后 3 帧抽取。
-4. 字幕片段切分。
-5. scene package 生成。
-6. scene-level LLM 解析。
-7. full-film LLM 解析。
-8. experience card 抽取。
+1. v1-0 工程骨架、schema 和 mock pipeline。
+2. Bilibili 视频下载。
+3. scene 切分。
+4. 前、中、后 3 帧抽取。
+5. 字幕片段切分。
+6. scene package 生成。
+7. scene-level LLM 解析。
+8. full-film LLM 解析。
+9. experience card 抽取。
 
 验收标准：
 
@@ -56,6 +57,164 @@ SceneWeaver 要建立一条从视频案例到导演经验记忆的生产线。
 4. `scenes.json` 可以汇总所有 scene 解析。
 5. `film_analysis.json` 可以总结全片氛围、基调、节奏、情绪曲线、视觉语言和叙事结构。
 6. `experience_cards.jsonl` 可以被关键词检索。
+
+### 2.2.1 v1-0：工程骨架、schema 和 mock pipeline
+
+状态：
+
+```text
+已完成
+```
+
+已交付：
+
+1. Python 工程骨架。
+2. Pydantic schema。
+3. example JSON。
+4. mock pipeline。
+5. CLI `mock-run`。
+6. pytest 自动测试。
+
+验收结果：
+
+```text
+8 passed
+```
+
+当前能力：
+
+```text
+mock source
+→ scene package
+→ scene analysis
+→ scenes.json
+→ film_analysis.json
+→ experience_cards.jsonl
+→ validation
+```
+
+### 2.2.2 v1-1：真实视频 package pipeline
+
+状态：
+
+```text
+已完成真实样本验收
+```
+
+交付物：
+
+1. Bilibili URL 输入。
+2. yt-dlp 下载视频和 metadata。
+3. PySceneDetect scene 切分。
+4. ffmpeg 抽取 start / middle / end 三帧。
+5. 字幕按 scene 时间范围切片。
+6. 生成真实 `packages/*.json`。
+7. CLI `package-video`。
+
+验收标准：
+
+1. 输入 1 个 Bilibili URL，可以生成可验证的 scene packages。
+2. 字幕缺失时不阻塞 package 生成。
+3. 每个 package 都通过 `ScenePackage` validation。
+4. 中间产物落盘，可检查、可复跑。
+
+当前已完成代码：
+
+1. `input/bilibili.py`
+2. `input/downloader.py`
+3. `split/scene_detector.py`
+4. `split/frame_sampler.py`
+5. `split/subtitle_segmenter.py`
+6. `analysis/scene_package_builder.py`
+7. `pipeline/package_video.py`
+8. CLI `package-video`
+
+测试结果：
+
+```text
+15 passed
+```
+
+真实样本验收：
+
+```text
+BV1pLqnBWEJC
+scene_count: 16
+frame_count: 48
+package_count: 16
+manifest: packages/scene_packages.json
+```
+
+### 2.2.3 v1-2：LLM 分析和经验抽取
+
+状态：
+
+```text
+scene-level LLM 代码已完成，真实 API 小样本验收待执行
+```
+
+交付物：
+
+1. Vision LLM client。
+2. scene-level 并发分析。
+3. retry / cache / timeout。
+4. `scenes.json` 汇总。
+5. `film_analysis.json`。
+6. `experience_cards.jsonl` 自动抽取。
+
+已完成：
+
+1. Vision LLM client。
+2. start / middle / end 三帧上传。
+3. `prompts/scene_analysis.md`。
+4. `SceneAnalysis` validation。
+5. `analysis/scene_XXX.json`。
+6. `analysis/scenes.json`。
+7. CLI `analyze-scenes`。
+
+测试结果：
+
+```text
+17 passed
+```
+
+### 2.2.4 v1-2a：字幕获取与字幕 fallback
+
+状态：
+
+```text
+下一步
+```
+
+交付物：
+
+1. Bilibili 字幕自动获取。
+2. `source/subtitles.srt`。
+3. package 阶段自动字幕切片。
+4. 字幕失败时继续生成无字幕 package。
+5. 字幕来源 metadata。
+
+### 2.2.5 v1-2b：Scene-level LLM 真实验收
+
+状态：
+
+```text
+下一步
+```
+
+验收命令：
+
+```powershell
+python -m sceneweaver.cli analyze-scenes outputs\BV1pLqnBWEJC --limit 1
+```
+
+验收标准：
+
+1. 输出 `analysis/scene_001.json`。
+2. 输出通过 `SceneAnalysis` validation。
+3. 内容区分客观观察和导演解释。
+4. 不包含评分体系字段。
+5. 有可复用 `experience_candidates`。
 
 ### 2.3 v2：导演经验检索
 
@@ -92,19 +251,20 @@ SceneWeaver 要建立一条从视频案例到导演经验记忆的生产线。
 
 ### 3.1 P0
 
-1. 数据 schema。
-2. scene package。
-3. scene analysis。
-4. film analysis。
-5. experience card。
+1. 数据 schema：已完成。
+2. scene package：mock 已完成，真实视频 package 已完成。
+3. scene analysis：schema、mock 和 LLM 代码已完成，真实 API 验收待执行。
+4. film analysis：schema 和 mock 已完成，LLM 待实现。
+5. experience card：schema 和 mock 已完成，自动抽取待实现。
 
 ### 3.2 P1
 
 1. Bilibili 下载。
 2. PySceneDetect 切分。
 3. ffmpeg 三帧抽取。
-4. 并发 LLM 调用。
-5. 本地 JSON / JSONL 存储。
+4. 字幕切片：已有 SRT 切片能力，自动获取待实现。
+5. 并发 LLM 调用。
+6. 本地 JSON / JSONL 存储：已完成基础 helper。
 
 ### 3.3 P2
 

@@ -1,0 +1,17 @@
+{
+  "card_id": "exp_000001",
+  "source_video_id": "bilibili_BVxxxx",
+  "source_scene_ids": ["scene_001", "scene_002"],
+  "keywords": ["青春", "热情", "梦想", "团队"],
+  "underlying_emotion": "年轻人正在共同创造未来",
+  "narrative_logic": "个体日常逐渐汇入团队群像",
+  "director_strategy": "先建立真实工作状态，再通过群像剪辑释放集体能量",
+  "shooting_techniques": ["手持跟拍", "逆光", "中近景", "群像快剪"],
+  "visual_symbols": ["晨光", "团队协作", "奔跑", "工作空间"],
+  "copywriting_tone": "少口号，多第一人称和真实动作",
+  "avoid": ["空泛梦想口号", "过度互联网大厂感", "纯炫技快剪"],
+  "emotion_temperature_range": [0.55, 0.85],
+  "reuse_condition": "适合希望表达青年热情、团队归属和未来感的招聘宣传片",
+  "confidence": 0.82
+}
+

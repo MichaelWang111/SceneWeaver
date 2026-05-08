@@ -18,7 +18,7 @@
 状态：
 
 ```text
-当前阶段
+已完成
 ```
 
 ## 2. v1：Director Experience Analyzer
@@ -27,17 +27,24 @@
 
 跑通“视频到导演经验”的核心 pipeline。
 
+当前状态：
+
+```text
+v1-0 已完成，v1-1 已完成真实样本验收，v1-2b 代码完成待真实 API 验收
+```
+
 能力：
 
-1. Bilibili 视频输入。
-2. 视频下载。
-3. scene 切分。
-4. 三帧抽取。
-5. 字幕切片。
-6. scene package 生成。
-7. scene LLM 解析。
-8. full film LLM 解析。
-9. experience card 抽取。
+1. 工程骨架、schema、mock pipeline：已完成。
+2. Bilibili 视频输入：已完成真实样本验收。
+3. 视频下载：已完成真实样本验收。
+4. scene 切分：已完成真实样本验收。
+5. 三帧抽取：已完成真实样本验收。
+6. 字幕切片：已有 SRT 切片能力，自动获取待实现。
+7. scene package 生成：已完成真实样本验收。
+8. scene LLM 解析：代码已实现，真实 API 小样本验收待执行。
+9. full film LLM 解析：待实现。
+10. experience card 抽取：mock 已完成，自动抽取待实现。
 
 输出：
 
@@ -46,6 +53,106 @@
 3. `scenes.json`
 4. `film_analysis.json`
 5. `experience_cards.jsonl`
+
+### 2.1 v1-0：工程骨架、schema 和 mock pipeline
+
+状态：
+
+```text
+已完成
+```
+
+输出：
+
+1. `pyproject.toml`
+2. `src/sceneweaver/`
+3. `examples/*.json`
+4. `tests/*.py`
+5. `outputs/*/packages/scene_001.json`
+6. `outputs/*/analysis/scene_001.json`
+7. `outputs/*/analysis/scenes.json`
+8. `outputs/*/analysis/film_analysis.json`
+9. `outputs/*/analysis/experience_cards.jsonl`
+
+验收：
+
+```text
+pytest: 8 passed
+```
+
+### 2.2 v1-1：真实视频 package pipeline
+
+状态：
+
+```text
+已完成真实样本验收
+```
+
+目标：
+
+输入真实 Bilibili URL，生成可验证的 scene packages。
+
+输出：
+
+1. `source/video.mp4`
+2. `source/metadata.json`
+3. `source/subtitles.srt`
+4. `frames/scene_001_start.jpg`
+5. `frames/scene_001_middle.jpg`
+6. `frames/scene_001_end.jpg`
+7. `packages/scene_001.json`
+8. `packages/scene_packages.json`
+
+验收样本：
+
+```text
+BV1pLqnBWEJC
+scene_count: 16
+frame_count: 48
+package_count: 16
+```
+
+说明：
+
+`scenes/` 目录默认不生成 scene clips。需要 clips 时使用 `--split-video`。
+
+### 2.2.1 v1-2a：字幕获取与字幕 fallback
+
+状态：
+
+```text
+下一步
+```
+
+目标：
+
+自动获取 Bilibili 字幕并注入 scene packages；字幕失败时保留无字幕 package 生成能力。
+
+### 2.3 v1-2：LLM 分析和经验抽取
+
+状态：
+
+```text
+scene-level 代码已实现，full-film 和 card extraction 后续
+```
+
+目标：
+
+基于真实 scene packages 生成 scene analysis、film analysis 和 experience cards。
+
+已实现：
+
+1. `analyze-scenes`
+2. Vision LLM client
+3. 三帧上传
+4. `SceneAnalysis` validation
+5. `analysis/scenes.json`
+
+下一步：
+
+```text
+真实 API 小样本验收
+```
 
 ## 3. v2：Director Memory Retrieval
 
