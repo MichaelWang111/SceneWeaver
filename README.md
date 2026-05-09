@@ -2,156 +2,143 @@
 
 SceneWeaver 是一个面向商业宣传片、招聘宣传片和品牌短片的导演经验分析系统。
 
-它的目标不是直接生成视频，而是把已有视频中的导演经验拆解、结构化、存储，并在未来支持根据关键词生成多份导演稿。
+它不直接生成视频，而是把已有视频中的导演语言拆解成结构化数据，并为后续的经验检索、导演稿生成和创意联想提供知识基础。
 
-## 1. 项目定位
+## 当前状态
 
-SceneWeaver 当前阶段聚焦：
-
-```text
-视频输入
-→ 场景拆分
-→ Scene LLM 解析
-→ 全片导演语言分析
-→ 导演经验卡片存储
-```
-
-长期目标是：
+截至 2026-05-09，项目处于 v1 中段：
 
 ```text
-关键词
-→ 底层情感
-→ 叙事逻辑
-→ 拍摄技法
-→ 导演稿生成
+已完成：工程骨架、schema、mock pipeline、真实视频 package pipeline、scene-level LLM 代码
+待验收：真实 Vision API scene 分析小样本
+待实现：字幕自动获取、full-film analysis、experience card 自动抽取、完整 v1 run 闭环
 ```
 
-例如用户输入：
+当前判断：
 
 ```text
-青春 / 热情 / 梦想 / 真实感
+方向成立，工程骨架成立，但还不是完整产品闭环。
 ```
 
-系统应能检索历史视频中的导演经验，推导出对应的情绪、叙事、技法和导演表达，而不是只生成普通广告文案。
+## v1 目标
 
-## 2. 第一阶段范围
-
-v1 只做“视频到导演经验”的数据生产线。
-
-### 2.1 包含
-
-1. Bilibili 视频下载。
-2. 场景切分。
-3. 每个 scene 抽取前、中、后 3 帧。
-4. 提取或切分字幕片段。
-5. 将 3 帧图像、字幕、时间范围合并为 scene package。
-6. 并发调用 Vision LLM 进行 scene 解析。
-7. 汇总生成 `scenes.json`。
-8. 再次调用 LLM 生成全片分析 `film_analysis.json`。
-9. 抽取可复用导演经验卡片 `experience_cards.jsonl`。
-
-### 2.2 暂不包含
-
-1. 多平台爬虫。
-2. Web UI。
-3. 视频生成。
-4. LoRA / fine-tune。
-5. 完整 Graph RAG。
-6. 多 Agent 自动化。
-
-## 3. 核心数据流
+v1 要跑通“视频到导演经验”的数据生产线：
 
 ```text
 Bilibili URL
-→ yt-dlp download video / subtitle / audio
-→ PySceneDetect split scenes
-→ ffmpeg sample start / middle / end frames
-→ build scene_package
-→ concurrent Vision LLM scene analysis
+→ 下载视频和 metadata
+→ scene 检测
+→ start / middle / end 三帧抽取
+→ scene package
+→ scene-level Vision LLM 分析
 → scenes.json
-→ chronological full-film analysis
+→ full-film LLM 分析
 → film_analysis.json
-→ experience card extraction
+→ experience card 抽取
 → experience_cards.jsonl
 ```
 
-## 4. 技术栈
-
-项目优先使用 Python 技术栈。
-
-1. Python 3.11+
-2. Pydantic：schema validation
-3. Typer：CLI
-4. yt-dlp：视频下载
-5. PySceneDetect：场景切分
-6. ffmpeg / ffprobe：帧抽取、音频和字幕处理
-7. asyncio + httpx：并发 LLM 调用
-8. OpenAI-compatible API client：Vision LLM 接入
-9. JSON / JSONL：v1 本地存储
-10. pytest：测试
-
-## 5. 文档
-
-1. [开发计划](docs/PLAN.md)
-2. [产品需求](docs/PRD.md)
-3. [技术设计](docs/TECHNICAL_DESIGN.md)
-4. [数据结构](docs/SCHEMA.md)
-5. [执行情况](docs/EXECUTION_STATUS.md)
-6. [背景摘要](docs/CONTEXT_SUMMARY.md)
-7. [路线图](docs/ROADMAP.md)
-8. [参考项目笔记](docs/REFERENCE_NOTES.md)
-
-## 6. 当前判断
-
-SceneWeaver 的核心壁垒不是视频下载、切分或调用 LLM，而是“导演经验结构化”。
-
-第一阶段的成功标准是：
+v1 成功标准不是“生成一份好看的报告”，而是：
 
 ```text
-能否从视频中稳定提取出可复用的导演经验卡片。
+能否稳定提取出可复用、可验证、可检索的导演经验卡片。
 ```
 
-只有这个成立，后续的关键词检索、情感温度随机化、多版本导演稿生成才有可靠基础。
-## CLI 速查
+## 已具备能力
 
-端到端入口：
+1. `mock-run`：生成完整 mock 产物并通过 schema validation。
+2. `package-video`：下载 Bilibili 视频，检测 scene，抽三帧，生成 scene packages。
+3. `analyze-scenes`：读取 scene packages 和三帧图，调用 Vision LLM 生成 scene analysis。
+4. `associate`：把关键词或粗糙 brief 扩展为导演/编剧可用的联想材料。
+
+已完成真实 package 样本：
+
+```text
+BV1pLqnBWEJC
+scene_count: 16
+frame_count: 48
+package_count: 16
+```
+
+## 快速开始
+
+推荐使用 Python 3.11 环境。当前仓库尚未完成干净环境的一键可复现配置，后续需要补依赖锁定和 CLI smoke test。
+
+安装：
 
 ```powershell
-python -m sceneweaver.cli run "https://www.bilibili.com/video/BV1pLqnBWEJC" --limit 20 --concurrency 3
+python -m pip install -e ".[dev,video]"
 ```
 
-说明：
+生成 mock 产物：
 
-1. `run` 会依次执行下载、切 scene、抽帧、生成 `packages/`、并发生成 `analysis/scene_XXX.json`
-2. 默认输出目录为 `outputs/film_analysis/<BV号>`
-3. `--limit 20` 表示最多处理前 20 个 scene
-4. `--concurrency 3` 表示最多并发 3 个 scene LLM 请求
-5. 默认断点续跑，已有结果会跳过
-6. `--update` 会覆盖已有下载、packages、frames 和 analysis
+```powershell
+python -m sceneweaver.cli mock-run --output outputs\mock\quick_check
+```
 
-拆分调试命令：
+真实视频打包：
 
 ```powershell
 python -m sceneweaver.cli package-video "https://www.bilibili.com/video/BV1pLqnBWEJC" --output outputs\film_analysis\BV1pLqnBWEJC
-python -m sceneweaver.cli analyze-scenes outputs\film_analysis\BV1pLqnBWEJC --limit 20 --concurrency 3
-python -m sceneweaver.cli analyze-scenes outputs\film_analysis\BV1pLqnBWEJC --limit 20 --concurrency 3 --update
 ```
 
-关键词联想入口：
+scene 级 LLM 分析：
+
+```powershell
+$env:SCENEWEAVER_API_KEY="..."
+$env:SCENEWEAVER_BASE_URL="https://..."
+$env:SCENEWEAVER_MODEL="..."
+
+python -m sceneweaver.cli analyze-scenes outputs\film_analysis\BV1pLqnBWEJC --limit 1 --concurrency 1
+```
+
+关键词联想：
 
 ```powershell
 python -m sceneweaver.cli associate "青春 / 逆光 / 奔跑 / 创意 / 不惧挑战"
-python -m sceneweaver.cli associate "青春 / 逆光 / 奔跑" --output outputs\key_associates\youth_running.json --max-items 60
 python -m sceneweaver.cli associate "招聘宣传片 / 科技向善 / 提供机会发挥潜力" --debug --timeout-seconds 240 --retries 2
 python -m sceneweaver.cli associate "招聘宣传片 / 科技向善 / 提供机会发挥潜力" --stream
 ```
 
-`associate --debug` 会把阶段日志、模型和输出路径写到 stderr；stdout 仍然只保留最终 JSON，方便重定向或被脚本读取。
-`associate --stream` 会把 LLM 原始 JSON token 流写到 stderr，让长请求有即时反馈；最终 stdout 仍然只输出校验后的 JSON。`--flue` 作为别名也可用。
+## 输出目录
 
-默认输出目录：
+```text
+outputs/
+  film_analysis/<BV号>/
+    source/
+    frames/
+    packages/
+    analysis/
+  key_associates/
+  mock/
+```
 
-1. `outputs/key_associates/`：关键词联想 JSON。
-2. `outputs/film_analysis/<BV号>/`：视频拆包、scene 分析和后续全片分析。
-3. `outputs/mock/`：mock pipeline 验收产物。
-4. `.tmp/`：测试、临时 scratch，不作为正式结果目录。
+主要产物：
+
+1. `packages/scene_XXX.json`：送入 Vision LLM 的 scene package。
+2. `analysis/scene_XXX.json`：单个 scene 的导演语言分析。
+3. `analysis/scenes.json`：全片 scene analysis 汇总。
+4. `analysis/film_analysis.json`：全片导演语言总结，待实现真实链路。
+5. `analysis/experience_cards.jsonl`：可复用导演经验卡片，待实现真实链路。
+
+## 文档分工
+
+为避免文档互相重复，后续按下面分工维护：
+
+1. [开发计划](docs/PLAN.md)：当前 v1 执行计划和下一步顺序。
+2. [执行状态](docs/EXECUTION_STATUS.md)：当前完成度、验收记录和已知环境问题。
+3. [技术设计](docs/TECHNICAL_DESIGN.md)：代码架构、模块职责和运行链路。
+4. [数据结构](docs/SCHEMA.md)：核心 JSON / JSONL schema。
+5. [产品需求](docs/PRD.md)：产品目标、用户场景和非目标。
+6. [路线图](docs/ROADMAP.md)：v2 以后方向。
+7. [背景摘要](docs/CONTEXT_SUMMARY.md)：交接用短摘要。
+8. [开发日志](docs/DEVELOPMENT_LOG.md)：按时间记录已发生的工程推进。
+9. [参考项目笔记](docs/REFERENCE_NOTES.md)：本地参考项目的借鉴边界。
+
+## 核心原则
+
+1. 先结构化，再自动化。
+2. 先本地文件，再数据库。
+3. 先小样本验证，再大规模处理。
+4. 所有 LLM 输出必须通过 Pydantic validation。
+5. `visual_observation` 写客观观察，`director_interpretation` 写推断和解释，`experience_card` 写可复用经验。

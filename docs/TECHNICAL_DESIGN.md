@@ -1,20 +1,31 @@
-# 技术设计文档
+# 技术设计
+
+本文描述当前架构和模块职责。执行状态见 `docs/EXECUTION_STATUS.md`，schema 细节见 `docs/SCHEMA.md`。
 
 ## 1. 总体架构
 
-SceneWeaver v1 使用 Python 技术栈，采用本地 pipeline 架构。
-
-核心链路：
+SceneWeaver v1 使用本地 Python pipeline。
 
 ```text
-Input Layer
-→ Split Layer
+Input
+→ Split
 → Scene Packaging
 → Scene LLM Analysis
 → Full Film Analysis
 → Experience Card Extraction
 → Local Storage
 ```
+
+当前真实链路做到：
+
+```text
+Input
+→ Split
+→ Scene Packaging
+→ Scene LLM Analysis code
+```
+
+Full Film Analysis 和 Experience Card Extraction 仍待接入真实链路。
 
 ## 2. 技术栈
 
@@ -23,184 +34,201 @@ Input Layer
 3. Pydantic：schema validation
 4. yt-dlp：Bilibili 视频下载
 5. PySceneDetect：scene detection
-6. ffmpeg / ffprobe：帧抽取、音频、字幕处理
-7. asyncio + httpx：并发 LLM 请求
-8. OpenAI-compatible API：Vision LLM 调用
-9. JSON / JSONL：v1 本地存储
-10. pytest：测试
+6. ffmpeg / ffprobe：帧抽取和视频信息读取
+7. OpenAI-compatible API：Vision / text LLM 调用
+8. JSON / JSONL：v1 本地存储
+9. pytest：测试
 
-## 3. 模块设计
+注意：
 
-### 3.1 输入层 Input Layer
+当前需要补依赖锁定。已观察到 `typer 0.9.0 + click 8.2.1` 下 CLI `--help` 可能报错。
 
-职责：
+## 3. 模块职责
 
-1. 接收 Bilibili URL。
-2. 下载视频文件。
-3. 下载或提取字幕。
-4. 提取基础 metadata。
-5. 输出 video asset 目录。
+### 3.1 CLI
 
-建议模块：
+文件：
+
+```text
+src/sceneweaver/cli.py
+```
+
+命令：
+
+1. `mock-run`
+2. `package-video`
+3. `analyze-scenes`
+4. `associate`
+5. `run`
+
+当前 `run` 只串到 scene-level analysis，未包含 full-film 和 card extraction。
+
+### 3.2 Input
+
+文件：
 
 ```text
 src/sceneweaver/input/bilibili.py
 src/sceneweaver/input/downloader.py
 ```
 
-### 3.2 拆分层 Split Layer
-
 职责：
 
-1. 使用 PySceneDetect 切分 scene。
-2. 记录每个 scene 的 start / end / duration。
-3. 生成 scene index。
+1. 从 URL 提取 BV 号。
+2. 调用 `yt-dlp` 获取 metadata。
+3. 下载视频到 `source/video.mp4`。
+4. 写出 `source/metadata.json`。
 
-建议模块：
+待补：
+
+1. 自动字幕获取。
+2. 字幕失败原因记录。
+
+### 3.3 Split
+
+文件：
 
 ```text
 src/sceneweaver/split/scene_detector.py
-```
-
-### 3.3 Frame Sampling Layer
-
-职责：
-
-1. 每个 scene 抽取 3 帧。
-2. start frame：scene 开始附近。
-3. middle frame：scene 中间。
-4. end frame：scene 结束附近。
-5. 输出 frame paths。
-
-注意：
-
-1. 三帧只能辅助推断，不应强迫 LLM 确认复杂镜头运动。
-2. 输出中需要保留 `confidence_notes`。
-
-建议模块：
-
-```text
 src/sceneweaver/split/frame_sampler.py
-```
-
-### 3.4 Subtitle Segmenter
-
-职责：
-
-1. 读取 SRT / VTT 字幕。
-2. 按 scene time_range 匹配字幕。
-3. 输出 subtitle segment。
-
-建议模块：
-
-```text
 src/sceneweaver/split/subtitle_segmenter.py
+src/sceneweaver/split/timecode.py
 ```
-
-### 3.5 Scene Packaging
 
 职责：
 
-将一个 scene 的所有输入合并为 `scene_package`：
+1. 使用 PySceneDetect 检测 scene spans。
+2. 使用 ffmpeg 抽取 start / middle / end 三帧。
+3. 解析已有 SRT 并按 scene 时间范围匹配字幕。
+4. 在没有检测到 scene 时 fallback 到整段视频。
 
-1. scene id
-2. time_range
-3. frame paths
-4. subtitle segment
-5. source metadata
+设计约束：
 
-建议模块：
+1. 三帧只能辅助判断，不强迫模型确认复杂镜头运动。
+2. 字幕缺失不能阻塞 package 生成。
+
+### 3.4 Scene Packaging
+
+文件：
 
 ```text
 src/sceneweaver/analysis/scene_package_builder.py
+src/sceneweaver/pipeline/package_video.py
 ```
+
+职责：
+
+1. 合并 scene span、frame paths、subtitle segment 和 source metadata。
+2. 写出 `packages/scene_XXX.json`。
+3. 写出 `packages/scene_packages.json` manifest。
+
+### 3.5 LLM Client
+
+文件：
+
+```text
+src/sceneweaver/llm/client.py
+```
+
+职责：
+
+1. 从环境变量读取 API key、base URL、model。
+2. 支持 text JSON 请求。
+3. 支持 Vision image JSON 请求。
+4. 提取并解析 LLM 返回的 JSON object。
+5. 支持文本流式输出和 reasoning 内容分离。
+
+待补：
+
+1. `analyze_images_json` 的 retry / timeout。
+2. 更稳健的 JSON 提取策略。
+3. 针对真实 provider 的错误分类。
 
 ### 3.6 Scene LLM Analysis
 
-职责：
-
-1. 并发读取 scene packages。
-2. 调用 Vision LLM。
-3. 输出 scene analysis。
-4. 做 JSON validation。
-5. 支持 retry / cache / timeout。
-
-输出重点：
-
-1. `visual_observation`
-2. `director_interpretation`
-3. `experience_candidates`
-4. `emotion_temperature`
-
-建议模块：
+文件：
 
 ```text
 src/sceneweaver/analysis/scene_analyzer.py
-src/sceneweaver/llm/client.py
-src/sceneweaver/llm/retry.py
+prompts/scene_analysis.md
 ```
-
-### 3.7 Full Film Analysis
 
 职责：
 
-1. 输入全部 scene analysis。
-2. 按时间顺序分析全片。
-3. 输出全片层面的导演语言总结。
+1. 读取 `packages/scene_XXX.json`。
+2. 解析三帧路径。
+3. 调用 Vision LLM。
+4. 校验 `SceneAnalysis`。
+5. 写出 `analysis/scene_XXX.json`。
+6. 汇总 `analysis/scenes.json`。
+7. 支持并发和已有结果复用。
 
-输出重点：
+### 3.7 Associate Analysis
 
-1. atmosphere
-2. tone
-3. rhythm
-4. emotional_curve
-5. visual_language
-6. narrative_structure
-7. director_language_summary
-8. brand_personality
-9. audience_projection
+文件：
 
-建议模块：
+```text
+src/sceneweaver/analysis/associate_analyzer.py
+prompts/associate.md
+```
+
+职责：
+
+1. 将关键词或粗糙 brief 扩展成导演/编剧联想材料。
+2. 输出 `AssociationAnalysis`。
+3. 支持 debug、stream、thinking 参数。
+
+该能力当前独立于视频经验库。
+
+### 3.8 Full Film Analysis
+
+计划文件：
 
 ```text
 src/sceneweaver/analysis/film_analyzer.py
+prompts/film_analysis.md
 ```
-
-### 3.8 Experience Card Extraction
 
 职责：
 
-1. 从 scene analysis 和 film analysis 中抽取可复用经验。
-2. 生成 `experience_cards.jsonl`。
-3. 为未来向量化和 Graph RAG 做准备。
+1. 输入 `analysis/scenes.json`。
+2. 按时间顺序分析全片。
+3. 输出 `analysis/film_analysis.json`。
+4. 校验 `FilmAnalysis`。
 
-建议模块：
+### 3.9 Experience Card Extraction
+
+计划文件：
 
 ```text
 src/sceneweaver/analysis/experience_extractor.py
-src/sceneweaver/storage/json_store.py
+prompts/experience_extraction.md
 ```
 
-## 4. 本地输出目录
+职责：
 
-建议每个视频生成一个独立目录：
+1. 输入 `analysis/scenes.json` 和 `analysis/film_analysis.json`。
+2. 抽取可复用导演经验。
+3. 输出 `analysis/experience_cards.jsonl`。
+4. 校验每个 `ExperienceCard`。
+
+## 4. 输出目录
 
 ```text
-outputs/{video_id}/
+outputs/film_analysis/<BV号>/
   source/
     video.mp4
-    audio.m4a
-    subtitles.srt
     metadata.json
+    subtitles.srt
   scenes/
     scene_001.mp4
-    scene_002.mp4
   frames/
     scene_001_start.jpg
     scene_001_middle.jpg
     scene_001_end.jpg
   packages/
     scene_001.json
+    scene_packages.json
   analysis/
     scene_001.json
     scenes.json
@@ -208,45 +236,17 @@ outputs/{video_id}/
     experience_cards.jsonl
 ```
 
-## 5. 并发与可靠性
+说明：
 
-### 5.1 并发
+1. `scenes/` 默认可以为空，只有 `--split-video` 时才生成 clips。
+2. `subtitles.srt` 目前不会自动生成。
+3. `film_analysis.json` 和 `experience_cards.jsonl` 的真实链路待实现。
 
-1. scene-level analysis 可以并发。
-2. full-film analysis 必须等待 scene analysis 完成。
-3. experience extraction 必须等待 film analysis 完成。
+## 5. 关键设计规则
 
-### 5.2 retry
-
-LLM 调用失败时：
-
-1. 重试 2-3 次。
-2. 指数退避。
-3. 仍失败则保留 failed status。
-4. 不阻塞已成功 scene 的落盘。
-
-### 5.3 cache
-
-每个 scene analysis 使用输入 hash 缓存。
-
-如果 scene package 未变化，不重复调用 LLM。
-
-## 6. 关键设计规则
-
-1. `visual_observation` 只写客观观察。
-2. `director_interpretation` 写推断和解释。
-3. `experience_card` 写可复用知识。
-4. 不能把 `scenes.json` 直接当经验库。
-5. 所有 LLM 输出必须通过 Pydantic validation。
+1. 所有 LLM 输出必须通过 Pydantic validation。
+2. `visual_observation` 只写客观观察。
+3. `director_interpretation` 写推断和解释。
+4. `experience_card` 写可复用知识，不写原始报告摘要。
+5. 不把 `scenes.json` 直接当经验库。
 6. 所有中间结果都应可落盘、可复跑、可检查。
-
-## 7. 未来扩展
-
-1. 多平台输入。
-2. 智能视频检索。
-3. embedding 检索。
-4. vector db。
-5. Graph RAG。
-6. Director Treatment 生成。
-7. Web UI。
-8. LoRA / fine-tune。

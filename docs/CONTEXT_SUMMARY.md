@@ -1,69 +1,49 @@
 # 背景摘要
 
-## 1. 项目一句话
+本文用于快速交接。详细计划见 `docs/PLAN.md`，执行状态见 `docs/EXECUTION_STATUS.md`。
+
+## 一句话
 
 SceneWeaver 是一个从商业视频中提炼导演经验，并为未来导演稿生成提供知识基础的 Python 项目。
 
-## 2. 当前核心目标
+## 项目本质
 
-当前阶段不做完整视频生成，也不做复杂 Web 产品。
+它不是普通视频分析器，也不是视频生成器。
 
-第一目标是跑通：
-
-```text
-Bilibili 视频
-→ 场景拆分
-→ 三帧 + 字幕片段
-→ Scene LLM 解析
-→ 全片 LLM 总结
-→ 导演经验卡片
-```
-
-## 3. 项目本质
-
-项目不是普通的视频分析器。
-
-真正目标是建立：
+它要回答的是：
 
 ```text
-导演经验检索系统
+为什么这里要这样拍？
+这个 scene 在全片中承担什么职责？
+它制造了什么观众感受？
+它塑造了什么品牌人格和身份投射？
+这条经验未来如何复用？
 ```
 
-也就是把视频里的导演决策结构化，让未来可以根据关键词检索并生成导演稿。
-
-## 4. 关键认知
-
-导演不是在“拍镜头”，而是在控制观众感受。
-
-所以系统不应只记录：
+## 当前 v1 链路
 
 ```text
-镜头类型 / 构图 / 光线 / 色彩
+Bilibili URL
+→ scene detection
+→ start / middle / end frames
+→ scene package
+→ scene-level Vision LLM analysis
+→ scenes.json
+→ film_analysis.json
+→ experience_cards.jsonl
 ```
 
-更应记录：
+当前只做到 scene-level LLM 代码实现，后半段真实链路仍待实现。
+
+## 当前状态
 
 ```text
-这个 scene 让观众感受到什么
-这个 scene 在全片中承担什么职责
-它塑造了什么品牌人格
-它制造了什么身份投射
-这条经验未来如何复用
+已完成：schema、mock pipeline、真实视频 package pipeline、scene-level LLM 代码、associate 命令
+待验收：真实 API scene 分析小样本
+待实现：字幕自动获取、full-film analysis、experience card extraction
 ```
 
-## 5. 当前 v1 数据链路
-
-```text
-Input Layer
-→ Split Layer
-→ Scene Packaging
-→ Scene LLM Analysis
-→ Full Film Analysis
-→ Experience Card Extraction
-→ Local JSON / JSONL Storage
-```
-
-## 6. 核心数据产物
+## 核心产物
 
 1. `scene_package`：送入 Vision LLM 的最小输入单元。
 2. `scene_analysis`：单个 scene 的导演分析。
@@ -71,58 +51,9 @@ Input Layer
 4. `film_analysis.json`：全片导演语言总结。
 5. `experience_cards.jsonl`：可复用导演经验卡片。
 
-## 7. 第一版技术栈
+## 下一步
 
-1. Python 3.11+
-2. Pydantic
-3. Typer
-4. yt-dlp
-5. PySceneDetect
-6. ffmpeg / ffprobe
-7. asyncio + httpx
-8. OpenAI-compatible Vision LLM API
-9. JSON / JSONL
-10. pytest
-
-## 8. 参考项目
-
-本地参考项目：
-
-```text
-D:\WorkSpace\github\video-expert-analyzer
-```
-
-它适合参考：
-
-1. 视频下载。
-2. scene 切分。
-3. frame extraction。
-4. 字幕 / OCR / ASR 处理。
-5. JSON 和 Markdown 报告输出。
-
-但它本质是高级剪辑分析器，SceneWeaver 需要在它之上增加导演认知层。
-
-## 9. 当前边界
-
-v1 不做：
-
-1. Web UI。
-2. 多平台输入。
-3. 视频生成。
-4. LoRA / fine-tune。
-5. 完整 Graph RAG。
-6. 多 Agent 自动化。
-
-## 10. 下一步重点
-
-下一步应从文档进入 Python 工程骨架：
-
-```text
-pyproject.toml
-src/sceneweaver/
-prompts/
-examples/
-tests/
-```
-
-然后优先实现 schema 和本地 mock pipeline，再接真实视频处理和真实 LLM。
+1. 修环境可复现和 CLI help 问题。
+2. 跑真实 API `analyze-scenes --limit 1`。
+3. 小样本通过后实现 `film_analyzer`。
+4. 再实现 `experience_extractor`。
