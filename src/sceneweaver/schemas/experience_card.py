@@ -3,12 +3,14 @@ from __future__ import annotations
 from pydantic import Field, field_validator
 
 from sceneweaver.schemas.common import EXPERIENCE_ID_RE, SCENE_ID_RE, StrictBaseModel
+from sceneweaver.schemas.fingerprint import CreativeFingerprint
 
 
 class ExperienceCard(StrictBaseModel):
     card_id: str
     source_video_id: str
     source_scene_ids: list[str] = Field(min_length=1)
+    fingerprint: CreativeFingerprint
     keywords: list[str] = Field(min_length=1)
     underlying_emotion: str
     narrative_logic: str
@@ -43,4 +45,3 @@ class ExperienceCard(StrictBaseModel):
         if not 0 <= low <= high <= 1:
             raise ValueError("emotion_temperature_range must be within 0..1 and sorted")
         return value
-

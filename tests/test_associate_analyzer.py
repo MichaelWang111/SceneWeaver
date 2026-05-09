@@ -40,6 +40,25 @@ def _valid_association_data(input_text: str = "青年逆光奔跑") -> dict:
     ]
     return {
         "input_text": input_text,
+        "query_fingerprint": {
+            "emotion_core": ["ambition", "creativity"],
+            "audience_projection": ["future_builder"],
+            "narrative_function": ["invitation"],
+            "interaction_mode": ["team_collaboration"],
+            "visual_motifs": ["silhouette", "upward_motion"],
+            "symbolic_logic": ["becoming"],
+            "rhythm_pattern": ["explosive_build"],
+            "evidence": [
+                {
+                    "source_id": "query",
+                    "source_type": "query",
+                    "field": "input_text",
+                    "quote": input_text,
+                    "note": "test query fingerprint",
+                }
+            ],
+            "confidence": 0.75,
+        },
         "core_reading": "一群年轻人从不确定走向共同发光。",
         "emotional_arc": {
             "origin": "最初是不确定和试探。",
@@ -176,6 +195,7 @@ def test_associate_input_reads_prompt_calls_llm_and_writes_output(tmp_path):
     )
 
     assert analysis.input_text == "青年逆光奔跑"
+    assert analysis.query_fingerprint.visual_motifs
     assert client.calls[0][0] == "system prompt"
     assert "max_items: 60" in client.calls[0][1]
     assert client.calls[0][3] == 12

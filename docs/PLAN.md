@@ -17,7 +17,8 @@ Bilibili URL
 当前判断：
 
 ```text
-前半段已经成立，后半段需要继续实现和验收。
+前半段已经用真实视频跑通到 scene analysis + creative fingerprints。
+后半段需要继续实现 film analysis、experience cards 和 retrieval。
 ```
 
 ## 2. 当前状态
@@ -27,17 +28,19 @@ Bilibili URL
 1. 工程骨架、schema、mock pipeline。
 2. 真实 Bilibili 视频下载和 scene package 生成。
 3. start / middle / end 三帧抽取。
-4. scene-level Vision LLM 分析代码。
-5. `associate` 关键词联想命令。
+4. scene-level Vision LLM 分析代码和真实 40 scene 样本验收。
+5. CreativeFingerprint schema、scene fingerprint、film fingerprint 和 query fingerprint。
+6. `associate` 关键词联想命令。
+7. `run` 命令已串起 package、scene analysis、fingerprint generation。
 
 待完成：
 
 1. 环境可复现和 CLI help 稳定性。
-2. scene-level Vision API 小样本真实验收。
-3. Bilibili 字幕自动获取。
-4. full-film analysis。
-5. experience card extraction。
-6. `run` 命令完整 v1 闭环。
+2. Bilibili 字幕自动获取。
+3. full-film analysis。
+4. experience card extraction。
+5. query fingerprint 到 experience cards 的检索入口。
+6. `run` 命令完整 v1 后半段闭环。
 
 ## 3. P0：先让当前代码可稳定验收
 
@@ -65,26 +68,38 @@ python -m sceneweaver.cli mock-run --output outputs\mock\quick_check
 python -m pytest
 ```
 
-### 3.2 验收 scene-level LLM
+### 3.2 维护真实 scene-level LLM 验收
 
 目标：
 
 ```text
-证明真实 Vision LLM 能产出合格 SceneAnalysis。
+把已经跑通的真实 Vision LLM 样本变成可复查的验收基线。
 ```
 
-任务：
-
-1. 配置 `SCENEWEAVER_API_KEY` / `SCENEWEAVER_BASE_URL` / `SCENEWEAVER_MODEL`。
-2. 对已生成 package 的样本跑 1 个 scene。
-3. 检查 JSON validation。
-4. 检查 prompt 质量。
-5. 必要时调整 `prompts/scene_analysis.md`。
-
-验收命令：
+已完成样本：
 
 ```powershell
-python -m sceneweaver.cli analyze-scenes outputs\film_analysis\BV1pLqnBWEJC --limit 1 --concurrency 1
+python -m sceneweaver.cli run "https://www.bilibili.com/video/BV1cWHyzwEKC" --limit 40 --concurrency 5
+```
+
+产物：
+
+```text
+outputs/film_analysis/BV1cWHyzwEKC/analysis/scenes.json
+outputs/film_analysis/BV1cWHyzwEKC/fingerprints/film_fingerprint.json
+```
+
+后续维护任务：
+
+1. 保留该样本作为 scene analysis 和 fingerprint 的回归基线。
+2. 抽查 `analysis/scene_XXX.json` 内容质量。
+3. 必要时调整 `prompts/scene_analysis.md`。
+4. 记录 provider、model 和运行参数，便于复现。
+
+回归命令：
+
+```powershell
+python -m sceneweaver.cli run "https://www.bilibili.com/video/BV1cWHyzwEKC" --limit 40 --concurrency 5
 ```
 
 验收标准：
@@ -176,6 +191,7 @@ run 命令产出 v1 全部核心文件。
 ```text
 package-video
 → analyze-scenes
+→ fingerprint-scenes
 → analyze-film
 → extract-experience
 ```
@@ -192,8 +208,30 @@ python -m sceneweaver.cli run "https://www.bilibili.com/video/BV1pLqnBWEJC" --li
 2. `packages/scene_packages.json`
 3. `analysis/scene_XXX.json`
 4. `analysis/scenes.json`
-5. `analysis/film_analysis.json`
-6. `analysis/experience_cards.jsonl`
+5. `fingerprints/scene_XXX.json`
+6. `fingerprints/film_fingerprint.json`
+7. `analysis/film_analysis.json`
+8. `analysis/experience_cards.jsonl`
+
+### 4.4 Experience card retrieval
+
+目标：
+
+```text
+用 query_fingerprint 召回 grounded experience cards，而不是只做自由联想。
+```
+
+计划新增：
+
+1. CLI `retrieve-cards`
+2. 从 brief 生成 `query_fingerprint`
+3. 读取 `analysis/experience_cards.jsonl`
+4. 输出 top-k cards 和匹配得分
+
+验收标准：
+
+1. 输入腾讯 2019 宣传片式 brief 时，能优先召回 `direct_address`、`screen`、`trust`、`human_centered_technology` 等相关 cards。
+2. 每个召回结果能展示 fingerprint overlap 和 evidence。
 
 ## 5. P2：提升输入质量
 

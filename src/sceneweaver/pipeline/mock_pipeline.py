@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from sceneweaver.analysis.fingerprint import build_film_fingerprint, build_scene_fingerprint
 from sceneweaver.schemas import (
     ExperienceCard,
     FilmAnalysis,
@@ -85,9 +86,15 @@ def build_mock_artifacts(source_url: str = "https://www.bilibili.com/video/BVxxx
         scene_count=1,
         scenes=[scene_analysis],
     )
+    scene_fingerprint = build_scene_fingerprint(scene_analysis, source_video_id=video_id)
+    film_fingerprint = build_film_fingerprint(
+        video_id=video_id,
+        scene_fingerprints=[scene_fingerprint],
+    )
 
     film_analysis = FilmAnalysis(
         video_id=video_id,
+        fingerprint=film_fingerprint.fingerprint,
         atmosphere="真实、温暖、轻度热血",
         tone="纪录片式招聘宣传片",
         rhythm=Rhythm(overall="前慢后快", description="前半段建立真实感，后半段释放团队能量"),
@@ -112,6 +119,7 @@ def build_mock_artifacts(source_url: str = "https://www.bilibili.com/video/BVxxx
             card_id="exp_000001",
             source_video_id=video_id,
             source_scene_ids=["scene_001"],
+            fingerprint=scene_fingerprint.fingerprint,
             keywords=["青春", "热情", "梦想", "团队"],
             underlying_emotion="年轻人正在共同创造未来",
             narrative_logic="个体日常逐渐汇入团队群像",
@@ -130,11 +138,17 @@ def build_mock_artifacts(source_url: str = "https://www.bilibili.com/video/BVxxx
 
 def run_mock_pipeline(output_dir: Path, source_url: str = "https://www.bilibili.com/video/BVxxxx") -> Path:
     package, scene_analysis, scenes, film_analysis, cards = build_mock_artifacts(source_url=source_url)
+    scene_fingerprint = build_scene_fingerprint(scene_analysis, source_video_id=scenes.video_id)
+    film_fingerprint = build_film_fingerprint(
+        video_id=scenes.video_id,
+        scene_fingerprints=[scene_fingerprint],
+    )
 
     write_json(output_dir / "packages" / "scene_001.json", package)
     write_json(output_dir / "analysis" / "scene_001.json", scene_analysis)
     write_json(output_dir / "analysis" / "scenes.json", scenes)
     write_json(output_dir / "analysis" / "film_analysis.json", film_analysis)
     write_jsonl(output_dir / "analysis" / "experience_cards.jsonl", cards)
+    write_json(output_dir / "fingerprints" / "scene_001.json", scene_fingerprint)
+    write_json(output_dir / "fingerprints" / "film_fingerprint.json", film_fingerprint)
     return output_dir
-

@@ -1,5 +1,24 @@
 {
   "input_text": "我需要一群年轻人逆光奔跑的场景，我需要看到他们的创意和不惧挑战",
+  "query_fingerprint": {
+    "emotion_core": ["ambition", "creativity", "belonging"],
+    "audience_projection": ["future_builder", "participant"],
+    "narrative_function": ["invitation"],
+    "interaction_mode": ["team_collaboration"],
+    "visual_motifs": ["silhouette", "upward_motion"],
+    "symbolic_logic": ["becoming", "connection"],
+    "rhythm_pattern": ["explosive_build"],
+    "evidence": [
+      {
+        "source_id": "query",
+        "source_type": "query",
+        "field": "input_text",
+        "quote": "我需要一群年轻人逆光奔跑的场景，我需要看到他们的创意和不惧挑战",
+        "note": "query fingerprint extracted from brief"
+      }
+    ],
+    "confidence": 0.75
+  },
   "core_reading": "这个输入真正要表达的不是单纯奔跑，而是一群年轻人从不确定走向共同发光：他们用行动证明创意不是想法本身，而是敢把想法带进现实。",
   "emotional_arc": {
     "origin": "情绪从清晨般的试探开始，人物还带着一点不确定和未被证明的紧张。",

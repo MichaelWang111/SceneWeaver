@@ -2,6 +2,25 @@
   "card_id": "exp_000001",
   "source_video_id": "bilibili_BVxxxx",
   "source_scene_ids": ["scene_001", "scene_002"],
+  "fingerprint": {
+    "emotion_core": ["belonging", "ambition", "trust"],
+    "audience_projection": ["future_builder", "participant"],
+    "narrative_function": ["culture_showcase", "invitation"],
+    "interaction_mode": ["team_collaboration"],
+    "visual_motifs": ["silhouette", "upward_motion"],
+    "symbolic_logic": ["becoming", "connection"],
+    "rhythm_pattern": ["explosive_build", "montage"],
+    "evidence": [
+      {
+        "source_id": "scene_001",
+        "source_type": "scene",
+        "field": "experience_card.director_strategy",
+        "quote": "先建立真实工作状态，再通过群像剪辑释放集体能量",
+        "note": "card fingerprint is used for retrieval"
+      }
+    ],
+    "confidence": 0.82
+  },
   "keywords": ["青春", "热情", "梦想", "团队"],
   "underlying_emotion": "年轻人正在共同创造未来",
   "narrative_logic": "个体日常逐渐汇入团队群像",
@@ -14,4 +33,3 @@
   "reuse_condition": "适合希望表达青年热情、团队归属和未来感的招聘宣传片",
   "confidence": 0.82
 }
-

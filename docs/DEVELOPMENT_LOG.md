@@ -114,7 +114,7 @@ v1-1 完成真实样本验收。
 阶段判断：
 
 ```text
-scene-level LLM 代码完成，真实 API 小样本验收待执行。
+当时 scene 分析模块完成；后续已通过 BV1cWHyzwEKC 40 scene 样本补齐。
 ```
 
 ## 2026-05-09：关键词联想和文档整理
@@ -130,4 +130,42 @@ scene-level LLM 代码完成，真实 API 小样本验收待执行。
 
 ```text
 associate 可作为独立前期创意联想入口；项目文档重新按职责收敛。
+```
+
+## 2026-05-09：Creative Fingerprint 接入真实 run 链路
+
+目标：
+
+把用户规划中的 latent expression / tag 层落成独立中间层，用于后续 retrieval。
+
+完成：
+
+1. 新增 `CreativeFingerprint`、`SceneFingerprint`、`FilmFingerprint` schema。
+2. 新增 `src/sceneweaver/analysis/fingerprint.py`。
+3. 从 `SceneAnalysis` 生成 scene fingerprint。
+4. 按 scene 顺序聚合 `film_fingerprint.json`。
+5. 为 `AssociationAnalysis` 增加 `query_fingerprint`。
+6. 为 `ExperienceCard` 增加 `fingerprint` 字段。
+7. `run` 命令新增 fingerprint generation 阶段。
+
+真实样本验收：
+
+```powershell
+python -m sceneweaver.cli run "https://www.bilibili.com/video/BV1cWHyzwEKC" --limit 40 --concurrency 5
+```
+
+结果：
+
+```text
+Scene analysis written to: outputs/film_analysis/BV1cWHyzwEKC/analysis
+Scenes analyzed: 40
+Fingerprints written to: outputs/film_analysis/BV1cWHyzwEKC/fingerprints
+Scenes fingerprinted: 40
+```
+
+阶段判断：
+
+```text
+真实视频到 scene-level director analysis 和 fingerprint corpus 的前半段已跑通。
+下一步应补 film_analysis、experience_cards 和 query-to-card retrieval。
 ```

@@ -1,5 +1,24 @@
 {
   "video_id": "bilibili_BVxxxx",
+  "fingerprint": {
+    "emotion_core": ["belonging", "trust", "human_care"],
+    "audience_projection": ["future_builder", "participant"],
+    "narrative_function": ["establish_trust", "culture_showcase", "invitation"],
+    "interaction_mode": ["team_collaboration"],
+    "visual_motifs": ["urban_architecture", "hands"],
+    "symbolic_logic": ["connection", "human_centered_technology"],
+    "rhythm_pattern": ["montage"],
+    "evidence": [
+      {
+        "source_id": "scene_001",
+        "source_type": "scene",
+        "field": "director_interpretation.underlying_emotion",
+        "quote": "我可以在这里被看见并参与真实工作",
+        "note": "film fingerprint aggregates scene-level evidence"
+      }
+    ],
+    "confidence": 0.82
+  },
   "atmosphere": "真实、温暖、轻度热血",
   "tone": "纪录片式招聘宣传片",
   "rhythm": {
@@ -33,4 +52,3 @@
   "audience_projection": "年轻人可以在这里成为被需要、有成长空间的团队成员",
   "director_language_summary": "影片通过生活化工作细节和群像推进，避免空泛口号，用真实感建立雇主品牌信任"
 }
-

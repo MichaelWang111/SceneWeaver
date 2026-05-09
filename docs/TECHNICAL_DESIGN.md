@@ -11,6 +11,7 @@ Input
 → Split
 → Scene Packaging
 → Scene LLM Analysis
+→ Creative Fingerprint
 → Full Film Analysis
 → Experience Card Extraction
 → Local Storage
@@ -22,10 +23,11 @@ Input
 Input
 → Split
 → Scene Packaging
-→ Scene LLM Analysis code
+→ Scene LLM Analysis
+→ Creative Fingerprint
 ```
 
-Full Film Analysis 和 Experience Card Extraction 仍待接入真实链路。
+Creative Fingerprint 已作为独立中间层落地，并已在真实 `run` 链路中产出 scene fingerprints 和 film fingerprint。Full Film Analysis、Experience Card Extraction 和 card retrieval 仍待接入真实链路。
 
 ## 2. 技术栈
 
@@ -58,10 +60,11 @@ src/sceneweaver/cli.py
 1. `mock-run`
 2. `package-video`
 3. `analyze-scenes`
-4. `associate`
-5. `run`
+4. `fingerprint-scenes`
+5. `associate`
+6. `run`
 
-当前 `run` 只串到 scene-level analysis，未包含 full-film 和 card extraction。
+当前 `run` 串到 package、scene-level analysis 和 fingerprint generation，未包含 full-film analysis、card extraction 和 card retrieval。
 
 ### 3.2 Input
 
@@ -163,6 +166,13 @@ prompts/scene_analysis.md
 6. 汇总 `analysis/scenes.json`。
 7. 支持并发和已有结果复用。
 
+当前真实样本：
+
+```text
+BV1cWHyzwEKC
+Scenes analyzed: 40
+```
+
 ### 3.7 Associate Analysis
 
 文件：
@@ -175,12 +185,43 @@ prompts/associate.md
 职责：
 
 1. 将关键词或粗糙 brief 扩展成导演/编剧联想材料。
-2. 输出 `AssociationAnalysis`。
+2. 输出 `AssociationAnalysis` 和 `query_fingerprint`。
 3. 支持 debug、stream、thinking 参数。
 
-该能力当前独立于视频经验库。
+该能力当前独立于视频经验库；query fingerprint 用于后续匹配 experience card fingerprints。
 
-### 3.8 Full Film Analysis
+### 3.8 Creative Fingerprint
+
+文件：
+
+```text
+src/sceneweaver/analysis/fingerprint.py
+src/sceneweaver/schemas/fingerprint.py
+```
+
+职责：
+
+1. 从 `SceneAnalysis` 生成 `SceneFingerprint`。
+2. 按 scene 顺序聚合 `FilmFingerprint`。
+3. 从 associate 输入生成 `query_fingerprint`。
+4. 为 `ExperienceCard` 提供可检索 fingerprint。
+5. 提供第一版 JSON 文件检索，不引入 vector DB。
+
+输出：
+
+```text
+fingerprints/scene_XXX.json
+fingerprints/film_fingerprint.json
+```
+
+当前真实样本：
+
+```text
+BV1cWHyzwEKC
+Scenes fingerprinted: 40
+```
+
+### 3.9 Full Film Analysis
 
 计划文件：
 
@@ -196,7 +237,7 @@ prompts/film_analysis.md
 3. 输出 `analysis/film_analysis.json`。
 4. 校验 `FilmAnalysis`。
 
-### 3.9 Experience Card Extraction
+### 3.10 Experience Card Extraction
 
 计划文件：
 
@@ -210,7 +251,23 @@ prompts/experience_extraction.md
 1. 输入 `analysis/scenes.json` 和 `analysis/film_analysis.json`。
 2. 抽取可复用导演经验。
 3. 输出 `analysis/experience_cards.jsonl`。
-4. 校验每个 `ExperienceCard`。
+4. 校验每个带 fingerprint 的 `ExperienceCard`。
+
+### 3.11 Experience Card Retrieval
+
+计划入口：
+
+```text
+CLI retrieve-cards 或后续 API
+```
+
+职责：
+
+1. 输入 brief 或 `AssociationAnalysis`。
+2. 生成或读取 `query_fingerprint`。
+3. 读取 `analysis/experience_cards.jsonl`。
+4. 基于 CreativeFingerprint overlap 做第一版 top-k retrieval。
+5. 返回 cards、匹配维度和 evidence。
 
 ## 4. 输出目录
 
@@ -234,13 +291,17 @@ outputs/film_analysis/<BV号>/
     scenes.json
     film_analysis.json
     experience_cards.jsonl
+  fingerprints/
+    scene_001.json
+    film_fingerprint.json
 ```
 
 说明：
 
 1. `scenes/` 默认可以为空，只有 `--split-video` 时才生成 clips。
 2. `subtitles.srt` 目前不会自动生成。
-3. `film_analysis.json` 和 `experience_cards.jsonl` 的真实链路待实现。
+3. `fingerprints/` 已接入 mock、run 和 `fingerprint-scenes`，并通过 40 scene 真实样本验收。
+4. `film_analysis.json` 和 `experience_cards.jsonl` 的真实链路待实现。
 
 ## 5. 关键设计规则
 

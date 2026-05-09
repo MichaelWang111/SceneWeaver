@@ -16,6 +16,7 @@ from sceneweaver.analysis.associate_analyzer import (
     DEFAULT_TIMEOUT_SECONDS,
     associate_input,
 )
+from sceneweaver.analysis.fingerprint import generate_scene_fingerprints
 from sceneweaver.input.bilibili import extract_bvid
 from sceneweaver.llm.client import LLMConfig
 from sceneweaver.pipeline.mock_pipeline import run_mock_pipeline
@@ -135,6 +136,22 @@ def analyze_scenes(
     )
     typer.echo(f"Scene analysis written to: {output.resolve() / 'analysis'}")
     typer.echo(f"Scenes analyzed: {scenes.scene_count}")
+
+
+@app.command("fingerprint-scenes")
+def fingerprint_scenes(
+    output: Path = typer.Argument(..., help="Video output directory containing analysis/scenes.json."),
+    update: bool = typer.Option(
+        False,
+        "--update",
+        "--force",
+        help="Overwrite existing scene fingerprint files.",
+    ),
+) -> None:
+    """Generate scene and film creative fingerprints from existing scene analyses."""
+    film_fingerprint = generate_scene_fingerprints(output, force=update, log=typer.echo)
+    typer.echo(f"Fingerprints written to: {output.resolve() / 'fingerprints'}")
+    typer.echo(f"Scenes fingerprinted: {film_fingerprint.scene_count}")
 
 
 @app.command("associate")
@@ -288,7 +305,7 @@ def run_pipeline(
         log=typer.echo,
     )
 
-    typer.echo("Phase 2/2: Analyzing scene packages...")
+    typer.echo("Phase 2/3: Analyzing scene packages...")
     scenes = analyze_scene_packages(
         packaged_dir,
         limit=limit,
@@ -297,9 +314,17 @@ def run_pipeline(
         max_workers=concurrency,
         log=typer.echo,
     )
+    typer.echo("Phase 3/3: Generating creative fingerprints...")
+    film_fingerprint = generate_scene_fingerprints(
+        packaged_dir,
+        force=update,
+        log=typer.echo,
+    )
     typer.echo(f"Scene packages written to: {packaged_dir / 'packages'}")
     typer.echo(f"Scene analysis written to: {packaged_dir / 'analysis'}")
     typer.echo(f"Scenes analyzed: {scenes.scene_count}")
+    typer.echo(f"Fingerprints written to: {packaged_dir / 'fingerprints'}")
+    typer.echo(f"Scenes fingerprinted: {film_fingerprint.scene_count}")
 
 
 def build_key_associate_output_path(input_text: str, *, now: datetime | None = None) -> Path:

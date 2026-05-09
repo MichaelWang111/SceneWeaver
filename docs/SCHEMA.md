@@ -148,21 +148,41 @@ SceneWeaver 的 schema 区分三类信息：
 
 关键字段：
 
-1. `atmosphere`
-2. `tone`
-3. `rhythm`
-4. `emotional_curve`
-5. `visual_language`
-6. `narrative_structure`
-7. `brand_personality`
-8. `audience_projection`
-9. `director_language_summary`
+1. `fingerprint`
+2. `atmosphere`
+3. `tone`
+4. `rhythm`
+5. `emotional_curve`
+6. `visual_language`
+7. `narrative_structure`
+8. `brand_personality`
+9. `audience_projection`
+10. `director_language_summary`
 
 示例：
 
 ```json
 {
   "video_id": "bilibili_BVxxxx",
+  "fingerprint": {
+    "emotion_core": ["belonging", "trust"],
+    "audience_projection": ["participant"],
+    "narrative_function": ["establish_trust"],
+    "interaction_mode": ["team_collaboration"],
+    "visual_motifs": [],
+    "symbolic_logic": ["human_centered_technology"],
+    "rhythm_pattern": [],
+    "evidence": [
+      {
+        "source_id": "scene_001",
+        "source_type": "scene",
+        "field": "director_interpretation.underlying_emotion",
+        "quote": "我可以在这里被看见并参与真实工作",
+        "note": ""
+      }
+    ],
+    "confidence": 0.8
+  },
   "atmosphere": "真实、温暖、轻度热血",
   "tone": "纪录片式招聘宣传片",
   "rhythm": {
@@ -203,6 +223,25 @@ SceneWeaver 的 schema 区分三类信息：
   "card_id": "exp_000001",
   "source_video_id": "bilibili_BVxxxx",
   "source_scene_ids": ["scene_001", "scene_002"],
+  "fingerprint": {
+    "emotion_core": ["belonging", "ambition"],
+    "audience_projection": ["future_builder"],
+    "narrative_function": ["invitation"],
+    "interaction_mode": ["team_collaboration"],
+    "visual_motifs": ["silhouette", "upward_motion"],
+    "symbolic_logic": ["becoming"],
+    "rhythm_pattern": ["explosive_build"],
+    "evidence": [
+      {
+        "source_id": "scene_001",
+        "source_type": "scene",
+        "field": "experience_card.director_strategy",
+        "quote": "先建立真实工作状态，再通过群像剪辑释放集体能量",
+        "note": ""
+      }
+    ],
+    "confidence": 0.82
+  },
   "keywords": ["青春", "热情", "梦想", "团队"],
   "underlying_emotion": "年轻人正在共同创造未来",
   "narrative_logic": "个体日常逐渐汇入团队群像",
@@ -237,11 +276,12 @@ SceneWeaver 的 schema 区分三类信息：
 关键字段：
 
 1. `input_text`
-2. `core_reading`
-3. `emotional_arc`
-4. `association_map`
-5. `director_possibilities`
-6. `avoid_cliches`
+2. `query_fingerprint`
+3. `core_reading`
+4. `emotional_arc`
+5. `association_map`
+6. `director_possibilities`
+7. `avoid_cliches`
 
 校验：
 
@@ -249,7 +289,34 @@ SceneWeaver 的 schema 区分三类信息：
 2. 每个 association 类别至少 1 条。
 3. `director_possibilities` 必须有 3 到 5 个方向。
 
-## 8. 命名规范
+## 8. CreativeFingerprint
+
+用途：
+
+```text
+检索用的低维语义坐标，独立于高密度 reasoning。
+```
+
+字段：
+
+1. `emotion_core`
+2. `audience_projection`
+3. `narrative_function`
+4. `interaction_mode`
+5. `visual_motifs`
+6. `symbolic_logic`
+7. `rhythm_pattern`
+8. `evidence`
+9. `confidence`
+
+约束：
+
+1. tag 会归一化为英文 snake_case。
+2. 至少包含一个 tag。
+3. `evidence` 至少一条，并指向来源和字段。
+4. `confidence` 必须在 0..1 内。
+
+## 9. 命名规范
 
 1. 字段名使用英文 snake_case。
 2. 文档说明使用中文。
@@ -258,7 +325,7 @@ SceneWeaver 的 schema 区分三类信息：
 5. scene id 使用 `scene_001` 格式。
 6. experience id 使用 `exp_000001` 格式。
 
-## 9. 必须避免
+## 10. 必须避免
 
 1. 不要把客观观察写成导演判断。
 2. 不要把推断当成确定事实。

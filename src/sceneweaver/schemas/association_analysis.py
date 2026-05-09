@@ -3,6 +3,7 @@ from __future__ import annotations
 from pydantic import Field, field_validator, model_validator
 
 from sceneweaver.schemas.common import StrictBaseModel
+from sceneweaver.schemas.fingerprint import CreativeFingerprint
 
 
 class AssociationItem(StrictBaseModel):
@@ -46,6 +47,7 @@ class DirectorPossibility(StrictBaseModel):
 
 class AssociationAnalysis(StrictBaseModel):
     input_text: str = Field(min_length=1)
+    query_fingerprint: CreativeFingerprint
     core_reading: str = Field(min_length=1)
     emotional_arc: EmotionalArc
     association_count: int = Field(ge=8, le=120)

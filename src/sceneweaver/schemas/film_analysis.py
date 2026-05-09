@@ -3,6 +3,7 @@ from __future__ import annotations
 from pydantic import Field
 
 from sceneweaver.schemas.common import StrictBaseModel
+from sceneweaver.schemas.fingerprint import CreativeFingerprint
 
 
 class Rhythm(StrictBaseModel):
@@ -24,6 +25,7 @@ class VisualLanguage(StrictBaseModel):
 
 class FilmAnalysis(StrictBaseModel):
     video_id: str
+    fingerprint: CreativeFingerprint
     atmosphere: str
     tone: str
     rhythm: Rhythm
@@ -33,4 +35,3 @@ class FilmAnalysis(StrictBaseModel):
     brand_personality: list[str] = Field(min_length=1)
     audience_projection: str
     director_language_summary: str
-

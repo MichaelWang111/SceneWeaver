@@ -7,7 +7,8 @@
 更新时间：2026-05-09
 
 ```text
-阶段性成功，但 v1 尚未完整闭环。
+真实视频到 scene analysis + creative fingerprint 的前半段已经跑通。
+v1 后半段 film analysis、experience cards 和 retrieval 尚未完整闭环。
 ```
 
 已经成立：
@@ -15,17 +16,18 @@
 1. 项目方向和 v1 范围明确。
 2. Python 工程骨架、schema、mock pipeline 已实现。
 3. 真实 Bilibili 视频 package pipeline 已完成样本验收。
-4. scene-level Vision LLM 分析代码已实现。
-5. 关键词联想 `associate` 已实现。
+4. scene-level Vision LLM 分析已完成真实 40 scene 样本验收。
+5. CreativeFingerprint 中间层已接入真实 `run` 链路。
+6. 关键词联想 `associate` 已实现，并支持 query fingerprint。
 
 尚未成立：
 
 1. 干净环境一键安装和测试验证。
-2. scene-level Vision LLM 真实 API 小样本验收。
-3. Bilibili 字幕自动获取。
-4. full-film analysis 真实链路。
-5. experience card 自动抽取真实链路。
-6. `run` 命令完整产出 `scenes.json -> film_analysis.json -> experience_cards.jsonl`。
+2. Bilibili 字幕自动获取。
+3. full-film analysis 真实链路。
+4. experience card 自动抽取真实链路。
+5. query fingerprint 到 experience cards 的检索入口。
+6. `run` 命令完整产出 `scenes.json -> fingerprints -> film_analysis.json -> experience_cards.jsonl`。
 
 ## 2. 状态表
 
@@ -40,10 +42,12 @@
 | 三帧抽取 | 已实现并验收 | 基于 ffmpeg |
 | SRT 字幕切片 | 已实现 | 需要用户提供字幕文件 |
 | 字幕自动获取 | 未实现 | v1 输入质量的下一项补强 |
-| Scene LLM 分析 | 代码已实现 | 真实 API 小样本待验收 |
+| Scene LLM 分析 | 已完成真实样本验收 | `BV1cWHyzwEKC` 已分析 40 个 scene |
+| Creative Fingerprint | 已接入真实链路 | scene fingerprints 和 film_fingerprint 已产出 |
 | Full-film 分析 | 待实现 | schema/mock 已有，真实链路未接 |
 | Experience card 抽取 | 待实现 | schema/mock 已有，真实链路未接 |
-| 关键词联想 | 已实现 | `associate` 命令，文本 LLM JSON 输出 |
+| Experience card 检索 | 待实现入口 | 底层 fingerprint scoring 已有，CLI/API 待接 |
+| 关键词联想 | 已实现 | `associate` 命令，文本 LLM JSON 输出，支持 query fingerprint |
 
 ## 3. 已验收样本
 
@@ -69,6 +73,29 @@ python -m sceneweaver.cli package-video "https://www.bilibili.com/video/BV1pLqnB
 1. `scenes/` 目录默认不生成 scene mp4 clips。
 2. 需要 clips 时使用 `--split-video`。
 3. 当前样本未自动获取字幕。
+
+真实 scene analysis + fingerprint 样本：
+
+```text
+BV1cWHyzwEKC
+命令：python -m sceneweaver.cli run "https://www.bilibili.com/video/BV1cWHyzwEKC" --limit 40 --concurrency 5
+Scenes analyzed: 40
+Scenes fingerprinted: 40
+```
+
+核心产物：
+
+```text
+outputs/film_analysis/BV1cWHyzwEKC/packages/
+outputs/film_analysis/BV1cWHyzwEKC/analysis/scenes.json
+outputs/film_analysis/BV1cWHyzwEKC/fingerprints/film_fingerprint.json
+```
+
+说明：
+
+1. 该样本证明真实 Vision LLM scene analysis 和 fingerprint generation 已能连续运行。
+2. 该目录尚未产出 `analysis/film_analysis.json`。
+3. 该目录尚未产出 `analysis/experience_cards.jsonl`。
 
 ## 4. 测试和环境记录
 
@@ -102,13 +129,7 @@ v1-2 scene-level mocked tests: pytest 17 passed
 优先顺序：
 
 1. 修环境和依赖版本，确保 CLI 和测试可复现。
-2. 配置 `SCENEWEAVER_API_KEY` / `SCENEWEAVER_BASE_URL` / `SCENEWEAVER_MODEL`。
-3. 对 `outputs\film_analysis\BV1pLqnBWEJC` 执行：
-
-```powershell
-python -m sceneweaver.cli analyze-scenes outputs\film_analysis\BV1pLqnBWEJC --limit 1 --concurrency 1
-```
-
-4. 检查 `analysis/scene_001.json` 是否通过 `SceneAnalysis` validation。
-5. 检查内容是否严格区分客观观察和导演解释。
-6. 小样本通过后，再实现 full-film analysis 和 experience card extraction。
+2. 抽查 `BV1cWHyzwEKC` 的 scene analysis 和 fingerprint 质量，记录为回归基线。
+3. 实现 `film_analyzer`，从 `analysis/scenes.json` 和 `fingerprints/film_fingerprint.json` 生成 `analysis/film_analysis.json`。
+4. 实现 `experience_extractor`，生成带 fingerprint 的 `analysis/experience_cards.jsonl`。
+5. 实现 query fingerprint 到 experience cards 的 top-k retrieval 入口。
