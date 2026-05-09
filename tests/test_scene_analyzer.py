@@ -85,3 +85,51 @@ def test_analyze_scene_packages_reuses_existing_analysis(tmp_path):
     assert scenes.scene_count == 1
     assert client.calls == []
 
+
+def test_analyze_scene_packages_supports_parallel_execution(tmp_path):
+    package, *_ = build_mock_artifacts()
+    output_dir = tmp_path / "video"
+
+    package_1 = package.model_copy(deep=True)
+    package_2 = package.model_copy(deep=True)
+    package_2.scene_id = "scene_002"
+    package_2.frames.start = "frames/scene_002_start.jpg"
+    package_2.frames.middle = "frames/scene_002_middle.jpg"
+    package_2.frames.end = "frames/scene_002_end.jpg"
+
+    write_json(output_dir / "packages" / "scene_001.json", package_1)
+    write_json(output_dir / "packages" / "scene_002.json", package_2)
+
+    for frame in [package_1.frames.start, package_1.frames.middle, package_1.frames.end]:
+        frame_path = output_dir / frame
+        frame_path.parent.mkdir(parents=True, exist_ok=True)
+        frame_path.write_bytes(b"fake image")
+
+    for frame in [package_2.frames.start, package_2.frames.middle, package_2.frames.end]:
+        frame_path = output_dir / frame
+        frame_path.parent.mkdir(parents=True, exist_ok=True)
+        frame_path.write_bytes(b"fake image")
+
+    class ParallelFakeVisionClient(FakeVisionClient):
+        def analyze_images_json(self, *, system_prompt: str, user_prompt: str, image_paths: list[Path]) -> dict:
+            result = super().analyze_images_json(
+                system_prompt=system_prompt,
+                user_prompt=user_prompt,
+                image_paths=image_paths,
+            )
+            scene_id = "scene_002" if "scene_002" in user_prompt else "scene_001"
+            result["scene_id"] = scene_id
+            if scene_id == "scene_002":
+                result["time_range"] = {
+                    "start": "00:00:07.800",
+                    "end": "00:00:10.000",
+                    "duration_seconds": 2.2,
+                }
+            return result
+
+    client = ParallelFakeVisionClient()
+    scenes = analyze_scene_packages(output_dir, client=client, max_workers=2)
+
+    assert scenes.scene_count == 2
+    assert [scene.scene_id for scene in scenes.scenes] == ["scene_001", "scene_002"]
+    assert len(client.calls) == 2

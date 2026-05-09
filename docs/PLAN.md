@@ -290,3 +290,27 @@ python -m sceneweaver.cli analyze-scenes outputs\BV1pLqnBWEJC --limit 1
 3. 先小样本验证，再大规模处理。
 4. 先保证 LLM 输出可验证，再追求生成质量。
 5. 先证明导演经验有复用价值，再做复杂生成。
+## CLI 命令大纲
+
+当前推荐的端到端入口：
+
+```powershell
+python -m sceneweaver.cli run "https://www.bilibili.com/video/BV1pLqnBWEJC" --limit 20 --concurrency 3
+```
+
+语义约定：
+
+1. `run`：从链接直接跑到 scene 级分析完成，不包含后续全片时序分析
+2. 默认输出目录固定为 `outputs/<BV号>`
+3. `--limit`：限制本次最多处理多少个 scene
+4. `--concurrency`：限制 scene LLM 并发数
+5. 默认断点续跑：已有 `analysis/scene_XXX.json` 会跳过
+6. `--update`：显式覆盖已有结果
+
+拆分命令仍保留，便于调试：
+
+```powershell
+python -m sceneweaver.cli package-video "https://www.bilibili.com/video/BV1pLqnBWEJC" --output outputs\BV1pLqnBWEJC
+python -m sceneweaver.cli analyze-scenes outputs\BV1pLqnBWEJC --limit 20 --concurrency 3
+python -m sceneweaver.cli analyze-scenes outputs\BV1pLqnBWEJC --limit 20 --concurrency 3 --update
+```

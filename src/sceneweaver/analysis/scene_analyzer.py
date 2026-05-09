@@ -1,16 +1,29 @@
 from __future__ import annotations
 
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Protocol
+import re
+from typing import Callable, Protocol
 
 from sceneweaver.llm.client import VisionLLMClient
 from sceneweaver.schemas import SceneAnalysis, ScenePackage, ScenesAnalysis
 from sceneweaver.storage.json_store import read_json, write_json
 
+LogFn = Callable[[str], None]
+SCENE_PACKAGE_FILENAME_RE = re.compile(r"^scene_\d{3}\.json$")
+
 
 class SceneLLMClient(Protocol):
     def analyze_images_json(self, *, system_prompt: str, user_prompt: str, image_paths: list[Path]) -> dict:
         ...
+
+
+@dataclass(frozen=True)
+class SceneTask:
+    index: int
+    package: ScenePackage
+    output_path: Path
 
 
 def analyze_scene_packages(
@@ -20,49 +33,119 @@ def analyze_scene_packages(
     prompt_path: Path | None = None,
     limit: int | None = None,
     force: bool = False,
+    max_workers: int = 1,
+    log: LogFn | None = None,
 ) -> ScenesAnalysis:
     output_dir = output_dir.resolve()
     packages_dir = output_dir / "packages"
     analysis_dir = output_dir / "analysis"
     analysis_dir.mkdir(parents=True, exist_ok=True)
 
+    if max_workers < 1:
+        raise ValueError("max_workers must be >= 1")
+
     system_prompt = load_scene_analysis_prompt(prompt_path)
     llm_client = client or VisionLLMClient()
-    package_paths = sorted(packages_dir.glob("scene_*.json"))
+    package_paths = sorted(
+        path
+        for path in packages_dir.glob("scene_*.json")
+        if SCENE_PACKAGE_FILENAME_RE.match(path.name)
+    )
     if limit is not None:
         package_paths = package_paths[:limit]
 
-    analyses: list[SceneAnalysis] = []
+    total_count = len(package_paths)
+    if log:
+        log(f"Preparing {total_count} scene(s) for analysis with concurrency={max_workers}.")
+
+    analyses: list[SceneAnalysis | None] = [None] * total_count
+    pending_tasks: list[SceneTask] = []
     source_url = ""
     video_id = ""
-    for package_path in package_paths:
+    reused_count = 0
+    completed_count = 0
+
+    for index, package_path in enumerate(package_paths):
         package = read_json(package_path, ScenePackage)
         source_url = package.metadata.source_url
         video_id = package.source_video_id
         output_path = analysis_dir / f"{package.scene_id}.json"
         if output_path.exists() and not force:
-            analyses.append(read_json(output_path, SceneAnalysis))
+            analyses[index] = read_json(output_path, SceneAnalysis)
+            reused_count += 1
+            completed_count += 1
+            if log:
+                log(f"[{completed_count}/{total_count}] Reused existing analysis for {package.scene_id}.")
             continue
+        pending_tasks.append(SceneTask(index=index, package=package, output_path=output_path))
 
-        frame_paths = _resolve_frame_paths(output_dir, package)
-        user_prompt = build_scene_user_prompt(package)
-        raw = llm_client.analyze_images_json(
-            system_prompt=system_prompt,
-            user_prompt=user_prompt,
-            image_paths=frame_paths,
-        )
-        analysis = SceneAnalysis.model_validate(raw)
-        write_json(output_path, analysis)
-        analyses.append(analysis)
+    if pending_tasks and log:
+        log(f"Submitting {len(pending_tasks)} new scene request(s).")
 
+    if pending_tasks:
+        if max_workers == 1:
+            for task in pending_tasks:
+                analyses[task.index] = _analyze_single_scene(
+                    output_dir=output_dir,
+                    task=task,
+                    system_prompt=system_prompt,
+                    client=llm_client,
+                )
+                completed_count += 1
+                if log:
+                    log(f"[{completed_count}/{total_count}] Finished {task.package.scene_id}.")
+        else:
+            with ThreadPoolExecutor(max_workers=max_workers) as executor:
+                futures = {
+                    executor.submit(
+                        _analyze_single_scene,
+                        output_dir=output_dir,
+                        task=task,
+                        system_prompt=system_prompt,
+                        client=llm_client,
+                    ): task
+                    for task in pending_tasks
+                }
+                for future in as_completed(futures):
+                    task = futures[future]
+                    analyses[task.index] = future.result()
+                    completed_count += 1
+                    if log:
+                        log(f"[{completed_count}/{total_count}] Finished {task.package.scene_id}.")
+
+    completed_analyses = [analysis for analysis in analyses if analysis is not None]
     scenes = ScenesAnalysis(
         video_id=video_id,
         source_url=source_url,
-        scene_count=len(analyses),
-        scenes=analyses,
+        scene_count=len(completed_analyses),
+        scenes=completed_analyses,
     )
     write_json(analysis_dir / "scenes.json", scenes)
+    if log:
+        log(
+            "Analysis complete. "
+            f"total={total_count}, reused={reused_count}, new={len(pending_tasks)}, written={len(completed_analyses)}."
+        )
     return scenes
+
+
+def _analyze_single_scene(
+    *,
+    output_dir: Path,
+    task: SceneTask,
+    system_prompt: str,
+    client: SceneLLMClient,
+) -> SceneAnalysis:
+    frame_paths = _resolve_frame_paths(output_dir, task.package)
+    user_prompt = build_scene_user_prompt(task.package)
+    raw = client.analyze_images_json(
+        system_prompt=system_prompt,
+        user_prompt=user_prompt,
+        image_paths=frame_paths,
+    )
+    analysis = SceneAnalysis.model_validate(raw)
+    write_json(task.output_path, analysis)
+    return analysis
 
 
 def load_scene_analysis_prompt(prompt_path: Path | None = None) -> str:
