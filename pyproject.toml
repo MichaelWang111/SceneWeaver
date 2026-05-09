@@ -13,6 +13,7 @@ authors = [
   { name = "SceneWeaver Contributors" }
 ]
 dependencies = [
+  "openai>=1.0",
   "pydantic>=2.7",
   "typer>=0.9",
 ]
@@ -25,7 +26,6 @@ video = [
   "yt-dlp>=2024.0",
   "scenedetect[opencv]>=0.6.4",
   "httpx>=0.27",
-  "openai>=1.0",
 ]
 
 [project.scripts]
@@ -34,4 +34,3 @@ sceneweaver = "sceneweaver.cli:app"
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
-

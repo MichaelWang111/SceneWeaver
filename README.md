@@ -123,7 +123,7 @@ python -m sceneweaver.cli run "https://www.bilibili.com/video/BV1pLqnBWEJC" --li
 说明：
 
 1. `run` 会依次执行下载、切 scene、抽帧、生成 `packages/`、并发生成 `analysis/scene_XXX.json`
-2. 默认输出目录为 `outputs/<BV号>`
+2. 默认输出目录为 `outputs/film_analysis/<BV号>`
 3. `--limit 20` 表示最多处理前 20 个 scene
 4. `--concurrency 3` 表示最多并发 3 个 scene LLM 请求
 5. 默认断点续跑，已有结果会跳过
@@ -132,7 +132,26 @@ python -m sceneweaver.cli run "https://www.bilibili.com/video/BV1pLqnBWEJC" --li
 拆分调试命令：
 
 ```powershell
-python -m sceneweaver.cli package-video "https://www.bilibili.com/video/BV1pLqnBWEJC" --output outputs\BV1pLqnBWEJC
-python -m sceneweaver.cli analyze-scenes outputs\BV1pLqnBWEJC --limit 20 --concurrency 3
-python -m sceneweaver.cli analyze-scenes outputs\BV1pLqnBWEJC --limit 20 --concurrency 3 --update
+python -m sceneweaver.cli package-video "https://www.bilibili.com/video/BV1pLqnBWEJC" --output outputs\film_analysis\BV1pLqnBWEJC
+python -m sceneweaver.cli analyze-scenes outputs\film_analysis\BV1pLqnBWEJC --limit 20 --concurrency 3
+python -m sceneweaver.cli analyze-scenes outputs\film_analysis\BV1pLqnBWEJC --limit 20 --concurrency 3 --update
 ```
+
+关键词联想入口：
+
+```powershell
+python -m sceneweaver.cli associate "青春 / 逆光 / 奔跑 / 创意 / 不惧挑战"
+python -m sceneweaver.cli associate "青春 / 逆光 / 奔跑" --output outputs\key_associates\youth_running.json --max-items 60
+python -m sceneweaver.cli associate "招聘宣传片 / 科技向善 / 提供机会发挥潜力" --debug --timeout-seconds 240 --retries 2
+python -m sceneweaver.cli associate "招聘宣传片 / 科技向善 / 提供机会发挥潜力" --stream
+```
+
+`associate --debug` 会把阶段日志、模型和输出路径写到 stderr；stdout 仍然只保留最终 JSON，方便重定向或被脚本读取。
+`associate --stream` 会把 LLM 原始 JSON token 流写到 stderr，让长请求有即时反馈；最终 stdout 仍然只输出校验后的 JSON。`--flue` 作为别名也可用。
+
+默认输出目录：
+
+1. `outputs/key_associates/`：关键词联想 JSON。
+2. `outputs/film_analysis/<BV号>/`：视频拆包、scene 分析和后续全片分析。
+3. `outputs/mock/`：mock pipeline 验收产物。
+4. `.tmp/`：测试、临时 scratch，不作为正式结果目录。

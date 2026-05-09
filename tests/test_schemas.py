@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from sceneweaver.schemas import ExperienceCard, FilmAnalysis, SceneAnalysis, ScenePackage
+from sceneweaver.schemas import AssociationAnalysis, ExperienceCard, FilmAnalysis, SceneAnalysis, ScenePackage
 from sceneweaver.schemas.common import TimeRange
 from sceneweaver.storage.json_store import read_json
 
@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 @pytest.mark.parametrize(
     ("path", "model"),
     [
+        ("examples/associate.json", AssociationAnalysis),
         ("examples/scene_package.json", ScenePackage),
         ("examples/scene_analysis.json", SceneAnalysis),
         ("examples/film_analysis.json", FilmAnalysis),
@@ -35,4 +36,3 @@ def test_experience_temperature_range_must_be_sorted():
     data["emotion_temperature_range"] = [0.9, 0.2]
     with pytest.raises(ValueError, match="emotion_temperature_range"):
         ExperienceCard.model_validate(data)
-

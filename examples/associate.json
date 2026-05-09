@@ -1,0 +1,185 @@
+{
+  "input_text": "我需要一群年轻人逆光奔跑的场景，我需要看到他们的创意和不惧挑战",
+  "core_reading": "这个输入真正要表达的不是单纯奔跑，而是一群年轻人从不确定走向共同发光：他们用行动证明创意不是想法本身，而是敢把想法带进现实。",
+  "emotional_arc": {
+    "origin": "情绪从清晨般的试探开始，人物还带着一点不确定和未被证明的紧张。",
+    "development": "奔跑让个体逐渐汇入群体，彼此的速度、目光和呼吸形成互相带动的关系。",
+    "release": "当人物冲进逆光，轮廓被光线点亮，挑战感转化为明亮的集体能量。",
+    "arc_summary": "从试探出发，到并肩加速，最后在逆光中完成主动发光。"
+  },
+  "association_count": 16,
+  "association_map": {
+    "visual_imagery": [
+      {
+        "term": "逆光轮廓",
+        "category": "visual_imagery",
+        "meaning": "让人物不是被照亮，而是像主动穿过光线显影。",
+        "emotion": "明亮、笃定、被召唤",
+        "image_hint": "太阳位于人物背后，头发、肩线和手臂边缘出现光晕。",
+        "usage_hint": "适合放在情绪释放点，作为群像完成转变的视觉标志。"
+      },
+      {
+        "term": "飞起的尘埃",
+        "category": "visual_imagery",
+        "meaning": "把奔跑的真实阻力和身体投入感拍出来，避免过度洁净的广告感。",
+        "emotion": "热、真实、正在发生",
+        "image_hint": "低机位捕捉鞋底掠过地面，尘埃在逆光里变成颗粒。",
+        "usage_hint": "适合连接动作细节和整体群像，增加现场感。"
+      }
+    ],
+    "character_state": [
+      {
+        "term": "年轻的莽撞",
+        "category": "character_state",
+        "meaning": "不是鲁莽，而是愿意在答案出现前先行动。",
+        "emotion": "冲劲、兴奋、不服输",
+        "image_hint": "人物起跑前短暂停顿，随后突然加速。",
+        "usage_hint": "适合建立主角或群体的初始人物气质。"
+      },
+      {
+        "term": "互相带动",
+        "category": "character_state",
+        "meaning": "挑战不是个人英雄主义，而是群体互相推着往前。",
+        "emotion": "信任、归属、共同燃烧",
+        "image_hint": "一个人回头招呼，后面的人跟上节奏。",
+        "usage_hint": "适合弱化口号，用关系动作表达团队感。"
+      }
+    ],
+    "action_motifs": [
+      {
+        "term": "突然起跑",
+        "category": "action_motifs",
+        "meaning": "从静止到行动的瞬间，代表想法被真正执行。",
+        "emotion": "启动、突破、决心",
+        "image_hint": "脚掌蹬地、身体前倾、镜头跟随加速。",
+        "usage_hint": "适合作为情绪弧光的第一段推进。"
+      },
+      {
+        "term": "冲破队形",
+        "category": "action_motifs",
+        "meaning": "创意不是整齐划一，而是在共同方向中保留个体能量。",
+        "emotion": "自由、冒险、释放",
+        "image_hint": "群体从横向队列变成错落奔跑的动态构图。",
+        "usage_hint": "适合表达年轻团队的创造力，而不是纪律展示。"
+      }
+    ],
+    "emotional_keywords": [
+      {
+        "term": "不惧挑战",
+        "category": "emotional_keywords",
+        "meaning": "重点不是没有恐惧，而是带着不确定仍然向前。",
+        "emotion": "勇气、紧张、兴奋",
+        "image_hint": "人物表情不是大笑，而是专注和喘息。",
+        "usage_hint": "适合替代空泛热血口号，转化为具体人物状态。"
+      },
+      {
+        "term": "共同发光",
+        "category": "emotional_keywords",
+        "meaning": "每个人不是背景板，而是在群像里共同贡献能量。",
+        "emotion": "归属、骄傲、明亮",
+        "image_hint": "逆光里每个人都有清晰轮廓和动作差异。",
+        "usage_hint": "适合用于片尾或核心主视觉。"
+      }
+    ],
+    "narrative_seeds": [
+      {
+        "term": "从想法到行动",
+        "category": "narrative_seeds",
+        "meaning": "创意的价值不止在脑中，而在它被一群人跑出来。",
+        "emotion": "落实、燃起、确认",
+        "image_hint": "纸面草图、手势讨论和奔跑动作形成剪辑对应。",
+        "usage_hint": "适合把创意主题和奔跑场景建立因果关系。"
+      },
+      {
+        "term": "从一个人到一群人",
+        "category": "narrative_seeds",
+        "meaning": "把个人的念头扩展成集体的方向。",
+        "emotion": "被回应、被支持、共同前进",
+        "image_hint": "先拍一个人起跑，再逐步加入更多人物。",
+        "usage_hint": "适合作为完整短片的结构骨架。"
+      }
+    ],
+    "spatial_symbols": [
+      {
+        "term": "空旷跑道",
+        "category": "spatial_symbols",
+        "meaning": "提供清晰方向感，也让挑战变得可见。",
+        "emotion": "开阔、向前、等待被占领",
+        "image_hint": "跑道线条延伸到远处，人物逆光进入画面。",
+        "usage_hint": "适合需要明确速度和方向的方案。"
+      },
+      {
+        "term": "城市天台",
+        "category": "spatial_symbols",
+        "meaning": "把青春挑战放在更现代、更接近未来的城市语境中。",
+        "emotion": "野心、自由、风感",
+        "image_hint": "远处城市轮廓、天台边缘、晨光和风。",
+        "usage_hint": "适合品牌片或校招片需要年轻未来感时使用。"
+      }
+    ],
+    "light_color_texture": [
+      {
+        "term": "金色晨光",
+        "category": "light_color_texture",
+        "meaning": "把开始和希望合并成一种可感知的时间质感。",
+        "emotion": "新鲜、温热、向上",
+        "image_hint": "偏暖高光、轻微眩光、肤色保持真实。",
+        "usage_hint": "适合表达青春和开始，但要避免过度滤镜。"
+      },
+      {
+        "term": "汗水高光",
+        "category": "light_color_texture",
+        "meaning": "让挑战有身体代价，避免只停留在漂亮画面。",
+        "emotion": "真实、投入、坚持",
+        "image_hint": "近景捕捉额头汗水和呼吸起伏。",
+        "usage_hint": "适合在热血段落中加入可信细节。"
+      }
+    ],
+    "copy_tone": [
+      {
+        "term": "少喊口号",
+        "category": "copy_tone",
+        "meaning": "让动作承担表达，不用旁白替人物解释一切。",
+        "emotion": "克制、真实、可信",
+        "image_hint": "字幕只点出关键词，画面保留呼吸声和脚步声。",
+        "usage_hint": "适合避免廉价燃点，让导演表达更高级。"
+      },
+      {
+        "term": "第一人称复数",
+        "category": "copy_tone",
+        "meaning": "用“我们”建立群体共同体，而不是单向召唤观众。",
+        "emotion": "并肩、参与、共同承担",
+        "image_hint": "群像奔跑时配短句字幕：我们先跑起来。",
+        "usage_hint": "适合招聘片、青年品牌片和团队主题短片。"
+      }
+    ]
+  },
+  "director_possibilities": [
+    {
+      "name": "晨光群像",
+      "concept": "用清晨逆光和群体奔跑表达年轻人共同进入未来。",
+      "emotional_direction": "明亮、笃定、充满开始感",
+      "visual_direction": "宽画幅、逆光轮廓、低机位脚步和群像调度",
+      "narrative_direction": "从一个人试探出发，到一群人共同加速。"
+    },
+    {
+      "name": "创意冲刺",
+      "concept": "把创意从纸面讨论转化为身体行动。",
+      "emotional_direction": "兴奋、灵感、突破",
+      "visual_direction": "手部细节、草图、奔跑转场和快速节奏",
+      "narrative_direction": "从想法生成，到团队执行，再到挑战释放。"
+    },
+    {
+      "name": "城市不服输",
+      "concept": "把年轻人的挑战放入真实城市空间，避免校园式单一青春感。",
+      "emotional_direction": "紧张、坚韧、有野心",
+      "visual_direction": "天台、街道、玻璃反光、晨间城市轮廓",
+      "narrative_direction": "从城市压力中起跑，把外部挑战转化为共同方向。"
+    }
+  ],
+  "avoid_cliches": [
+    "不要让所有人一直大笑奔跑，容易变成廉价青春广告。",
+    "不要只用口号解释创意和挑战，应该让动作、关系和光线承担表达。",
+    "不要把逆光拍成单纯唯美，要让它和人物弧光发生关系。"
+  ]
+}

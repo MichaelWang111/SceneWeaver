@@ -13,3 +13,4 @@ build/
 outputs/
 .env
 .idea/
+error/
