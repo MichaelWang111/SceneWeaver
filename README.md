@@ -1,29 +1,54 @@
 # SceneWeaver
 
-SceneWeaver 是一个面向商业宣传片、招聘宣传片和品牌短片的导演经验分析系统。
+SceneWeaver 是一个从商业视频、招聘宣传片和品牌短片中提炼导演经验的本地 Python 项目。
 
-它不直接生成视频，而是把已有视频中的导演语言拆解成结构化数据，并为后续的经验检索、导演稿生成和创意联想提供知识基础。
+它不直接生成视频，而是把已有视频拆成可检查的 scene package，再产出带半封闭 tags 的 scene analysis，并从中沉淀 experience cards。当前重构目标是压缩核心解析架构，避免 schema boom。
 
 ## 当前状态
 
-截至 2026-05-09，项目处于 v1 中段：
+截至 2026-05-11，项目正在从旧的 `fingerprints/` 独立中间层迁移到：
 
 ```text
-已完成：工程骨架、schema、mock pipeline、真实视频 package pipeline、scene-level Vision LLM 分析、creative fingerprint 中间层
-已验收：真实视频 40 个 scene 的 package、scene analysis 和 fingerprint 生成
-待实现：字幕自动获取、full-film analysis、experience card 自动抽取、experience card 检索入口、完整 v1 后半段闭环
+analysis 内嵌 tags
+→ experience_cards.jsonl
 ```
 
-当前判断：
+已经成立：
+
+1. 真实视频 package pipeline。
+2. scene-level Vision LLM analysis。
+3. `SceneAnalysis.tags` 第一版生成。
+4. `ExperienceCard.tags` 第一版检索。
+5. `associate` 作为独立创意联想工具保留。
+
+正在收敛：
+
+1. 停止把 tags 写入独立 `fingerprints/` 目录。
+2. `fingerprint-scenes` 只作为 legacy 过渡命令，用于给旧 analysis 补 tags。
+3. `FilmAnalysis` 暂停作为核心链路，后续只作为报告型派生产物。
+
+## 核心架构
+
+核心输出目录只保留：
 
 ```text
-真实视频到 scene-level director analysis 和 fingerprint corpus 的前半段已经成立。
-full-film analysis、experience cards 和 retrieval 仍是 v1 后半段。
+outputs/film_analysis/<video_id>/
+  source/
+  frames/
+  packages/
+  analysis/
 ```
 
-## v1 目标
+核心语义层只有两层：
 
-v1 要跑通“视频到导演经验”的数据生产线：
+```text
+SceneAnalysis.tags
+ExperienceCard.tags
+```
+
+`tags` 是半封闭标签集：正式数据只写 canonical tags；新表达、同义词、近义词先进入 aliases 或 candidate pool，再决定合并、升级或丢弃。
+
+## v1 链路
 
 ```text
 Bilibili URL
@@ -31,54 +56,13 @@ Bilibili URL
 → scene 检测
 → start / middle / end 三帧抽取
 → scene package
-→ scene-level Vision LLM 分析
-→ scenes.json
-→ creative fingerprints
-→ full-film LLM 分析
-→ film_analysis.json
-→ experience card 抽取
-→ experience_cards.jsonl
+→ scene-level Vision LLM analysis
+→ analysis/scene_XXX.json with tags
+→ analysis/scenes.json
+→ analysis/experience_cards.jsonl
 ```
 
-v1 成功标准不是“生成一份好看的报告”，而是：
-
-```text
-能否稳定提取出可复用、可验证、可检索的导演经验卡片。
-```
-
-## 已具备能力
-
-1. `mock-run`：生成完整 mock 产物并通过 schema validation。
-2. `package-video`：下载 Bilibili 视频，检测 scene，抽三帧，生成 scene packages。
-3. `analyze-scenes`：读取 scene packages 和三帧图，调用 Vision LLM 生成 scene analysis。
-4. `fingerprint-scenes`：从 scene analysis 生成 scene / film creative fingerprints。
-5. `associate`：把关键词或粗糙 brief 扩展为导演/编剧可用的联想材料，并补 query fingerprint。
-6. `run`：串起真实视频 package、scene analysis 和 creative fingerprint generation。
-
-已完成真实 package 样本：
-
-```text
-BV1pLqnBWEJC
-scene_count: 16
-frame_count: 48
-package_count: 16
-```
-
-已完成真实 scene analysis + fingerprint 样本：
-
-```text
-BV1cWHyzwEKC
-command: python -m sceneweaver.cli run "https://www.bilibili.com/video/BV1cWHyzwEKC" --limit 40 --concurrency 5
-scenes analyzed: 40
-scenes fingerprinted: 40
-outputs:
-  outputs/film_analysis/BV1cWHyzwEKC/analysis/scenes.json
-  outputs/film_analysis/BV1cWHyzwEKC/fingerprints/film_fingerprint.json
-```
-
-## 快速开始
-
-推荐使用 Python 3.11 环境。当前仓库尚未完成干净环境的一键可复现配置，后续需要补依赖锁定和 CLI smoke test。
+## 命令
 
 安装：
 
@@ -95,83 +79,58 @@ python -m sceneweaver.cli mock-run --output outputs\mock\quick_check
 真实视频打包：
 
 ```powershell
-python -m sceneweaver.cli package-video "https://www.bilibili.com/video/BV1pLqnBWEJC" --output outputs\film_analysis\BV1pLqnBWEJC
+python -m sceneweaver.cli package-video "https://www.bilibili.com/video/BVxxxx" --output outputs\film_analysis\BVxxxx
 ```
 
-scene 级 LLM 分析：
+scene 分析，输出会包含 `tags`：
 
 ```powershell
-$env:SCENEWEAVER_API_KEY="..."
-$env:SCENEWEAVER_BASE_URL="https://..."
-$env:SCENEWEAVER_MODEL="..."
-
-python -m sceneweaver.cli analyze-scenes outputs\film_analysis\BV1pLqnBWEJC --limit 1 --concurrency 1
+python -m sceneweaver.cli analyze-scenes outputs\film_analysis\BVxxxx --limit 20 --concurrency 3
 ```
 
-生成 creative fingerprints：
+legacy 过渡命令：给旧 analysis 补 tags，不再写 `fingerprints/`：
 
 ```powershell
-python -m sceneweaver.cli fingerprint-scenes outputs\film_analysis\BV1pLqnBWEJC
+python -m sceneweaver.cli fingerprint-scenes outputs\film_analysis\BVxxxx
 ```
 
-真实视频端到端跑到 fingerprint：
+抽取经验卡片：
 
 ```powershell
-python -m sceneweaver.cli run "https://www.bilibili.com/video/BV1cWHyzwEKC" --limit 40 --concurrency 5
+python -m sceneweaver.cli extract-experience outputs\film_analysis\BVxxxx
+```
+
+检索经验卡片：
+
+```powershell
+python -m sceneweaver.cli retrieve-cards outputs\film_analysis\BVxxxx "招聘宣传片，稳重可靠，科技向善，面对屏幕后的观众对话" --top-k 3
+```
+
+端到端运行：
+
+```powershell
+python -m sceneweaver.cli run "https://www.bilibili.com/video/BVxxxx" --limit 40 --concurrency 5
 ```
 
 关键词联想：
 
 ```powershell
 python -m sceneweaver.cli associate "青春 / 逆光 / 奔跑 / 创意 / 不惧挑战"
-python -m sceneweaver.cli associate "招聘宣传片 / 科技向善 / 提供机会发挥潜力" --debug --timeout-seconds 240 --retries 2
-python -m sceneweaver.cli associate "招聘宣传片 / 科技向善 / 提供机会发挥潜力" --stream
 ```
 
-## 输出目录
+## 核心产物
 
-```text
-outputs/
-  film_analysis/<BV号>/
-    source/
-    frames/
-    packages/
-    analysis/
-    fingerprints/
-  key_associates/
-  mock/
-```
-
-主要产物：
-
-1. `packages/scene_XXX.json`：送入 Vision LLM 的 scene package。
-2. `analysis/scene_XXX.json`：单个 scene 的导演语言分析。
+1. `packages/scene_XXX.json`：送入 Vision LLM 的 scene 输入包。
+2. `analysis/scene_XXX.json`：单个 scene 的导演分析，内含 `tags`。
 3. `analysis/scenes.json`：全片 scene analysis 汇总。
-4. `fingerprints/scene_XXX.json`：单个 scene 的低维语义坐标。
-5. `fingerprints/film_fingerprint.json`：全片 fingerprint 聚合。
-6. `analysis/film_analysis.json`：全片导演语言总结，待实现真实链路。
-7. `analysis/experience_cards.jsonl`：可复用导演经验卡片，待实现真实链路。
-
-当前真实 `run` 命令已经稳定产出到第 5 项。第 6、7 项是下一阶段核心工作。
-
-## 文档分工
-
-为避免文档互相重复，后续按下面分工维护：
-
-1. [开发计划](docs/PLAN.md)：当前 v1 执行计划和下一步顺序。
-2. [执行状态](docs/EXECUTION_STATUS.md)：当前完成度、验收记录和已知环境问题。
-3. [技术设计](docs/TECHNICAL_DESIGN.md)：代码架构、模块职责和运行链路。
-4. [数据结构](docs/SCHEMA.md)：核心 JSON / JSONL schema。
-5. [产品需求](docs/PRD.md)：产品目标、用户场景和非目标。
-6. [路线图](docs/ROADMAP.md)：v2 以后方向。
-7. [背景摘要](docs/CONTEXT_SUMMARY.md)：交接用短摘要。
-8. [开发日志](docs/DEVELOPMENT_LOG.md)：按时间记录已发生的工程推进。
-9. [参考项目笔记](docs/REFERENCE_NOTES.md)：本地参考项目的借鉴边界。
+4. `analysis/experience_cards.jsonl`：可复用导演经验卡片，内含 `tags`。
+5. `analysis/film_analysis.json`：legacy/mock 报告型产物，暂不作为核心链路。
 
 ## 核心原则
 
 1. 先结构化，再自动化。
 2. 先本地文件，再数据库。
-3. 先小样本验证，再大规模处理。
-4. 所有 LLM 输出必须通过 Pydantic validation。
-5. `visual_observation` 写客观观察，`director_interpretation` 写推断和解释，`experience_card` 写可复用经验。
+3. 正式数据只写 canonical tags。
+4. 新表达先进入 candidate pool，不直接污染主标签集。
+5. `visual_observation` 写客观观察，`director_interpretation` 写推断解释，`experience_cards` 写可复用经验。
+6. 所有 LLM 输出必须通过 Pydantic validation。

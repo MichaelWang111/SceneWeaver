@@ -5,11 +5,13 @@
 2. `director_interpretation`：写导演意图、叙事功能、情绪功能、品牌人格和观众投射，但必须基于观察，不要伪造事实。
 3. `experience_candidates`：提炼未来可复用的导演经验候选。
 
+`tags` 由系统根据 analysis 和受控 taxonomy 自动补全，你不需要手动生成 tags，也不要临时创造 tag 名称。
+
 禁止输出评分、筛选等级、`MUST KEEP`、`USABLE`、`DISCARD`、`weighted_score`。
 
 如果三帧不足以判断镜头运动，必须在 `visual_observation.camera_motion` 和 `visual_observation.confidence_notes` 中说明不确定性。
 
-必须只返回一个 JSON object，不要 Markdown，不要解释文字。JSON 必须符合：
+必须只返回一个 JSON object，不要 Markdown，不要解释文字。JSON 必须符合下列分析字段；系统会在写入前补全 `tags`：
 
 ```json
 {

@@ -6,6 +6,7 @@ from pathlib import Path
 import re
 from typing import Callable, Protocol
 
+from sceneweaver.analysis.tags import add_tags_to_scene_raw, read_scene_analysis_with_tags
 from sceneweaver.llm.client import VisionLLMClient
 from sceneweaver.schemas import SceneAnalysis, ScenePackage, ScenesAnalysis
 from sceneweaver.storage.json_store import read_json, write_json
@@ -71,7 +72,7 @@ def analyze_scene_packages(
         video_id = package.source_video_id
         output_path = analysis_dir / f"{package.scene_id}.json"
         if output_path.exists() and not force:
-            analyses[index] = read_json(output_path, SceneAnalysis)
+            analyses[index] = read_scene_analysis_with_tags(output_path, write_back=True)
             reused_count += 1
             completed_count += 1
             if log:
@@ -143,6 +144,7 @@ def _analyze_single_scene(
         user_prompt=user_prompt,
         image_paths=frame_paths,
     )
+    raw = add_tags_to_scene_raw(raw)
     analysis = SceneAnalysis.model_validate(raw)
     write_json(task.output_path, analysis)
     return analysis

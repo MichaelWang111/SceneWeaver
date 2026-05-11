@@ -16,7 +16,12 @@ from sceneweaver.analysis.associate_analyzer import (
     DEFAULT_TIMEOUT_SECONDS,
     associate_input,
 )
-from sceneweaver.analysis.fingerprint import generate_scene_fingerprints
+from sceneweaver.analysis.experience_extractor import extract_experience_cards
+from sceneweaver.analysis.tags import (
+    build_query_tags,
+    generate_analysis_tags,
+    retrieve_experience_card_matches_from_jsonl,
+)
 from sceneweaver.input.bilibili import extract_bvid
 from sceneweaver.llm.client import LLMConfig
 from sceneweaver.pipeline.mock_pipeline import run_mock_pipeline
@@ -145,13 +150,50 @@ def fingerprint_scenes(
         False,
         "--update",
         "--force",
-        help="Overwrite existing scene fingerprint files.",
+        help="Overwrite existing tags in analysis files.",
     ),
 ) -> None:
-    """Generate scene and film creative fingerprints from existing scene analyses."""
-    film_fingerprint = generate_scene_fingerprints(output, force=update, log=typer.echo)
-    typer.echo(f"Fingerprints written to: {output.resolve() / 'fingerprints'}")
-    typer.echo(f"Scenes fingerprinted: {film_fingerprint.scene_count}")
+    """Legacy command: add or refresh tags inside existing scene analyses."""
+    scenes = generate_analysis_tags(output, force=update, log=typer.echo)
+    typer.echo(f"Tags written to: {output.resolve() / 'analysis'}")
+    typer.echo(f"Scenes tagged: {scenes.scene_count}")
+
+
+@app.command("extract-experience")
+def extract_experience(
+    output: Path = typer.Argument(..., help="Video output directory containing analysis/scenes.json."),
+    update: bool = typer.Option(
+        False,
+        "--update",
+        "--force",
+        help="Overwrite existing experience_cards.jsonl.",
+    ),
+) -> None:
+    """Extract first-pass experience cards from scene analyses."""
+    cards = extract_experience_cards(output, force=update, log=typer.echo)
+    typer.echo(f"Experience cards written to: {output.resolve() / 'analysis' / 'experience_cards.jsonl'}")
+    typer.echo(f"Experience cards extracted: {len(cards)}")
+
+
+@app.command("retrieve-cards")
+def retrieve_cards(
+    output: Path = typer.Argument(..., help="Video output directory containing analysis/experience_cards.jsonl."),
+    input_text: str = typer.Argument(..., help="Brief or keywords to match against experience cards."),
+    top_k: int = typer.Option(
+        5,
+        "--top-k",
+        min=1,
+        help="Maximum number of matching experience cards to return.",
+    ),
+) -> None:
+    """Retrieve grounded experience cards with an explainable tag match."""
+    query_tags = build_query_tags(input_text)
+    result = retrieve_experience_card_matches_from_jsonl(
+        query_tags,
+        output.resolve() / "analysis" / "experience_cards.jsonl",
+        top_k=top_k,
+    )
+    typer.echo(json.dumps(result.model_dump(mode="json"), ensure_ascii=False, indent=2))
 
 
 @app.command("associate")
@@ -294,7 +336,7 @@ def run_pipeline(
     output_dir = FILM_ANALYSIS_DIR / output_name
 
     typer.echo(f"Output directory: {output_dir.resolve()}")
-    typer.echo("Phase 1/2: Packaging video into scene packages...")
+    typer.echo("Phase 1/3: Packaging video into scene packages...")
     packaged_dir = run_package_video(
         url=url,
         output_dir=output_dir,
@@ -305,7 +347,7 @@ def run_pipeline(
         log=typer.echo,
     )
 
-    typer.echo("Phase 2/3: Analyzing scene packages...")
+    typer.echo("Phase 2/3: Analyzing scene packages with tags...")
     scenes = analyze_scene_packages(
         packaged_dir,
         limit=limit,
@@ -314,8 +356,8 @@ def run_pipeline(
         max_workers=concurrency,
         log=typer.echo,
     )
-    typer.echo("Phase 3/3: Generating creative fingerprints...")
-    film_fingerprint = generate_scene_fingerprints(
+    typer.echo("Phase 3/3: Extracting experience cards...")
+    cards = extract_experience_cards(
         packaged_dir,
         force=update,
         log=typer.echo,
@@ -323,8 +365,8 @@ def run_pipeline(
     typer.echo(f"Scene packages written to: {packaged_dir / 'packages'}")
     typer.echo(f"Scene analysis written to: {packaged_dir / 'analysis'}")
     typer.echo(f"Scenes analyzed: {scenes.scene_count}")
-    typer.echo(f"Fingerprints written to: {packaged_dir / 'fingerprints'}")
-    typer.echo(f"Scenes fingerprinted: {film_fingerprint.scene_count}")
+    typer.echo(f"Experience cards written to: {packaged_dir / 'analysis' / 'experience_cards.jsonl'}")
+    typer.echo(f"Experience cards extracted: {len(cards)}")
 
 
 def build_key_associate_output_path(input_text: str, *, now: datetime | None = None) -> Path:

@@ -1,16 +1,16 @@
 from __future__ import annotations
 
-from pydantic import Field, field_validator
+from pydantic import Field, field_validator, model_validator
 
 from sceneweaver.schemas.common import EXPERIENCE_ID_RE, SCENE_ID_RE, StrictBaseModel
-from sceneweaver.schemas.fingerprint import CreativeFingerprint
+from sceneweaver.schemas.tags import TagProfile
 
 
 class ExperienceCard(StrictBaseModel):
     card_id: str
     source_video_id: str
     source_scene_ids: list[str] = Field(min_length=1)
-    fingerprint: CreativeFingerprint
+    tags: TagProfile
     keywords: list[str] = Field(min_length=1)
     underlying_emotion: str
     narrative_logic: str
@@ -22,6 +22,18 @@ class ExperienceCard(StrictBaseModel):
     emotion_temperature_range: tuple[float, float]
     reuse_condition: str
     confidence: float = Field(ge=0, le=1)
+
+    @model_validator(mode="before")
+    @classmethod
+    def migrate_legacy_fingerprint(cls, data):
+        if isinstance(data, dict) and "tags" not in data and "fingerprint" in data:
+            data = dict(data)
+            data["tags"] = data.pop("fingerprint")
+        return data
+
+    @property
+    def fingerprint(self) -> TagProfile:
+        return self.tags
 
     @field_validator("card_id")
     @classmethod

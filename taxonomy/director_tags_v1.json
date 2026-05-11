@@ -1,0 +1,88 @@
+{
+  "version": "director_tags_v1",
+  "dimensions": [
+    "emotion_core",
+    "audience_projection",
+    "narrative_function",
+    "interaction_mode",
+    "visual_motifs",
+    "symbolic_logic",
+    "rhythm_pattern"
+  ],
+  "canonical_tags": [
+    {
+      "tag": "trust",
+      "dimension": "emotion_core",
+      "label": "信任 / 可靠",
+      "definition": "表达可信、稳重、专业或降低广告感的情绪核心。",
+      "aliases": ["信任", "可信", "可靠", "稳重", "专业", "可靠感", "大公司"],
+      "positive_examples": ["通过真实细节建立可信度"],
+      "negative_examples": ["单纯炫技或只展示规模"]
+    },
+    {
+      "tag": "human_care",
+      "dimension": "emotion_core",
+      "label": "关注个体 / 人文关怀",
+      "definition": "表达品牌或技术关注人、服务人、改善生活。",
+      "aliases": ["关注个体", "关注于人", "以人为本", "人文", "科技向善"],
+      "positive_examples": ["技术被呈现为帮助普通人的工具"],
+      "negative_examples": ["只展示高科技质感"]
+    },
+    {
+      "tag": "direct_listener",
+      "dimension": "audience_projection",
+      "label": "屏幕后倾听者",
+      "definition": "观众被邀请成为被直接对话、倾听或回应的人。",
+      "aliases": ["倾听者", "对话者", "屏幕后的观众", "屏幕后", "直视", "听"],
+      "positive_examples": ["人物直视镜头与观众建立对话"],
+      "negative_examples": ["观众只是旁观群像"]
+    },
+    {
+      "tag": "direct_address",
+      "dimension": "interaction_mode",
+      "label": "直接对话",
+      "definition": "通过直视、面对面、打破第四面墙或隔屏交流形成直接沟通。",
+      "aliases": ["直视", "眼神接触", "打破第四面墙", "对话", "面对面", "直接说话", "直视镜头"],
+      "positive_examples": ["人物正对镜头向屏幕后的观众说话"],
+      "negative_examples": ["人物之间自然交谈但不面向观众"]
+    },
+    {
+      "tag": "team_collaboration",
+      "dimension": "interaction_mode",
+      "label": "团队协作",
+      "definition": "多人共同完成、互相带动或组成群体能量。",
+      "aliases": ["团队", "协作", "共同", "多人"],
+      "positive_examples": ["个体行动逐渐汇入团队群像"],
+      "negative_examples": ["孤立个人英雄表达"]
+    },
+    {
+      "tag": "screen",
+      "dimension": "visual_motifs",
+      "label": "屏幕 / 界面",
+      "definition": "以屏幕、显示器、手机或界面作为视觉母题。",
+      "aliases": ["屏幕", "显示器", "界面", "手机", "screen"],
+      "positive_examples": ["通过屏幕建立隔屏对话"],
+      "negative_examples": ["没有视觉屏幕，仅有抽象科技概念"]
+    },
+    {
+      "tag": "human_centered_technology",
+      "dimension": "symbolic_logic",
+      "label": "人本科技",
+      "definition": "技术被表达为服务人、连接人、改善生活，而非单纯炫技。",
+      "aliases": ["科技服务于人", "科技向善", "关注于人", "以人为本", "人本科技", "更好生活"],
+      "positive_examples": ["科技让人与人产生连接"],
+      "negative_examples": ["只展示复杂界面和速度"]
+    },
+    {
+      "tag": "calm_direct",
+      "dimension": "rhythm_pattern",
+      "label": "克制直接",
+      "definition": "节奏平静、克制、直接，强调可信和对话感。",
+      "aliases": ["克制", "平静", "直视", "对话", "稳重", "可靠"],
+      "positive_examples": ["少剪辑、正面对话、稳定节奏"],
+      "negative_examples": ["高燃快剪和爆发式节奏"]
+    }
+  ],
+  "deprecated_mappings": [],
+  "candidate_tags": []
+}

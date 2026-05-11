@@ -24,6 +24,26 @@
     "shooting_techniques": ["中近景", "自然光", "生活化动作"],
     "why_it_works": "通过真实工作细节替代口号，使观众更容易相信品牌表达"
   },
+  "tags": {
+    "emotion_core": ["trust", "belonging"],
+    "audience_projection": ["participant"],
+    "narrative_function": ["establish_trust", "culture_showcase"],
+    "interaction_mode": ["team_collaboration"],
+    "visual_motifs": [],
+    "symbolic_logic": ["connection"],
+    "rhythm_pattern": ["calm_direct"],
+    "custom_tags": [],
+    "evidence": [
+      {
+        "source_id": "scene_001",
+        "source_type": "scene",
+        "field": "director_interpretation.underlying_emotion",
+        "quote": "我可以在这里被看见并参与真实工作",
+        "note": "canonical tags are stored inside analysis"
+      }
+    ],
+    "confidence": 0.75
+  },
   "experience_candidates": [
     {
       "keywords": ["真实感", "青年", "团队"],
@@ -35,4 +55,3 @@
   ],
   "emotion_temperature": 0.45
 }
-

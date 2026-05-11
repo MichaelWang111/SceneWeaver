@@ -1,130 +1,40 @@
 # 路线图
 
-本文只保留阶段路线，不记录当前执行细节。当前执行计划见 `docs/PLAN.md`，完成度见 `docs/EXECUTION_STATUS.md`。
-
-## v0：项目蓝图
-
-状态：
-
-```text
-已完成
-```
-
-目标：
-
-1. 明确 SceneWeaver 的产品定位。
-2. 明确 v1 范围和非目标。
-3. 建立初版 schema、技术设计和参考边界。
-
-## v1：Director Experience Analyzer
-
-状态：
-
-```text
-进行中
-```
+## v1：核心闭环
 
 目标：
 
 ```text
-真实视频
-→ scene package
-→ scene analysis
-→ creative fingerprints
-→ film analysis
-→ experience cards
+真实视频 → scene analysis with tags → experience cards → retrieval
 ```
 
-v1 完成后，系统应能从一个真实 Bilibili 视频中稳定提取可复用导演经验卡片。
+当前优先级：
 
-关键里程碑：
+1. 稳定 `SceneAnalysis.tags`。
+2. 稳定 `ExperienceCard.tags`。
+3. 建立 taxonomy candidate pool。
+4. 用真实检索结果校准 tag 权重。
 
-1. v1-0 工程骨架、schema、mock pipeline：已完成。
-2. v1-1 真实视频 package pipeline：已完成真实样本验收。
-3. v1-2 scene-level LLM 分析：已完成 40 scene 真实样本验收。
-4. v1-3 creative fingerprint：已接入真实 `run` 链路并产出 film fingerprint。
-5. v1-4 full-film analysis：待实现。
-6. v1-5 experience card extraction：待实现。
-7. v1-6 experience card retrieval：待实现。
-8. v1-7 完整 `run` 后半段闭环：待实现。
-
-## v2：Director Memory Retrieval
+## v1.5：标签治理
 
 目标：
-
-让 `experience_cards.jsonl` 变成可检索的导演经验库。
-
-能力：
-
-1. 关键词检索。
-2. 情绪、叙事、技法分层检索。
-3. embedding 检索。
-4. 检索结果解释。
-
-示例：
 
 ```text
-输入：青春 / 热情 / 梦想
-输出：底层情感、叙事逻辑、拍摄技法、视觉符号、文案语气
+canonical tags + aliases + candidate pool + deprecated mappings
 ```
 
-## v3：Director Treatment Generation
+任务：
 
-目标：
+1. 将代码内 taxonomy 迁移到版本化 JSON。
+2. 增加 candidate tags 输出和 review 流程。
+3. 建立同义词归并和 deprecated mapping。
+4. 保证主数据只写 canonical tags。
 
-基于 brief 和经验库生成多版本导演稿。
+## v2：生成辅助
 
-能力：
+在 experience cards 稳定后，再推进：
 
-1. brief 解析。
-2. 经验卡片召回。
-3. 情感温度参数。
-4. 多版本 treatment。
-5. shotlist。
-6. music direction。
-7. copywriting tone。
-
-示例：
-
-```text
-输入：新能源车企 / 校招 / 青春 / 热血 / 不要互联网大厂味
-输出：3 版不同情绪温度的导演稿
-```
-
-## v4：产品化
-
-目标：
-
-把本地 pipeline 变成可持续使用的工具。
-
-能力：
-
-1. Web UI。
-2. 项目管理。
-3. 多平台输入。
-4. 可视化情绪曲线。
-5. 可编辑经验卡片。
-6. 可导出 treatment / shotlist。
-
-## v5：导演知识系统
-
-目标：
-
-从经验库升级为导演知识系统。
-
-可能方向：
-
-1. Graph RAG。
-2. 视觉符号库。
-3. 品牌人格 taxonomy。
-4. 情绪曲线 taxonomy。
-5. narrative pattern library。
-6. Taste Engine。
-
-## 长期判断
-
-SceneWeaver 的长期价值不在于自动化视频生成，而在于：
-
-```text
-把商业视频为什么有效这件事结构化。
-```
+1. brief 到 cards 的检索增强。
+2. 基于 cards 的导演稿生成。
+3. 报告型 `FilmAnalysis` 派生产物。
+4. 更大样本的经验库整理。

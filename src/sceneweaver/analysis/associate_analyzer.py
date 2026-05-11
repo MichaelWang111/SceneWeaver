@@ -5,7 +5,7 @@ from threading import Event, Thread
 from time import perf_counter
 from typing import Callable, Protocol
 
-from sceneweaver.analysis.fingerprint import build_query_fingerprint
+from sceneweaver.analysis.tags import build_query_tags
 from sceneweaver.llm.client import VisionLLMClient
 from sceneweaver.schemas import AssociationAnalysis
 from sceneweaver.storage.json_store import write_json
@@ -86,10 +86,10 @@ def associate_input(
     if stream_callback is not None:
         stream_callback("\n")
     _log(log, f"LLM response received after {perf_counter() - started_at:.1f}s. Validating JSON schema.")
-    if "query_fingerprint" not in raw:
-        raw["query_fingerprint"] = build_query_fingerprint(
+    if "query_tags" not in raw and "query_fingerprint" not in raw:
+        raw["query_tags"] = build_query_tags(
             clean_input,
-            extra_text=_association_fingerprint_text(raw),
+            extra_text=_association_tag_text(raw),
         ).model_dump(mode="json")
     analysis = AssociationAnalysis.model_validate(raw)
     if output_path is not None:
@@ -179,7 +179,7 @@ def _call_llm_with_heartbeat(
             heartbeat_thread.join(timeout=0.2)
 
 
-def _association_fingerprint_text(raw: dict) -> str:
+def _association_tag_text(raw: dict) -> str:
     parts: list[str] = []
     for key in ("core_reading", "avoid_cliches"):
         value = raw.get(key)

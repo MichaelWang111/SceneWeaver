@@ -1,18 +1,66 @@
 # 数据结构
 
-本文说明核心 JSON / JSONL 数据合同。代码实现以 `src/sceneweaver/schemas/` 为准。
+本文定义当前核心 JSON / JSONL 数据合同。代码实现以 `src/sceneweaver/schemas/` 为准。
 
-## 1. 设计原则
+## 1. 当前核心
 
-SceneWeaver 的 schema 区分三类信息：
+SceneWeaver 的核心语义层收敛为：
 
-1. 客观观察：画面中看到了什么。
-2. 导演解释：为什么这样拍。
-3. 可复用经验：未来如何被检索和生成系统复用。
+```text
+SceneAnalysis.tags
+ExperienceCard.tags
+```
 
-禁止把所有内容塞进一个泛化的 `director_insight` 字段。
+`tags` 不是独立产物，不再写入 `fingerprints/`。它是 analysis 的一部分，用于检索、归并和经验卡片匹配。
 
-## 2. ScenePackage
+## 2. TagProfile
+
+用途：
+
+```text
+半封闭导演语义标签层。
+```
+
+字段：
+
+```json
+{
+  "emotion_core": [],
+  "audience_projection": [],
+  "narrative_function": [],
+  "interaction_mode": [],
+  "visual_motifs": [],
+  "symbolic_logic": [],
+  "rhythm_pattern": [],
+  "custom_tags": [],
+  "evidence": [],
+  "confidence": 0.75
+}
+```
+
+规则：
+
+1. 主维度只写 canonical tags。
+2. 同义词、近义词和中文表达进入 aliases，不直接写入主数据。
+3. 未命中新表达进入 candidate pool，后续决定合并、升级或丢弃。
+4. `custom_tags` 是半封闭出口，只用于尚未纳入 canonical taxonomy 的少量临时表达。
+5. `evidence` 必须指向来源字段。
+
+## 3. TagEvidence
+
+字段：
+
+```json
+{
+  "source_id": "scene_001",
+  "source_type": "scene",
+  "field": "director_interpretation.underlying_emotion",
+  "quote": "我可以在这里被看见并参与真实工作",
+  "note": ""
+}
+```
+
+## 4. ScenePackage
 
 用途：
 
@@ -29,186 +77,54 @@ SceneWeaver 的 schema 区分三类信息：
 5. `subtitle_segment`
 6. `metadata`
 
-示例：
-
-```json
-{
-  "scene_id": "scene_001",
-  "source_video_id": "bilibili_BVxxxx",
-  "time_range": {
-    "start": "00:00:03.200",
-    "end": "00:00:07.800",
-    "duration_seconds": 4.6
-  },
-  "frames": {
-    "start": "frames/scene_001_start.jpg",
-    "middle": "frames/scene_001_middle.jpg",
-    "end": "frames/scene_001_end.jpg"
-  },
-  "subtitle_segment": {
-    "text": "这里是字幕片段",
-    "items": []
-  },
-  "metadata": {
-    "scene_index": 1,
-    "source_url": "https://www.bilibili.com/video/...",
-    "language": "zh-CN"
-  }
-}
-```
-
-## 3. SceneAnalysis
+## 5. SceneAnalysis
 
 用途：
 
 ```text
-单个 scene 的结构化导演分析。
+单个 scene 的导演分析主产物。
 ```
 
 关键字段：
 
-1. `visual_observation`：只写客观观察。
-2. `director_interpretation`：写导演意图、叙事功能、情绪功能、品牌人格和观众投射。
-3. `experience_candidates`：候选可复用经验，不等于最终经验卡片。
-4. `emotion_temperature`：0 到 1 的情绪强度。
+1. `visual_observation`：客观观察。
+2. `director_interpretation`：导演意图、叙事功能、情绪功能、品牌人格和观众投射。
+3. `tags`：半封闭 canonical tag profile。
+4. `experience_candidates`：候选经验，不等于最终经验卡片。
+5. `emotion_temperature`：0 到 1 的情绪强度。
 
-示例：
+示例结构：
 
 ```json
 {
   "scene_id": "scene_001",
-  "time_range": {
-    "start": "00:00:03.200",
-    "end": "00:00:07.800",
-    "duration_seconds": 4.6
-  },
-  "visual_observation": {
-    "setting": "办公室或工位环境",
-    "characters": "年轻员工或团队成员",
-    "action_change": "从独立工作转向团队互动",
-    "composition": "中近景为主，强调人物状态",
-    "lighting": "自然光或柔和人工光",
-    "color": "低饱和、真实感",
-    "camera_motion": "无法从三帧确定，可能为静态或轻微移动",
-    "confidence_notes": "三帧不足以确认完整镜头运动"
-  },
-  "director_interpretation": {
-    "narrative_function": "建立真实工作状态",
-    "emotional_function": "降低广告感，建立可信度",
-    "brand_personality_signal": "真实、温暖、可靠",
-    "underlying_emotion": "我可以在这里被看见并参与真实工作",
-    "audience_projection": "年轻人可以成为团队中被需要的一员",
-    "shooting_techniques": ["中近景", "自然光", "生活化动作"],
-    "why_it_works": "通过真实工作细节替代口号，使观众更容易相信品牌表达"
-  },
-  "experience_candidates": [
-    {
-      "keywords": ["真实感", "青年", "团队"],
-      "emotion": "被需要",
-      "narrative_logic": "先建立真实日常，再导向团队归属",
-      "techniques": ["自然光", "中近景", "微行为"],
-      "reuse_condition": "适合需要弱化广告感、强调真实工作氛围的招聘宣传片"
-    }
-  ],
+  "time_range": {},
+  "visual_observation": {},
+  "director_interpretation": {},
+  "tags": {},
+  "experience_candidates": [],
   "emotion_temperature": 0.45
 }
 ```
 
-## 4. ScenesAnalysis
+## 6. ScenesAnalysis
 
 用途：
 
 ```text
-一支视频所有 scene analysis 的集合。
+一支视频的 scene analysis 集合。
 ```
 
-示例：
+字段：
 
-```json
-{
-  "video_id": "bilibili_BVxxxx",
-  "source_url": "https://www.bilibili.com/video/...",
-  "scene_count": 12,
-  "scenes": []
-}
-```
+1. `video_id`
+2. `source_url`
+3. `scene_count`
+4. `scenes`
 
-校验：
+`scene_count` 必须等于 `scenes` 长度。
 
-1. `scene_count` 必须等于 `scenes` 长度。
-2. `scene_id` 使用 `scene_001` 格式。
-
-## 5. FilmAnalysis
-
-用途：
-
-```text
-全片层面的导演语言总结。
-```
-
-关键字段：
-
-1. `fingerprint`
-2. `atmosphere`
-3. `tone`
-4. `rhythm`
-5. `emotional_curve`
-6. `visual_language`
-7. `narrative_structure`
-8. `brand_personality`
-9. `audience_projection`
-10. `director_language_summary`
-
-示例：
-
-```json
-{
-  "video_id": "bilibili_BVxxxx",
-  "fingerprint": {
-    "emotion_core": ["belonging", "trust"],
-    "audience_projection": ["participant"],
-    "narrative_function": ["establish_trust"],
-    "interaction_mode": ["team_collaboration"],
-    "visual_motifs": [],
-    "symbolic_logic": ["human_centered_technology"],
-    "rhythm_pattern": [],
-    "evidence": [
-      {
-        "source_id": "scene_001",
-        "source_type": "scene",
-        "field": "director_interpretation.underlying_emotion",
-        "quote": "我可以在这里被看见并参与真实工作",
-        "note": ""
-      }
-    ],
-    "confidence": 0.8
-  },
-  "atmosphere": "真实、温暖、轻度热血",
-  "tone": "纪录片式招聘宣传片",
-  "rhythm": {
-    "overall": "前慢后快",
-    "description": "前半段建立真实感，后半段释放团队能量"
-  },
-  "emotional_curve": [
-    {
-      "phase": "start",
-      "emotion": "好奇",
-      "function": "引入人物和场景"
-    }
-  ],
-  "visual_language": {
-    "camera": ["手持", "中近景"],
-    "lighting": ["自然光", "晨光"],
-    "symbolism": ["团队协作", "工作空间"]
-  },
-  "narrative_structure": "真实日常 -> 团队协作 -> 未来召唤",
-  "brand_personality": ["真实", "年轻", "可信"],
-  "audience_projection": "年轻人可以在这里成为被需要、有成长空间的团队成员",
-  "director_language_summary": "影片通过生活化工作细节和群像推进建立雇主品牌信任"
-}
-```
-
-## 6. ExperienceCard
+## 7. ExperienceCard
 
 用途：
 
@@ -216,54 +132,31 @@ SceneWeaver 的 schema 区分三类信息：
 未来检索和生成的核心知识单元。
 ```
 
-示例：
+关键字段：
 
-```json
-{
-  "card_id": "exp_000001",
-  "source_video_id": "bilibili_BVxxxx",
-  "source_scene_ids": ["scene_001", "scene_002"],
-  "fingerprint": {
-    "emotion_core": ["belonging", "ambition"],
-    "audience_projection": ["future_builder"],
-    "narrative_function": ["invitation"],
-    "interaction_mode": ["team_collaboration"],
-    "visual_motifs": ["silhouette", "upward_motion"],
-    "symbolic_logic": ["becoming"],
-    "rhythm_pattern": ["explosive_build"],
-    "evidence": [
-      {
-        "source_id": "scene_001",
-        "source_type": "scene",
-        "field": "experience_card.director_strategy",
-        "quote": "先建立真实工作状态，再通过群像剪辑释放集体能量",
-        "note": ""
-      }
-    ],
-    "confidence": 0.82
-  },
-  "keywords": ["青春", "热情", "梦想", "团队"],
-  "underlying_emotion": "年轻人正在共同创造未来",
-  "narrative_logic": "个体日常逐渐汇入团队群像",
-  "director_strategy": "先建立真实工作状态，再通过群像剪辑释放集体能量",
-  "shooting_techniques": ["手持跟拍", "逆光", "中近景"],
-  "visual_symbols": ["晨光", "团队协作", "工作空间"],
-  "copywriting_tone": "少口号，多第一人称和真实动作",
-  "avoid": ["空泛梦想口号", "过度互联网大厂感"],
-  "emotion_temperature_range": [0.55, 0.85],
-  "reuse_condition": "适合希望表达青年热情、团队归属和未来感的招聘宣传片",
-  "confidence": 0.82
-}
-```
+1. `card_id`
+2. `source_video_id`
+3. `source_scene_ids`
+4. `tags`
+5. `keywords`
+6. `underlying_emotion`
+7. `narrative_logic`
+8. `director_strategy`
+9. `shooting_techniques`
+10. `visual_symbols`
+11. `copywriting_tone`
+12. `avoid`
+13. `emotion_temperature_range`
+14. `reuse_condition`
+15. `confidence`
 
-校验：
+说明：
 
-1. `card_id` 使用 `exp_000001` 格式。
-2. `source_scene_ids` 使用 `scene_001` 格式。
-3. `emotion_temperature_range` 必须在 0..1 内且从低到高。
-4. `confidence` 必须在 0..1 内。
+1. card 不是 scene 摘要，而是可迁移经验。
+2. card 的 `tags` 用于检索和匹配。
+3. 旧字段 `fingerprint` 只作为读取兼容，新写出统一使用 `tags`。
 
-## 7. AssociationAnalysis
+## 8. AssociationAnalysis
 
 用途：
 
@@ -271,64 +164,23 @@ SceneWeaver 的 schema 区分三类信息：
 关键词或 brief 的导演/编剧前期联想材料。
 ```
 
-该结构由 `associate` 命令生成，当前不依赖历史视频经验库。
+它是独立创意工具，不属于视频解析核心层。
 
-关键字段：
-
-1. `input_text`
-2. `query_fingerprint`
-3. `core_reading`
-4. `emotional_arc`
-5. `association_map`
-6. `director_possibilities`
-7. `avoid_cliches`
-
-校验：
-
-1. `association_count` 必须等于所有 association item 总数。
-2. 每个 association 类别至少 1 条。
-3. `director_possibilities` 必须有 3 到 5 个方向。
-
-## 8. CreativeFingerprint
-
-用途：
+当前字段中使用：
 
 ```text
-检索用的低维语义坐标，独立于高密度 reasoning。
+query_tags
 ```
 
-字段：
+旧字段 `query_fingerprint` 只作为读取兼容。
 
-1. `emotion_core`
-2. `audience_projection`
-3. `narrative_function`
-4. `interaction_mode`
-5. `visual_motifs`
-6. `symbolic_logic`
-7. `rhythm_pattern`
-8. `evidence`
-9. `confidence`
+## 9. Legacy
 
-约束：
+旧 `CreativeFingerprint`、`FingerprintEvidence`、`SceneFingerprint`、`FilmFingerprint` 名称仅为兼容旧数据和旧测试语境保留。
 
-1. tag 会归一化为英文 snake_case。
-2. 至少包含一个 tag。
-3. `evidence` 至少一条，并指向来源和字段。
-4. `confidence` 必须在 0..1 内。
+新主接口为：
 
-## 9. 命名规范
-
-1. 字段名使用英文 snake_case。
-2. 文档说明使用中文。
-3. 输出内容默认中文。
-4. 时间统一使用 `HH:MM:SS.mmm`。
-5. scene id 使用 `scene_001` 格式。
-6. experience id 使用 `exp_000001` 格式。
-
-## 10. 必须避免
-
-1. 不要把客观观察写成导演判断。
-2. 不要把推断当成确定事实。
-3. 不要把单个 scene 的判断直接上升为全片结论。
-4. 不要把原始分析报告直接存成经验库。
-5. 不要让未验证 JSON 进入存储层。
+```text
+TagProfile
+TagEvidence
+```

@@ -1,171 +1,36 @@
 # 开发日志
 
-本文按时间记录已发生的工程推进。当前状态以 `docs/EXECUTION_STATUS.md` 为准。
+## 2026-05-11：核心架构精简
 
-## 2026-05-08：v1-0 工程骨架、schema 和 mock pipeline
-
-目标：
-
-把 SceneWeaver 从文档规划推进到可运行、可测试、可持续开发的 Python 工程。
-
-完成：
-
-1. 创建 Python 工程骨架：`pyproject.toml`、`src/sceneweaver/`、`examples/`、`tests/`。
-2. 实现核心 Pydantic schema：`ScenePackage`、`SceneAnalysis`、`ScenesAnalysis`、`FilmAnalysis`、`ExperienceCard`。
-3. 实现 JSON / JSONL 存储 helper。
-4. 实现 mock pipeline。
-5. 实现 CLI `mock-run`。
-6. 完成初始自动测试。
-
-mock 链路：
+本轮目标是解决 schema boom，将核心语义链路从旧的 independent fingerprint artifacts 收敛为：
 
 ```text
-mock source
-→ scene package
-→ scene analysis
-→ scenes.json
-→ film_analysis.json
-→ experience_cards.jsonl
-→ Pydantic validation
+SceneAnalysis.tags
+ExperienceCard.tags
 ```
 
-阶段判断：
+已完成：
+
+1. 新增主 schema：`TagProfile`、`TagEvidence`。
+2. `SceneAnalysis` 内嵌 `tags`。
+3. `ExperienceCard` 使用 `tags`，旧 `fingerprint` 字段仅读取兼容。
+4. `AssociationAnalysis` 使用 `query_tags`，旧 `query_fingerprint` 仅读取兼容。
+5. mock/run 主链路不再写新的 `fingerprints/` 目录。
+6. `fingerprint-scenes` 改为 legacy 过渡命令，用于给旧 analysis 补 tags。
+7. 新增 `taxonomy/director_tags_v1.json` 作为标签词表治理结构预留。
+
+验证：
 
 ```text
-v1-0 完成，内部数据合同成立。
+50 passed
 ```
 
-## 2026-05-08：v1-1 真实视频 package pipeline
-
-目标：
-
-把真实 Bilibili 视频转换为可验证的 scene packages。
-
-参考：
-
-```text
-D:\WorkSpace\github\video-expert-analyzer
-```
-
-完成模块：
-
-1. `src/sceneweaver/input/bilibili.py`
-2. `src/sceneweaver/input/downloader.py`
-3. `src/sceneweaver/split/timecode.py`
-4. `src/sceneweaver/split/scene_detector.py`
-5. `src/sceneweaver/split/frame_sampler.py`
-6. `src/sceneweaver/split/subtitle_segmenter.py`
-7. `src/sceneweaver/analysis/scene_package_builder.py`
-8. `src/sceneweaver/pipeline/package_video.py`
-
-CLI：
+命令：
 
 ```powershell
-python -m sceneweaver.cli package-video "https://www.bilibili.com/video/BVxxxx" --output outputs\film_analysis\BVxxxx
+python -m pytest -q --basetemp .tmp\pytest-tags -p no:cacheprovider
 ```
 
-真实样本验收：
+## 历史说明
 
-```text
-BV1pLqnBWEJC
-scene_count: 16
-frame_count: 48
-package_count: 16
-```
-
-阶段判断：
-
-```text
-v1-1 完成真实样本验收。
-```
-
-限制：
-
-1. 未自动抓取 Bilibili 字幕。
-2. 默认不生成 scene clips，需显式传入 `--split-video`。
-3. 产物只到 `packages/`，不包含 LLM 分析。
-
-## 2026-05-08：v1-2 Scene-level Vision LLM 分析代码
-
-目标：
-
-将 scene package 和三帧图送入 Vision LLM，输出规格化导演赏析，而不是镜头评分报告。
-
-完成：
-
-1. `src/sceneweaver/llm/client.py`
-2. `src/sceneweaver/analysis/scene_analyzer.py`
-3. `prompts/scene_analysis.md`
-4. CLI `analyze-scenes`
-
-输出：
-
-1. `analysis/scene_XXX.json`
-2. `analysis/scenes.json`
-
-设计约束：
-
-1. 不输出评分。
-2. 不输出 `weighted_score`。
-3. 不输出 `MUST KEEP` / `USABLE` / `DISCARD`。
-4. 严格区分客观观察和导演解释。
-5. 所有输出通过 `SceneAnalysis` / `ScenesAnalysis` validation。
-
-阶段判断：
-
-```text
-当时 scene 分析模块完成；后续已通过 BV1cWHyzwEKC 40 scene 样本补齐。
-```
-
-## 2026-05-09：关键词联想和文档整理
-
-完成：
-
-1. `associate` 命令支持关键词或粗糙 brief。
-2. 支持 debug、stream、thinking 参数。
-3. 输出 `AssociationAnalysis`。
-4. 重新整理 README 和 docs 分工，减少 PLAN、ROADMAP、STATUS、SUMMARY 之间的重复。
-
-阶段判断：
-
-```text
-associate 可作为独立前期创意联想入口；项目文档重新按职责收敛。
-```
-
-## 2026-05-09：Creative Fingerprint 接入真实 run 链路
-
-目标：
-
-把用户规划中的 latent expression / tag 层落成独立中间层，用于后续 retrieval。
-
-完成：
-
-1. 新增 `CreativeFingerprint`、`SceneFingerprint`、`FilmFingerprint` schema。
-2. 新增 `src/sceneweaver/analysis/fingerprint.py`。
-3. 从 `SceneAnalysis` 生成 scene fingerprint。
-4. 按 scene 顺序聚合 `film_fingerprint.json`。
-5. 为 `AssociationAnalysis` 增加 `query_fingerprint`。
-6. 为 `ExperienceCard` 增加 `fingerprint` 字段。
-7. `run` 命令新增 fingerprint generation 阶段。
-
-真实样本验收：
-
-```powershell
-python -m sceneweaver.cli run "https://www.bilibili.com/video/BV1cWHyzwEKC" --limit 40 --concurrency 5
-```
-
-结果：
-
-```text
-Scene analysis written to: outputs/film_analysis/BV1cWHyzwEKC/analysis
-Scenes analyzed: 40
-Fingerprints written to: outputs/film_analysis/BV1cWHyzwEKC/fingerprints
-Scenes fingerprinted: 40
-```
-
-阶段判断：
-
-```text
-真实视频到 scene-level director analysis 和 fingerprint corpus 的前半段已跑通。
-下一步应补 film_analysis、experience_cards 和 query-to-card retrieval。
-```
+2026-05-09 之前曾使用 fingerprint 命名探索低维语义坐标。该命名现在视为 legacy compatibility；新主接口统一为 tags。

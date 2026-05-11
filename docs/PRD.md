@@ -4,106 +4,57 @@
 
 SceneWeaver 是一个从视频案例中提炼导演经验，并为未来导演稿生成提供知识基础的分析系统。
 
-它的核心价值不是“分析视频”，而是：
+核心价值：
 
 ```text
 把商业导演经验变成可检索、可组合、可生成的知识。
 ```
 
-## 2. 目标用户
+## 2. 当前 v1 范围
 
-v1 面向：
-
-1. 项目创建者。
-2. AI 创意工具开发者。
-3. 研究商业宣传片、招聘宣传片、品牌短片的人。
-
-未来面向：
-
-1. 广告创意策划。
-2. 商业导演。
-3. 制片团队。
-4. 雇主品牌团队。
-5. 品牌内容团队。
-
-## 3. 核心场景
-
-### 3.1 视频经验沉淀
-
-用户输入一个 Bilibili 视频 URL，系统下载视频、拆分 scene、抽取三帧和字幕片段，并调用 Vision LLM 分析每个 scene 的画面、导演意图和可复用经验。
-
-### 3.2 全片导演语言总结
-
-系统按时间顺序读取全部 scene analysis，生成全片层面的导演语言总结。
-
-需要包含：
-
-1. 氛围。
-2. 基调。
-3. 节奏。
-4. 情绪曲线。
-5. 视觉语言。
-6. 叙事结构。
-7. 品牌人格。
-8. 观众身份投射。
-
-### 3.3 经验卡片抽取
-
-系统将 scene analysis 和 film analysis 抽取为可复用的经验卡片。
-
-经验卡片面向未来检索和生成，不是普通阅读报告。
-
-### 3.4 创意联想
-
-用户输入关键词或粗糙 brief，系统生成导演/编剧可用的联想材料，帮助前期创意开发。
-
-该能力由 `associate` 命令承载，当前不依赖历史经验库。
-
-## 4. v1 范围
-
-v1 包含：
+v1 聚焦：
 
 1. Bilibili URL 输入。
 2. 视频下载和 metadata 获取。
 3. scene 检测。
 4. start / middle / end 三帧抽取。
-5. SRT 字幕切片，自动字幕获取待补。
-6. scene package 生成。
-7. scene-level Vision LLM 分析。
-8. full-film LLM 分析。
-9. experience card 抽取。
-10. 本地 JSON / JSONL 存储。
+5. scene package 生成。
+6. scene-level Vision LLM 分析。
+7. analysis 内嵌 tags。
+8. experience card 抽取。
+9. 本地 JSON / JSONL 存储。
 
-v1 不包含：
+## 3. 核心对象
+
+### SceneAnalysis.tags
+
+用于把 scene analysis 归一到半封闭 canonical tags，支持后续检索和经验卡片匹配。
+
+### ExperienceCard.tags
+
+用于表示可复用导演经验的语义坐标，是检索和生成阶段的核心知识单元。
+
+## 4. Tag 治理原则
+
+1. 主数据只写 canonical tags。
+2. 同义词、近义词和中文表达进入 aliases。
+3. 新表达先进入 candidate pool。
+4. 高频、有区分度、不能被已有 tag 覆盖的 candidate 才升级为 canonical tag。
+5. 旧 tag 合并时记录 deprecated mapping。
+
+## 5. 暂不包含
 
 1. Web UI。
 2. 多平台下载。
-3. 智能搜索视频。
-4. 视频生成。
-5. LoRA / fine-tune。
-6. 自动剪辑。
-7. 完整故事板生成。
-8. 生产级数据库。
+3. 视频生成。
+4. 生产级数据库。
+5. 向量库。
+6. 完整故事板生成。
 
-## 5. 成功标准
+## 6. 成功标准
 
-功能成功：
-
-1. 一个 Bilibili URL 可以跑出完整分析链路。
-2. 每个 scene 都有结构化分析结果。
-3. 全片总结能体现整体导演语言。
-4. experience cards 能表达可复用导演经验。
-
-质量成功：
-
-1. 输出不只是画面描述，而能解释“为什么这样拍”。
-2. 输出能区分客观观察和导演推断。
-3. 输出能体现情绪、叙事、品牌人格和身份投射。
-4. 经验卡片能被未来关键词检索复用。
-
-长期成功：
-
-```text
-输入：青春 / 热情 / 梦想
-输出：底层情感、叙事逻辑、拍摄技法、视觉符号、文案语气、可执行导演稿
-```
+1. 一个真实视频可以产出 `analysis/scene_XXX.json` 和 `analysis/experience_cards.jsonl`。
+2. 每个 scene analysis 都包含 tags。
+3. 每张 experience card 都包含 tags。
+4. brief 能转成 query_tags 并召回相关 cards。
+5. 标签集可迭代，但不会被同义词和近义词污染。
