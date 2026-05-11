@@ -2,7 +2,7 @@
   "card_id": "exp_000001",
   "source_video_id": "bilibili_BVxxxx",
   "source_scene_ids": ["scene_001", "scene_002"],
-  "fingerprint": {
+  "tags": {
     "emotion_core": ["belonging", "ambition", "trust"],
     "audience_projection": ["future_builder", "participant"],
     "narrative_function": ["culture_showcase", "invitation"],
@@ -10,13 +10,14 @@
     "visual_motifs": ["silhouette", "upward_motion"],
     "symbolic_logic": ["becoming", "connection"],
     "rhythm_pattern": ["explosive_build", "montage"],
+    "custom_tags": [],
     "evidence": [
       {
         "source_id": "scene_001",
         "source_type": "scene",
         "field": "experience_card.director_strategy",
         "quote": "先建立真实工作状态，再通过群像剪辑释放集体能量",
-        "note": "card fingerprint is used for retrieval"
+        "note": "card tags are used for retrieval"
       }
     ],
     "confidence": 0.82

@@ -1,0 +1,65 @@
+{
+  "version": "director_tags_v1",
+  "dimensions": [
+    "emotion_core",
+    "audience_projection",
+    "narrative_function",
+    "interaction_mode",
+    "visual_motifs",
+    "symbolic_logic",
+    "rhythm_pattern"
+  ],
+  "canonical_tags": [
+    {"tag": "awakening", "dimension": "emotion_core", "label": "启示 / 唤醒", "definition": "表达想法、人物或关系开始显影。", "aliases": ["启示", "唤醒", "显影", "idea", "起源", "开始"], "positive_examples": ["一个想法被看见"], "negative_examples": ["单纯信息说明"]},
+    {"tag": "ambition", "dimension": "emotion_core", "label": "野心 / 向往", "definition": "表达面向未来、突破、机会或潜力。", "aliases": ["野心", "向往", "未来", "突破", "机会", "潜力"], "positive_examples": ["年轻人面向未来"], "negative_examples": ["只表达舒适日常"]},
+    {"tag": "belonging", "dimension": "emotion_core", "label": "归属", "definition": "表达团队、共同体和成为其中一员。", "aliases": ["归属", "团队", "共同", "一员", "协作"], "positive_examples": ["个体进入团队"], "negative_examples": ["孤立个人英雄"]},
+    {"tag": "trust", "dimension": "emotion_core", "label": "信任 / 可靠", "definition": "表达可信、稳重、专业或降低广告感。", "aliases": ["信任", "可信", "可靠", "稳重", "专业", "可靠感", "大公司"], "positive_examples": ["真实细节建立可信度"], "negative_examples": ["单纯炫技"]},
+    {"tag": "ease", "dimension": "emotion_core", "label": "轻松", "definition": "表达无负担、便利、松弛。", "aliases": ["轻松", "无负担", "松弛", "便利"], "positive_examples": ["使用过程自然轻松"], "negative_examples": ["紧张冲突"]},
+    {"tag": "awe", "dimension": "emotion_core", "label": "敬畏 / 自豪", "definition": "表达宏大、自豪、仰望。", "aliases": ["敬畏", "自豪", "仰望", "宏大"], "positive_examples": ["宏大场景唤起自豪"], "negative_examples": ["克制日常对话"]},
+    {"tag": "loneliness", "dimension": "emotion_core", "label": "孤独 / 疏离", "definition": "表达个体疏离、局外人状态。", "aliases": ["孤独", "疏离", "局外人"], "positive_examples": ["人物独自面对环境"], "negative_examples": ["团队协作"]},
+    {"tag": "delight", "dimension": "emotion_core", "label": "趣味 / 快乐", "definition": "表达有趣、俏皮、游戏感。", "aliases": ["有趣", "快乐", "俏皮", "wink", "游戏"], "positive_examples": ["轻巧趣味互动"], "negative_examples": ["庄重可信表达"]},
+    {"tag": "creativity", "dimension": "emotion_core", "label": "创意", "definition": "表达创新、想法和创意生成。", "aliases": ["创意", "创新", "想法", "idea"], "positive_examples": ["创意从想法走向行动"], "negative_examples": ["流程化执行"]},
+    {"tag": "human_care", "dimension": "emotion_core", "label": "关注个体 / 人文关怀", "definition": "表达品牌或技术关注人、服务人、改善生活。", "aliases": ["关注个体", "关注于人", "以人为本", "人文", "科技向善"], "positive_examples": ["技术帮助普通人"], "negative_examples": ["只展示高科技质感"]},
+
+    {"tag": "future_builder", "dimension": "audience_projection", "label": "未来共创者", "definition": "观众被投射为加入未来建设的人。", "aliases": ["未来", "共创", "潜在员工", "加入者", "发挥潜力"], "positive_examples": ["观众被邀请加入未来"], "negative_examples": ["观众只是旁观"]},
+    {"tag": "direct_listener", "dimension": "audience_projection", "label": "屏幕后倾听者", "definition": "观众被邀请成为被直接对话、倾听或回应的人。", "aliases": ["倾听者", "对话者", "屏幕后的观众", "屏幕后", "直视", "听"], "positive_examples": ["人物直视镜头"], "negative_examples": ["旁观群像"]},
+    {"tag": "witness", "dimension": "audience_projection", "label": "见证者", "definition": "观众被放在观察和见证的位置。", "aliases": ["见证者", "观察者", "旁观者"], "positive_examples": ["观众旁观一个过程"], "negative_examples": ["观众被直接召唤"]},
+    {"tag": "participant", "dimension": "audience_projection", "label": "参与者", "definition": "观众被投射为参与其中的人。", "aliases": ["一员", "参与", "投射为", "被邀请"], "positive_examples": ["观众成为团队一员"], "negative_examples": ["外部观察"]},
+    {"tag": "user", "dimension": "audience_projection", "label": "用户", "definition": "观众被视为产品、服务或体验的使用者。", "aliases": ["用户", "食客", "玩家", "观众"], "positive_examples": ["观众代入产品使用者"], "negative_examples": ["观众代入潜在员工"]},
+
+    {"tag": "establish_trust", "dimension": "narrative_function", "label": "建立信任", "definition": "叙事功能是建立可信度。", "aliases": ["建立", "可信", "信任", "证明", "可靠"], "positive_examples": ["用真实细节证明品牌可信"], "negative_examples": ["只做情绪释放"]},
+    {"tag": "origin_story", "dimension": "narrative_function", "label": "起源故事", "definition": "叙事功能是说明起源、初心或开始。", "aliases": ["起源", "初心", "开始", "历史"], "positive_examples": ["从初心讲到现在"], "negative_examples": ["没有时间来源"]},
+    {"tag": "scale_reveal", "dimension": "narrative_function", "label": "规模揭示", "definition": "叙事功能是揭示规模、全球性或宏大系统。", "aliases": ["规模", "宏大", "十亿", "全球", "国际化", "世界五百强"], "positive_examples": ["从个人拉到全球规模"], "negative_examples": ["只表现个体日常"]},
+    {"tag": "culture_showcase", "dimension": "narrative_function", "label": "文化展示", "definition": "叙事功能是展示团队、员工、组织文化。", "aliases": ["文化", "团队", "员工", "氛围"], "positive_examples": ["展示团队工作氛围"], "negative_examples": ["只展示产品功能"]},
+    {"tag": "invitation", "dimension": "narrative_function", "label": "邀请 / 召唤", "definition": "叙事功能是邀请观众加入或行动。", "aliases": ["邀请", "召唤", "机会", "加入"], "positive_examples": ["片尾邀请加入"], "negative_examples": ["纯旁观记录"]},
+
+    {"tag": "direct_address", "dimension": "interaction_mode", "label": "直接对话", "definition": "通过直视、面对面、打破第四面墙或隔屏交流形成直接沟通。", "aliases": ["直视", "眼神接触", "打破第四面墙", "对话", "面对面", "直接说话", "直视镜头"], "positive_examples": ["人物正对镜头说话"], "negative_examples": ["人物之间自然交谈但不面向观众"]},
+    {"tag": "observational", "dimension": "interaction_mode", "label": "观察式", "definition": "以旁观和见证方式呈现。", "aliases": ["观察者", "旁观", "见证"], "positive_examples": ["纪录式旁观"], "negative_examples": ["直视镜头对话"]},
+    {"tag": "product_demonstration", "dimension": "interaction_mode", "label": "产品演示", "definition": "通过使用、扫码、功能展示完成表达。", "aliases": ["扫码", "功能", "支付", "演示", "使用"], "positive_examples": ["展示产品功能"], "negative_examples": ["纯情绪群像"]},
+    {"tag": "symbolic_reveal", "dimension": "interaction_mode", "label": "象征揭示", "definition": "通过隐喻、转场、显影完成意义揭示。", "aliases": ["隐喻", "揭示", "转场", "显影"], "positive_examples": ["道具揭示主题"], "negative_examples": ["直接说明"]},
+    {"tag": "team_collaboration", "dimension": "interaction_mode", "label": "团队协作", "definition": "多人共同完成、互相带动或组成群体能量。", "aliases": ["团队", "协作", "共同", "多人"], "positive_examples": ["个体汇入团队群像"], "negative_examples": ["孤立个人英雄"]},
+
+    {"tag": "screen", "dimension": "visual_motifs", "label": "屏幕 / 界面", "definition": "以屏幕、显示器、手机或界面作为视觉母题。", "aliases": ["屏幕", "显示器", "界面", "手机", "screen"], "positive_examples": ["隔屏对话"], "negative_examples": ["无屏幕实体"]},
+    {"tag": "silhouette", "dimension": "visual_motifs", "label": "轮廓 / 逆光", "definition": "以轮廓、逆光、剪影表达人物状态。", "aliases": ["轮廓", "逆光", "剪影"], "positive_examples": ["逆光中人物显影"], "negative_examples": ["均匀平光"]},
+    {"tag": "upward_motion", "dimension": "visual_motifs", "label": "向上运动", "definition": "以仰望、向上、起跑、加速表达上升。", "aliases": ["仰望", "向上", "起跑", "加速"], "positive_examples": ["人物加速向前"], "negative_examples": ["静态平视"]},
+    {"tag": "urban_architecture", "dimension": "visual_motifs", "label": "城市建筑", "definition": "以建筑、城市、CBD、天际线表达空间语境。", "aliases": ["建筑", "城市", "cbd", "大楼", "天际线"], "positive_examples": ["城市天际线"], "negative_examples": ["室内纯人物"]},
+    {"tag": "crowd_contrast", "dimension": "visual_motifs", "label": "人群反差", "definition": "以人群、拥挤或背景对照表达差异。", "aliases": ["人群", "拥挤", "背景", "狂欢"], "positive_examples": ["人物与人群形成对照"], "negative_examples": ["没有群体背景"]},
+    {"tag": "object_metaphor", "dimension": "visual_motifs", "label": "道具隐喻", "definition": "以按钮、存钱罐、蛋糕等物件承载意义。", "aliases": ["按钮", "存钱罐", "道具", "蛋糕"], "positive_examples": ["道具承载主题"], "negative_examples": ["纯人物动作"]},
+    {"tag": "hands", "dimension": "visual_motifs", "label": "手部", "definition": "以手、指尖、触碰表达行动或连接。", "aliases": ["手", "指尖", "触碰", "手部"], "positive_examples": ["手部操作和触碰"], "negative_examples": ["无细节特写"]},
+
+    {"tag": "becoming", "dimension": "symbolic_logic", "label": "成为 / 成长", "definition": "象征逻辑是成长、成为、潜力释放。", "aliases": ["成为", "成长", "生长", "潜力"], "positive_examples": ["人物从试探到发光"], "negative_examples": ["静态陈列"]},
+    {"tag": "connection", "dimension": "symbolic_logic", "label": "连接", "definition": "象征逻辑是人与人或系统间连接。", "aliases": ["连接", "人与人", "同频", "共振"], "positive_examples": ["多人建立关系"], "negative_examples": ["孤立展示"]},
+    {"tag": "human_centered_technology", "dimension": "symbolic_logic", "label": "人本科技", "definition": "技术被表达为服务人、连接人、改善生活，而非单纯炫技。", "aliases": ["科技服务于人", "科技向善", "关注于人", "以人为本", "人本科技", "更好生活"], "positive_examples": ["科技让人与人连接"], "negative_examples": ["只展示复杂界面"]},
+    {"tag": "scale_to_person", "dimension": "symbolic_logic", "label": "从规模到个体", "definition": "在宏大规模与个人感受之间建立关系。", "aliases": ["宏大", "个体", "十亿", "大众", "全球"], "positive_examples": ["全球规模落到个体"], "negative_examples": ["只有宏大数字"]},
+    {"tag": "contrast", "dimension": "symbolic_logic", "label": "对比 / 反差", "definition": "通过对比或反差表达意义。", "aliases": ["对比", "反差", "不协调"], "positive_examples": ["前后状态反差"], "negative_examples": ["平铺直叙"]},
+    {"tag": "origin_to_future", "dimension": "symbolic_logic", "label": "从起源到未来", "definition": "从起点、初心或过去导向未来。", "aliases": ["起源", "未来", "初心"], "positive_examples": ["从初心走向未来"], "negative_examples": ["只有当下片段"]},
+
+    {"tag": "explosive_build", "dimension": "rhythm_pattern", "label": "爆发式推进", "definition": "节奏从蓄势到释放、冲刺或突破。", "aliases": ["加速", "突破", "释放", "冲刺"], "positive_examples": ["剪辑逐渐加速"], "negative_examples": ["全程平静"]},
+    {"tag": "slow_reveal", "dimension": "rhythm_pattern", "label": "慢揭示", "definition": "节奏逐步推进和揭示。", "aliases": ["拉远", "揭示", "逐步", "推进"], "positive_examples": ["镜头慢慢揭示空间"], "negative_examples": ["快速切换"]},
+    {"tag": "calm_direct", "dimension": "rhythm_pattern", "label": "克制直接", "definition": "节奏平静、克制、直接，强调可信和对话感。", "aliases": ["克制", "平静", "直视", "对话", "稳重", "可靠"], "positive_examples": ["稳定直面对话"], "negative_examples": ["高燃快剪"]},
+    {"tag": "contrast_cut", "dimension": "rhythm_pattern", "label": "反差剪辑", "definition": "通过转换、对比或反差形成节奏。", "aliases": ["反差", "转换", "对比"], "positive_examples": ["前后场景强对比"], "negative_examples": ["无明显转换"]},
+    {"tag": "montage", "dimension": "rhythm_pattern", "label": "蒙太奇 / 群像", "definition": "通过剪辑、群像和切换组织节奏。", "aliases": ["剪辑", "群像", "切换"], "positive_examples": ["群像快剪"], "negative_examples": ["单镜到底对话"]}
+  ],
+  "deprecated_mappings": [],
+  "candidate_tags": []
+}

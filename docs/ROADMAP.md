@@ -1,130 +1,66 @@
-# 路线图
+# Roadmap
 
-本文只保留阶段路线，不记录当前执行细节。当前执行计划见 `docs/PLAN.md`，完成度见 `docs/EXECUTION_STATUS.md`。
+## Current Status
 
-## v0：项目蓝图
+Implemented:
 
-状态：
+- Bilibili video packaging.
+- Scene package creation.
+- Vision LLM scene analysis.
+- Embedded `tags` in scene analysis.
+- Experience card extraction.
+- Taxonomy-backed tag normalization.
+- Candidate tag logging.
+- Keyword loop over one film or all film outputs.
+- Streaming and thinking debug output for keyword loop.
+- Optional embedding reranking for softer creative matching.
 
-```text
-已完成
-```
+## Recommended Near-Term Work
 
-目标：
-
-1. 明确 SceneWeaver 的产品定位。
-2. 明确 v1 范围和非目标。
-3. 建立初版 schema、技术设计和参考边界。
-
-## v1：Director Experience Analyzer
-
-状态：
-
-```text
-进行中
-```
-
-目标：
+1. Fix existing Chinese mojibake in prompts, taxonomy labels, old tests, and historical sample outputs.
+2. Add a tag-candidate review command:
 
 ```text
-真实视频
-→ scene package
-→ scene analysis
-→ creative fingerprints
-→ film analysis
-→ experience cards
+review-tag-candidates
+merge-tag-candidate
+reject-tag-candidate
 ```
 
-v1 完成后，系统应能从一个真实 Bilibili 视频中稳定提取可复用导演经验卡片。
-
-关键里程碑：
-
-1. v1-0 工程骨架、schema、mock pipeline：已完成。
-2. v1-1 真实视频 package pipeline：已完成真实样本验收。
-3. v1-2 scene-level LLM 分析：已完成 40 scene 真实样本验收。
-4. v1-3 creative fingerprint：已接入真实 `run` 链路并产出 film fingerprint。
-5. v1-4 full-film analysis：待实现。
-6. v1-5 experience card extraction：待实现。
-7. v1-6 experience card retrieval：待实现。
-8. v1-7 完整 `run` 后半段闭环：待实现。
-
-## v2：Director Memory Retrieval
-
-目标：
-
-让 `experience_cards.jsonl` 变成可检索的导演经验库。
-
-能力：
-
-1. 关键词检索。
-2. 情绪、叙事、技法分层检索。
-3. embedding 检索。
-4. 检索结果解释。
-
-示例：
+3. Add embedding cache for experience cards:
 
 ```text
-输入：青春 / 热情 / 梦想
-输出：底层情感、叙事逻辑、拍摄技法、视觉符号、文案语气
+analysis/experience_card_embeddings.jsonl
 ```
 
-## v3：Director Treatment Generation
+4. Add semantic retrieval smoke tests that run only when `sentence-transformers` is installed.
+5. Improve retrieval output for creative review:
 
-目标：
+- show why tag dimensions matched;
+- show semantic score;
+- show recommended reuse condition;
+- show source scene evidence.
 
-基于 brief 和经验库生成多版本导演稿。
+## Deferred
 
-能力：
+- Web UI.
+- Vector database.
+- Production database.
+- Multi-platform video download.
+- Storyboard generation.
+- Direct video generation.
 
-1. brief 解析。
-2. 经验卡片召回。
-3. 情感温度参数。
-4. 多版本 treatment。
-5. shotlist。
-6. music direction。
-7. copywriting tone。
+## Vector Database Decision
 
-示例：
+Do not add FAISS, Chroma, Milvus, or another vector store yet.
+
+Reason:
 
 ```text
-输入：新能源车企 / 校招 / 青春 / 热血 / 不要互联网大厂味
-输出：3 版不同情绪温度的导演稿
+The current card library is small enough for in-memory scoring, and in-memory scoring is easier to debug.
 ```
 
-## v4：产品化
+Revisit when:
 
-目标：
-
-把本地 pipeline 变成可持续使用的工具。
-
-能力：
-
-1. Web UI。
-2. 项目管理。
-3. 多平台输入。
-4. 可视化情绪曲线。
-5. 可编辑经验卡片。
-6. 可导出 treatment / shotlist。
-
-## v5：导演知识系统
-
-目标：
-
-从经验库升级为导演知识系统。
-
-可能方向：
-
-1. Graph RAG。
-2. 视觉符号库。
-3. 品牌人格 taxonomy。
-4. 情绪曲线 taxonomy。
-5. narrative pattern library。
-6. Taste Engine。
-
-## 长期判断
-
-SceneWeaver 的长期价值不在于自动化视频生成，而在于：
-
-```text
-把商业视频为什么有效这件事结构化。
-```
+- the card library reaches tens of thousands of cards;
+- retrieval latency becomes a real bottleneck;
+- multiple projects need a shared persistent semantic index.

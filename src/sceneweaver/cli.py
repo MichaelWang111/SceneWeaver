@@ -16,7 +16,14 @@ from sceneweaver.analysis.associate_analyzer import (
     DEFAULT_TIMEOUT_SECONDS,
     associate_input,
 )
-from sceneweaver.analysis.fingerprint import generate_scene_fingerprints
+from sceneweaver.analysis.experience_extractor import extract_experience_cards
+from sceneweaver.analysis.keyword_loop import run_keyword_loop
+from sceneweaver.analysis.semantic import DEFAULT_EMBEDDING_MODEL, DEFAULT_SEMANTIC_WEIGHT
+from sceneweaver.analysis.tags import (
+    build_query_tags,
+    generate_analysis_tags,
+    retrieve_experience_card_matches_from_jsonl,
+)
 from sceneweaver.input.bilibili import extract_bvid
 from sceneweaver.llm.client import LLMConfig
 from sceneweaver.pipeline.mock_pipeline import run_mock_pipeline
@@ -145,13 +152,168 @@ def fingerprint_scenes(
         False,
         "--update",
         "--force",
-        help="Overwrite existing scene fingerprint files.",
+        help="Overwrite existing tags in analysis files.",
     ),
 ) -> None:
-    """Generate scene and film creative fingerprints from existing scene analyses."""
-    film_fingerprint = generate_scene_fingerprints(output, force=update, log=typer.echo)
-    typer.echo(f"Fingerprints written to: {output.resolve() / 'fingerprints'}")
-    typer.echo(f"Scenes fingerprinted: {film_fingerprint.scene_count}")
+    """Legacy command: add or refresh tags inside existing scene analyses."""
+    scenes = generate_analysis_tags(output, force=update, log=typer.echo)
+    typer.echo(f"Tags written to: {output.resolve() / 'analysis'}")
+    typer.echo(f"Scenes tagged: {scenes.scene_count}")
+
+
+@app.command("extract-experience")
+def extract_experience(
+    output: Path = typer.Argument(..., help="Video output directory containing analysis/scenes.json."),
+    update: bool = typer.Option(
+        False,
+        "--update",
+        "--force",
+        help="Overwrite existing experience_cards.jsonl.",
+    ),
+) -> None:
+    """Extract first-pass experience cards from scene analyses."""
+    cards = extract_experience_cards(output, force=update, log=typer.echo)
+    typer.echo(f"Experience cards written to: {output.resolve() / 'analysis' / 'experience_cards.jsonl'}")
+    typer.echo(f"Experience cards extracted: {len(cards)}")
+
+
+@app.command("retrieve-cards")
+def retrieve_cards(
+    output: Path = typer.Argument(..., help="Video output directory containing analysis/experience_cards.jsonl."),
+    input_text: str = typer.Argument(..., help="Brief or keywords to match against experience cards."),
+    top_k: int = typer.Option(
+        5,
+        "--top-k",
+        min=1,
+        help="Maximum number of matching experience cards to return.",
+    ),
+) -> None:
+    """Retrieve grounded experience cards with an explainable tag match."""
+    query_tags = build_query_tags(
+        input_text,
+        candidate_log_path=output.resolve() / "analysis" / "tag_candidates.jsonl",
+    )
+    result = retrieve_experience_card_matches_from_jsonl(
+        query_tags,
+        output.resolve() / "analysis" / "experience_cards.jsonl",
+        top_k=top_k,
+    )
+    typer.echo(json.dumps(result.model_dump(mode="json"), ensure_ascii=False, indent=2))
+
+
+@app.command("keyword-loop")
+def keyword_loop(
+    card_source: Path = typer.Argument(
+        ...,
+        help=(
+            "Experience-card source: an experience_cards.jsonl file, a film output directory, "
+            "or a collection directory such as outputs/film_analysis."
+        ),
+    ),
+    input_text: str = typer.Argument(..., help="Brief or keywords to expand, tag, and match against experience cards."),
+    top_k: int = typer.Option(
+        5,
+        "--top-k",
+        min=1,
+        help="Maximum number of matching experience cards to return.",
+    ),
+    semantic: bool = typer.Option(
+        False,
+        "--semantic",
+        help="Use local embedding similarity to rerank experience cards after tag scoring.",
+    ),
+    embedding_model: str = typer.Option(
+        DEFAULT_EMBEDDING_MODEL,
+        "--embedding-model",
+        help="SentenceTransformer model used when --semantic is enabled.",
+    ),
+    semantic_weight: float = typer.Option(
+        DEFAULT_SEMANTIC_WEIGHT,
+        "--semantic-weight",
+        min=0.0,
+        help="Score multiplier for embedding cosine similarity when --semantic is enabled.",
+    ),
+    association_output: Optional[Path] = typer.Option(
+        None,
+        "--association-output",
+        help="JSON file where the intermediate LLM association analysis will be written.",
+    ),
+    result_output: Optional[Path] = typer.Option(
+        None,
+        "--result-output",
+        help="Optional JSON file where the full keyword loop result will be written.",
+    ),
+    max_items: int = typer.Option(
+        DEFAULT_MAX_ITEMS,
+        "--max-items",
+        min=8,
+        max=120,
+        help="Target number of association items. The LLM may vary within a useful creative range.",
+    ),
+    prompt_path: Optional[Path] = typer.Option(
+        None,
+        "--prompt",
+        help="Custom associate prompt path.",
+    ),
+    timeout_seconds: float = typer.Option(
+        DEFAULT_TIMEOUT_SECONDS,
+        "--timeout-seconds",
+        min=1.0,
+        help="LLM request timeout in seconds.",
+    ),
+    retries: int = typer.Option(
+        DEFAULT_RETRIES,
+        "--retries",
+        min=0,
+        help="Retry count for timeout, connection, rate-limit, and 5xx failures.",
+    ),
+    debug: bool = typer.Option(
+        False,
+        "--debug",
+        help="Print keyword-loop progress to stderr.",
+    ),
+    stream: bool = typer.Option(
+        False,
+        "--stream",
+        "--flue",
+        help="Stream raw LLM JSON chunks to stderr while preserving final validated JSON on stdout.",
+    ),
+    thinking: bool = typer.Option(
+        False,
+        "--thinking",
+        help="Enable DashScope/Qwen thinking mode and stream reasoning_content to stderr.",
+    ),
+    thinking_budget: Optional[int] = typer.Option(
+        None,
+        "--thinking-budget",
+        min=1,
+        help="Maximum tokens for DashScope/Qwen thinking content. Implies --thinking.",
+    ),
+) -> None:
+    """Expand one keyword brief, refresh tags, and retrieve matching experience cards."""
+    request_thinking = thinking or thinking_budget is not None
+    result = run_keyword_loop(
+        input_text,
+        card_source,
+        association_output_path=association_output,
+        result_output_path=result_output,
+        top_k=top_k,
+        semantic=semantic,
+        embedding_model=embedding_model,
+        semantic_weight=semantic_weight,
+        max_items=max_items,
+        prompt_path=prompt_path,
+        timeout_seconds=timeout_seconds,
+        retries=retries,
+        log=(lambda message: typer.echo(f"[keyword-loop] {message}", err=True)) if debug or stream or request_thinking else None,
+        stream_callback=_write_stderr_chunk if stream else None,
+        reasoning_callback=_write_stderr_chunk if request_thinking else None,
+        enable_thinking=True if request_thinking else None,
+        thinking_budget=thinking_budget,
+    )
+    typer.echo(json.dumps(result.model_dump(mode="json"), ensure_ascii=False, indent=2))
+    if result_output is not None:
+        typer.echo(f"Keyword loop result written to: {result_output.resolve()}", err=True)
 
 
 @app.command("associate")
@@ -294,7 +456,7 @@ def run_pipeline(
     output_dir = FILM_ANALYSIS_DIR / output_name
 
     typer.echo(f"Output directory: {output_dir.resolve()}")
-    typer.echo("Phase 1/2: Packaging video into scene packages...")
+    typer.echo("Phase 1/3: Packaging video into scene packages...")
     packaged_dir = run_package_video(
         url=url,
         output_dir=output_dir,
@@ -305,7 +467,7 @@ def run_pipeline(
         log=typer.echo,
     )
 
-    typer.echo("Phase 2/3: Analyzing scene packages...")
+    typer.echo("Phase 2/3: Analyzing scene packages with tags...")
     scenes = analyze_scene_packages(
         packaged_dir,
         limit=limit,
@@ -314,8 +476,8 @@ def run_pipeline(
         max_workers=concurrency,
         log=typer.echo,
     )
-    typer.echo("Phase 3/3: Generating creative fingerprints...")
-    film_fingerprint = generate_scene_fingerprints(
+    typer.echo("Phase 3/3: Extracting experience cards...")
+    cards = extract_experience_cards(
         packaged_dir,
         force=update,
         log=typer.echo,
@@ -323,8 +485,8 @@ def run_pipeline(
     typer.echo(f"Scene packages written to: {packaged_dir / 'packages'}")
     typer.echo(f"Scene analysis written to: {packaged_dir / 'analysis'}")
     typer.echo(f"Scenes analyzed: {scenes.scene_count}")
-    typer.echo(f"Fingerprints written to: {packaged_dir / 'fingerprints'}")
-    typer.echo(f"Scenes fingerprinted: {film_fingerprint.scene_count}")
+    typer.echo(f"Experience cards written to: {packaged_dir / 'analysis' / 'experience_cards.jsonl'}")
+    typer.echo(f"Experience cards extracted: {len(cards)}")
 
 
 def build_key_associate_output_path(input_text: str, *, now: datetime | None = None) -> Path:

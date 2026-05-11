@@ -3,6 +3,7 @@ from __future__ import annotations
 from pydantic import Field, field_validator, model_validator
 
 from sceneweaver.schemas.common import SCENE_ID_RE, StrictBaseModel, TimeRange
+from sceneweaver.schemas.tags import TagProfile
 
 
 class VisualObservation(StrictBaseModel):
@@ -39,6 +40,7 @@ class SceneAnalysis(StrictBaseModel):
     time_range: TimeRange
     visual_observation: VisualObservation
     director_interpretation: DirectorInterpretation
+    tags: TagProfile
     experience_candidates: list[ExperienceCandidate] = Field(default_factory=list)
     emotion_temperature: float = Field(ge=0, le=1)
 
@@ -61,4 +63,3 @@ class ScenesAnalysis(StrictBaseModel):
         if self.scene_count != len(self.scenes):
             raise ValueError("scene_count must match scenes length")
         return self
-

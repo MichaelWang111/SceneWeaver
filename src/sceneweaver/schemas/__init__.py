@@ -12,6 +12,7 @@ from sceneweaver.schemas.fingerprint import (
 from sceneweaver.schemas.film_analysis import FilmAnalysis
 from sceneweaver.schemas.scene_analysis import SceneAnalysis, ScenesAnalysis
 from sceneweaver.schemas.scene_package import FrameSet, SceneMetadata, ScenePackage
+from sceneweaver.schemas.tags import TagCandidate, TagEvidence, TagProfile
 
 __all__ = [
     "AssociationAnalysis",
@@ -28,5 +29,8 @@ __all__ = [
     "ScenesAnalysis",
     "SubtitleItem",
     "SubtitleSegment",
+    "TagEvidence",
+    "TagCandidate",
+    "TagProfile",
     "TimeRange",
 ]

@@ -40,9 +40,9 @@ def detect_scenes(
 ) -> list[SceneSpan]:
     """Detect scenes with PySceneDetect and optionally split clips with the CLI."""
     scene_spans = _detect_scene_spans(video_path, threshold)
-    scenes_dir.mkdir(parents=True, exist_ok=True)
 
     if split_video:
+        scenes_dir.mkdir(parents=True, exist_ok=True)
         cmd = [
             sys.executable,
             "-m",

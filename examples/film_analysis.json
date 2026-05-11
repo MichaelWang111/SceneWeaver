@@ -1,6 +1,6 @@
 {
   "video_id": "bilibili_BVxxxx",
-  "fingerprint": {
+  "tags": {
     "emotion_core": ["belonging", "trust", "human_care"],
     "audience_projection": ["future_builder", "participant"],
     "narrative_function": ["establish_trust", "culture_showcase", "invitation"],
@@ -8,13 +8,14 @@
     "visual_motifs": ["urban_architecture", "hands"],
     "symbolic_logic": ["connection", "human_centered_technology"],
     "rhythm_pattern": ["montage"],
+    "custom_tags": [],
     "evidence": [
       {
         "source_id": "scene_001",
         "source_type": "scene",
         "field": "director_interpretation.underlying_emotion",
         "quote": "我可以在这里被看见并参与真实工作",
-        "note": "film fingerprint aggregates scene-level evidence"
+        "note": "film tags aggregate scene-level evidence"
       }
     ],
     "confidence": 0.82

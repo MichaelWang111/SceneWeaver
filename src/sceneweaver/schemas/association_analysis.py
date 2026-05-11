@@ -3,7 +3,7 @@ from __future__ import annotations
 from pydantic import Field, field_validator, model_validator
 
 from sceneweaver.schemas.common import StrictBaseModel
-from sceneweaver.schemas.fingerprint import CreativeFingerprint
+from sceneweaver.schemas.tags import TagProfile
 
 
 class AssociationItem(StrictBaseModel):
@@ -47,13 +47,25 @@ class DirectorPossibility(StrictBaseModel):
 
 class AssociationAnalysis(StrictBaseModel):
     input_text: str = Field(min_length=1)
-    query_fingerprint: CreativeFingerprint
+    query_tags: TagProfile
     core_reading: str = Field(min_length=1)
     emotional_arc: EmotionalArc
     association_count: int = Field(ge=8, le=120)
     association_map: AssociationMap
     director_possibilities: list[DirectorPossibility] = Field(min_length=3, max_length=5)
     avoid_cliches: list[str] = Field(min_length=1)
+
+    @model_validator(mode="before")
+    @classmethod
+    def migrate_legacy_query_fingerprint(cls, data):
+        if isinstance(data, dict) and "query_tags" not in data and "query_fingerprint" in data:
+            data = dict(data)
+            data["query_tags"] = data.pop("query_fingerprint")
+        return data
+
+    @property
+    def query_fingerprint(self) -> TagProfile:
+        return self.query_tags
 
     @field_validator("avoid_cliches")
     @classmethod

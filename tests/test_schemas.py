@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from sceneweaver.schemas import AssociationAnalysis, CreativeFingerprint, ExperienceCard, FilmAnalysis, SceneAnalysis, ScenePackage
+from sceneweaver.schemas import AssociationAnalysis, ExperienceCard, FilmAnalysis, SceneAnalysis, ScenePackage, TagProfile
 from sceneweaver.schemas.common import TimeRange
 from sceneweaver.storage.json_store import read_json
 
@@ -38,16 +38,16 @@ def test_experience_temperature_range_must_be_sorted():
         ExperienceCard.model_validate(data)
 
 
-def test_fingerprint_requires_evidence_and_tags():
+def test_tag_profile_requires_evidence_and_tags():
     with pytest.raises(ValueError, match="evidence"):
-        CreativeFingerprint(
+        TagProfile(
             emotion_core=["trust"],
             evidence=[],
             confidence=0.8,
         )
 
     with pytest.raises(ValueError, match="at least one tag"):
-        CreativeFingerprint(
+        TagProfile(
             evidence=[
                 {
                     "source_id": "scene_001",

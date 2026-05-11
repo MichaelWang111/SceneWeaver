@@ -15,12 +15,15 @@ authors = [
 dependencies = [
   "openai>=1.0",
   "pydantic>=2.7",
-  "typer>=0.9",
+  "typer>=0.16,<1.0",
 ]
 
 [project.optional-dependencies]
 dev = [
   "pytest>=8.0",
+]
+semantic = [
+  "sentence-transformers>=3.0",
 ]
 video = [
   "yt-dlp>=2024.0",
