@@ -70,13 +70,37 @@ Keyword loop:
 src/sceneweaver/analysis/keyword_loop.py
 ```
 
+Lightweight tag expansion:
+
+```text
+src/sceneweaver/analysis/tag_expander.py
+```
+
+Creative intent analysis:
+
+```text
+src/sceneweaver/analysis/intent_analyzer.py
+```
+
 Semantic retrieval:
 
 ```text
 src/sceneweaver/analysis/semantic.py
 ```
 
+Retrieval policy:
+
+```text
+src/sceneweaver/retrieval/
+```
+
 ## Retrieval Design
+
+### Script Use Case Scoring
+
+Retrieval is now driven by both fingerprint tags and script use case. Each `ExperienceCard` carries a `script_usecase` that describes where the card fits in a script, such as `opening`, `team_work`, `growth`, `technology_showcase`, `value_expression`, or `ending`.
+
+The query side infers the same use-case shape from the input brief and query tags. Matching script stage adds `3.0`; each matching creative purpose adds `1.5`.
 
 ### Tag Scoring
 
@@ -113,12 +137,40 @@ BAAI/bge-small-zh-v1.5
 Final score:
 
 ```text
-score = tag_score + max(0, semantic_score) * semantic_weight
+score = tag_score
+      + usecase_score
+      + intent_score
+      + max(0, semantic_score) * semantic_weight
+      + card.confidence * 0.5
 ```
 
 Default `semantic_weight` is `4.0`.
 
 The system intentionally does not use a vector database yet. For tens, hundreds, or low thousands of cards, encoding and scoring in memory is simpler and easier to inspect. A vector index can be added later when the card library grows substantially.
+
+### Core-Intent Mode
+
+`keyword-loop --intent` uses a separate prompt that asks the LLM what the creator is really trying to retrieve. It produces must-match terms, nice-to-have terms, avoid terms, target audience, and selection criteria.
+
+Intent scoring is deterministic after the LLM output is validated:
+
+```text
+intent_score = must_hits * intent_weight
+             + nice_hits * intent_weight * 0.5
+             - avoid_hits * intent_weight
+```
+
+Default `intent_weight` is `3.0`.
+
+### Just-Tags Mode
+
+`keyword-loop --just-tags` uses a smaller prompt for quick retrieval tests. It asks the LLM only for:
+
+- expanded terms;
+- dimension-level tag hints;
+- avoid terms.
+
+It does not ask for scene concepts, shot ideas, story material, or director possibilities. The result still flows through the same `build_query_tags` and card retrieval logic.
 
 ## Tag Governance
 

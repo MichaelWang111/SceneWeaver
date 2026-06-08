@@ -134,7 +134,48 @@ Key fields:
 - `visual_symbols`
 - `copywriting_tone`
 - `reuse_condition`
+- `script_usecase`
 - `confidence`
+
+## ScriptUseCase
+
+Used by:
+
+```text
+ExperienceCard.script_usecase
+retrieval results
+```
+
+Purpose:
+
+```text
+Describe where an experience card fits in a script, not only what tags it matches.
+```
+
+Shape:
+
+```json
+{
+  "script_stage": "team_work",
+  "creative_purpose": ["show_team"],
+  "best_usage": "Use in a team culture, collaboration, or collective action segment.",
+  "risk": "May feel like generic office montage if the collaboration logic is not explicit.",
+  "confidence": 0.8
+}
+```
+
+Allowed `script_stage` values:
+
+- `opening`
+- `setup`
+- `character_intro`
+- `team_work`
+- `growth`
+- `technology_showcase`
+- `value_expression`
+- `ending`
+- `transition`
+- `general`
 
 ## KeywordLoopResult
 
@@ -143,16 +184,84 @@ Written when `--result-output` is provided.
 Key fields:
 
 - `input_text`
+- `mode`
 - `association_path`
 - `candidate_log_path`
 - `experience_cards_paths`
+- `unindexed_scene_dirs`
 - `searched_card_count`
 - `matched_card_count`
 - `semantic_enabled`
 - `embedding_model`
 - `semantic_weight`
+- `intent_weight`
 - `top_matches`
 - `association_analysis`
+- `tag_expansion_analysis`
+- `intent_analysis`
 - `retrieval`
 
 `top_matches` is the compact view for humans. `retrieval.results` keeps the full matched cards.
+Each match can include `tag_score`, `usecase_score`, `intent_score`, `quality_score`, `semantic_score`, `matched_usecase`, `script_stage`, `creative_purpose`, `best_usage`, and `risk`.
+
+## TagExpansionAnalysis
+
+Written by `keyword-loop --just-tags`.
+
+Purpose:
+
+```text
+Lightweight keyword expansion for retrieval testing.
+```
+
+Shape:
+
+```json
+{
+  "input_text": "...",
+  "query_tags": {},
+  "expanded_terms": [],
+  "tag_hints": {
+    "emotion_core": [],
+    "audience_projection": [],
+    "narrative_function": [],
+    "interaction_mode": [],
+    "visual_motifs": [],
+    "symbolic_logic": [],
+    "rhythm_pattern": []
+  },
+  "expanded_text": "...",
+  "avoid_terms": []
+}
+```
+
+`expanded_text` is derived from `expanded_terms` and `tag_hints`, then passed into `build_query_tags` together with the original input.
+
+## CreativeIntentAnalysis
+
+Written by `keyword-loop --intent` / `--core-intent`.
+
+Purpose:
+
+```text
+Compact understanding of what the creator really wants to retrieve, used for ranking experience cards.
+```
+
+Shape:
+
+```json
+{
+  "input_text": "...",
+  "query_tags": {},
+  "primary_intent": "...",
+  "must_match": [],
+  "nice_to_have": [],
+  "avoid": [],
+  "intent_keywords": [],
+  "target_audience": [],
+  "selection_criteria": [],
+  "expanded_text": "..."
+}
+```
+
+`expanded_text` is derived from the intent fields and passed into `build_query_tags`. The same fields also drive deterministic `intent_score` ranking.

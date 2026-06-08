@@ -86,6 +86,18 @@ Search experience cards from all film outputs:
 python -m sceneweaver.cli keyword-loop outputs\film_analysis "年轻人逆光奔跑" --result-output outputs\loop_result.json --debug
 ```
 
+Use lightweight tag-only expansion for fast retrieval tests:
+
+```powershell
+python -m sceneweaver.cli keyword-loop outputs\film_analysis "成熟大型商业与科技公司全球推广与招聘宣传片，比如甲骨文、腾讯 / 致力于为人们创造更好生活 / 以与视频受众面对面交流对话为主 / 科技向善 / 致力于创意有趣 / 提供发挥潜力的机会" --just-tags --stream --thinking --thinking-budget 1024 --result-output outputs\loop_result.json --debug
+```
+
+Use core creative-intent analysis when the query should be ranked by what the creator is really looking for, instead of broad tag expansion:
+
+```powershell
+python -m sceneweaver.cli keyword-loop outputs\film_analysis "成熟大型商业与科技公司全球推广与招聘宣传片，比如甲骨文、腾讯 / 致力于为人们创造更好生活 / 以与视频受众面对面交流对话为主 / 科技向善 / 致力于创意有趣 / 提供发挥潜力的机会" --intent --stream --thinking --thinking-budget 1024 --result-output outputs\loop_result.json --debug
+```
+
 Enable local semantic reranking:
 
 ```powershell
@@ -109,7 +121,8 @@ The first `keyword-loop` argument can be:
 Retrieval has two layers:
 
 1. deterministic tag scoring for explainable matching;
-2. optional local embedding reranking for softer creative similarity.
+2. optional core-intent scoring for creator must-match and avoid terms;
+3. optional local embedding reranking for softer creative similarity.
 
 No vector database is required at the current scale. Semantic scoring is done in memory.
 

@@ -4,6 +4,7 @@ from pathlib import Path
 from typing import Callable
 
 from sceneweaver.analysis.tags import build_card_tags, read_scenes_analysis_with_tags
+from sceneweaver.retrieval.usecase import build_script_usecase
 from sceneweaver.schemas import ExperienceCard, SceneAnalysis, ScenesAnalysis
 from sceneweaver.storage.json_store import write_jsonl
 
@@ -89,6 +90,22 @@ def _build_card(
         avoid=["避免脱离原始 scene 证据的空泛口号"],
         emotion_temperature_range=_temperature_range(scene.emotion_temperature),
         reuse_condition=reuse_condition,
+        script_usecase=build_script_usecase(
+            scene.tags,
+            text=" ".join(
+                [
+                    " ".join(keywords),
+                    underlying_emotion,
+                    narrative_logic,
+                    director_strategy,
+                    " ".join(shooting_techniques),
+                    " ".join(visual_symbols),
+                    copywriting_tone,
+                    reuse_condition,
+                ]
+            ),
+            base_confidence=confidence,
+        ),
         confidence=confidence,
     )
     return placeholder.model_copy(update={"tags": build_card_tags(placeholder)})

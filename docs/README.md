@@ -24,6 +24,7 @@ video case
 Retrieval now has two layers:
 
 1. tag scoring for explainable matching;
-2. optional embedding reranking for softer creative similarity.
+2. optional core-intent scoring for creator must-match and avoid terms;
+3. optional embedding reranking for softer creative similarity.
 
 The first semantic model target is `BAAI/bge-small-zh-v1.5`. Vector databases are intentionally deferred until the experience-card library is large enough to justify the operational cost.

@@ -30,8 +30,16 @@ class ExperienceCardMatch(StrictBaseModel):
     card_id: str
     score: float = Field(ge=0)
     tag_score: float = Field(default=0, ge=0)
+    usecase_score: float = Field(default=0, ge=0)
+    intent_score: float = Field(default=0)
+    quality_score: float = Field(default=0, ge=0)
     semantic_score: float | None = Field(default=None, ge=-1, le=1)
     matched_dimensions: dict[str, list[str]]
+    matched_usecase: dict[str, list[str]] = Field(default_factory=dict)
+    script_stage: str = "general"
+    creative_purpose: list[str] = Field(default_factory=list)
+    best_usage: str = ""
+    risk: str = ""
     evidence: list[TagEvidence]
     card: ExperienceCard
 
@@ -290,6 +298,10 @@ def match_experience_cards(
             card_id=match.card.card_id,
             score=round(match.score, 3),
             tag_score=round(match.score, 3),
+            script_stage=match.card.script_usecase.script_stage,
+            creative_purpose=match.card.script_usecase.creative_purpose,
+            best_usage=match.card.script_usecase.best_usage,
+            risk=match.card.script_usecase.risk,
             matched_dimensions=match.matched_dimensions,
             evidence=match.card.tags.evidence,
             card=match.card,

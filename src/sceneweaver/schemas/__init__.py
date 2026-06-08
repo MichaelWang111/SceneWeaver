@@ -2,7 +2,7 @@
 
 from sceneweaver.schemas.association_analysis import AssociationAnalysis
 from sceneweaver.schemas.common import SubtitleItem, SubtitleSegment, TimeRange
-from sceneweaver.schemas.experience_card import ExperienceCard
+from sceneweaver.schemas.experience_card import ExperienceCard, ScriptUseCase
 from sceneweaver.schemas.fingerprint import (
     CreativeFingerprint,
     FilmFingerprint,
@@ -12,10 +12,11 @@ from sceneweaver.schemas.fingerprint import (
 from sceneweaver.schemas.film_analysis import FilmAnalysis
 from sceneweaver.schemas.scene_analysis import SceneAnalysis, ScenesAnalysis
 from sceneweaver.schemas.scene_package import FrameSet, SceneMetadata, ScenePackage
-from sceneweaver.schemas.tags import TagCandidate, TagEvidence, TagProfile
+from sceneweaver.schemas.tags import CreativeIntentAnalysis, TagCandidate, TagEvidence, TagExpansionAnalysis, TagProfile
 
 __all__ = [
     "AssociationAnalysis",
+    "CreativeIntentAnalysis",
     "CreativeFingerprint",
     "ExperienceCard",
     "FilmFingerprint",
@@ -27,10 +28,12 @@ __all__ = [
     "SceneMetadata",
     "ScenePackage",
     "ScenesAnalysis",
+    "ScriptUseCase",
     "SubtitleItem",
     "SubtitleSegment",
     "TagEvidence",
     "TagCandidate",
+    "TagExpansionAnalysis",
     "TagProfile",
     "TimeRange",
 ]

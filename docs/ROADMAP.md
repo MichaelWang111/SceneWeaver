@@ -13,6 +13,7 @@ Implemented:
 - Candidate tag logging.
 - Keyword loop over one film or all film outputs.
 - Streaming and thinking debug output for keyword loop.
+- Core creative-intent prompt and intent scoring for retrieval ranking.
 - Optional embedding reranking for softer creative matching.
 
 ## Recommended Near-Term Work
@@ -26,14 +27,15 @@ merge-tag-candidate
 reject-tag-candidate
 ```
 
-3. Add embedding cache for experience cards:
+3. Add optional LLM rerank pass after tag / intent / semantic preselection for the top 10-20 cards.
+4. Add embedding cache for experience cards:
 
 ```text
 analysis/experience_card_embeddings.jsonl
 ```
 
-4. Add semantic retrieval smoke tests that run only when `sentence-transformers` is installed.
-5. Improve retrieval output for creative review:
+5. Add semantic retrieval smoke tests that run only when `sentence-transformers` is installed.
+6. Improve retrieval output for creative review:
 
 - show why tag dimensions matched;
 - show semantic score;

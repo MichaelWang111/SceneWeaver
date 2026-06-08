@@ -63,17 +63,22 @@ def test_cli_keyword_loop_streams_and_thinking(monkeypatch, tmp_path):
         def model_dump(self, *, mode: str = "python") -> dict:
             return {
                 "input_text": "young people running",
+                "mode": "just-tags",
                 "association_path": str(tmp_path / "association.json"),
                 "candidate_log_path": str(tmp_path / "tag_candidates.jsonl"),
                 "experience_cards_path": str(tmp_path / "experience_cards.jsonl"),
                 "experience_cards_paths": [str(tmp_path / "experience_cards.jsonl")],
+                "unindexed_scene_dirs": [],
                 "searched_card_count": 1,
                 "matched_card_count": 0,
                 "semantic_enabled": True,
                 "embedding_model": "BAAI/bge-small-zh-v1.5",
                 "semantic_weight": 4.0,
+                "intent_weight": 0.0,
                 "top_matches": [],
-                "association_analysis": {"input_text": "young people running"},
+                "association_analysis": None,
+                "tag_expansion_analysis": {"input_text": "young people running"},
+                "intent_analysis": None,
                 "retrieval": {"query_tags": {}, "results": []},
                 "next_actions": [],
             }
@@ -96,6 +101,7 @@ def test_cli_keyword_loop_streams_and_thinking(monkeypatch, tmp_path):
             "keyword-loop",
             str(tmp_path / "film_analysis"),
             "young people running",
+            "--just-tags",
             "--semantic",
             "--embedding-model",
             "BAAI/bge-small-zh-v1.5",
@@ -112,6 +118,9 @@ def test_cli_keyword_loop_streams_and_thinking(monkeypatch, tmp_path):
     assert result.exit_code == 0
     assert calls["input_text"] == "young people running"
     assert calls["stream_callback"] is not None
+    assert calls["just_tags"] is True
+    assert calls["intent"] is False
+    assert calls["intent_weight"] == 3.0
     assert calls["semantic"] is True
     assert calls["embedding_model"] == "BAAI/bge-small-zh-v1.5"
     assert calls["semantic_weight"] == 4

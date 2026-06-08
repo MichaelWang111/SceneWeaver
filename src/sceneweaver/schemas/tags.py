@@ -83,3 +83,25 @@ class TagProfile(StrictBaseModel):
         ):
             raise ValueError("tag profile must contain at least one tag")
         return self
+
+
+class TagExpansionAnalysis(StrictBaseModel):
+    input_text: str = Field(min_length=1)
+    query_tags: TagProfile
+    expanded_terms: list[str] = Field(min_length=1)
+    tag_hints: dict[str, list[str]] = Field(default_factory=dict)
+    expanded_text: str = Field(min_length=1)
+    avoid_terms: list[str] = Field(default_factory=list)
+
+
+class CreativeIntentAnalysis(StrictBaseModel):
+    input_text: str = Field(min_length=1)
+    query_tags: TagProfile
+    primary_intent: str = Field(min_length=1)
+    must_match: list[str] = Field(min_length=1)
+    nice_to_have: list[str] = Field(default_factory=list)
+    avoid: list[str] = Field(default_factory=list)
+    intent_keywords: list[str] = Field(default_factory=list)
+    target_audience: list[str] = Field(default_factory=list)
+    selection_criteria: list[str] = Field(default_factory=list)
+    expanded_text: str = Field(min_length=1)

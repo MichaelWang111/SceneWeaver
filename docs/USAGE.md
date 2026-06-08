@@ -73,6 +73,36 @@ keyword brief
 -> optional semantic reranking
 ```
 
+Use lightweight tag-only expansion when you want faster retrieval tests and do not need scene ideas or full directing associations:
+
+```powershell
+python -m sceneweaver.cli keyword-loop outputs\film_analysis "成熟大型商业与科技公司全球推广与招聘宣传片，比如甲骨文、腾讯 / 致力于为人们创造更好生活 / 以与视频受众面对面交流对话为主 / 科技向善 / 致力于创意有趣 / 提供发挥潜力的机会" --just-tags --stream --thinking --thinking-budget 1024 --result-output outputs\loop_result.json --debug
+```
+
+`--just-tags` asks the LLM only for tag-level expansion:
+
+- expanded terms;
+- dimension hints;
+- avoid terms.
+
+It does not ask for scenes, story material, shot ideas, or director possibilities.
+
+Use core creative-intent analysis when broad tag expansion is too loose and the ranking should follow the creator's real selection intent:
+
+```powershell
+python -m sceneweaver.cli keyword-loop outputs\film_analysis "成熟大型商业与科技公司全球推广与招聘宣传片，比如甲骨文、腾讯 / 致力于为人们创造更好生活 / 以与视频受众面对面交流对话为主 / 科技向善 / 致力于创意有趣 / 提供发挥潜力的机会" --intent --stream --thinking --thinking-budget 1024 --result-output outputs\loop_result.json --debug
+```
+
+`--intent` is also available as `--core-intent`. It asks the LLM for:
+
+- primary creative intent;
+- must-match conditions;
+- nice-to-have conditions;
+- avoid conditions;
+- target audience and selection criteria.
+
+It does not ask for scenes, story material, shot ideas, or broad tag expansion. Results include `intent_analysis`, `intent_weight`, and `top_matches[].intent_score`.
+
 ## Streaming and Thinking
 
 Stream raw provider chunks to stderr:
@@ -117,13 +147,25 @@ python -m sceneweaver.cli keyword-loop outputs\film_analysis "年轻人逆光奔
 
 Output includes:
 
+- `mode`
 - `searched_card_count`
 - `matched_card_count`
+- `unindexed_scene_dirs`
 - `semantic_enabled`
 - `embedding_model`
+- `intent_weight`
 - `top_matches[].tag_score`
+- `top_matches[].usecase_score`
+- `top_matches[].intent_score`
+- `top_matches[].quality_score`
 - `top_matches[].semantic_score`
+- `top_matches[].script_stage`
+- `top_matches[].creative_purpose`
+- `top_matches[].best_usage`
+- `top_matches[].risk`
 - `top_matches[].score`
+
+If `unindexed_scene_dirs` is not empty, those videos have `analysis/scenes.json` but do not yet have `analysis/experience_cards.jsonl`. Run `extract-experience` on those film directories before judging retrieval quality.
 
 ## Legacy Command
 

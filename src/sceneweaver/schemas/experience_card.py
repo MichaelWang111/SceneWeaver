@@ -1,9 +1,45 @@
 from __future__ import annotations
 
+import re
+from typing import Literal
+
 from pydantic import Field, field_validator, model_validator
 
 from sceneweaver.schemas.common import EXPERIENCE_ID_RE, SCENE_ID_RE, StrictBaseModel
 from sceneweaver.schemas.tags import TagProfile
+
+SCRIPT_PURPOSE_RE = re.compile(r"[^0-9A-Za-z]+")
+
+ScriptStage = Literal[
+    "opening",
+    "setup",
+    "character_intro",
+    "team_work",
+    "growth",
+    "technology_showcase",
+    "value_expression",
+    "ending",
+    "transition",
+    "general",
+]
+
+
+class ScriptUseCase(StrictBaseModel):
+    script_stage: ScriptStage = "general"
+    creative_purpose: list[str] = Field(default_factory=lambda: ["general_expression"], min_length=1)
+    best_usage: str = "General directing reference."
+    risk: str = "Needs additional creative context before direct reuse."
+    confidence: float = Field(default=0.35, ge=0, le=1)
+
+    @field_validator("creative_purpose")
+    @classmethod
+    def normalize_creative_purpose(cls, values: list[str]) -> list[str]:
+        normalized: list[str] = []
+        for value in values:
+            purpose = SCRIPT_PURPOSE_RE.sub("_", value.strip().lower()).strip("_")
+            if purpose and purpose not in normalized:
+                normalized.append(purpose)
+        return normalized or ["general_expression"]
 
 
 class ExperienceCard(StrictBaseModel):
@@ -21,6 +57,7 @@ class ExperienceCard(StrictBaseModel):
     avoid: list[str] = Field(default_factory=list)
     emotion_temperature_range: tuple[float, float]
     reuse_condition: str
+    script_usecase: ScriptUseCase = Field(default_factory=ScriptUseCase)
     confidence: float = Field(ge=0, le=1)
 
     @model_validator(mode="before")

@@ -15,6 +15,7 @@ from sceneweaver.analysis.associate_analyzer import (
     AssociateLLMClient,
     associate_input,
 )
+from sceneweaver.analysis.intent_analyzer import analyze_creative_intent
 from sceneweaver.analysis.semantic import (
     DEFAULT_EMBEDDING_MODEL,
     DEFAULT_SEMANTIC_WEIGHT,
@@ -23,8 +24,10 @@ from sceneweaver.analysis.semantic import (
     build_query_embedding_text,
     semantic_scores,
 )
-from sceneweaver.analysis.tags import ExperienceCardMatch, RetrievalResult, match_experience_cards, score_experience_card
-from sceneweaver.schemas import AssociationAnalysis, ExperienceCard
+from sceneweaver.analysis.tag_expander import expand_input_tags
+from sceneweaver.analysis.tags import RetrievalResult
+from sceneweaver.retrieval.service import retrieve_experience_matches
+from sceneweaver.schemas import AssociationAnalysis, CreativeIntentAnalysis, ExperienceCard, TagExpansionAnalysis
 from sceneweaver.schemas.common import StrictBaseModel
 from sceneweaver.storage.json_store import read_jsonl, write_json
 
@@ -33,17 +36,22 @@ LogFn = Callable[[str], None]
 
 class KeywordLoopResult(StrictBaseModel):
     input_text: str = Field(min_length=1)
+    mode: str = "associate"
     association_path: str
     candidate_log_path: str
     experience_cards_path: str
     experience_cards_paths: list[str] = Field(default_factory=list)
+    unindexed_scene_dirs: list[str] = Field(default_factory=list)
     searched_card_count: int = 0
     matched_card_count: int = 0
     semantic_enabled: bool = False
     embedding_model: str | None = None
     semantic_weight: float = 0.0
+    intent_weight: float = 0.0
     top_matches: list["KeywordLoopMatchSummary"] = Field(default_factory=list)
-    association_analysis: AssociationAnalysis
+    association_analysis: AssociationAnalysis | None = None
+    tag_expansion_analysis: TagExpansionAnalysis | None = None
+    intent_analysis: CreativeIntentAnalysis | None = None
     retrieval: RetrievalResult
     next_actions: list[str] = Field(default_factory=list)
 
@@ -54,8 +62,16 @@ class KeywordLoopMatchSummary(StrictBaseModel):
     source_scene_ids: list[str]
     score: float
     tag_score: float
+    usecase_score: float = 0.0
+    intent_score: float = 0.0
+    quality_score: float = 0.0
     semantic_score: float | None = None
     matched_dimensions: dict[str, list[str]]
+    matched_usecase: dict[str, list[str]] = Field(default_factory=dict)
+    script_stage: str = "general"
+    creative_purpose: list[str] = Field(default_factory=list)
+    best_usage: str = ""
+    risk: str = ""
     keywords: list[str]
     reuse_condition: str
 
@@ -68,6 +84,9 @@ def run_keyword_loop(
     association_output_path: Path | None = None,
     result_output_path: Path | None = None,
     top_k: int = 5,
+    just_tags: bool = False,
+    intent: bool = False,
+    intent_weight: float = 3.0,
     semantic: bool = False,
     embedding_model: str = DEFAULT_EMBEDDING_MODEL,
     semantic_weight: float = DEFAULT_SEMANTIC_WEIGHT,
@@ -89,8 +108,13 @@ def run_keyword_loop(
         raise ValueError("top_k must be >= 1")
     if semantic_weight < 0:
         raise ValueError("semantic_weight must be >= 0")
+    if intent_weight < 0:
+        raise ValueError("intent_weight must be >= 0")
+    if just_tags and intent:
+        raise ValueError("just_tags and intent cannot both be enabled")
 
     card_paths = discover_experience_card_paths(card_source)
+    unindexed_scene_dirs = discover_unindexed_scene_dirs(card_source)
     if not card_paths:
         raise FileNotFoundError(
             f"experience cards not found under: {card_source.resolve()}. "
@@ -109,38 +133,87 @@ def run_keyword_loop(
         clean_input,
     )
 
-    _log(log, "Phase 1/2: expanding keyword with LLM and refreshing query tags.")
-    association = associate_input(
-        clean_input,
-        client=client,
-        prompt_path=prompt_path,
-        output_path=association_path,
-        max_items=max_items,
-        timeout_seconds=timeout_seconds,
-        retries=retries,
-        log=log,
-        stream_callback=stream_callback,
-        reasoning_callback=reasoning_callback,
-        enable_thinking=enable_thinking,
-        thinking_budget=thinking_budget,
-    )
+    if intent:
+        _log(log, "Phase 1/2: analyzing creative core intent and refreshing query tags.")
+        intent_analysis = analyze_creative_intent(
+            clean_input,
+            client=client,
+            output_path=association_path,
+            timeout_seconds=timeout_seconds,
+            retries=retries,
+            log=log,
+            stream_callback=stream_callback,
+            reasoning_callback=reasoning_callback,
+            enable_thinking=enable_thinking,
+            thinking_budget=thinking_budget,
+        )
+        association = None
+        tag_expansion = None
+        query_tags = intent_analysis.query_tags
+    elif just_tags:
+        _log(log, "Phase 1/2: lightweight tag expansion and query tag refresh.")
+        tag_expansion = expand_input_tags(
+            clean_input,
+            client=client,
+            output_path=association_path,
+            timeout_seconds=timeout_seconds,
+            retries=retries,
+            log=log,
+            stream_callback=stream_callback,
+            reasoning_callback=reasoning_callback,
+            enable_thinking=enable_thinking,
+            thinking_budget=thinking_budget,
+        )
+        association = None
+        intent_analysis = None
+        query_tags = tag_expansion.query_tags
+    else:
+        _log(log, "Phase 1/2: expanding keyword with LLM and refreshing query tags.")
+        association = associate_input(
+            clean_input,
+            client=client,
+            prompt_path=prompt_path,
+            output_path=association_path,
+            max_items=max_items,
+            timeout_seconds=timeout_seconds,
+            retries=retries,
+            log=log,
+            stream_callback=stream_callback,
+            reasoning_callback=reasoning_callback,
+            enable_thinking=enable_thinking,
+            thinking_budget=thinking_budget,
+        )
+        tag_expansion = None
+        intent_analysis = None
+        query_tags = association.query_tags
 
-    _log(log, "Phase 2/2: matching query tags against experience cards.")
+    _log(log, "Phase 2/2: matching query tags and script use case against experience cards.")
+    query_context_text = build_query_embedding_text(
+        clean_input,
+        _extra_text_from_analysis(association, tag_expansion, intent_analysis),
+    )
     if semantic:
         _log(log, f"Semantic rerank enabled: model={embedding_model}, weight={semantic_weight:g}")
         retrieval = match_experience_cards_semantic(
-            association,
-            cards,
+            association=association,
+            tag_expansion=tag_expansion,
+            intent_analysis=intent_analysis,
+            cards=cards,
             top_k=top_k,
             input_text=clean_input,
             embedding_model=embedding_model,
             semantic_weight=semantic_weight,
+            intent_weight=intent_weight,
             embedding_backend=embedding_backend,
         )
     else:
-        retrieval = RetrievalResult(
-            query_tags=association.query_tags,
-            results=match_experience_cards(association.query_tags, cards, top_k=top_k),
+        retrieval = retrieve_experience_matches(
+            query_tags=query_tags,
+            cards=cards,
+            top_k=top_k,
+            input_text=query_context_text,
+            intent_analysis=intent_analysis,
+            intent_weight=intent_weight if intent_analysis is not None else 0.0,
         )
     _log(log, f"Experience card matches: {len(retrieval.results)}")
     for match in retrieval.results[:3]:
@@ -154,19 +227,24 @@ def run_keyword_loop(
     candidate_log_path = association_path.parent / "tag_candidates.jsonl"
     result = KeywordLoopResult(
         input_text=clean_input,
+        mode="intent" if intent else "just-tags" if just_tags else "associate",
         association_path=str(association_path.resolve()),
         candidate_log_path=str(candidate_log_path.resolve()),
         experience_cards_path=str(card_paths[0].resolve()),
         experience_cards_paths=[str(path.resolve()) for path in card_paths],
+        unindexed_scene_dirs=[str(path.resolve()) for path in unindexed_scene_dirs],
         searched_card_count=len(cards),
         matched_card_count=len(retrieval.results),
         semantic_enabled=semantic,
         embedding_model=embedding_model if semantic else None,
         semantic_weight=semantic_weight if semantic else 0.0,
+        intent_weight=intent_weight if intent else 0.0,
         top_matches=summarize_matches(retrieval),
         association_analysis=association,
+        tag_expansion_analysis=tag_expansion,
+        intent_analysis=intent_analysis,
         retrieval=retrieval,
-        next_actions=_next_actions(retrieval, candidate_log_path),
+        next_actions=_next_actions(retrieval, candidate_log_path, unindexed_scene_dirs),
     )
     if result_output_path is not None:
         write_json(result_output_path, result)
@@ -174,42 +252,49 @@ def run_keyword_loop(
 
 
 def match_experience_cards_semantic(
-    association: AssociationAnalysis,
+    association: AssociationAnalysis | None,
+    tag_expansion: TagExpansionAnalysis | None,
+    intent_analysis: CreativeIntentAnalysis | None,
     cards: list[ExperienceCard],
     *,
     input_text: str,
     top_k: int,
     embedding_model: str,
     semantic_weight: float,
+    intent_weight: float = 0.0,
     embedding_backend: EmbeddingBackend | None = None,
 ) -> RetrievalResult:
     backend = embedding_backend or SentenceTransformerBackend(embedding_model)
-    query_text = build_query_embedding_text(input_text, _association_embedding_text(association))
+    query_tags = _query_tags_from_analysis(association, tag_expansion, intent_analysis)
+    extra_text = _extra_text_from_analysis(association, tag_expansion, intent_analysis)
+    query_text = build_query_embedding_text(input_text, extra_text)
     scores = semantic_scores(query_text, cards, backend=backend)
-    rows: list[tuple[ExperienceCardMatch, int]] = []
-    for index, (card, semantic_score) in enumerate(zip(cards, scores)):
-        tag_match = score_experience_card(association.query_tags, card)
-        final_score = tag_match.score + max(0.0, semantic_score) * semantic_weight
-        if final_score <= 0:
-            continue
-        rows.append(
-            (
-                ExperienceCardMatch(
-                    card_id=card.card_id,
-                    score=round(final_score, 3),
-                    tag_score=round(tag_match.score, 3),
-                    semantic_score=round(semantic_score, 4),
-                    matched_dimensions=tag_match.matched_dimensions,
-                    evidence=card.tags.evidence,
-                    card=card,
-                ),
-                index,
-            )
-        )
-    rows.sort(key=lambda row: (-row[0].score, row[1]))
-    return RetrievalResult(
-        query_tags=association.query_tags,
-        results=[match for match, _ in rows[:top_k]],
+    return retrieve_experience_matches(
+        query_tags=query_tags,
+        cards=cards,
+        top_k=top_k,
+        input_text=query_text,
+        intent_analysis=intent_analysis,
+        intent_weight=intent_weight if intent_analysis is not None else 0.0,
+        semantic_scores=scores,
+        semantic_weight=semantic_weight,
+    )
+
+
+def match_experience_cards_with_intent(
+    intent_analysis: CreativeIntentAnalysis,
+    cards: list[ExperienceCard],
+    *,
+    top_k: int,
+    intent_weight: float,
+) -> RetrievalResult:
+    return retrieve_experience_matches(
+        query_tags=intent_analysis.query_tags,
+        cards=cards,
+        top_k=top_k,
+        input_text=intent_analysis.expanded_text,
+        intent_analysis=intent_analysis,
+        intent_weight=intent_weight,
     )
 
 
@@ -223,6 +308,22 @@ def discover_experience_card_paths(card_source: Path) -> list[Path]:
     if direct_path.exists():
         return [direct_path]
     return sorted(source.glob("**/analysis/experience_cards.jsonl"))
+
+
+def discover_unindexed_scene_dirs(card_source: Path) -> list[Path]:
+    source = card_source.resolve()
+    if source.is_file():
+        return []
+    analysis_dirs: list[Path]
+    if (source / "analysis" / "scenes.json").exists():
+        analysis_dirs = [source / "analysis"]
+    else:
+        analysis_dirs = [path.parent for path in source.glob("**/analysis/scenes.json")]
+    return sorted(
+        analysis_dir
+        for analysis_dir in analysis_dirs
+        if not (analysis_dir / "experience_cards.jsonl").exists()
+    )
 
 
 def read_experience_cards(paths: list[Path]) -> list[ExperienceCard]:
@@ -246,8 +347,16 @@ def summarize_matches(retrieval: RetrievalResult, *, limit: int = 5) -> list[Key
             source_scene_ids=match.card.source_scene_ids,
             score=match.score,
             tag_score=match.tag_score,
+            usecase_score=match.usecase_score,
+            intent_score=match.intent_score,
+            quality_score=match.quality_score,
             semantic_score=match.semantic_score,
             matched_dimensions=match.matched_dimensions,
+            matched_usecase=match.matched_usecase,
+            script_stage=match.script_stage,
+            creative_purpose=match.creative_purpose,
+            best_usage=match.best_usage,
+            risk=match.risk,
             keywords=match.card.keywords,
             reuse_condition=match.card.reuse_condition,
         )
@@ -267,8 +376,14 @@ def build_keyword_loop_association_path(
     return loop_output_dir.resolve() / f"{timestamp}_{slug}_{digest}_association.json"
 
 
-def _next_actions(retrieval: RetrievalResult, candidate_log_path: Path) -> list[str]:
+def _next_actions(
+    retrieval: RetrievalResult,
+    candidate_log_path: Path,
+    unindexed_scene_dirs: list[Path],
+) -> list[str]:
     actions: list[str] = []
+    for analysis_dir in unindexed_scene_dirs:
+        actions.append(f"Experience cards missing for {analysis_dir}. Run extract-experience on its film directory.")
     if not retrieval.results:
         actions.append("No experience cards matched. Review query_tags and expand taxonomy aliases or add more cards.")
     if candidate_log_path.exists():
@@ -298,6 +413,34 @@ def _association_embedding_text(association: AssociationAnalysis) -> str:
             ]
         )
     return "\n".join(part for part in parts if part)
+
+
+def _query_tags_from_analysis(
+    association: AssociationAnalysis | None,
+    tag_expansion: TagExpansionAnalysis | None,
+    intent_analysis: CreativeIntentAnalysis | None,
+):
+    if association is not None:
+        return association.query_tags
+    if tag_expansion is not None:
+        return tag_expansion.query_tags
+    if intent_analysis is not None:
+        return intent_analysis.query_tags
+    raise ValueError("one analysis object is required")
+
+
+def _extra_text_from_analysis(
+    association: AssociationAnalysis | None,
+    tag_expansion: TagExpansionAnalysis | None,
+    intent_analysis: CreativeIntentAnalysis | None,
+) -> str:
+    if association is not None:
+        return _association_embedding_text(association)
+    if tag_expansion is not None:
+        return tag_expansion.expanded_text
+    if intent_analysis is not None:
+        return intent_analysis.expanded_text
+    return ""
 
 
 def _safe_filename_slug(text: str) -> str:

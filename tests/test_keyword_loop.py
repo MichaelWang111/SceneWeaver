@@ -4,7 +4,11 @@ import json
 
 import pytest
 
-from sceneweaver.analysis.keyword_loop import discover_experience_card_paths, run_keyword_loop
+from sceneweaver.analysis.keyword_loop import (
+    discover_experience_card_paths,
+    discover_unindexed_scene_dirs,
+    run_keyword_loop,
+)
 from sceneweaver.schemas import ExperienceCard, TagProfile
 from sceneweaver.storage.json_store import write_jsonl
 
@@ -161,9 +165,135 @@ def test_keyword_loop_semantic_rerank_can_promote_semantic_match(tmp_path):
     assert result.top_matches[0].tag_score == 0
 
 
+def test_keyword_loop_just_tags_uses_lightweight_tag_expansion(tmp_path):
+    output_dir = tmp_path / "video"
+    cards_path = output_dir / "analysis" / "experience_cards.jsonl"
+    write_jsonl(cards_path, [_experience_card()])
+    client = FakeTextClient(
+        {
+            "expanded_terms": [
+                "trust",
+                "direct_address",
+                "screen",
+                "human_centered_technology",
+            ],
+            "tag_hints": {
+                "emotion_core": ["trust"],
+                "audience_projection": ["direct_listener"],
+                "narrative_function": ["establish_trust"],
+                "interaction_mode": ["direct_address"],
+                "visual_motifs": ["screen"],
+                "symbolic_logic": ["human_centered_technology"],
+                "rhythm_pattern": ["calm_direct"],
+            },
+            "avoid_terms": ["generic big company"],
+        }
+    )
+
+    result = run_keyword_loop(
+        "trust screen",
+        output_dir,
+        client=client,
+        top_k=1,
+        just_tags=True,
+    )
+
+    assert result.mode == "just-tags"
+    assert result.association_analysis is None
+    assert result.tag_expansion_analysis is not None
+    assert result.tag_expansion_analysis.expanded_terms[0] == "trust"
+    assert result.retrieval.results[0].card_id == "exp_000001"
+
+
+def test_keyword_loop_intent_promotes_core_intent_match(tmp_path):
+    output_dir = tmp_path / "video"
+    cards_path = output_dir / "analysis" / "experience_cards.jsonl"
+    write_jsonl(
+        cards_path,
+            [
+                _experience_card(
+                    card_id="exp_000010",
+                source_video_id="visual_film",
+                keywords=["technology", "city", "scale"],
+                tags=_query_tags("trust direct_address screen human_centered_technology calm_direct"),
+            ),
+                _experience_card(
+                    card_id="exp_000011",
+                source_video_id="tencent_like",
+                keywords=["科技向善", "人机共生", "面对面交流"],
+                tags=TagProfile(
+                    emotion_core=["human_care"],
+                    audience_projection=["future_builder"],
+                    narrative_function=["invitation"],
+                    interaction_mode=["direct_address"],
+                    visual_motifs=["screen"],
+                    symbolic_logic=["human_centered_technology"],
+                    rhythm_pattern=["calm_direct"],
+                    evidence=[
+                        {
+                            "source_id": "scene_002",
+                            "source_type": "scene",
+                            "field": "input_text",
+                            "quote": "科技向善 人机共生 面对面交流",
+                        }
+                    ],
+                    confidence=0.8,
+                ),
+            ),
+        ],
+    )
+    client = FakeTextClient(
+        {
+            "primary_intent": "寻找科技公司招聘宣传片中以科技向善和面对面沟通建立认同的经验卡",
+            "must_match": ["科技向善", "人机共生", "面对面交流"],
+            "nice_to_have": ["招聘", "发挥潜力"],
+            "avoid": ["纯科技视觉", "赛博朋克城市"],
+            "intent_keywords": ["human_centered_technology", "direct_address"],
+            "target_audience": ["潜在求职者"],
+            "selection_criteria": ["technology serves people"],
+        }
+    )
+
+    result = run_keyword_loop(
+        "成熟大型商业与科技公司招聘宣传片 科技向善 面对面交流",
+        output_dir,
+        client=client,
+        top_k=2,
+        intent=True,
+        intent_weight=3,
+    )
+
+    assert result.mode == "intent"
+    assert result.intent_analysis is not None
+    assert result.association_analysis is None
+    assert result.tag_expansion_analysis is None
+    assert result.top_matches[0].card_id == "exp_000011"
+    assert result.top_matches[0].intent_score > 0
+
+
 def test_keyword_loop_requires_experience_cards(tmp_path):
     with pytest.raises(FileNotFoundError, match="experience cards not found"):
         run_keyword_loop("trust", tmp_path / "video", client=FakeTextClient(_association_data("trust")))
+
+
+def test_keyword_loop_reports_scene_dirs_without_experience_cards(tmp_path):
+    collection_dir = tmp_path / "film_analysis"
+    indexed_cards = collection_dir / "film_a" / "analysis" / "experience_cards.jsonl"
+    unindexed_scenes = collection_dir / "film_b" / "analysis" / "scenes.json"
+    write_jsonl(indexed_cards, [_experience_card()])
+    unindexed_scenes.parent.mkdir(parents=True, exist_ok=True)
+    unindexed_scenes.write_text('{"video_id":"film_b","scene_count":0,"scenes":[]}', encoding="utf-8")
+
+    result = run_keyword_loop(
+        "trust direct_address",
+        collection_dir,
+        client=FakeTextClient(_association_data("trust direct_address")),
+        max_items=8,
+    )
+
+    assert discover_unindexed_scene_dirs(collection_dir) == [unindexed_scenes.parent.resolve()]
+    assert result.unindexed_scene_dirs == [str(unindexed_scenes.parent.resolve())]
+    assert "Experience cards missing" in result.next_actions[0]
 
 
 def _association_data(input_text: str) -> dict:

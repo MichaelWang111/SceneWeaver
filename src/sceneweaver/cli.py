@@ -217,6 +217,23 @@ def keyword_loop(
         min=1,
         help="Maximum number of matching experience cards to return.",
     ),
+    just_tags: bool = typer.Option(
+        False,
+        "--just-tags",
+        help="Use lightweight LLM tag expansion instead of the full director association prompt.",
+    ),
+    intent: bool = typer.Option(
+        False,
+        "--intent",
+        "--core-intent",
+        help="Use LLM creative-intent analysis for retrieval ranking instead of association or tag expansion.",
+    ),
+    intent_weight: float = typer.Option(
+        3.0,
+        "--intent-weight",
+        min=0.0,
+        help="Score multiplier for creative-intent must-match and avoid terms when --intent is enabled.",
+    ),
     semantic: bool = typer.Option(
         False,
         "--semantic",
@@ -236,7 +253,7 @@ def keyword_loop(
     association_output: Optional[Path] = typer.Option(
         None,
         "--association-output",
-        help="JSON file where the intermediate LLM association analysis will be written.",
+        help="JSON file where the intermediate LLM association, tag, or intent analysis will be written.",
     ),
     result_output: Optional[Path] = typer.Option(
         None,
@@ -298,6 +315,9 @@ def keyword_loop(
         association_output_path=association_output,
         result_output_path=result_output,
         top_k=top_k,
+        just_tags=just_tags,
+        intent=intent,
+        intent_weight=intent_weight,
         semantic=semantic,
         embedding_model=embedding_model,
         semantic_weight=semantic_weight,
