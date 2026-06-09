@@ -24,7 +24,6 @@ texts = ['公平','盈利']
 # Similarity: 0.49231586000301175
 texts = ['真实但有力量的开场，年轻团队协作，不要互联网大厂味，科技向善，可信赖，工程师成长，公司很大但不冰冷','主角与同事下班后约定留下探讨业务细节问题，适用于表现合作，展现员工的进步之路']
 resp = dashscope.TextEmbedding.call(
-    # api_key= 'sk-687fa953ec64425a951a379b415a49c6',
     model=dashscope.TextEmbedding.Models.text_embedding_v4,
     input=texts,
     dimension=1024,
