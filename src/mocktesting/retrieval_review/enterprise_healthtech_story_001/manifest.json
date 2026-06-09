@@ -1,0 +1,20 @@
+{
+  "fixture_id": "enterprise_healthtech_story_001",
+  "title": "把距离变成抵达",
+  "industry": "medical_technology_and_digital_health",
+  "company_profile": "world_500_style_global_medical_technology_company",
+  "film_style": "story_driven_enterprise_brand_film",
+  "duration_seconds": 150,
+  "scene_count": 10,
+  "layer_files": {
+    "source": "source.json",
+    "knowledge": "knowledge.json",
+    "retrieval": "retrieval.json"
+  },
+  "prototype_notes": [
+    "This fixture is fake but designed to feel like a plausible Fortune 500 corporate film.",
+    "Source, knowledge, and retrieval layers are split so retrieval logic can be tested without depending on the current outputs layout.",
+    "Embedding vectors are intentionally empty arrays until qwen embedding generation is enabled."
+  ]
+}
+

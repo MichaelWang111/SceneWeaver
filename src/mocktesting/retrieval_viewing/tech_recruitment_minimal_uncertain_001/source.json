@@ -1,0 +1,162 @@
+{
+  "video_id": "tech_recruitment_minimal_uncertain_001",
+  "title": "看见问题的人",
+  "source_layer": {
+    "frames_root": "frames/",
+    "packages_root": "packages/",
+    "source_policy": "visual_observation_only"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_001",
+      "time_range": "00:00-00:10",
+      "frames": ["frames/scene_001/f001.jpg", "frames/scene_001/f002.jpg", "frames/scene_001/f003.jpg"],
+      "visual_observation": {
+        "setting": "纯白无限背景，中央有一块大型半透明磨砂板，板面贴着若干黑色矩形块，底部有黑色支架。",
+        "characters": "一名戴眼镜的年轻男性，米色拼接T恤，灰色短裤，休闲运动风格。",
+        "action_change": "人物从磨砂板后方朝镜头方向行走，三帧呈现连续步态变化，下半身被遮挡，上半身透过板材隐约可见。",
+        "composition": "中心对称构图，人物和板子位于中轴线，大量白色留白。",
+        "lighting": "均匀柔和的高调光，无明显阴影。",
+        "color": "白色为主，黑色矩形块和支架形成强对比，人物服装为低饱和米灰色。",
+        "camera_motion": "固定机位。",
+        "confidence_notes": "确定人物在板后行走；确定黑色矩形块是板面上的可见物；不确定黑色块是否有明确符号含义。"
+      }
+    },
+    {
+      "scene_id": "scene_002",
+      "time_range": "00:10-00:22",
+      "frames": ["frames/scene_002/f001.jpg", "frames/scene_002/f002.jpg", "frames/scene_002/f003.jpg"],
+      "visual_observation": {
+        "setting": "同样的白色空间，地面摆放三张透明亚克力椅，椅子之间距离较远。",
+        "characters": "两名年轻人分别坐在画面左右，中间椅子空着，一人低头看纸，一人看向空椅。",
+        "action_change": "左侧人物抬头，右侧人物把手中的纸放到空椅上，动作幅度很小。",
+        "composition": "横向三分构图，空椅位于画面中心。",
+        "lighting": "高调光，人物和椅子的边缘较软。",
+        "color": "白色空间、透明材质、黑色纸张、浅灰衣物。",
+        "camera_motion": "固定机位，轻微景深变化不明显。",
+        "confidence_notes": "确定中间椅子为空；不确定空椅代表缺席、等待还是协作位置。"
+      }
+    },
+    {
+      "scene_id": "scene_003",
+      "time_range": "00:22-00:34",
+      "frames": ["frames/scene_003/f001.jpg", "frames/scene_003/f002.jpg", "frames/scene_003/f003.jpg"],
+      "visual_observation": {
+        "setting": "白色背景前悬挂多根细线，线端吊着小型黑色卡片。",
+        "characters": "一名短发女性站在线阵中间，手里拿着一支细笔。",
+        "action_change": "人物依次翻看两张黑色卡片，并在其中一张背面写下小字。",
+        "composition": "人物位于偏右位置，前景细线形成轻微遮挡。",
+        "lighting": "柔和均匀，细线产生很淡的阴影。",
+        "color": "白、黑、浅蓝衬衫构成冷静色调。",
+        "camera_motion": "静态中近景。",
+        "confidence_notes": "确定人物在读取和标记卡片；不确定卡片代表任务、问题、用户反馈或数据点。"
+      }
+    },
+    {
+      "scene_id": "scene_004",
+      "time_range": "00:34-00:46",
+      "frames": ["frames/scene_004/f001.jpg", "frames/scene_004/f002.jpg", "frames/scene_004/f003.jpg"],
+      "visual_observation": {
+        "setting": "白色空间中有一张长桌，桌面放置几块透明板和黑色磁贴。",
+        "characters": "四名年轻员工围桌站立，服装休闲但整洁。",
+        "action_change": "几人轮流移动磁贴，其中一人把两块透明板叠在一起。",
+        "composition": "俯拍和正面中景交替，桌面图形成为视觉中心。",
+        "lighting": "高调柔光，桌面反光明显但不刺眼。",
+        "color": "白色、透明材质、黑色磁贴、少量浅色服装。",
+        "camera_motion": "有一次短促的俯拍切换，未见复杂运镜。",
+        "confidence_notes": "确定是多人协作动作；不确定他们在做产品讨论、解题游戏还是视觉化工作坊。"
+      }
+    },
+    {
+      "scene_id": "scene_005",
+      "time_range": "00:46-00:58",
+      "frames": ["frames/scene_005/f001.jpg", "frames/scene_005/f002.jpg", "frames/scene_005/f003.jpg"],
+      "visual_observation": {
+        "setting": "一面半透明屏幕占据画面右侧，屏幕上只有少量几何线条和点阵。",
+        "characters": "一名人物站在屏幕后侧，只能看到轮廓和手部动作。",
+        "action_change": "人物用手指沿着屏幕后方移动，前景点阵随之亮起几处。",
+        "composition": "屏幕占据大部分画面，人物被弱化为轮廓。",
+        "lighting": "屏幕发出微弱冷光，环境仍为白色高调。",
+        "color": "白色、浅灰、少量蓝白光点。",
+        "camera_motion": "缓慢推近或后期裁切感，运动幅度小。",
+        "confidence_notes": "确定有交互式屏幕或类似装置；不确定点阵是否为真实屏幕内容或后期叠加。"
+      }
+    },
+    {
+      "scene_id": "scene_006",
+      "time_range": "00:58-01:10",
+      "frames": ["frames/scene_006/f001.jpg", "frames/scene_006/f002.jpg", "frames/scene_006/f003.jpg"],
+      "visual_observation": {
+        "setting": "白色空间中摆放多个不同高度的黑色方块，像简化的城市或数据柱。",
+        "characters": "三名人物分散站在方块之间，彼此距离较远。",
+        "action_change": "三人分别转动一个方块，方块侧面出现不同灰度图案。",
+        "composition": "宽画幅横向展开，人物被空间和方块分隔。",
+        "lighting": "均匀顶光，方块阴影很轻。",
+        "color": "黑白灰极简色调。",
+        "camera_motion": "固定广角。",
+        "confidence_notes": "确定空间有抽象装置感；不确定方块代表城市、业务模块、问题复杂度或组织结构。"
+      }
+    },
+    {
+      "scene_id": "scene_007",
+      "time_range": "01:10-01:22",
+      "frames": ["frames/scene_007/f001.jpg", "frames/scene_007/f002.jpg", "frames/scene_007/f003.jpg"],
+      "visual_observation": {
+        "setting": "白色背景前，一张透明桌面上放着一副眼镜、一张工牌和几张黑白便签。",
+        "characters": "前一场的男性角色坐在桌前，另一人只露出手部，把便签推到他面前。",
+        "action_change": "男性看便签，停顿后点头，把工牌翻到正面。",
+        "composition": "桌面特写与人物中近景切换，工牌没有可读公司名。",
+        "lighting": "柔和高调光，桌面反射清晰。",
+        "color": "透明材质、黑白便签、米灰服装。",
+        "camera_motion": "静态切换。",
+        "confidence_notes": "确定出现工牌和便签；不确定此处是否为入职、面试、任务确认或身份转换。"
+      }
+    },
+    {
+      "scene_id": "scene_008",
+      "time_range": "01:22-01:34",
+      "frames": ["frames/scene_008/f001.jpg", "frames/scene_008/f002.jpg", "frames/scene_008/f003.jpg"],
+      "visual_observation": {
+        "setting": "白色空间中出现一面由透明板拼成的临时墙，板间有缝隙。",
+        "characters": "多人从墙两侧同时靠近，把各自手中的黑色矩形插入缝隙。",
+        "action_change": "黑色矩形逐渐排成一条不完全连续的线，人物之间没有直接对话。",
+        "composition": "正面构图，透明墙形成平面图案。",
+        "lighting": "高调光，透明板边缘在光下可见。",
+        "color": "白色、透明材质、黑色矩形。",
+        "camera_motion": "固定机位。",
+        "confidence_notes": "确定多人共同完成某个图形；不确定图形代表路径、连接、数据流或团队成果。"
+      }
+    },
+    {
+      "scene_id": "scene_009",
+      "time_range": "01:34-01:47",
+      "frames": ["frames/scene_009/f001.jpg", "frames/scene_009/f002.jpg", "frames/scene_009/f003.jpg"],
+      "visual_observation": {
+        "setting": "白色空间变暗一些，人物站在一圈低矮光带中，周围仍有黑色小块散落。",
+        "characters": "多名人物站成半圆，看向中心的空白区域。",
+        "action_change": "其中一人走入中心，弯腰拾起一个黑块，其他人视线跟随。",
+        "composition": "半圆形队列，中心留白明显。",
+        "lighting": "整体仍明亮，但光带带来轻微舞台感。",
+        "color": "白、灰、黑，少量冷白光。",
+        "camera_motion": "缓慢横移，幅度不大。",
+        "confidence_notes": "确定出现集体注视和中心动作；不确定是否表示选拔、承担任务、团队认可或问题聚焦。"
+      }
+    },
+    {
+      "scene_id": "scene_010",
+      "time_range": "01:47-02:00",
+      "frames": ["frames/scene_010/f001.jpg", "frames/scene_010/f002.jpg", "frames/scene_010/f003.jpg"],
+      "visual_observation": {
+        "setting": "回到第一场的半透明磨砂板，但黑色矩形数量减少，板后空间更清晰。",
+        "characters": "最初的男性和另外几名人物从板后走出，站到板前。",
+        "action_change": "人物依次走出遮挡，最后停在画面中线附近，字幕区域留白。",
+        "composition": "中心构图，人物从遮挡后进入清晰前景。",
+        "lighting": "高调光，画面比第一场更通透。",
+        "color": "白色主导，黑色块减少，人物服装仍为低饱和色。",
+        "camera_motion": "固定机位。",
+        "confidence_notes": "确定与第一场形成视觉呼应；不确定是否表示完成挑战、加入团队、问题被看见或身份变清晰。"
+      }
+    }
+  ]
+}
+

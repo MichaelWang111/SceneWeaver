@@ -1,0 +1,393 @@
+{
+  "video_id": "enterprise_auto_story_002",
+  "title": "回家的路线",
+  "industry": "automotive_and_mobility",
+  "style": "story_driven_enterprise_brand_film",
+  "logline": "一位工程师在发布会前夜回到老家，用父亲的一段夜路检验团队对安全的执念。",
+  "source_layer": {
+    "frames_root": "frames/",
+    "packages_root": "packages/",
+    "frame_policy": "fake_keyframes_only",
+    "package_policy": "scene_level_package"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_001",
+      "time_range": "00:00-00:17",
+      "narrative_role": "opening",
+      "frames": [
+        {
+          "frame_id": "scene_001_f001",
+          "timestamp": "00:05.2",
+          "path": "frames/scene_001/scene_001_f001.jpg",
+          "visual_note": "研发中心、夜间高速、县城老家、试验场中的智能驾驶安全工程师出现在画面里，承担“开场建立真实世界压力”的叙事功能。"
+        },
+        {
+          "frame_id": "scene_001_f002",
+          "timestamp": "00:10.4",
+          "path": "frames/scene_001/scene_001_f002.jpg",
+          "visual_note": "画面强调夜路反光线、父亲旧车钥匙、仪表安全提示，把真正的安全不是参数，而是家人也愿意信任的夜路转化为可观察的现场细节。"
+        }
+      ],
+      "package": {
+        "package_id": "pkg_scene_001",
+        "summary": "用研发中心、夜间高速、县城老家、试验场建立真实业务场景和真正的安全不是参数，而是家人也愿意信任的夜路。",
+        "visible_entities": [
+          "智能驾驶安全工程师",
+          "夜间辅助驾驶、传感器融合和安全冗余系统",
+          "夜路反光线、父亲旧车钥匙、仪表安全提示",
+          "研发中心、夜间高速、县城老家、试验场",
+          "真实用户场景",
+          "环境细节"
+        ],
+        "actions": [
+          "进入现场",
+          "观察环境",
+          "问题显现"
+        ],
+        "setting": "研发中心、夜间高速、县城老家、试验场",
+        "audio_hint": "音乐跟随人物情绪推进，关键处降低配乐突出真实声音。"
+      }
+    },
+    {
+      "scene_id": "scene_002",
+      "time_range": "00:17-00:34",
+      "narrative_role": "setup",
+      "frames": [
+        {
+          "frame_id": "scene_002_f001",
+          "timestamp": "00:20.2",
+          "path": "frames/scene_002/scene_002_f001.jpg",
+          "visual_note": "研发中心、夜间高速、县城老家、试验场中的智能驾驶安全工程师出现在画面里，承担“进入一线场景，建立具体需求”的叙事功能。"
+        },
+        {
+          "frame_id": "scene_002_f002",
+          "timestamp": "00:25.4",
+          "path": "frames/scene_002/scene_002_f002.jpg",
+          "visual_note": "画面强调夜路反光线、父亲旧车钥匙、仪表安全提示，把真正的安全不是参数，而是家人也愿意信任的夜路转化为可观察的现场细节。"
+        }
+      ],
+      "package": {
+        "package_id": "pkg_scene_002",
+        "summary": "把真正的安全不是参数，而是家人也愿意信任的夜路具体化，让企业能力有进入理由。",
+        "visible_entities": [
+          "智能驾驶安全工程师",
+          "夜间辅助驾驶、传感器融合和安全冗余系统",
+          "夜路反光线、父亲旧车钥匙、仪表安全提示",
+          "一线人员",
+          "等待中的客户或用户",
+          "问题线索"
+        ],
+        "actions": [
+          "比对信息",
+          "等待确认",
+          "压力累积"
+        ],
+        "setting": "研发中心、夜间高速、县城老家、试验场",
+        "audio_hint": "音乐跟随人物情绪推进，关键处降低配乐突出真实声音。"
+      }
+    },
+    {
+      "scene_id": "scene_003",
+      "time_range": "00:34-00:51",
+      "narrative_role": "character_intro",
+      "frames": [
+        {
+          "frame_id": "scene_003_f001",
+          "timestamp": "00:35.2",
+          "path": "frames/scene_003/scene_003_f001.jpg",
+          "visual_note": "研发中心、夜间高速、县城老家、试验场中的智能驾驶安全工程师出现在画面里，承担“引入核心人物和专业视角”的叙事功能。"
+        },
+        {
+          "frame_id": "scene_003_f002",
+          "timestamp": "00:40.4",
+          "path": "frames/scene_003/scene_003_f002.jpg",
+          "visual_note": "画面强调夜路反光线、父亲旧车钥匙、仪表安全提示，把真正的安全不是参数，而是家人也愿意信任的夜路转化为可观察的现场细节。"
+        }
+      ],
+      "package": {
+        "package_id": "pkg_scene_003",
+        "summary": "通过智能驾驶安全工程师进入专业视角，避免空泛品牌叙述。",
+        "visible_entities": [
+          "智能驾驶安全工程师",
+          "夜间辅助驾驶、传感器融合和安全冗余系统",
+          "夜路反光线、父亲旧车钥匙、仪表安全提示",
+          "工作证件",
+          "专业工具"
+        ],
+        "actions": [
+          "整理工具",
+          "看向现场",
+          "做出判断"
+        ],
+        "setting": "研发中心、夜间高速、县城老家、试验场",
+        "audio_hint": "音乐跟随人物情绪推进，关键处降低配乐突出真实声音。"
+      }
+    },
+    {
+      "scene_id": "scene_004",
+      "time_range": "00:51-01:08",
+      "narrative_role": "team_work",
+      "frames": [
+        {
+          "frame_id": "scene_004_f001",
+          "timestamp": "00:50.2",
+          "path": "frames/scene_004/scene_004_f001.jpg",
+          "visual_note": "研发中心、夜间高速、县城老家、试验场中的智能驾驶安全工程师出现在画面里，承担“展现跨职能团队如何协作”的叙事功能。"
+        },
+        {
+          "frame_id": "scene_004_f002",
+          "timestamp": "00:55.4",
+          "path": "frames/scene_004/scene_004_f002.jpg",
+          "visual_note": "画面强调夜路反光线、父亲旧车钥匙、仪表安全提示，把真正的安全不是参数，而是家人也愿意信任的夜路转化为可观察的现场细节。"
+        }
+      ],
+      "package": {
+        "package_id": "pkg_scene_004",
+        "summary": "展现安全工程师、测试车队、软件团队、用户体验研究员如何围绕同一个问题协作。",
+        "visible_entities": [
+          "智能驾驶安全工程师",
+          "夜间辅助驾驶、传感器融合和安全冗余系统",
+          "夜路反光线、父亲旧车钥匙、仪表安全提示",
+          "安全工程师",
+          "测试车队",
+          "软件团队",
+          "用户体验研究员"
+        ],
+        "actions": [
+          "围绕问题讨论",
+          "标注风险点",
+          "分配下一步"
+        ],
+        "setting": "研发中心、夜间高速、县城老家、试验场",
+        "audio_hint": "音乐跟随人物情绪推进，关键处降低配乐突出真实声音。"
+      }
+    },
+    {
+      "scene_id": "scene_005",
+      "time_range": "01:08-01:25",
+      "narrative_role": "technology_showcase",
+      "frames": [
+        {
+          "frame_id": "scene_005_f001",
+          "timestamp": "01:05.2",
+          "path": "frames/scene_005/scene_005_f001.jpg",
+          "visual_note": "研发中心、夜间高速、县城老家、试验场中的智能驾驶安全工程师出现在画面里，承担“让技术或系统能力自然入场”的叙事功能。"
+        },
+        {
+          "frame_id": "scene_005_f002",
+          "timestamp": "01:10.4",
+          "path": "frames/scene_005/scene_005_f002.jpg",
+          "visual_note": "画面强调夜路反光线、父亲旧车钥匙、仪表安全提示，把真正的安全不是参数，而是家人也愿意信任的夜路转化为可观察的现场细节。"
+        }
+      ],
+      "package": {
+        "package_id": "pkg_scene_005",
+        "summary": "让夜间辅助驾驶、传感器融合和安全冗余系统作为解决路径自然出现。",
+        "visible_entities": [
+          "智能驾驶安全工程师",
+          "夜间辅助驾驶、传感器融合和安全冗余系统",
+          "夜路反光线、父亲旧车钥匙、仪表安全提示",
+          "操作界面",
+          "确认提示"
+        ],
+        "actions": [
+          "打开系统",
+          "验证数据",
+          "确认流程"
+        ],
+        "setting": "研发中心、夜间高速、县城老家、试验场",
+        "audio_hint": "音乐跟随人物情绪推进，关键处降低配乐突出真实声音。"
+      }
+    },
+    {
+      "scene_id": "scene_006",
+      "time_range": "01:25-01:42",
+      "narrative_role": "scale_reveal",
+      "frames": [
+        {
+          "frame_id": "scene_006_f001",
+          "timestamp": "01:20.2",
+          "path": "frames/scene_006/scene_006_f001.jpg",
+          "visual_note": "研发中心、夜间高速、县城老家、试验场中的智能驾驶安全工程师出现在画面里，承担“揭示世界级规模和网络能力”的叙事功能。"
+        },
+        {
+          "frame_id": "scene_006_f002",
+          "timestamp": "01:25.4",
+          "path": "frames/scene_006/scene_006_f002.jpg",
+          "visual_note": "画面强调夜路反光线、父亲旧车钥匙、仪表安全提示，把真正的安全不是参数，而是家人也愿意信任的夜路转化为可观察的现场细节。"
+        }
+      ],
+      "package": {
+        "package_id": "pkg_scene_006",
+        "summary": "揭示世界500强企业的网络、系统和跨地域能力。",
+        "visible_entities": [
+          "智能驾驶安全工程师",
+          "夜间辅助驾驶、传感器融合和安全冗余系统",
+          "夜路反光线、父亲旧车钥匙、仪表安全提示",
+          "全球地图",
+          "多地团队",
+          "数据看板"
+        ],
+        "actions": [
+          "多地连线",
+          "同步信息",
+          "网络展开"
+        ],
+        "setting": "研发中心、夜间高速、县城老家、试验场",
+        "audio_hint": "音乐跟随人物情绪推进，关键处降低配乐突出真实声音。"
+      }
+    },
+    {
+      "scene_id": "scene_007",
+      "time_range": "01:42-01:59",
+      "narrative_role": "value_expression",
+      "frames": [
+        {
+          "frame_id": "scene_007_f001",
+          "timestamp": "01:35.2",
+          "path": "frames/scene_007/scene_007_f001.jpg",
+          "visual_note": "研发中心、夜间高速、县城老家、试验场中的智能驾驶安全工程师出现在画面里，承担“通过具体互动建立信任和价值”的叙事功能。"
+        },
+        {
+          "frame_id": "scene_007_f002",
+          "timestamp": "01:40.4",
+          "path": "frames/scene_007/scene_007_f002.jpg",
+          "visual_note": "画面强调夜路反光线、父亲旧车钥匙、仪表安全提示，把真正的安全不是参数，而是家人也愿意信任的夜路转化为可观察的现场细节。"
+        }
+      ],
+      "package": {
+        "package_id": "pkg_scene_007",
+        "summary": "用具体沟通和责任动作表达温暖与可信赖。",
+        "visible_entities": [
+          "智能驾驶安全工程师",
+          "夜间辅助驾驶、传感器融合和安全冗余系统",
+          "夜路反光线、父亲旧车钥匙、仪表安全提示",
+          "面对面沟通",
+          "记录动作",
+          "确认反馈"
+        ],
+        "actions": [
+          "面对面解释",
+          "认真记录",
+          "确认承诺"
+        ],
+        "setting": "研发中心、夜间高速、县城老家、试验场",
+        "audio_hint": "音乐跟随人物情绪推进，关键处降低配乐突出真实声音。"
+      }
+    },
+    {
+      "scene_id": "scene_008",
+      "time_range": "01:59-02:16",
+      "narrative_role": "outcome",
+      "frames": [
+        {
+          "frame_id": "scene_008_f001",
+          "timestamp": "01:50.2",
+          "path": "frames/scene_008/scene_008_f001.jpg",
+          "visual_note": "研发中心、夜间高速、县城老家、试验场中的智能驾驶安全工程师出现在画面里，承担“呈现结果落地但避免夸大”的叙事功能。"
+        },
+        {
+          "frame_id": "scene_008_f002",
+          "timestamp": "01:55.4",
+          "path": "frames/scene_008/scene_008_f002.jpg",
+          "visual_note": "画面强调夜路反光线、父亲旧车钥匙、仪表安全提示，把真正的安全不是参数，而是家人也愿意信任的夜路转化为可观察的现场细节。"
+        }
+      ],
+      "package": {
+        "package_id": "pkg_scene_008",
+        "summary": "呈现系统在复杂夜路中保持克制可靠，父子关系完成和解，但不过度承诺。",
+        "visible_entities": [
+          "智能驾驶安全工程师",
+          "夜间辅助驾驶、传感器融合和安全冗余系统",
+          "夜路反光线、父亲旧车钥匙、仪表安全提示",
+          "服务对象",
+          "结果记录",
+          "稳定表情"
+        ],
+        "actions": [
+          "方案落地",
+          "用户点头",
+          "情绪稳定"
+        ],
+        "setting": "研发中心、夜间高速、县城老家、试验场",
+        "audio_hint": "音乐跟随人物情绪推进，关键处降低配乐突出真实声音。"
+      }
+    },
+    {
+      "scene_id": "scene_009",
+      "time_range": "02:16-02:33",
+      "narrative_role": "growth",
+      "frames": [
+        {
+          "frame_id": "scene_009_f001",
+          "timestamp": "02:05.2",
+          "path": "frames/scene_009/scene_009_f001.jpg",
+          "visual_note": "研发中心、夜间高速、县城老家、试验场中的智能驾驶安全工程师出现在画面里，承担“表现员工、客户或系统的成长”的叙事功能。"
+        },
+        {
+          "frame_id": "scene_009_f002",
+          "timestamp": "02:10.4",
+          "path": "frames/scene_009/scene_009_f002.jpg",
+          "visual_note": "画面强调夜路反光线、父亲旧车钥匙、仪表安全提示，把真正的安全不是参数，而是家人也愿意信任的夜路转化为可观察的现场细节。"
+        }
+      ],
+      "package": {
+        "package_id": "pkg_scene_009",
+        "summary": "把长期主义和改进动作落在具体人物身上。",
+        "visible_entities": [
+          "智能驾驶安全工程师",
+          "夜间辅助驾驶、传感器融合和安全冗余系统",
+          "夜路反光线、父亲旧车钥匙、仪表安全提示",
+          "年轻员工",
+          "反馈信息",
+          "版本记录"
+        ],
+        "actions": [
+          "接收反馈",
+          "复盘问题",
+          "继续改进"
+        ],
+        "setting": "研发中心、夜间高速、县城老家、试验场",
+        "audio_hint": "音乐跟随人物情绪推进，关键处降低配乐突出真实声音。"
+      }
+    },
+    {
+      "scene_id": "scene_010",
+      "time_range": "02:33-02:50",
+      "narrative_role": "ending",
+      "frames": [
+        {
+          "frame_id": "scene_010_f001",
+          "timestamp": "02:20.2",
+          "path": "frames/scene_010/scene_010_f001.jpg",
+          "visual_note": "研发中心、夜间高速、县城老家、试验场中的智能驾驶安全工程师出现在画面里，承担“收束主题并完成品牌表达”的叙事功能。"
+        },
+        {
+          "frame_id": "scene_010_f002",
+          "timestamp": "02:25.4",
+          "path": "frames/scene_010/scene_010_f002.jpg",
+          "visual_note": "画面强调夜路反光线、父亲旧车钥匙、仪表安全提示，把真正的安全不是参数，而是家人也愿意信任的夜路转化为可观察的现场细节。"
+        }
+      ],
+      "package": {
+        "package_id": "pkg_scene_010",
+        "summary": "回到核心场景，完成回家的路线的品牌收束。",
+        "visible_entities": [
+          "智能驾驶安全工程师",
+          "夜间辅助驾驶、传感器融合和安全冗余系统",
+          "夜路反光线、父亲旧车钥匙、仪表安全提示",
+          "品牌字幕",
+          "回到开场地点"
+        ],
+        "actions": [
+          "回到起点",
+          "主题字幕出现",
+          "音乐收束"
+        ],
+        "setting": "研发中心、夜间高速、县城老家、试验场",
+        "audio_hint": "音乐跟随人物情绪推进，关键处降低配乐突出真实声音。"
+      }
+    }
+  ]
+}

@@ -1,0 +1,111 @@
+{
+  "video_id": "enterprise_healthtech_story_001",
+  "knowledge_layer": {
+    "film_level_intent": "把医疗科技企业从抽象的大公司转化为可信赖的协作系统：它连接基层医生、全球专家和研发团队，让可靠医疗抵达更远的地方。",
+    "brand_personality": ["克制", "可信赖", "专业", "有人情味", "长期主义"],
+    "overall_risk": "如果剪辑过度强调平台界面和全球地图，容易变成冷冰冰的技术展示；如果过度强调患者情绪，又会像公益短片而削弱企业能力。"
+  },
+  "scene_knowledge": [
+    {
+      "scene_id": "scene_001",
+      "knowledge_id": "know_scene_001",
+      "shooting_techniques": ["清晨自然光", "远景建立地理距离", "救护车运动引入事件", "低饱和色彩"],
+      "director_intent": "用真实空间压力打开故事，让观众先理解问题，而不是先看到企业。",
+      "emotional_function": "建立紧迫感和真实感。",
+      "reusable_knowledge": "企业片开场可以先呈现业务所解决的真实世界问题，再进入品牌能力。",
+      "best_usage": "适合用于开场、问题建立、地域距离、公共服务可及性主题。",
+      "risk": "如果没有后续人物承接，容易变成空镜和机构宣传。"
+    },
+    {
+      "scene_id": "scene_002",
+      "knowledge_id": "know_scene_002",
+      "shooting_techniques": ["近景观察表情", "屏幕信息局部展示", "诊室空间压迫感", "家属等待反打"],
+      "director_intent": "把基层医生的专业压力具体化，让技术需求来自场景而不是来自产品卖点。",
+      "emotional_function": "制造判断不确定性。",
+      "reusable_knowledge": "表现技术价值之前，先让观众看见使用者的困境和限制。",
+      "best_usage": "适合用于setup、需求建立、人物压力、专业场景可信化。",
+      "risk": "如果医生被拍得过于无助，会削弱专业尊重。"
+    },
+    {
+      "scene_id": "scene_003",
+      "knowledge_id": "know_scene_003",
+      "shooting_techniques": ["手部操作特写", "界面克制展示", "流程节点切换", "屏幕光作为视觉引导"],
+      "director_intent": "让技术自然进入故事，强调连接和辅助，而不是炫技。",
+      "emotional_function": "把焦虑转化为可行动的路径。",
+      "reusable_knowledge": "技术产品入场时，应该呈现它如何减少人的不确定性。",
+      "best_usage": "适合用于技术入场、工具价值展示、从问题到解决路径的转折。",
+      "risk": "界面镜头太多会显得像产品功能说明视频。"
+    },
+    {
+      "scene_id": "scene_004",
+      "knowledge_id": "know_scene_004",
+      "shooting_techniques": ["群像调度", "白板信息可读", "跨职能人物同框", "讨论节奏剪辑"],
+      "director_intent": "证明企业能力来自团队协作，而不是单点英雄或抽象平台。",
+      "emotional_function": "建立组织可信度和协作能量。",
+      "reusable_knowledge": "拍团队协作时要让讨论对象具体可见，避免变成会议室摆拍。",
+      "best_usage": "适合用于team_work、组织能力、年轻团队但不互联网大厂化的表达。",
+      "risk": "如果只拍笑脸和会议，会变成模板化办公蒙太奇。"
+    },
+    {
+      "scene_id": "scene_005",
+      "knowledge_id": "know_scene_005",
+      "shooting_techniques": ["界面与便签并置", "工程师侧脸近景", "人工确认按钮特写", "冷暖光对比"],
+      "director_intent": "表达科技向善：算法是辅助，人的判断仍然被尊重。",
+      "emotional_function": "建立技术可信赖和人本价值。",
+      "reusable_knowledge": "表现AI或算法时，可以通过人工确认、反馈便签、误差复核来避免冷感。",
+      "best_usage": "适合用于technology_showcase、value_expression、可信赖技术、科技向善。",
+      "risk": "如果把AI表现得过于万能，会引发医疗伦理和真实性风险。"
+    },
+    {
+      "scene_id": "scene_006",
+      "knowledge_id": "know_scene_006",
+      "shooting_techniques": ["地图短镜头", "多屏视频墙", "跨地域匹配剪辑", "规模信息克制呈现"],
+      "director_intent": "展示全球能力，但让规模服务于协作，而不是服务于炫耀。",
+      "emotional_function": "扩大格局，同时保持温度。",
+      "reusable_knowledge": "世界500强规模感可以通过协作网络和服务覆盖表达，少用宏大口号。",
+      "best_usage": "适合用于scale_reveal、全球网络、企业能力展开。",
+      "risk": "地图和数据过多会让影片变得冷、远、像汇报片。"
+    },
+    {
+      "scene_id": "scene_007",
+      "knowledge_id": "know_scene_007",
+      "shooting_techniques": ["视频会诊正反打", "医生记录细节", "家属等待留白", "人声前置混音"],
+      "director_intent": "用面对面沟通建立信任，证明技术最终服务于人与人的理解。",
+      "emotional_function": "从不确定转向笃定。",
+      "reusable_knowledge": "可信赖不是靠字幕说出来，而是靠清楚沟通、认真记录和可执行建议呈现。",
+      "best_usage": "适合用于build_trust、面对面沟通、价值表达、专家协作。",
+      "risk": "如果专家姿态太高，会削弱平等协作感。"
+    },
+    {
+      "scene_id": "scene_008",
+      "knowledge_id": "know_scene_008",
+      "shooting_techniques": ["病房中近景", "家属手部细节", "医生低声解释", "情绪克制收束"],
+      "director_intent": "表现结果但不夸大疗效，重点放在清晰方案给人的稳定感。",
+      "emotional_function": "释放焦虑，形成温暖回报。",
+      "reusable_knowledge": "医疗企业片应避免神化治疗结果，可以表现行动方向和心理稳定。",
+      "best_usage": "适合用于outcome、价值落地、患者感受、可信结果。",
+      "risk": "过度煽情会像公益广告，过度承诺会有合规风险。"
+    },
+    {
+      "scene_id": "scene_009",
+      "knowledge_id": "know_scene_009",
+      "shooting_techniques": ["夜间工位", "语音反馈作为叙事触发", "版本保存特写", "静默反应"],
+      "director_intent": "把员工成长和真实反馈绑定，让使命感来自工作闭环。",
+      "emotional_function": "形成长期主义和内部驱动力。",
+      "reusable_knowledge": "表现年轻团队成长时，用真实反馈驱动改进，比喊奋斗口号更高级。",
+      "best_usage": "适合用于growth、员工成长、长期主义、使命感升温。",
+      "risk": "如果夜间加班被拍成热血鸡汤，会显得陈旧且压迫。"
+    },
+    {
+      "scene_id": "scene_010",
+      "knowledge_id": "know_scene_010",
+      "shooting_techniques": ["首尾呼应", "道路意象", "晨光回归", "一句价值字幕"],
+      "director_intent": "完成从距离到抵达的主题闭环，把品牌价值落在具体地点。",
+      "emotional_function": "稳定收束，留下可信赖的品牌余韵。",
+      "reusable_knowledge": "结尾可以回到开场空间，让企业承诺看起来像已发生的行动，而不是口号。",
+      "best_usage": "适合用于ending、品牌价值表达、使命收束、温和号召。",
+      "risk": "字幕如果太大太满，会破坏前面建立的克制质感。"
+    }
+  ]
+}
+

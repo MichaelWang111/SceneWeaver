@@ -1,0 +1,425 @@
+{
+  "method": "tags-embedding",
+  "description": "Compare user_input with flattened target_tags_text by DashScope embedding cosine similarity.",
+  "scored_case_count": 10,
+  "aggregates": {
+    "overall": {
+      "tags_embedding": {
+        "count": 10,
+        "avg": 0.530485,
+        "min": 0.335088,
+        "max": 0.692042
+      }
+    },
+    "by_case_type": {
+      "simple_positive": {
+        "tags_embedding": {
+          "count": 4,
+          "avg": 0.410274,
+          "min": 0.335088,
+          "max": 0.505374
+        }
+      },
+      "hard_positive": {
+        "tags_embedding": {
+          "count": 3,
+          "avg": 0.648482,
+          "min": 0.599769,
+          "max": 0.692042
+        }
+      },
+      "hard_negative": {
+        "tags_embedding": {
+          "count": 3,
+          "avg": 0.572771,
+          "min": 0.501123,
+          "max": 0.62194
+        }
+      }
+    }
+  },
+  "results": [
+    {
+      "case_id": "simple_positive__enterprise_healthtech_story_001__scene_001",
+      "case_type": "simple_positive",
+      "expected_relation": "should_match",
+      "user_input": "我需要一个开场镜头：适合用于企业片开场或问题建立阶段，用真实场景先让观众感到距离、紧迫和需要被解决的现实压力。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "establish_problem",
+          "show_distance",
+          "build_reality"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于企业片开场或问题建立阶段，用真实场景先让观众感到距离、紧迫和需要被解决的现实压力。",
+      "target_tags_text": "县医院 救护车 医生 山路 清晨 医疗资源与地域距离 急诊与公共服务 医生与患者即将建立连接 救护车驶入 医生快步进入 抬头观察 紧急响应 县域医院 山谷公路 清晨薄雾 急诊入口 基层医疗系统 公共服务对象 医生对患者的责任",
+      "expected_prefer": null,
+      "comparisons": {
+        "tags_embedding": {
+          "method": "dashscope_text_embedding_v4_cosine",
+          "reference_field": "target_tags_text",
+          "input_text": "我需要一个开场镜头：适合用于企业片开场或问题建立阶段，用真实场景先让观众感到距离、紧迫和需要被解决的现实压力。",
+          "reference_text": "县医院 救护车 医生 山路 清晨 医疗资源与地域距离 急诊与公共服务 医生与患者即将建立连接 救护车驶入 医生快步进入 抬头观察 紧急响应 县域医院 山谷公路 清晨薄雾 急诊入口 基层医疗系统 公共服务对象 医生对患者的责任",
+          "cosine": 0.342571,
+          "threshold_hint": 0.4
+        }
+      }
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_story_001__scene_001",
+      "case_type": "hard_positive",
+      "expected_relation": "should_match",
+      "user_input": "想找一个世界500强质感的开场段落，不要直白讲道理。画面可以有县医院、救护车、医生、山路、清晨这类元素，重点是建立问题、表现距离感、建立真实感，要能服务于医疗科技与数字健康的品牌表达。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "establish_problem",
+          "show_distance",
+          "build_reality"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于企业片开场或问题建立阶段，用真实场景先让观众感到距离、紧迫和需要被解决的现实压力。",
+      "target_tags_text": "县医院 救护车 医生 山路 清晨 医疗资源与地域距离 急诊与公共服务 医生与患者即将建立连接 救护车驶入 医生快步进入 抬头观察 紧急响应 县域医院 山谷公路 清晨薄雾 急诊入口 基层医疗系统 公共服务对象 医生对患者的责任",
+      "expected_prefer": null,
+      "comparisons": {
+        "tags_embedding": {
+          "method": "dashscope_text_embedding_v4_cosine",
+          "reference_field": "target_tags_text",
+          "input_text": "想找一个世界500强质感的开场段落，不要直白讲道理。画面可以有县医院、救护车、医生、山路、清晨这类元素，重点是建立问题、表现距离感、建立真实感，要能服务于医疗科技与数字健康的品牌表达。",
+          "reference_text": "县医院 救护车 医生 山路 清晨 医疗资源与地域距离 急诊与公共服务 医生与患者即将建立连接 救护车驶入 医生快步进入 抬头观察 紧急响应 县域医院 山谷公路 清晨薄雾 急诊入口 基层医疗系统 公共服务对象 医生对患者的责任",
+          "cosine": 0.599769,
+          "threshold_hint": 0.4
+        }
+      }
+    },
+    {
+      "case_id": "hard_negative__enterprise_healthtech_story_001__scene_001",
+      "case_type": "hard_negative",
+      "expected_relation": "should_not_match",
+      "user_input": "画面可以借用县医院、救护车、医生、山路这类相似元素，但不要做成开场。我真正要的是铺垫，重点是建立需求、表现压力、让专业场景更有人味，不要强调开场气势或问题建立，而要让观众看到后续情节的具体铺垫。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "establish_problem",
+          "show_distance",
+          "build_reality"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于企业片开场或问题建立阶段，用真实场景先让观众感到距离、紧迫和需要被解决的现实压力。",
+      "target_tags_text": "县医院 救护车 医生 山路 清晨 医疗资源与地域距离 急诊与公共服务 医生与患者即将建立连接 救护车驶入 医生快步进入 抬头观察 紧急响应 县域医院 山谷公路 清晨薄雾 急诊入口 基层医疗系统 公共服务对象 医生对患者的责任",
+      "expected_prefer": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_002",
+        "retrieval_id": "ret_scene_002",
+        "script_stage": "setup",
+        "creative_purpose": [
+          "establish_need",
+          "show_pressure",
+          "humanize_professional"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "comparisons": {
+        "tags_embedding": {
+          "method": "dashscope_text_embedding_v4_cosine",
+          "reference_field": "target_tags_text",
+          "input_text": "画面可以借用县医院、救护车、医生、山路这类相似元素，但不要做成开场。我真正要的是铺垫，重点是建立需求、表现压力、让专业场景更有人味，不要强调开场气势或问题建立，而要让观众看到后续情节的具体铺垫。",
+          "reference_text": "县医院 救护车 医生 山路 清晨 医疗资源与地域距离 急诊与公共服务 医生与患者即将建立连接 救护车驶入 医生快步进入 抬头观察 紧急响应 县域医院 山谷公路 清晨薄雾 急诊入口 基层医疗系统 公共服务对象 医生对患者的责任",
+          "cosine": 0.501123,
+          "threshold_hint": 0.4
+        }
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_healthtech_story_001__scene_002",
+      "case_type": "simple_positive",
+      "expected_relation": "should_match",
+      "user_input": "我需要一个铺垫镜头：适合用于setup或需求建立段落，让技术需求从医生困境中自然出现，而不是从产品卖点中出现。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_002",
+        "retrieval_id": "ret_scene_002",
+        "script_stage": "setup",
+        "creative_purpose": [
+          "establish_need",
+          "show_pressure",
+          "humanize_professional"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于setup或需求建立段落，让技术需求从医生困境中自然出现，而不是从产品卖点中出现。",
+      "target_tags_text": "基层医生 患者家属 医学影像 诊室 排班表 医生面对复杂病例 家属等待判断 专业能力与信息不足 比对影像 皱眉思考 停顿 家属等待 县医院诊室 狭小空间 医学屏幕 临床一线 医生与患者家庭 基层医院与复杂病例 专业责任",
+      "expected_prefer": null,
+      "comparisons": {
+        "tags_embedding": {
+          "method": "dashscope_text_embedding_v4_cosine",
+          "reference_field": "target_tags_text",
+          "input_text": "我需要一个铺垫镜头：适合用于setup或需求建立段落，让技术需求从医生困境中自然出现，而不是从产品卖点中出现。",
+          "reference_text": "基层医生 患者家属 医学影像 诊室 排班表 医生面对复杂病例 家属等待判断 专业能力与信息不足 比对影像 皱眉思考 停顿 家属等待 县医院诊室 狭小空间 医学屏幕 临床一线 医生与患者家庭 基层医院与复杂病例 专业责任",
+          "cosine": 0.458063,
+          "threshold_hint": 0.4
+        }
+      }
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_story_001__scene_002",
+      "case_type": "hard_positive",
+      "expected_relation": "should_match",
+      "user_input": "想找一个世界500强质感的铺垫段落，不要直白讲道理。画面可以有基层医生、患者家属、医学影像、诊室、排班表这类元素，重点是建立需求、表现压力、让专业场景更有人味，要能服务于医疗科技与数字健康的品牌表达。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_002",
+        "retrieval_id": "ret_scene_002",
+        "script_stage": "setup",
+        "creative_purpose": [
+          "establish_need",
+          "show_pressure",
+          "humanize_professional"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于setup或需求建立段落，让技术需求从医生困境中自然出现，而不是从产品卖点中出现。",
+      "target_tags_text": "基层医生 患者家属 医学影像 诊室 排班表 医生面对复杂病例 家属等待判断 专业能力与信息不足 比对影像 皱眉思考 停顿 家属等待 县医院诊室 狭小空间 医学屏幕 临床一线 医生与患者家庭 基层医院与复杂病例 专业责任",
+      "expected_prefer": null,
+      "comparisons": {
+        "tags_embedding": {
+          "method": "dashscope_text_embedding_v4_cosine",
+          "reference_field": "target_tags_text",
+          "input_text": "想找一个世界500强质感的铺垫段落，不要直白讲道理。画面可以有基层医生、患者家属、医学影像、诊室、排班表这类元素，重点是建立需求、表现压力、让专业场景更有人味，要能服务于医疗科技与数字健康的品牌表达。",
+          "reference_text": "基层医生 患者家属 医学影像 诊室 排班表 医生面对复杂病例 家属等待判断 专业能力与信息不足 比对影像 皱眉思考 停顿 家属等待 县医院诊室 狭小空间 医学屏幕 临床一线 医生与患者家庭 基层医院与复杂病例 专业责任",
+          "cosine": 0.653634,
+          "threshold_hint": 0.4
+        }
+      }
+    },
+    {
+      "case_id": "hard_negative__enterprise_healthtech_story_001__scene_002",
+      "case_type": "hard_negative",
+      "expected_relation": "should_not_match",
+      "user_input": "画面可以借用基层医生、患者家属、医学影像、诊室这类相似元素，但不要做成铺垫。我真正要的是开场，重点是建立问题、表现距离感、建立真实感，不要停留在需求铺垫，而要更像一段能直接进入主题的画面。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_002",
+        "retrieval_id": "ret_scene_002",
+        "script_stage": "setup",
+        "creative_purpose": [
+          "establish_need",
+          "show_pressure",
+          "humanize_professional"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于setup或需求建立段落，让技术需求从医生困境中自然出现，而不是从产品卖点中出现。",
+      "target_tags_text": "基层医生 患者家属 医学影像 诊室 排班表 医生面对复杂病例 家属等待判断 专业能力与信息不足 比对影像 皱眉思考 停顿 家属等待 县医院诊室 狭小空间 医学屏幕 临床一线 医生与患者家庭 基层医院与复杂病例 专业责任",
+      "expected_prefer": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "establish_problem",
+          "show_distance",
+          "build_reality"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "comparisons": {
+        "tags_embedding": {
+          "method": "dashscope_text_embedding_v4_cosine",
+          "reference_field": "target_tags_text",
+          "input_text": "画面可以借用基层医生、患者家属、医学影像、诊室这类相似元素，但不要做成铺垫。我真正要的是开场，重点是建立问题、表现距离感、建立真实感，不要停留在需求铺垫，而要更像一段能直接进入主题的画面。",
+          "reference_text": "基层医生 患者家属 医学影像 诊室 排班表 医生面对复杂病例 家属等待判断 专业能力与信息不足 比对影像 皱眉思考 停顿 家属等待 县医院诊室 狭小空间 医学屏幕 临床一线 医生与患者家庭 基层医院与复杂病例 专业责任",
+          "cosine": 0.59525,
+          "threshold_hint": 0.4
+        }
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_healthtech_story_001__scene_003",
+      "case_type": "simple_positive",
+      "expected_relation": "should_match",
+      "user_input": "我需要一个technology_entrance镜头：适合用于技术入场或情节转折，让技术作为降低不确定性的工具出现。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_003",
+        "retrieval_id": "ret_scene_003",
+        "script_stage": "technology_entrance",
+        "creative_purpose": [
+          "introduce_tool",
+          "reduce_uncertainty",
+          "connect_expertise"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于技术入场或情节转折，让技术作为降低不确定性的工具出现。",
+      "target_tags_text": "远程会诊平台 医学影像 医生 专家列表 加密上传 医生连接专家 技术辅助判断 病例与远程资源 登录系统 上传影像 发起会诊 流程确认 诊室屏幕 远程医疗平台 数字化医疗流程 基层医生与远程专家 技术平台与医疗协作",
+      "expected_prefer": null,
+      "comparisons": {
+        "tags_embedding": {
+          "method": "dashscope_text_embedding_v4_cosine",
+          "reference_field": "target_tags_text",
+          "input_text": "我需要一个technology_entrance镜头：适合用于技术入场或情节转折，让技术作为降低不确定性的工具出现。",
+          "reference_text": "远程会诊平台 医学影像 医生 专家列表 加密上传 医生连接专家 技术辅助判断 病例与远程资源 登录系统 上传影像 发起会诊 流程确认 诊室屏幕 远程医疗平台 数字化医疗流程 基层医生与远程专家 技术平台与医疗协作",
+          "cosine": 0.335088,
+          "threshold_hint": 0.4
+        }
+      }
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_story_001__scene_003",
+      "case_type": "hard_positive",
+      "expected_relation": "should_match",
+      "user_input": "想找一个世界500强质感的technology_entrance段落，不要直白讲道理。画面可以有远程会诊平台、医学影像、医生、专家列表、加密上传这类元素，重点是引入工具、降低不确定性、连接专业资源，要能服务于医疗科技与数字健康的品牌表达。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_003",
+        "retrieval_id": "ret_scene_003",
+        "script_stage": "technology_entrance",
+        "creative_purpose": [
+          "introduce_tool",
+          "reduce_uncertainty",
+          "connect_expertise"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于技术入场或情节转折，让技术作为降低不确定性的工具出现。",
+      "target_tags_text": "远程会诊平台 医学影像 医生 专家列表 加密上传 医生连接专家 技术辅助判断 病例与远程资源 登录系统 上传影像 发起会诊 流程确认 诊室屏幕 远程医疗平台 数字化医疗流程 基层医生与远程专家 技术平台与医疗协作",
+      "expected_prefer": null,
+      "comparisons": {
+        "tags_embedding": {
+          "method": "dashscope_text_embedding_v4_cosine",
+          "reference_field": "target_tags_text",
+          "input_text": "想找一个世界500强质感的technology_entrance段落，不要直白讲道理。画面可以有远程会诊平台、医学影像、医生、专家列表、加密上传这类元素，重点是引入工具、降低不确定性、连接专业资源，要能服务于医疗科技与数字健康的品牌表达。",
+          "reference_text": "远程会诊平台 医学影像 医生 专家列表 加密上传 医生连接专家 技术辅助判断 病例与远程资源 登录系统 上传影像 发起会诊 流程确认 诊室屏幕 远程医疗平台 数字化医疗流程 基层医生与远程专家 技术平台与医疗协作",
+          "cosine": 0.692042,
+          "threshold_hint": 0.4
+        }
+      }
+    },
+    {
+      "case_id": "hard_negative__enterprise_healthtech_story_001__scene_003",
+      "case_type": "hard_negative",
+      "expected_relation": "should_not_match",
+      "user_input": "画面可以借用远程会诊平台、医学影像、医生、专家列表这类相似元素，但不要做成technology_entrance。我真正要的是开场，重点是建立问题、表现距离感、建立真实感，希望它的脚本位置和情绪功能明显不同。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_003",
+        "retrieval_id": "ret_scene_003",
+        "script_stage": "technology_entrance",
+        "creative_purpose": [
+          "introduce_tool",
+          "reduce_uncertainty",
+          "connect_expertise"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于技术入场或情节转折，让技术作为降低不确定性的工具出现。",
+      "target_tags_text": "远程会诊平台 医学影像 医生 专家列表 加密上传 医生连接专家 技术辅助判断 病例与远程资源 登录系统 上传影像 发起会诊 流程确认 诊室屏幕 远程医疗平台 数字化医疗流程 基层医生与远程专家 技术平台与医疗协作",
+      "expected_prefer": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "establish_problem",
+          "show_distance",
+          "build_reality"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "comparisons": {
+        "tags_embedding": {
+          "method": "dashscope_text_embedding_v4_cosine",
+          "reference_field": "target_tags_text",
+          "input_text": "画面可以借用远程会诊平台、医学影像、医生、专家列表这类相似元素，但不要做成technology_entrance。我真正要的是开场，重点是建立问题、表现距离感、建立真实感，希望它的脚本位置和情绪功能明显不同。",
+          "reference_text": "远程会诊平台 医学影像 医生 专家列表 加密上传 医生连接专家 技术辅助判断 病例与远程资源 登录系统 上传影像 发起会诊 流程确认 诊室屏幕 远程医疗平台 数字化医疗流程 基层医生与远程专家 技术平台与医疗协作",
+          "cosine": 0.62194,
+          "threshold_hint": 0.4
+        }
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_healthtech_story_001__scene_004",
+      "case_type": "simple_positive",
+      "expected_relation": "should_match",
+      "user_input": "我需要一个团队协作镜头：适合用于团队协作段落，表现年轻专业团队如何围绕真实问题工作，避免互联网大厂式空泛办公感。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_004",
+        "retrieval_id": "ret_scene_004",
+        "script_stage": "team_work",
+        "creative_purpose": [
+          "show_team",
+          "show_collaboration",
+          "prove_organization_capability"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于团队协作段落，表现年轻专业团队如何围绕真实问题工作，避免互联网大厂式空泛办公感。",
+      "target_tags_text": "算法工程师 临床专家 产品经理 白板 病例流程 跨职能团队协作 临床问题转产品改进 专家与工程师共同决策 围桌讨论 标注风险点 复盘医生反馈 确认方案 研发中心 会议区 白板流程图 企业团队空间 研发团队 医疗专家 产品组织 企业内部协作",
+      "expected_prefer": null,
+      "comparisons": {
+        "tags_embedding": {
+          "method": "dashscope_text_embedding_v4_cosine",
+          "reference_field": "target_tags_text",
+          "input_text": "我需要一个团队协作镜头：适合用于团队协作段落，表现年轻专业团队如何围绕真实问题工作，避免互联网大厂式空泛办公感。",
+          "reference_text": "算法工程师 临床专家 产品经理 白板 病例流程 跨职能团队协作 临床问题转产品改进 专家与工程师共同决策 围桌讨论 标注风险点 复盘医生反馈 确认方案 研发中心 会议区 白板流程图 企业团队空间 研发团队 医疗专家 产品组织 企业内部协作",
+          "cosine": 0.505374,
+          "threshold_hint": 0.4
+        }
+      }
+    }
+  ]
+}

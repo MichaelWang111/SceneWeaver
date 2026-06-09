@@ -29,6 +29,7 @@ from sceneweaver.llm.client import LLMConfig
 from sceneweaver.pipeline.mock_pipeline import run_mock_pipeline
 from sceneweaver.pipeline.package_video import run_package_video
 from sceneweaver.analysis.scene_analyzer import analyze_scene_packages
+from sceneweaver.llm.client import VisionLLMClient
 
 app = typer.Typer(help="SceneWeaver director experience analysis CLI.")
 
@@ -199,6 +200,52 @@ def retrieve_cards(
         top_k=top_k,
     )
     typer.echo(json.dumps(result.model_dump(mode="json"), ensure_ascii=False, indent=2))
+
+
+@app.command("llm-check")
+def llm_check(
+    prompt: str = typer.Argument(
+        "hi",
+        help="Short prompt used to verify that the configured LLM endpoint is reachable.",
+    ),
+    model: Optional[str] = typer.Option(
+        None,
+        "--model",
+        help="Override the configured model for this check only.",
+    ),
+    timeout_seconds: float = typer.Option(
+        30.0,
+        "--timeout-seconds",
+        min=1.0,
+        help="Request timeout for the connectivity check.",
+    ),
+) -> None:
+    """Send a minimal JSON request to the configured LLM endpoint and print the response."""
+    client = VisionLLMClient()
+    if model is not None:
+        client.config = client.config.__class__(
+            api_key=client.config.api_key,
+            base_url=client.config.base_url,
+            model=model,
+            temperature=client.config.temperature,
+            max_tokens=client.config.max_tokens,
+            request_timeout_seconds=client.config.request_timeout_seconds,
+            stream_idle_timeout_seconds=client.config.stream_idle_timeout_seconds,
+            enable_thinking=client.config.enable_thinking,
+            thinking_budget=client.config.thinking_budget,
+        )
+    typer.echo(
+        "LLM check: "
+        f"base_url={client.config.base_url!r}, model={client.config.model!r}, timeout_seconds={timeout_seconds:g}",
+        err=True,
+    )
+    result = client.analyze_text_json(
+        system_prompt="Return a one-field JSON object with key 'reply'.",
+        user_prompt=prompt,
+        timeout_seconds=timeout_seconds,
+        retries=0,
+    )
+    typer.echo(json.dumps(result, ensure_ascii=False, indent=2))
 
 
 @app.command("keyword-loop")

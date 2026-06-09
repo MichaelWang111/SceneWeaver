@@ -1,0 +1,257 @@
+{
+  "video_id": "tech_recruitment_minimal_uncertain_001",
+  "knowledge_layer_policy": "hypotheses_not_ground_truth",
+  "scene_knowledge": [
+    {
+      "scene_id": "scene_001",
+      "director_interpretation_hypotheses": [
+        {
+          "narrative_function": "可能在用半透明遮挡表现进入未知问题空间。",
+          "emotional_function": "冷静、轻微神秘、带一点探索感。",
+          "brand_personality_signal": "极简、理性、现代。",
+          "underlying_emotion": "面对未知时的从容。",
+          "confidence": 0.66,
+          "evidence": ["半透明板遮挡人物", "黑色矩形块像未知障碍", "人物向镜头行走"],
+          "alternatives": ["也可能只是视觉化招聘棚拍装置", "也可能表达透明度或信息逐渐显现"],
+          "risk_of_overread": "如果直接断言为职业探索，会把招聘语境过度投射到画面。"
+        }
+      ],
+      "experience_candidates": [
+        {
+          "keywords": ["极简", "遮挡", "半透明", "探索", "未知"],
+          "emotion": "好奇与冷静",
+          "narrative_logic": "利用半透明材质和遮挡制造人物进入未知空间的感觉。",
+          "techniques": ["固定机位", "中心构图", "遮挡构图", "高调照明"],
+          "reuse_condition": "适合需要表达探索、未知、问题空间、招聘入场的抽象场景。",
+          "confidence": 0.68
+        }
+      ]
+    },
+    {
+      "scene_id": "scene_002",
+      "director_interpretation_hypotheses": [
+        {
+          "narrative_function": "可能通过空椅暗示等待、缺席或团队中尚未被填补的位置。",
+          "emotional_function": "安静、悬置、略带期待。",
+          "brand_personality_signal": "克制、留白、开放。",
+          "underlying_emotion": "等待某人加入或等待答案出现。",
+          "confidence": 0.58,
+          "evidence": ["中间空椅突出", "纸张被放到空椅上", "两侧人物看向中心"],
+          "alternatives": ["可能只是构图装置", "可能是面试场景的抽象化"],
+          "risk_of_overread": "空椅的含义不稳定，不能直接绑定招聘缺口。"
+        }
+      ],
+      "experience_candidates": [
+        {
+          "keywords": ["空椅", "等待", "留白", "位置", "开放"],
+          "emotion": "期待与悬置",
+          "narrative_logic": "用空置位置制造观众对缺席者或新角色的想象。",
+          "techniques": ["三分构图", "留白", "透明道具", "固定机位"],
+          "reuse_condition": "适合表现等待加入、开放机会、团队缺口或问题尚未解决。",
+          "confidence": 0.56
+        }
+      ]
+    },
+    {
+      "scene_id": "scene_003",
+      "director_interpretation_hypotheses": [
+        {
+          "narrative_function": "可能表现人物在复杂信息中筛选和标记重点。",
+          "emotional_function": "专注、安静、略微紧张。",
+          "brand_personality_signal": "分析能力、理性、细节导向。",
+          "underlying_emotion": "从混乱中寻找线索。",
+          "confidence": 0.62,
+          "evidence": ["多张黑色卡片悬挂", "人物逐张查看", "人物进行书写标记"],
+          "alternatives": ["可能是创意工作坊", "可能是数据点或任务卡的视觉隐喻"],
+          "risk_of_overread": "卡片代表什么无法从画面确定。"
+        }
+      ],
+      "experience_candidates": [
+        {
+          "keywords": ["筛选", "标记", "信息", "线索", "专注"],
+          "emotion": "专注与思考",
+          "narrative_logic": "用悬挂卡片和手写标记表现从复杂信息中寻找关键点。",
+          "techniques": ["前景遮挡", "细节特写", "冷色服装", "静态中景"],
+          "reuse_condition": "适合表现分析、研究、问题拆解、寻找线索的段落。",
+          "confidence": 0.61
+        }
+      ]
+    },
+    {
+      "scene_id": "scene_004",
+      "director_interpretation_hypotheses": [
+        {
+          "narrative_function": "可能表现多人共同拆解问题或建立方案。",
+          "emotional_function": "协作、理性、轻微推进感。",
+          "brand_personality_signal": "团队协作、开放讨论、年轻专业。",
+          "underlying_emotion": "一起把抽象问题变得可操作。",
+          "confidence": 0.7,
+          "evidence": ["多人围桌", "移动磁贴", "透明板叠放", "桌面成为信息中心"],
+          "alternatives": ["可能是游戏化视觉设计", "可能是产品工作坊"],
+          "risk_of_overread": "不能确定他们讨论的是业务、算法还是创意。"
+        }
+      ],
+      "experience_candidates": [
+        {
+          "keywords": ["协作", "工作坊", "磁贴", "透明板", "问题拆解"],
+          "emotion": "协作与推进",
+          "narrative_logic": "通过多人移动桌面元素表现团队共同组织信息。",
+          "techniques": ["群像调度", "桌面俯拍", "道具互动", "动作剪辑"],
+          "reuse_condition": "适合表现团队协作、共创、解题过程，但需要避免会议室模板感。",
+          "confidence": 0.72
+        }
+      ]
+    },
+    {
+      "scene_id": "scene_005",
+      "director_interpretation_hypotheses": [
+        {
+          "narrative_function": "可能表现人与系统之间的交互，技术作为响应人的动作的界面。",
+          "emotional_function": "冷静、轻科技感、可控。",
+          "brand_personality_signal": "技术现代感、简洁、人机互动。",
+          "underlying_emotion": "尝试触发系统反馈。",
+          "confidence": 0.6,
+          "evidence": ["人物轮廓在屏幕后", "手部动作与点阵亮起相关", "屏幕内容极简"],
+          "alternatives": ["可能是后期视觉效果", "可能只是抽象装置表演"],
+          "risk_of_overread": "不能直接认定为具体产品或技术能力。"
+        }
+      ],
+      "experience_candidates": [
+        {
+          "keywords": ["人机交互", "点阵", "屏幕", "轮廓", "技术感"],
+          "emotion": "冷静与可控",
+          "narrative_logic": "用人物轮廓和界面反馈表现人与系统之间的关系。",
+          "techniques": ["半透明屏幕", "手部动作", "冷光点阵", "弱化人物面部"],
+          "reuse_condition": "适合表现抽象技术、人机协作、系统响应，不适合证明具体产品功能。",
+          "confidence": 0.59
+        }
+      ]
+    },
+    {
+      "scene_id": "scene_006",
+      "director_interpretation_hypotheses": [
+        {
+          "narrative_function": "可能通过不同高度的方块表现复杂系统、城市、模块或问题结构。",
+          "emotional_function": "理性、秩序、轻微距离感。",
+          "brand_personality_signal": "系统化、结构化、规模感。",
+          "underlying_emotion": "面对复杂结构时保持冷静。",
+          "confidence": 0.52,
+          "evidence": ["多个方块高度不同", "人物分散其中", "方块被转动后出现图案"],
+          "alternatives": ["可能是城市隐喻", "可能是业务模块", "可能是视觉节奏段落"],
+          "risk_of_overread": "这个镜头的对象含义高度不确定。"
+        }
+      ],
+      "experience_candidates": [
+        {
+          "keywords": ["结构", "模块", "复杂系统", "方块", "规模"],
+          "emotion": "理性与秩序",
+          "narrative_logic": "用抽象方块阵列表现复杂结构中的探索或调整。",
+          "techniques": ["广角固定", "装置化布景", "人物空间分隔"],
+          "reuse_condition": "适合表现系统复杂度、组织结构或规模感，但需要上下文补足。",
+          "confidence": 0.5
+        }
+      ]
+    },
+    {
+      "scene_id": "scene_007",
+      "director_interpretation_hypotheses": [
+        {
+          "narrative_function": "可能表现身份确认、任务交接或进入组织的瞬间。",
+          "emotional_function": "安静确认、轻微仪式感。",
+          "brand_personality_signal": "专业、透明、克制。",
+          "underlying_emotion": "从观察者变成参与者。",
+          "confidence": 0.55,
+          "evidence": ["工牌出现", "便签被推到人物面前", "人物点头并翻开工牌"],
+          "alternatives": ["可能是面试", "可能是项目确认", "可能是身份转换"],
+          "risk_of_overread": "工牌容易诱导招聘解读，但画面没有明确文字信息。"
+        }
+      ],
+      "experience_candidates": [
+        {
+          "keywords": ["工牌", "确认", "交接", "身份", "便签"],
+          "emotion": "确认与进入",
+          "narrative_logic": "通过工牌和便签表现某种身份或任务的确认。",
+          "techniques": ["桌面特写", "道具叙事", "动作留白"],
+          "reuse_condition": "适合表现入场、确认、任务交接、从旁观到参与。",
+          "confidence": 0.56
+        }
+      ]
+    },
+    {
+      "scene_id": "scene_008",
+      "director_interpretation_hypotheses": [
+        {
+          "narrative_function": "可能表现多人把分散信息连接成一条路径。",
+          "emotional_function": "协作、逐步清晰。",
+          "brand_personality_signal": "连接、组织能力、共创。",
+          "underlying_emotion": "从碎片到连贯。",
+          "confidence": 0.64,
+          "evidence": ["多人从两侧插入黑色矩形", "矩形逐渐形成线", "透明墙作为共同界面"],
+          "alternatives": ["可能是数据流", "可能是路径", "可能是团队成果展示"],
+          "risk_of_overread": "连接的具体对象无法确定。"
+        }
+      ],
+      "experience_candidates": [
+        {
+          "keywords": ["连接", "共创", "路径", "碎片", "透明墙"],
+          "emotion": "协作与清晰",
+          "narrative_logic": "多人共同把分散元素组织成连续线索。",
+          "techniques": ["透明材质", "正面构图", "重复动作", "多人协作"],
+          "reuse_condition": "适合表现共创、连接信息、团队把问题变清晰。",
+          "confidence": 0.65
+        }
+      ]
+    },
+    {
+      "scene_id": "scene_009",
+      "director_interpretation_hypotheses": [
+        {
+          "narrative_function": "可能表现某人主动承担中心问题，或团队将注意力集中到一个关键点。",
+          "emotional_function": "聚焦、轻微升温、承担感。",
+          "brand_personality_signal": "主动性、问题意识、团队关注。",
+          "underlying_emotion": "愿意走向问题中心。",
+          "confidence": 0.57,
+          "evidence": ["多人形成半圆", "中心留白", "一人走入中心拾起黑块"],
+          "alternatives": ["可能是选择、认可、任务领取或舞台化动作"],
+          "risk_of_overread": "承担感来自构图推断，不是明确剧情事实。"
+        }
+      ],
+      "experience_candidates": [
+        {
+          "keywords": ["聚焦", "承担", "中心", "团队注视", "选择"],
+          "emotion": "聚焦与承担",
+          "narrative_logic": "通过走入中心和拾起物件表现主动面对问题。",
+          "techniques": ["半圆构图", "中心留白", "光带", "缓慢横移"],
+          "reuse_condition": "适合表现承担任务、团队认可、问题聚焦，但要避免过度仪式化。",
+          "confidence": 0.58
+        }
+      ]
+    },
+    {
+      "scene_id": "scene_010",
+      "director_interpretation_hypotheses": [
+        {
+          "narrative_function": "可能用人物从遮挡后走出表现问题变清晰、团队形成或加入完成。",
+          "emotional_function": "清晰、完成、开放。",
+          "brand_personality_signal": "透明、现代、欢迎加入。",
+          "underlying_emotion": "从未知走向可见。",
+          "confidence": 0.67,
+          "evidence": ["回到第一场装置", "黑块减少", "多人从板后走到前景", "画面更通透"],
+          "alternatives": ["可能是视觉闭环", "可能是招聘号召前的团队亮相"],
+          "risk_of_overread": "如果没有字幕，不能确定它是招聘结尾还是品牌结尾。"
+        }
+      ],
+      "experience_candidates": [
+        {
+          "keywords": ["走出遮挡", "首尾呼应", "清晰", "团队", "结尾"],
+          "emotion": "完成与开放",
+          "narrative_logic": "用首尾呼应和遮挡减少表现从未知到清晰。",
+          "techniques": ["首尾呼应", "中心构图", "遮挡解除", "高调光"],
+          "reuse_condition": "适合招聘片尾、团队亮相、问题被看见后的收束。",
+          "confidence": 0.66
+        }
+      ]
+    }
+  ]
+}
+

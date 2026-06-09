@@ -1,0 +1,337 @@
+{
+  "video_id": "tech_recruitment_minimal_uncertain_001",
+  "retrieval_layer_policy": "loose_tags_candidate_usecases_empty_vectors",
+  "items": [
+    {
+      "retrieval_id": "ret_scene_001",
+      "scene_id": "scene_001",
+      "shallow_llm_tags": {
+        "entities": ["半透明磨砂板", "黑色矩形块", "年轻男性", "白色背景", "支架"],
+        "relations": ["人物在板后", "遮挡与可见", "人和抽象装置"],
+        "actions_and_expressions": ["向镜头行走", "步态变化", "表情平静"],
+        "background_and_setting": ["纯白棚拍", "极简装置", "高调光"],
+        "social_relations": []
+      },
+      "script_use_candidates": [
+        {
+          "sentence": "可能适合用于招聘片或科技品牌片的入场段，表达人物进入未知问题空间。",
+          "stage": "opening",
+          "confidence": 0.62
+        },
+        {
+          "sentence": "也可用于表现探索、遮挡、信息尚未清晰的过渡段。",
+          "stage": "transition",
+          "confidence": 0.46
+        }
+      ],
+      "embedding_texts": {
+        "visual_observation": "白色背景 半透明磨砂板 黑色矩形块 年轻男性 板后行走 中心构图 高调光",
+        "interpretation_hypothesis": "可能表达探索未知 穿过遮挡 问题空间 招聘入场 科技公司极简理性",
+        "script_usage": "真实用途不确定 可用于开场 入场 探索 遮挡 未知 职业探索"
+      },
+      "embedding_vectors": {
+        "visual_observation": [],
+        "interpretation_hypothesis": [],
+        "script_usage": []
+      }
+    },
+    {
+      "retrieval_id": "ret_scene_002",
+      "scene_id": "scene_002",
+      "shallow_llm_tags": {
+        "entities": ["透明椅", "空椅", "两名年轻人", "纸张", "白色空间"],
+        "relations": ["人物与空位", "纸张被放到空椅", "左右人物分隔"],
+        "actions_and_expressions": ["抬头", "放下纸张", "看向空椅"],
+        "background_and_setting": ["极简棚拍", "透明道具", "大量留白"],
+        "social_relations": ["可能是等待关系", "可能是团队位置"]
+      },
+      "script_use_candidates": [
+        {
+          "sentence": "可能适合表现等待某人加入、开放席位或问题尚未被回答。",
+          "stage": "setup",
+          "confidence": 0.55
+        },
+        {
+          "sentence": "也可作为人物出场前的留白镜头。",
+          "stage": "transition",
+          "confidence": 0.42
+        }
+      ],
+      "embedding_texts": {
+        "visual_observation": "透明椅 空椅 两个人 纸张 白色空间 留白 固定机位",
+        "interpretation_hypothesis": "可能表达等待 缺席 开放位置 招聘机会 团队尚未完整",
+        "script_usage": "可用于setup 等待 加入 空位 开放机会 团队缺口"
+      },
+      "embedding_vectors": {
+        "visual_observation": [],
+        "interpretation_hypothesis": [],
+        "script_usage": []
+      }
+    },
+    {
+      "retrieval_id": "ret_scene_003",
+      "scene_id": "scene_003",
+      "shallow_llm_tags": {
+        "entities": ["黑色卡片", "细线", "短发女性", "笔", "白色背景"],
+        "relations": ["人物读取卡片", "卡片悬挂在线上", "前景遮挡人物"],
+        "actions_and_expressions": ["翻看卡片", "书写标记", "专注观察"],
+        "background_and_setting": ["抽象装置", "极简空间", "线阵"],
+        "social_relations": []
+      },
+      "script_use_candidates": [
+        {
+          "sentence": "可能适合用于分析、研究、拆解问题的段落。",
+          "stage": "setup",
+          "confidence": 0.58
+        },
+        {
+          "sentence": "也可用于表现人物专注度或信息筛选过程。",
+          "stage": "character_intro",
+          "confidence": 0.5
+        }
+      ],
+      "embedding_texts": {
+        "visual_observation": "悬挂卡片 细线 短发女性 写字 标记 专注 前景遮挡",
+        "interpretation_hypothesis": "可能表达信息筛选 问题拆解 研究 线索 标记重点",
+        "script_usage": "适合分析研究 专注人物 信息复杂 找线索"
+      },
+      "embedding_vectors": {
+        "visual_observation": [],
+        "interpretation_hypothesis": [],
+        "script_usage": []
+      }
+    },
+    {
+      "retrieval_id": "ret_scene_004",
+      "scene_id": "scene_004",
+      "shallow_llm_tags": {
+        "entities": ["长桌", "透明板", "黑色磁贴", "四名年轻员工", "白色空间"],
+        "relations": ["多人围桌", "手部与磁贴互动", "透明板叠放"],
+        "actions_and_expressions": ["移动磁贴", "讨论", "叠放透明板", "共同观察桌面"],
+        "background_and_setting": ["工作坊", "极简会议装置", "棚拍空间"],
+        "social_relations": ["团队协作", "多人共创"]
+      },
+      "script_use_candidates": [
+        {
+          "sentence": "可能适合表现团队协作和共同拆解问题。",
+          "stage": "team_work",
+          "confidence": 0.7
+        },
+        {
+          "sentence": "也可用于表现年轻团队的工作方式，但不一定能说明具体业务。",
+          "stage": "character_intro",
+          "confidence": 0.44
+        }
+      ],
+      "embedding_texts": {
+        "visual_observation": "多人围桌 透明板 黑色磁贴 移动道具 俯拍 团队工作坊",
+        "interpretation_hypothesis": "可能表达团队协作 共创 拆解问题 组织信息 年轻专业",
+        "script_usage": "适合团队协作 不要大厂味 问题拆解 共创 工作坊"
+      },
+      "embedding_vectors": {
+        "visual_observation": [],
+        "interpretation_hypothesis": [],
+        "script_usage": []
+      }
+    },
+    {
+      "retrieval_id": "ret_scene_005",
+      "scene_id": "scene_005",
+      "shallow_llm_tags": {
+        "entities": ["半透明屏幕", "点阵", "人物轮廓", "手指", "冷光"],
+        "relations": ["手部动作与点阵亮起", "人物在屏幕后", "屏幕遮挡人物"],
+        "actions_and_expressions": ["手指移动", "点阵亮起", "人物靠近屏幕"],
+        "background_and_setting": ["极简科技装置", "白色空间", "冷色光"],
+        "social_relations": ["人机交互"]
+      },
+      "script_use_candidates": [
+        {
+          "sentence": "可能适合用于抽象技术展示或人机交互段落。",
+          "stage": "technology_showcase",
+          "confidence": 0.6
+        },
+        {
+          "sentence": "也可作为表现系统响应或技术感的过渡镜头。",
+          "stage": "transition",
+          "confidence": 0.48
+        }
+      ],
+      "embedding_texts": {
+        "visual_observation": "半透明屏幕 点阵 人物轮廓 手指移动 冷光 人机交互",
+        "interpretation_hypothesis": "可能表达系统响应 技术界面 人与技术互动 抽象科技感",
+        "script_usage": "适合技术展示 人机交互 系统响应 科技感 但不证明具体功能"
+      },
+      "embedding_vectors": {
+        "visual_observation": [],
+        "interpretation_hypothesis": [],
+        "script_usage": []
+      }
+    },
+    {
+      "retrieval_id": "ret_scene_006",
+      "scene_id": "scene_006",
+      "shallow_llm_tags": {
+        "entities": ["黑色方块", "三名人物", "灰度图案", "白色空间", "装置"],
+        "relations": ["人物分散在方块之间", "方块被转动", "空间像抽象系统"],
+        "actions_and_expressions": ["转动方块", "站立观察", "分散行动"],
+        "background_and_setting": ["抽象装置空间", "黑白灰极简场景"],
+        "social_relations": ["可能是多人处理不同模块"]
+      },
+      "script_use_candidates": [
+        {
+          "sentence": "可能适合表现复杂系统、模块或规模感，但需要上下文补充。",
+          "stage": "scale_reveal",
+          "confidence": 0.48
+        },
+        {
+          "sentence": "也可用于表现多人面对不同问题点的过渡段。",
+          "stage": "transition",
+          "confidence": 0.44
+        }
+      ],
+      "embedding_texts": {
+        "visual_observation": "黑色方块 不同高度 三人分散 转动方块 抽象系统 白色空间",
+        "interpretation_hypothesis": "可能表达复杂系统 模块 规模 城市 数据柱 结构化问题",
+        "script_usage": "适合规模感 复杂系统 模块化 但语义不确定"
+      },
+      "embedding_vectors": {
+        "visual_observation": [],
+        "interpretation_hypothesis": [],
+        "script_usage": []
+      }
+    },
+    {
+      "retrieval_id": "ret_scene_007",
+      "scene_id": "scene_007",
+      "shallow_llm_tags": {
+        "entities": ["眼镜", "工牌", "便签", "透明桌", "年轻男性"],
+        "relations": ["便签被推向人物", "人物翻开工牌", "道具集中在桌面"],
+        "actions_and_expressions": ["查看便签", "点头", "翻工牌"],
+        "background_and_setting": ["白色棚拍", "透明桌面", "道具特写"],
+        "social_relations": ["可能是交接", "可能是身份确认"]
+      },
+      "script_use_candidates": [
+        {
+          "sentence": "可能适合表现入职、任务确认或从观察者变成参与者。",
+          "stage": "character_intro",
+          "confidence": 0.54
+        },
+        {
+          "sentence": "也可用于招聘片里的身份转换或加入前确认。",
+          "stage": "setup",
+          "confidence": 0.46
+        }
+      ],
+      "embedding_texts": {
+        "visual_observation": "工牌 便签 透明桌 眼镜 男性 点头 翻开工牌",
+        "interpretation_hypothesis": "可能表达身份确认 任务交接 入职 面试 加入组织",
+        "script_usage": "适合人物入场 身份转换 任务确认 招聘片"
+      },
+      "embedding_vectors": {
+        "visual_observation": [],
+        "interpretation_hypothesis": [],
+        "script_usage": []
+      }
+    },
+    {
+      "retrieval_id": "ret_scene_008",
+      "scene_id": "scene_008",
+      "shallow_llm_tags": {
+        "entities": ["透明墙", "黑色矩形", "多人", "缝隙", "白色空间"],
+        "relations": ["多人从两侧靠近", "矩形插入缝隙", "图形逐渐连成线"],
+        "actions_and_expressions": ["插入矩形", "靠近透明墙", "共同完成图形"],
+        "background_and_setting": ["透明装置", "极简棚拍", "协作动作"],
+        "social_relations": ["多人协作", "共同完成"]
+      },
+      "script_use_candidates": [
+        {
+          "sentence": "可能适合表现团队把分散信息连接成路径。",
+          "stage": "team_work",
+          "confidence": 0.63
+        },
+        {
+          "sentence": "也可用于表现连接、数据流或解决方案逐渐成形。",
+          "stage": "technology_showcase",
+          "confidence": 0.43
+        }
+      ],
+      "embedding_texts": {
+        "visual_observation": "透明墙 多人 黑色矩形 插入缝隙 形成线 正面构图",
+        "interpretation_hypothesis": "可能表达连接 共创 路径 碎片变连贯 团队成果",
+        "script_usage": "适合团队协作 信息连接 路径形成 解决方案成形"
+      },
+      "embedding_vectors": {
+        "visual_observation": [],
+        "interpretation_hypothesis": [],
+        "script_usage": []
+      }
+    },
+    {
+      "retrieval_id": "ret_scene_009",
+      "scene_id": "scene_009",
+      "shallow_llm_tags": {
+        "entities": ["光带", "黑色小块", "多名人物", "中心空白", "白色空间"],
+        "relations": ["多人半圆站立", "一人走向中心", "其他人注视中心"],
+        "actions_and_expressions": ["走入中心", "拾起黑块", "集体注视"],
+        "background_and_setting": ["轻微舞台感", "极简空间", "中心留白"],
+        "social_relations": ["团队关注个体", "可能是选择或承担"]
+      },
+      "script_use_candidates": [
+        {
+          "sentence": "可能适合表现某人主动承担问题或团队注意力聚焦。",
+          "stage": "growth",
+          "confidence": 0.55
+        },
+        {
+          "sentence": "也可用于表现选择、认可或任务领取的仪式化瞬间。",
+          "stage": "value_expression",
+          "confidence": 0.42
+        }
+      ],
+      "embedding_texts": {
+        "visual_observation": "半圆队列 中心留白 一人走入中心 拾起黑块 光带 集体注视",
+        "interpretation_hypothesis": "可能表达承担 选择 团队认可 问题聚焦 主动走向问题",
+        "script_usage": "适合成长 承担任务 团队认可 问题聚焦"
+      },
+      "embedding_vectors": {
+        "visual_observation": [],
+        "interpretation_hypothesis": [],
+        "script_usage": []
+      }
+    },
+    {
+      "retrieval_id": "ret_scene_010",
+      "scene_id": "scene_010",
+      "shallow_llm_tags": {
+        "entities": ["半透明磨砂板", "黑色矩形块", "多名人物", "白色背景", "字幕留白"],
+        "relations": ["人物从板后走出", "与第一场视觉呼应", "遮挡减少"],
+        "actions_and_expressions": ["走出遮挡", "站到前景", "停在中线附近"],
+        "background_and_setting": ["极简棚拍", "高调光", "收束画面"],
+        "social_relations": ["团队形成", "可能是加入后的群像"]
+      },
+      "script_use_candidates": [
+        {
+          "sentence": "可能适合招聘片结尾，用从遮挡后走出表现加入、清晰或团队形成。",
+          "stage": "ending",
+          "confidence": 0.65
+        },
+        {
+          "sentence": "也可用于品牌片结尾的首尾呼应和价值收束。",
+          "stage": "value_expression",
+          "confidence": 0.47
+        }
+      ],
+      "embedding_texts": {
+        "visual_observation": "半透明磨砂板 黑块减少 多人走出遮挡 中心构图 高调光 首尾呼应",
+        "interpretation_hypothesis": "可能表达从未知到清晰 加入团队 招聘结尾 团队形成 问题被看见",
+        "script_usage": "适合结尾 招聘号召 首尾呼应 团队亮相 从遮挡到清晰"
+      },
+      "embedding_vectors": {
+        "visual_observation": [],
+        "interpretation_hypothesis": [],
+        "script_usage": []
+      }
+    }
+  ]
+}
+

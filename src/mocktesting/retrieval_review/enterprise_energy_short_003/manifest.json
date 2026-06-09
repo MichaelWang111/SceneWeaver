@@ -1,0 +1,19 @@
+{
+  "fixture_id": "enterprise_energy_short_003",
+  "title": "一度电的路",
+  "industry": "energy_and_utilities",
+  "company_profile": "world_500_style_global_enterprise",
+  "film_style": "short_video_vertical_world_500_style",
+  "duration_seconds": 80,
+  "scene_count": 10,
+  "layer_files": {
+    "source": "source.json",
+    "knowledge": "knowledge.json",
+    "retrieval": "retrieval.json"
+  },
+  "prototype_notes": [
+    "Fake but plausible enterprise film fixture for retrieval prototype testing.",
+    "Does not follow outputs/film_analysis layout.",
+    "Embeddings are empty arrays by design."
+  ]
+}

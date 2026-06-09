@@ -1,0 +1,166 @@
+{
+  "video_id": "enterprise_auto_business_001",
+  "knowledge_layer": {
+    "film_level_intent": "用business_corporate_brand_film表达automotive_and_mobility企业如何把电驱平台、辅助驾驶安全系统和电池热管理转化为对真实人的支持。",
+    "brand_personality": [
+      "精密",
+      "可靠",
+      "创新",
+      "安全",
+      "全球化"
+    ],
+    "overall_risk": "如果只强调规模和技术，容易变成汇报片；如果只强调情绪，企业能力会显得不足。"
+  },
+  "scene_knowledge": [
+    {
+      "scene_id": "scene_001",
+      "knowledge_id": "know_scene_001",
+      "shooting_techniques": [
+        "稳定轨道运动",
+        "干净构图",
+        "克制数据可视化",
+        "远景建立场域"
+      ],
+      "director_intent": "用智能制造工厂、测试道路、城市充电站、家庭车库建立真实业务场景和智能出行需要在效率、体验和安全之间取得可信平衡。",
+      "emotional_function": "建立真实感和进入感。",
+      "reusable_knowledge": "automotive_and_mobility企业片可以先拍真实问题，再进入企业能力。",
+      "best_usage": "适合开场、问题建立、真实场景进入。",
+      "risk": "如果后续没有人物承接，容易成为空镜。"
+    },
+    {
+      "scene_id": "scene_002",
+      "knowledge_id": "know_scene_002",
+      "shooting_techniques": [
+        "稳定轨道运动",
+        "干净构图",
+        "克制数据可视化",
+        "中近景建立压力"
+      ],
+      "director_intent": "把智能出行需要在效率、体验和安全之间取得可信平衡具体化，让企业能力有进入理由。",
+      "emotional_function": "制造必要的张力和问题意识。",
+      "reusable_knowledge": "需求建立必须来自具体人物和场景，不应直接从产品卖点开始。",
+      "best_usage": "适合需求铺垫、矛盾建立、一线压力表达。",
+      "risk": "如果压力过度，会显得企业在制造焦虑。"
+    },
+    {
+      "scene_id": "scene_003",
+      "knowledge_id": "know_scene_003",
+      "shooting_techniques": [
+        "稳定轨道运动",
+        "干净构图",
+        "克制数据可视化",
+        "人物工作细节特写"
+      ],
+      "director_intent": "通过整车安全测试工程师进入专业视角，避免空泛品牌叙述。",
+      "emotional_function": "让观众找到可信的人物入口。",
+      "reusable_knowledge": "人物介绍要通过专业动作建立可信，而不是靠头衔字幕。",
+      "best_usage": "适合人物出场、专业身份建立。",
+      "risk": "如果头衔感太重，会像领导介绍。"
+    },
+    {
+      "scene_id": "scene_004",
+      "knowledge_id": "know_scene_004",
+      "shooting_techniques": [
+        "稳定轨道运动",
+        "干净构图",
+        "克制数据可视化",
+        "群像调度"
+      ],
+      "director_intent": "证明能力来自安全测试工程师、软件工程师、制造技师、用户研究员的协作，而不是单个英雄人物。",
+      "emotional_function": "形成组织能力和协作能量。",
+      "reusable_knowledge": "团队协作要有明确讨论对象，避免空泛办公蒙太奇。",
+      "best_usage": "适合团队协作、组织能力、跨职能工作流。",
+      "risk": "如果只拍会议和笑脸，会变成模板化办公片。"
+    },
+    {
+      "scene_id": "scene_005",
+      "knowledge_id": "know_scene_005",
+      "shooting_techniques": [
+        "稳定轨道运动",
+        "干净构图",
+        "克制数据可视化",
+        "界面与人同框"
+      ],
+      "director_intent": "把电驱平台、辅助驾驶安全系统和电池热管理拍成服务人的工具，而不是炫技符号。",
+      "emotional_function": "把不确定转化为可执行路径。",
+      "reusable_knowledge": "表现电驱平台、辅助驾驶安全系统和电池热管理时要让技术和人的判断同框。",
+      "best_usage": "适合技术能力、人机协作、系统价值展示。",
+      "risk": "如果界面过多，会像功能说明视频。"
+    },
+    {
+      "scene_id": "scene_006",
+      "knowledge_id": "know_scene_006",
+      "shooting_techniques": [
+        "稳定轨道运动",
+        "干净构图",
+        "克制数据可视化",
+        "多地并置剪辑"
+      ],
+      "director_intent": "揭示世界500强企业的网络、系统和跨地域能力。",
+      "emotional_function": "扩大格局但保持克制。",
+      "reusable_knowledge": "世界500强规模感适合通过网络、流程和服务覆盖表达。",
+      "best_usage": "适合规模揭示、全球网络、企业能力展开。",
+      "risk": "如果地图和数据过多，会变成汇报片。"
+    },
+    {
+      "scene_id": "scene_007",
+      "knowledge_id": "know_scene_007",
+      "shooting_techniques": [
+        "稳定轨道运动",
+        "干净构图",
+        "克制数据可视化",
+        "正反打沟通"
+      ],
+      "director_intent": "用具体互动表达精密和可信赖，避免口号。",
+      "emotional_function": "建立信任和价值认同。",
+      "reusable_knowledge": "价值观要通过面对面沟通、记录、确认和承担责任体现。",
+      "best_usage": "适合建立信任、表达责任、价值观落地。",
+      "risk": "如果靠字幕解释价值观，会显得说教。"
+    },
+    {
+      "scene_id": "scene_008",
+      "knowledge_id": "know_scene_008",
+      "shooting_techniques": [
+        "稳定轨道运动",
+        "干净构图",
+        "克制数据可视化",
+        "结果细节特写"
+      ],
+      "director_intent": "呈现车辆从工厂测试走向用户真实通勤，但不过度承诺。",
+      "emotional_function": "释放压力并确认价值落地。",
+      "reusable_knowledge": "结果段落要落地但克制，避免夸大承诺。",
+      "best_usage": "适合结果落地、情绪释放、客户价值确认。",
+      "risk": "如果承诺过满，会引发可信度风险。"
+    },
+    {
+      "scene_id": "scene_009",
+      "knowledge_id": "know_scene_009",
+      "shooting_techniques": [
+        "稳定轨道运动",
+        "干净构图",
+        "克制数据可视化",
+        "夜景或复盘镜头"
+      ],
+      "director_intent": "把长期主义和改进动作落在具体人物身上。",
+      "emotional_function": "形成长期主义和内部驱动力。",
+      "reusable_knowledge": "成长段落最好由真实反馈推动，而不是靠奋斗口号推动。",
+      "best_usage": "适合员工成长、长期主义、使命升温。",
+      "risk": "如果拍成加班热血，会显得陈旧。"
+    },
+    {
+      "scene_id": "scene_010",
+      "knowledge_id": "know_scene_010",
+      "shooting_techniques": [
+        "稳定轨道运动",
+        "干净构图",
+        "克制数据可视化",
+        "回到开场空间"
+      ],
+      "director_intent": "回到核心场景，完成移动的下一公里的品牌收束。",
+      "emotional_function": "完成主题闭环和品牌余韵。",
+      "reusable_knowledge": "结尾回到开场问题，会让品牌承诺显得像已经发生的行动。",
+      "best_usage": "适合片尾收束、品牌价值表达、温和号召。",
+      "risk": "如果品牌字幕太满，会破坏克制质感。"
+    }
+  ]
+}

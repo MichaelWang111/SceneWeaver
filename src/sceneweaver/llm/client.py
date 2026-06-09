@@ -18,27 +18,51 @@ class LLMConfig:
     temperature: float = 0.2
     max_tokens: int = 1800
     request_timeout_seconds: float = 180.0
+    stream_idle_timeout_seconds: float = 10.0
     enable_thinking: bool | None = None
     thinking_budget: int | None = None
 
     @classmethod
     def from_env(cls) -> "LLMConfig":
         # VIDEO_ANALYZER_* aliases keep reuse convenient in the existing conda env.
-        api_key = os.environ.get("SCENEWEAVER_API_KEY") or os.environ.get("VIDEO_ANALYZER_API_KEY", "")
+        api_key = (
+            os.environ.get("SCENEWEAVER_API_KEY")
+            or os.environ.get("VIDEO_ANALYZER_API_KEY")
+            or os.environ.get("DASHSCOPE_API_KEY", "")
+        )
         base_url = os.environ.get("SCENEWEAVER_BASE_URL") or os.environ.get(
             "VIDEO_ANALYZER_BASE_URL",
-            "https://generativelanguage.googleapis.com/v1beta/openai",
+            os.environ.get("DASHSCOPE_BASE_URL", "https://generativelanguage.googleapis.com/v1beta/openai"),
         )
-        model = os.environ.get("SCENEWEAVER_MODEL") or os.environ.get("VIDEO_ANALYZER_MODEL", "gemini-2.0-flash")
-        max_tokens = int(os.environ.get("SCENEWEAVER_MAX_TOKENS") or os.environ.get("VIDEO_ANALYZER_MAX_TOKENS", "1800"))
+        model = (
+            os.environ.get("SCENEWEAVER_MODEL")
+            or os.environ.get("VIDEO_ANALYZER_MODEL")
+            or os.environ.get("DASHSCOPE_MODEL", "gemini-2.0-flash")
+        )
+        max_tokens = int(
+            os.environ.get("SCENEWEAVER_MAX_TOKENS")
+            or os.environ.get("VIDEO_ANALYZER_MAX_TOKENS")
+            or os.environ.get("DASHSCOPE_MAX_TOKENS", "1800")
+        )
         request_timeout_seconds = float(
-            os.environ.get("SCENEWEAVER_TIMEOUT_SECONDS") or os.environ.get("VIDEO_ANALYZER_TIMEOUT_SECONDS", "180")
+            os.environ.get("SCENEWEAVER_TIMEOUT_SECONDS")
+            or os.environ.get("VIDEO_ANALYZER_TIMEOUT_SECONDS")
+            or os.environ.get("DASHSCOPE_TIMEOUT_SECONDS", "180")
+        )
+        stream_idle_timeout_seconds = float(
+            os.environ.get("SCENEWEAVER_STREAM_IDLE_TIMEOUT_SECONDS")
+            or os.environ.get("VIDEO_ANALYZER_STREAM_IDLE_TIMEOUT_SECONDS")
+            or os.environ.get("DASHSCOPE_STREAM_IDLE_TIMEOUT_SECONDS", "10")
         )
         enable_thinking = _parse_optional_bool(
-            os.environ.get("SCENEWEAVER_ENABLE_THINKING") or os.environ.get("VIDEO_ANALYZER_ENABLE_THINKING")
+            os.environ.get("SCENEWEAVER_ENABLE_THINKING")
+            or os.environ.get("VIDEO_ANALYZER_ENABLE_THINKING")
+            or os.environ.get("DASHSCOPE_ENABLE_THINKING")
         )
-        thinking_budget_raw = os.environ.get("SCENEWEAVER_THINKING_BUDGET") or os.environ.get(
-            "VIDEO_ANALYZER_THINKING_BUDGET"
+        thinking_budget_raw = (
+            os.environ.get("SCENEWEAVER_THINKING_BUDGET")
+            or os.environ.get("VIDEO_ANALYZER_THINKING_BUDGET")
+            or os.environ.get("DASHSCOPE_THINKING_BUDGET")
         )
         thinking_budget = int(thinking_budget_raw) if thinking_budget_raw else None
         return cls(
@@ -47,6 +71,7 @@ class LLMConfig:
             model=model,
             max_tokens=max_tokens,
             request_timeout_seconds=request_timeout_seconds,
+            stream_idle_timeout_seconds=stream_idle_timeout_seconds,
             enable_thinking=enable_thinking,
             thinking_budget=thinking_budget,
         )
@@ -82,10 +107,14 @@ class VisionLLMClient:
         if retries < 0:
             raise ValueError("retries must be >= 0")
 
+        should_stream = stream_callback is not None or reasoning_callback is not None
+        request_timeout = timeout_seconds or self.config.request_timeout_seconds
+        sdk_timeout = self.config.stream_idle_timeout_seconds if should_stream else request_timeout
+
         client = OpenAI(
             api_key=self.config.api_key,
             base_url=self.config.base_url,
-            timeout=timeout_seconds or self.config.request_timeout_seconds,
+            timeout=sdk_timeout,
             max_retries=0,
         )
         request_enable_thinking = self.config.enable_thinking if enable_thinking is None else enable_thinking
@@ -108,7 +137,7 @@ class VisionLLMClient:
                     "response_format": {"type": "json_object"},
                     "temperature": self.config.temperature,
                     "max_tokens": max_tokens or self.config.max_tokens,
-                    "stream": stream_callback is not None or reasoning_callback is not None,
+                    "stream": should_stream,
                 }
                 if extra_body:
                     request_kwargs["extra_body"] = extra_body
@@ -133,19 +162,23 @@ class VisionLLMClient:
                 partial_note = ""
                 if exc.partial_text:
                     partial_note = f" partial_chars={len(exc.partial_text)}."
+                ping_note = _format_ping_note(client, self.config)
                 raise RuntimeError(
                     "LLM text JSON stream failed before a complete JSON object could be parsed. "
                     f"attempts={attempts}, base_url={self.config.base_url!r}, "
-                    f"model={self.config.model!r}.{partial_note} Error: {exc.original_error}"
+                    f"model={self.config.model!r}.{partial_note} "
+                    f"stream_idle_timeout_seconds={self.config.stream_idle_timeout_seconds:g}. "
+                    f"{ping_note} Error: {exc.original_error}"
                 ) from exc.original_error
             except (APIConnectionError, APITimeoutError, ValueError) as exc:
                 if attempt_index < retries:
                     time.sleep(_retry_delay_seconds(attempt_index))
                     continue
+                ping_note = _format_ping_note(client, self.config)
                 raise RuntimeError(
                     "LLM text JSON request failed. "
                     f"attempts={attempts}, base_url={self.config.base_url!r}, "
-                    f"model={self.config.model!r}. Error: {exc}"
+                    f"model={self.config.model!r}. {ping_note} Error: {exc}"
                 ) from exc
 
     def analyze_images_json(self, *, system_prompt: str, user_prompt: str, image_paths: list[Path]) -> dict[str, Any]:
@@ -308,6 +341,26 @@ def _format_api_status_error(exc: Exception, config: LLMConfig) -> str:
         f"LLM provider request failed with status {status_code}. "
         f"base_url={config.base_url!r}, model={config.model!r}."
     )
+
+
+def _format_ping_note(client: Any, config: LLMConfig) -> str:
+    try:
+        response = client.chat.completions.create(
+            model=config.model,
+            messages=[
+                {"role": "system", "content": "Return JSON only."},
+                {"role": "user", "content": 'Return {"reply":"pong"} now.'},
+            ],
+            response_format={"type": "json_object"},
+            temperature=0,
+            max_tokens=64,
+            timeout=config.stream_idle_timeout_seconds,
+        )
+        text = response.choices[0].message.content or ""
+        data = extract_json_object(text)
+    except Exception as exc:
+        return f"Ping failed: {type(exc).__name__}: {exc}."
+    return f"Ping ok: {data}."
 
 
 def _should_retry_status(exc: Exception) -> bool:

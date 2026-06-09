@@ -1,0 +1,19 @@
+{
+  "fixture_id": "enterprise_finance_story_003",
+  "title": "雨天的保单",
+  "industry": "financial_services_and_insurance",
+  "company_profile": "world_500_style_global_enterprise",
+  "film_style": "story_driven_enterprise_brand_film",
+  "duration_seconds": 165,
+  "scene_count": 10,
+  "layer_files": {
+    "source": "source.json",
+    "knowledge": "knowledge.json",
+    "retrieval": "retrieval.json"
+  },
+  "prototype_notes": [
+    "Fake but plausible enterprise film fixture for retrieval prototype testing.",
+    "Does not follow outputs/film_analysis layout.",
+    "Embeddings are empty arrays by design."
+  ]
+}

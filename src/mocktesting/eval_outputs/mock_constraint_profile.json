@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "weights": {
+    "desired_stage_bonus": 0.06,
+    "forbidden_stage_penalty": 0.1,
+    "negative_constraint_penalty": 0.0
+  },
+  "stage_aliases": {},
+  "negative_aliases": {}
+}

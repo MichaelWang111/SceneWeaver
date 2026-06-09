@@ -1,175 +1,132 @@
-# Usage
+# Usage Guide
 
-## Install
+This guide explains which workflow to use. For runnable one-line commands, use the [CLI Command Book](CLI.md).
 
-Base development install:
+## 1. Environment Validation
 
-```powershell
-python -m pip install -e ".[dev,video]"
-```
+Use this when setting up a machine, changing model providers, or debugging API timeouts.
 
-Optional semantic retrieval install:
+Primary command:
 
 ```powershell
-python -m pip install -e ".[semantic]"
+python -m sceneweaver.cli llm-check "hi" --timeout-seconds 30
 ```
 
-`semantic` installs `sentence-transformers`. It reuses the existing PyTorch/CUDA environment when available.
+Expected result:
 
-## Pipeline Commands
+```json
+{
+  "reply": "..."
+}
+```
 
-Create mock artifacts:
+If this fails, fix API key, base URL, model name, or network routing before running scene analysis or keyword-loop.
+
+## 2. Local Smoke Test
+
+Use this when checking whether the repo and schemas work without external APIs.
+
+Primary command:
 
 ```powershell
 python -m sceneweaver.cli mock-run --output outputs\mock\quick_check
 ```
 
-Package a real Bilibili video:
-
-```powershell
-python -m sceneweaver.cli package-video "https://www.bilibili.com/video/BVxxxx" --output outputs\film_analysis\BVxxxx
-```
-
-Analyze packaged scenes:
-
-```powershell
-python -m sceneweaver.cli analyze-scenes outputs\film_analysis\BVxxxx --limit 20 --concurrency 3
-```
-
-Extract experience cards:
-
-```powershell
-python -m sceneweaver.cli extract-experience outputs\film_analysis\BVxxxx
-```
-
-Run the full video pipeline:
-
-```powershell
-python -m sceneweaver.cli run "https://www.bilibili.com/video/BVxxxx" --limit 40 --concurrency 5
-```
-
-## Keyword Loop
-
-Search all generated film experience cards:
-
-```powershell
-python -m sceneweaver.cli keyword-loop outputs\film_analysis "年轻人逆光奔跑" --result-output outputs\loop_result.json --debug
-```
-
-The first argument can be:
-
-- `outputs\film_analysis`: recursively search every `analysis\experience_cards.jsonl` below it.
-- `outputs\film_analysis\BVxxxx`: search one film output directory.
-- `outputs\film_analysis\BVxxxx\analysis\experience_cards.jsonl`: search one explicit card file.
-
-The loop performs:
+This should create:
 
 ```text
-keyword brief
--> LLM association analysis
--> query_tags
--> tag candidate logging
--> experience-card retrieval
--> optional semantic reranking
+outputs\mock\quick_check\analysis\experience_cards.jsonl
 ```
 
-Use lightweight tag-only expansion when you want faster retrieval tests and do not need scene ideas or full directing associations:
+## 3. Real Video Ingestion
+
+Use this when adding a new video case into the experience library.
+
+Minimal path:
 
 ```powershell
-python -m sceneweaver.cli keyword-loop outputs\film_analysis "成熟大型商业与科技公司全球推广与招聘宣传片，比如甲骨文、腾讯 / 致力于为人们创造更好生活 / 以与视频受众面对面交流对话为主 / 科技向善 / 致力于创意有趣 / 提供发挥潜力的机会" --just-tags --stream --thinking --thinking-budget 1024 --result-output outputs\loop_result.json --debug
+python -m sceneweaver.cli run "https://www.bilibili.com/video/BVxxxx" --limit 1 --concurrency 1
 ```
 
-`--just-tags` asks the LLM only for tag-level expansion:
-
-- expanded terms;
-- dimension hints;
-- avoid terms.
-
-It does not ask for scenes, story material, shot ideas, or director possibilities.
-
-Use core creative-intent analysis when broad tag expansion is too loose and the ranking should follow the creator's real selection intent:
-
-```powershell
-python -m sceneweaver.cli keyword-loop outputs\film_analysis "成熟大型商业与科技公司全球推广与招聘宣传片，比如甲骨文、腾讯 / 致力于为人们创造更好生活 / 以与视频受众面对面交流对话为主 / 科技向善 / 致力于创意有趣 / 提供发挥潜力的机会" --intent --stream --thinking --thinking-budget 1024 --result-output outputs\loop_result.json --debug
-```
-
-`--intent` is also available as `--core-intent`. It asks the LLM for:
-
-- primary creative intent;
-- must-match conditions;
-- nice-to-have conditions;
-- avoid conditions;
-- target audience and selection criteria.
-
-It does not ask for scenes, story material, shot ideas, or broad tag expansion. Results include `intent_analysis`, `intent_weight`, and `top_matches[].intent_score`.
-
-## Streaming and Thinking
-
-Stream raw provider chunks to stderr:
-
-```powershell
-python -m sceneweaver.cli keyword-loop outputs\film_analysis "年轻人逆光奔跑" --stream --debug
-```
-
-Stream provider reasoning content when the model/API supports it:
-
-```powershell
-python -m sceneweaver.cli keyword-loop outputs\film_analysis "年轻人逆光奔跑" --thinking --thinking-budget 1024 --debug
-```
-
-Both modes keep the final validated JSON on stdout.
-
-## Semantic Retrieval
-
-Enable local embedding reranking:
-
-```powershell
-python -m sceneweaver.cli keyword-loop outputs\film_analysis "年轻人逆光奔跑" --semantic --debug
-```
-
-Default model:
+Production-style path:
 
 ```text
-BAAI/bge-small-zh-v1.5
+package-video
+-> analyze-scenes
+-> extract-experience
 ```
 
-Try the larger model explicitly:
+Run the split steps when you need to inspect artifacts between phases or rerun only one phase.
+
+## 4. Experience Retrieval
+
+Use offline retrieval when validating existing cards or testing retrieval quality without LLM risk.
 
 ```powershell
-python -m sceneweaver.cli keyword-loop outputs\film_analysis "年轻人逆光奔跑" --semantic --embedding-model BAAI/bge-base-zh-v1.5
+python -m sceneweaver.cli retrieve-cards outputs\film_analysis\BVxxxx "科技向善，可信赖，面对面沟通" --top-k 5
 ```
 
-Control semantic influence:
+Use `keyword-loop` when the user brief needs LLM interpretation before retrieval.
 
 ```powershell
-python -m sceneweaver.cli keyword-loop outputs\film_analysis "年轻人逆光奔跑" --semantic --semantic-weight 4
+python -m sceneweaver.cli keyword-loop outputs\film_analysis "科技向善，可信赖，面对面沟通" --just-tags --top-k 5 --result-output outputs\keyword_loop_result.json --debug
 ```
 
-Output includes:
+Modes:
 
-- `mode`
+- default: full association prompt, richer but heavier.
+- `--just-tags`: lighter LLM tag expansion.
+- `--intent`: compact creative-intent extraction and ranking.
+- `--semantic`: local embedding reranking.
+
+## 5. Streaming And Thinking Diagnostics
+
+Use this when DashScope / Qwen requests appear to hang.
+
+```powershell
+python -m sceneweaver.cli keyword-loop outputs\film_analysis "科技向善，可信赖，面对面沟通" --just-tags --stream --thinking --thinking-budget 4000 --timeout-seconds 180 --retries 0 --debug
+```
+
+Behavior:
+
+- `reasoning_content` is written to stderr when the provider sends it.
+- streamed answer chunks are written to stderr.
+- final validated JSON remains on stdout.
+- if no reasoning or answer chunk arrives within the stream idle timeout, the request fails and includes a ping result.
+
+Configurable idle timeout:
+
+```powershell
+$env:DASHSCOPE_STREAM_IDLE_TIMEOUT_SECONDS="10"
+```
+
+## 6. Retrieval Output Review
+
+Important fields in `keyword-loop` output:
+
 - `searched_card_count`
 - `matched_card_count`
 - `unindexed_scene_dirs`
-- `semantic_enabled`
-- `embedding_model`
-- `intent_weight`
+- `top_matches[].score`
 - `top_matches[].tag_score`
 - `top_matches[].usecase_score`
 - `top_matches[].intent_score`
-- `top_matches[].quality_score`
 - `top_matches[].semantic_score`
 - `top_matches[].script_stage`
 - `top_matches[].creative_purpose`
 - `top_matches[].best_usage`
 - `top_matches[].risk`
-- `top_matches[].score`
 
-If `unindexed_scene_dirs` is not empty, those videos have `analysis/scenes.json` but do not yet have `analysis/experience_cards.jsonl`. Run `extract-experience` on those film directories before judging retrieval quality.
+Review quality by asking:
 
-## Legacy Command
+- Did the card match the requested script stage?
+- Is the creative purpose useful, not only semantically similar?
+- Does the evidence point back to a real source scene?
+- Is the risk acceptable for the intended script segment?
 
-`fingerprint-scenes` is kept only to backfill tags into older `analysis/scenes.json` files:
+## 7. Legacy Backfill
+
+Use only for old outputs that have `analysis\scenes.json` but no embedded tags.
 
 ```powershell
 python -m sceneweaver.cli fingerprint-scenes outputs\film_analysis\BVxxxx

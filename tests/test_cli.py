@@ -131,3 +131,38 @@ def test_cli_keyword_loop_streams_and_thinking(monkeypatch, tmp_path):
     assert '{"partial":"json"}' in result.stderr
     assert "thinking trace" in result.stderr
     assert json.loads(result.stdout)["input_text"] == "young people running"
+
+
+def test_cli_llm_check_uses_configured_client(monkeypatch):
+    captured: dict[str, Any] = {}
+
+    class FakeClient:
+        def __init__(self) -> None:
+            self.config = type(
+                "Config",
+                (),
+                {
+                    "api_key": "test-key",
+                    "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+                    "model": "qwen3.6-plus",
+                    "temperature": 0.2,
+                    "max_tokens": 1800,
+                    "request_timeout_seconds": 180.0,
+                    "stream_idle_timeout_seconds": 10.0,
+                    "enable_thinking": None,
+                    "thinking_budget": None,
+                },
+            )()
+
+        def analyze_text_json(self, **kwargs):
+            captured.update(kwargs)
+            return {"reply": "pong"}
+
+    monkeypatch.setattr("sceneweaver.cli.VisionLLMClient", lambda: FakeClient())
+
+    result = CliRunner().invoke(app, ["llm-check", "ping", "--timeout-seconds", "12"])
+
+    assert result.exit_code == 0
+    assert captured["user_prompt"] == "ping"
+    assert captured["timeout_seconds"] == 12.0
+    assert json.loads(result.stdout)["reply"] == "pong"

@@ -1,0 +1,537 @@
+{
+  "video_id": "enterprise_energy_short_003",
+  "retrieval_layer": {
+    "tag_policy": "loose_llm_generated_tags_without_synonym_constraint",
+    "embedding_policy": "embedding_texts_are_ready_but_vectors_are_empty_until_qwen_embedding_is_enabled",
+    "effective_similarity_hint": 0.4
+  },
+  "items": [
+    {
+      "retrieval_id": "ret_scene_001",
+      "scene_id": "scene_001",
+      "llm_tags": {
+        "entities": [
+          "一位年轻调度员",
+          "绿电追踪平台和实时负荷预测",
+          "一度电图标、流动光线、家庭台灯",
+          "风电场、储能站、调度屏幕、城市家庭",
+          "真实用户场景",
+          "环境细节",
+          "energy_and_utilities",
+          "清晰"
+        ],
+        "relations": [
+          "一位年轻调度员与调度员、风机巡检员、储能工程师的关系",
+          "绿电追踪平台和实时负荷预测与普通用户看不见能源系统如何保持稳定的关系",
+          "世界500强企业能力与真实用户场景"
+        ],
+        "actions_and_expressions": [
+          "进入现场",
+          "观察环境",
+          "问题显现"
+        ],
+        "background_and_setting": [
+          "风电场、储能站、调度屏幕、城市家庭",
+          "short_video_vertical_world_500_style",
+          "一度电图标、流动光线、家庭台灯"
+        ],
+        "social_relations": [
+          "调度员、风机巡检员、储能工程师",
+          "企业与社会责任",
+          "专业服务对象"
+        ]
+      },
+      "script_use_sentence": "适合用于opening段落，开场建立真实世界压力，用一位年轻调度员、绿电追踪平台和实时负荷预测和一度电图标、流动光线、家庭台灯表达清晰的世界500强品牌质感。",
+      "script_stage": "opening",
+      "creative_purpose": [
+        "opening",
+        "establish_problem",
+        "build_reality"
+      ],
+      "embedding_texts": {
+        "script_usage": "适合开场、问题建立、真实场景进入。 一度电的路 energy_and_utilities short_video_vertical_world_500_style 普通用户看不见能源系统如何保持稳定 绿电追踪平台和实时负荷预测 绿色能源被看见，也被稳定使用",
+        "knowledge_semantic": "energy_and_utilities企业片可以先拍真实问题，再进入企业能力。",
+        "visual_semantic": "风电场、储能站、调度屏幕、城市家庭、一位年轻调度员、一度电图标、流动光线、家庭台灯、绿电追踪平台和实时负荷预测、清晰质感。"
+      },
+      "embedding_vectors": {
+        "script_usage": [],
+        "knowledge_semantic": [],
+        "visual_semantic": []
+      }
+    },
+    {
+      "retrieval_id": "ret_scene_002",
+      "scene_id": "scene_002",
+      "llm_tags": {
+        "entities": [
+          "一位年轻调度员",
+          "绿电追踪平台和实时负荷预测",
+          "一度电图标、流动光线、家庭台灯",
+          "一线人员",
+          "等待中的客户或用户",
+          "问题线索",
+          "energy_and_utilities",
+          "清晰"
+        ],
+        "relations": [
+          "一位年轻调度员与调度员、风机巡检员、储能工程师的关系",
+          "绿电追踪平台和实时负荷预测与普通用户看不见能源系统如何保持稳定的关系",
+          "世界500强企业能力与真实用户场景"
+        ],
+        "actions_and_expressions": [
+          "比对信息",
+          "等待确认",
+          "压力累积"
+        ],
+        "background_and_setting": [
+          "风电场、储能站、调度屏幕、城市家庭",
+          "short_video_vertical_world_500_style",
+          "一度电图标、流动光线、家庭台灯"
+        ],
+        "social_relations": [
+          "调度员、风机巡检员、储能工程师",
+          "企业与社会责任",
+          "专业服务对象"
+        ]
+      },
+      "script_use_sentence": "适合用于setup段落，进入一线场景，建立具体需求，用一位年轻调度员、绿电追踪平台和实时负荷预测和一度电图标、流动光线、家庭台灯表达清晰的世界500强品牌质感。",
+      "script_stage": "setup",
+      "creative_purpose": [
+        "setup",
+        "establish_need",
+        "show_pressure"
+      ],
+      "embedding_texts": {
+        "script_usage": "适合需求铺垫、矛盾建立、一线压力表达。 一度电的路 energy_and_utilities short_video_vertical_world_500_style 普通用户看不见能源系统如何保持稳定 绿电追踪平台和实时负荷预测 绿色能源被看见，也被稳定使用",
+        "knowledge_semantic": "需求建立必须来自具体人物和场景，不应直接从产品卖点开始。",
+        "visual_semantic": "风电场、储能站、调度屏幕、城市家庭、一位年轻调度员、一度电图标、流动光线、家庭台灯、绿电追踪平台和实时负荷预测、清晰质感。"
+      },
+      "embedding_vectors": {
+        "script_usage": [],
+        "knowledge_semantic": [],
+        "visual_semantic": []
+      }
+    },
+    {
+      "retrieval_id": "ret_scene_003",
+      "scene_id": "scene_003",
+      "llm_tags": {
+        "entities": [
+          "一位年轻调度员",
+          "绿电追踪平台和实时负荷预测",
+          "一度电图标、流动光线、家庭台灯",
+          "工作证件",
+          "专业工具",
+          "energy_and_utilities",
+          "清晰"
+        ],
+        "relations": [
+          "一位年轻调度员与调度员、风机巡检员、储能工程师的关系",
+          "绿电追踪平台和实时负荷预测与普通用户看不见能源系统如何保持稳定的关系",
+          "世界500强企业能力与真实用户场景"
+        ],
+        "actions_and_expressions": [
+          "整理工具",
+          "看向现场",
+          "做出判断"
+        ],
+        "background_and_setting": [
+          "风电场、储能站、调度屏幕、城市家庭",
+          "short_video_vertical_world_500_style",
+          "一度电图标、流动光线、家庭台灯"
+        ],
+        "social_relations": [
+          "调度员、风机巡检员、储能工程师",
+          "企业与社会责任",
+          "专业服务对象"
+        ]
+      },
+      "script_use_sentence": "适合用于character_intro段落，引入核心人物和专业视角，用一位年轻调度员、绿电追踪平台和实时负荷预测和一度电图标、流动光线、家庭台灯表达清晰的世界500强品牌质感。",
+      "script_stage": "character_intro",
+      "creative_purpose": [
+        "character_intro",
+        "introduce_people",
+        "build_empathy"
+      ],
+      "embedding_texts": {
+        "script_usage": "适合人物出场、专业身份建立。 一度电的路 energy_and_utilities short_video_vertical_world_500_style 普通用户看不见能源系统如何保持稳定 绿电追踪平台和实时负荷预测 绿色能源被看见，也被稳定使用",
+        "knowledge_semantic": "人物介绍要通过专业动作建立可信，而不是靠头衔字幕。",
+        "visual_semantic": "风电场、储能站、调度屏幕、城市家庭、一位年轻调度员、一度电图标、流动光线、家庭台灯、绿电追踪平台和实时负荷预测、清晰质感。"
+      },
+      "embedding_vectors": {
+        "script_usage": [],
+        "knowledge_semantic": [],
+        "visual_semantic": []
+      }
+    },
+    {
+      "retrieval_id": "ret_scene_004",
+      "scene_id": "scene_004",
+      "llm_tags": {
+        "entities": [
+          "一位年轻调度员",
+          "绿电追踪平台和实时负荷预测",
+          "一度电图标、流动光线、家庭台灯",
+          "调度员",
+          "风机巡检员",
+          "储能工程师",
+          "energy_and_utilities",
+          "清晰"
+        ],
+        "relations": [
+          "一位年轻调度员与调度员、风机巡检员、储能工程师的关系",
+          "绿电追踪平台和实时负荷预测与普通用户看不见能源系统如何保持稳定的关系",
+          "世界500强企业能力与真实用户场景"
+        ],
+        "actions_and_expressions": [
+          "围绕问题讨论",
+          "标注风险点",
+          "分配下一步"
+        ],
+        "background_and_setting": [
+          "风电场、储能站、调度屏幕、城市家庭",
+          "short_video_vertical_world_500_style",
+          "一度电图标、流动光线、家庭台灯"
+        ],
+        "social_relations": [
+          "调度员、风机巡检员、储能工程师",
+          "企业与社会责任",
+          "专业服务对象"
+        ]
+      },
+      "script_use_sentence": "适合用于team_work段落，展现跨职能团队如何协作，用一位年轻调度员、绿电追踪平台和实时负荷预测和一度电图标、流动光线、家庭台灯表达清晰的世界500强品牌质感。",
+      "script_stage": "team_work",
+      "creative_purpose": [
+        "team_work",
+        "show_team",
+        "show_collaboration"
+      ],
+      "embedding_texts": {
+        "script_usage": "适合团队协作、组织能力、跨职能工作流。 一度电的路 energy_and_utilities short_video_vertical_world_500_style 普通用户看不见能源系统如何保持稳定 绿电追踪平台和实时负荷预测 绿色能源被看见，也被稳定使用",
+        "knowledge_semantic": "团队协作要有明确讨论对象，避免空泛办公蒙太奇。",
+        "visual_semantic": "风电场、储能站、调度屏幕、城市家庭、一位年轻调度员、一度电图标、流动光线、家庭台灯、绿电追踪平台和实时负荷预测、清晰质感。"
+      },
+      "embedding_vectors": {
+        "script_usage": [],
+        "knowledge_semantic": [],
+        "visual_semantic": []
+      }
+    },
+    {
+      "retrieval_id": "ret_scene_005",
+      "scene_id": "scene_005",
+      "llm_tags": {
+        "entities": [
+          "一位年轻调度员",
+          "绿电追踪平台和实时负荷预测",
+          "一度电图标、流动光线、家庭台灯",
+          "操作界面",
+          "确认提示",
+          "energy_and_utilities",
+          "清晰"
+        ],
+        "relations": [
+          "一位年轻调度员与调度员、风机巡检员、储能工程师的关系",
+          "绿电追踪平台和实时负荷预测与普通用户看不见能源系统如何保持稳定的关系",
+          "世界500强企业能力与真实用户场景"
+        ],
+        "actions_and_expressions": [
+          "打开系统",
+          "验证数据",
+          "确认流程"
+        ],
+        "background_and_setting": [
+          "风电场、储能站、调度屏幕、城市家庭",
+          "short_video_vertical_world_500_style",
+          "一度电图标、流动光线、家庭台灯"
+        ],
+        "social_relations": [
+          "调度员、风机巡检员、储能工程师",
+          "企业与社会责任",
+          "专业服务对象"
+        ]
+      },
+      "script_use_sentence": "适合用于technology_showcase段落，让技术或系统能力自然入场，用一位年轻调度员、绿电追踪平台和实时负荷预测和一度电图标、流动光线、家庭台灯表达清晰的世界500强品牌质感。",
+      "script_stage": "technology_showcase",
+      "creative_purpose": [
+        "technology_showcase",
+        "show_technology",
+        "prove_capability"
+      ],
+      "embedding_texts": {
+        "script_usage": "适合技术能力、人机协作、系统价值展示。 一度电的路 energy_and_utilities short_video_vertical_world_500_style 普通用户看不见能源系统如何保持稳定 绿电追踪平台和实时负荷预测 绿色能源被看见，也被稳定使用",
+        "knowledge_semantic": "表现绿电追踪平台和实时负荷预测时要让技术和人的判断同框。",
+        "visual_semantic": "风电场、储能站、调度屏幕、城市家庭、一位年轻调度员、一度电图标、流动光线、家庭台灯、绿电追踪平台和实时负荷预测、清晰质感。"
+      },
+      "embedding_vectors": {
+        "script_usage": [],
+        "knowledge_semantic": [],
+        "visual_semantic": []
+      }
+    },
+    {
+      "retrieval_id": "ret_scene_006",
+      "scene_id": "scene_006",
+      "llm_tags": {
+        "entities": [
+          "一位年轻调度员",
+          "绿电追踪平台和实时负荷预测",
+          "一度电图标、流动光线、家庭台灯",
+          "全球地图",
+          "多地团队",
+          "数据看板",
+          "energy_and_utilities",
+          "清晰"
+        ],
+        "relations": [
+          "一位年轻调度员与调度员、风机巡检员、储能工程师的关系",
+          "绿电追踪平台和实时负荷预测与普通用户看不见能源系统如何保持稳定的关系",
+          "世界500强企业能力与真实用户场景"
+        ],
+        "actions_and_expressions": [
+          "多地连线",
+          "同步信息",
+          "网络展开"
+        ],
+        "background_and_setting": [
+          "风电场、储能站、调度屏幕、城市家庭",
+          "short_video_vertical_world_500_style",
+          "一度电图标、流动光线、家庭台灯"
+        ],
+        "social_relations": [
+          "调度员、风机巡检员、储能工程师",
+          "企业与社会责任",
+          "专业服务对象"
+        ]
+      },
+      "script_use_sentence": "适合用于scale_reveal段落，揭示世界级规模和网络能力，用一位年轻调度员、绿电追踪平台和实时负荷预测和一度电图标、流动光线、家庭台灯表达清晰的世界500强品牌质感。",
+      "script_stage": "scale_reveal",
+      "creative_purpose": [
+        "scale_reveal",
+        "show_scale",
+        "show_network"
+      ],
+      "embedding_texts": {
+        "script_usage": "适合规模揭示、全球网络、企业能力展开。 一度电的路 energy_and_utilities short_video_vertical_world_500_style 普通用户看不见能源系统如何保持稳定 绿电追踪平台和实时负荷预测 绿色能源被看见，也被稳定使用",
+        "knowledge_semantic": "世界500强规模感适合通过网络、流程和服务覆盖表达。",
+        "visual_semantic": "风电场、储能站、调度屏幕、城市家庭、一位年轻调度员、一度电图标、流动光线、家庭台灯、绿电追踪平台和实时负荷预测、清晰质感。"
+      },
+      "embedding_vectors": {
+        "script_usage": [],
+        "knowledge_semantic": [],
+        "visual_semantic": []
+      }
+    },
+    {
+      "retrieval_id": "ret_scene_007",
+      "scene_id": "scene_007",
+      "llm_tags": {
+        "entities": [
+          "一位年轻调度员",
+          "绿电追踪平台和实时负荷预测",
+          "一度电图标、流动光线、家庭台灯",
+          "面对面沟通",
+          "记录动作",
+          "确认反馈",
+          "energy_and_utilities",
+          "清晰"
+        ],
+        "relations": [
+          "一位年轻调度员与调度员、风机巡检员、储能工程师的关系",
+          "绿电追踪平台和实时负荷预测与普通用户看不见能源系统如何保持稳定的关系",
+          "世界500强企业能力与真实用户场景"
+        ],
+        "actions_and_expressions": [
+          "面对面解释",
+          "认真记录",
+          "确认承诺"
+        ],
+        "background_and_setting": [
+          "风电场、储能站、调度屏幕、城市家庭",
+          "short_video_vertical_world_500_style",
+          "一度电图标、流动光线、家庭台灯"
+        ],
+        "social_relations": [
+          "调度员、风机巡检员、储能工程师",
+          "企业与社会责任",
+          "专业服务对象"
+        ]
+      },
+      "script_use_sentence": "适合用于value_expression段落，通过具体互动建立信任和价值，用一位年轻调度员、绿电追踪平台和实时负荷预测和一度电图标、流动光线、家庭台灯表达清晰的世界500强品牌质感。",
+      "script_stage": "value_expression",
+      "creative_purpose": [
+        "value_expression",
+        "build_trust",
+        "show_responsibility"
+      ],
+      "embedding_texts": {
+        "script_usage": "适合建立信任、表达责任、价值观落地。 一度电的路 energy_and_utilities short_video_vertical_world_500_style 普通用户看不见能源系统如何保持稳定 绿电追踪平台和实时负荷预测 绿色能源被看见，也被稳定使用",
+        "knowledge_semantic": "价值观要通过面对面沟通、记录、确认和承担责任体现。",
+        "visual_semantic": "风电场、储能站、调度屏幕、城市家庭、一位年轻调度员、一度电图标、流动光线、家庭台灯、绿电追踪平台和实时负荷预测、清晰质感。"
+      },
+      "embedding_vectors": {
+        "script_usage": [],
+        "knowledge_semantic": [],
+        "visual_semantic": []
+      }
+    },
+    {
+      "retrieval_id": "ret_scene_008",
+      "scene_id": "scene_008",
+      "llm_tags": {
+        "entities": [
+          "一位年轻调度员",
+          "绿电追踪平台和实时负荷预测",
+          "一度电图标、流动光线、家庭台灯",
+          "服务对象",
+          "结果记录",
+          "稳定表情",
+          "energy_and_utilities",
+          "清晰"
+        ],
+        "relations": [
+          "一位年轻调度员与调度员、风机巡检员、储能工程师的关系",
+          "绿电追踪平台和实时负荷预测与普通用户看不见能源系统如何保持稳定的关系",
+          "世界500强企业能力与真实用户场景"
+        ],
+        "actions_and_expressions": [
+          "方案落地",
+          "用户点头",
+          "情绪稳定"
+        ],
+        "background_and_setting": [
+          "风电场、储能站、调度屏幕、城市家庭",
+          "short_video_vertical_world_500_style",
+          "一度电图标、流动光线、家庭台灯"
+        ],
+        "social_relations": [
+          "调度员、风机巡检员、储能工程师",
+          "企业与社会责任",
+          "专业服务对象"
+        ]
+      },
+      "script_use_sentence": "适合用于outcome段落，呈现结果落地但避免夸大，用一位年轻调度员、绿电追踪平台和实时负荷预测和一度电图标、流动光线、家庭台灯表达清晰的世界500强品牌质感。",
+      "script_stage": "outcome",
+      "creative_purpose": [
+        "outcome",
+        "show_outcome",
+        "land_value"
+      ],
+      "embedding_texts": {
+        "script_usage": "适合结果落地、情绪释放、客户价值确认。 一度电的路 energy_and_utilities short_video_vertical_world_500_style 普通用户看不见能源系统如何保持稳定 绿电追踪平台和实时负荷预测 绿色能源被看见，也被稳定使用",
+        "knowledge_semantic": "结果段落要落地但克制，避免夸大承诺。",
+        "visual_semantic": "风电场、储能站、调度屏幕、城市家庭、一位年轻调度员、一度电图标、流动光线、家庭台灯、绿电追踪平台和实时负荷预测、清晰质感。"
+      },
+      "embedding_vectors": {
+        "script_usage": [],
+        "knowledge_semantic": [],
+        "visual_semantic": []
+      }
+    },
+    {
+      "retrieval_id": "ret_scene_009",
+      "scene_id": "scene_009",
+      "llm_tags": {
+        "entities": [
+          "一位年轻调度员",
+          "绿电追踪平台和实时负荷预测",
+          "一度电图标、流动光线、家庭台灯",
+          "年轻员工",
+          "反馈信息",
+          "版本记录",
+          "energy_and_utilities",
+          "清晰"
+        ],
+        "relations": [
+          "一位年轻调度员与调度员、风机巡检员、储能工程师的关系",
+          "绿电追踪平台和实时负荷预测与普通用户看不见能源系统如何保持稳定的关系",
+          "世界500强企业能力与真实用户场景"
+        ],
+        "actions_and_expressions": [
+          "接收反馈",
+          "复盘问题",
+          "继续改进"
+        ],
+        "background_and_setting": [
+          "风电场、储能站、调度屏幕、城市家庭",
+          "short_video_vertical_world_500_style",
+          "一度电图标、流动光线、家庭台灯"
+        ],
+        "social_relations": [
+          "调度员、风机巡检员、储能工程师",
+          "企业与社会责任",
+          "专业服务对象"
+        ]
+      },
+      "script_use_sentence": "适合用于growth段落，表现员工、客户或系统的成长，用一位年轻调度员、绿电追踪平台和实时负荷预测和一度电图标、流动光线、家庭台灯表达清晰的世界500强品牌质感。",
+      "script_stage": "growth",
+      "creative_purpose": [
+        "growth",
+        "show_growth",
+        "show_long_termism"
+      ],
+      "embedding_texts": {
+        "script_usage": "适合员工成长、长期主义、使命升温。 一度电的路 energy_and_utilities short_video_vertical_world_500_style 普通用户看不见能源系统如何保持稳定 绿电追踪平台和实时负荷预测 绿色能源被看见，也被稳定使用",
+        "knowledge_semantic": "成长段落最好由真实反馈推动，而不是靠奋斗口号推动。",
+        "visual_semantic": "风电场、储能站、调度屏幕、城市家庭、一位年轻调度员、一度电图标、流动光线、家庭台灯、绿电追踪平台和实时负荷预测、清晰质感。"
+      },
+      "embedding_vectors": {
+        "script_usage": [],
+        "knowledge_semantic": [],
+        "visual_semantic": []
+      }
+    },
+    {
+      "retrieval_id": "ret_scene_010",
+      "scene_id": "scene_010",
+      "llm_tags": {
+        "entities": [
+          "一位年轻调度员",
+          "绿电追踪平台和实时负荷预测",
+          "一度电图标、流动光线、家庭台灯",
+          "品牌字幕",
+          "回到开场地点",
+          "energy_and_utilities",
+          "清晰"
+        ],
+        "relations": [
+          "一位年轻调度员与调度员、风机巡检员、储能工程师的关系",
+          "绿电追踪平台和实时负荷预测与普通用户看不见能源系统如何保持稳定的关系",
+          "世界500强企业能力与真实用户场景"
+        ],
+        "actions_and_expressions": [
+          "回到起点",
+          "主题字幕出现",
+          "音乐收束"
+        ],
+        "background_and_setting": [
+          "风电场、储能站、调度屏幕、城市家庭",
+          "short_video_vertical_world_500_style",
+          "一度电图标、流动光线、家庭台灯"
+        ],
+        "social_relations": [
+          "调度员、风机巡检员、储能工程师",
+          "企业与社会责任",
+          "专业服务对象"
+        ]
+      },
+      "script_use_sentence": "适合用于ending段落，收束主题并完成品牌表达，用一位年轻调度员、绿电追踪平台和实时负荷预测和一度电图标、流动光线、家庭台灯表达清晰的世界500强品牌质感。",
+      "script_stage": "ending",
+      "creative_purpose": [
+        "ending",
+        "close_loop",
+        "express_value"
+      ],
+      "embedding_texts": {
+        "script_usage": "适合片尾收束、品牌价值表达、温和号召。 一度电的路 energy_and_utilities short_video_vertical_world_500_style 普通用户看不见能源系统如何保持稳定 绿电追踪平台和实时负荷预测 绿色能源被看见，也被稳定使用",
+        "knowledge_semantic": "结尾回到开场问题，会让品牌承诺显得像已经发生的行动。",
+        "visual_semantic": "风电场、储能站、调度屏幕、城市家庭、一位年轻调度员、一度电图标、流动光线、家庭台灯、绿电追踪平台和实时负荷预测、清晰质感。"
+      },
+      "embedding_vectors": {
+        "script_usage": [],
+        "knowledge_semantic": [],
+        "visual_semantic": []
+      }
+    }
+  ]
+}

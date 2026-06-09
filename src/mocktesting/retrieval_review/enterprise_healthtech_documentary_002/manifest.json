@@ -1,0 +1,19 @@
+{
+  "fixture_id": "enterprise_healthtech_documentary_002",
+  "title": "每一次确认都算数",
+  "industry": "medical_technology_and_digital_health",
+  "company_profile": "world_500_style_global_enterprise",
+  "film_style": "documentary_enterprise_brand_film",
+  "duration_seconds": 180,
+  "scene_count": 10,
+  "layer_files": {
+    "source": "source.json",
+    "knowledge": "knowledge.json",
+    "retrieval": "retrieval.json"
+  },
+  "prototype_notes": [
+    "Fake but plausible enterprise film fixture for retrieval prototype testing.",
+    "Does not follow outputs/film_analysis layout.",
+    "Embeddings are empty arrays by design."
+  ]
+}

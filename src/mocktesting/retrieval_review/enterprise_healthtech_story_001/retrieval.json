@@ -1,0 +1,251 @@
+{
+  "video_id": "enterprise_healthtech_story_001",
+  "retrieval_layer": {
+    "tag_policy": "loose_llm_generated_tags_without_synonym_constraint",
+    "embedding_policy": "embedding_texts_are_ready_but_vectors_are_empty_until_qwen_embedding_is_enabled",
+    "effective_similarity_hint": 0.4
+  },
+  "items": [
+    {
+      "retrieval_id": "ret_scene_001",
+      "scene_id": "scene_001",
+      "llm_tags": {
+        "entities": ["县医院", "救护车", "医生", "山路", "清晨"],
+        "relations": ["医疗资源与地域距离", "急诊与公共服务", "医生与患者即将建立连接"],
+        "actions_and_expressions": ["救护车驶入", "医生快步进入", "抬头观察", "紧急响应"],
+        "background_and_setting": ["县域医院", "山谷公路", "清晨薄雾", "急诊入口"],
+        "social_relations": ["基层医疗系统", "公共服务对象", "医生对患者的责任"]
+      },
+      "script_use_sentence": "适合用于企业片开场或问题建立阶段，用真实场景先让观众感到距离、紧迫和需要被解决的现实压力。",
+      "script_stage": "opening",
+      "creative_purpose": ["establish_problem", "show_distance", "build_reality"],
+      "embedding_texts": {
+        "script_usage": "真实但有力量的开场，县域医院清晨急诊，建立医疗可及性问题和地理距离。",
+        "knowledge_semantic": "企业片先呈现真实世界问题，再进入品牌能力，适合医疗普惠和公共服务主题。",
+        "visual_semantic": "清晨山路、救护车、县医院、值班医生、低饱和真实影像。"
+      },
+      "embedding_vectors": {
+        "script_usage": [],
+        "knowledge_semantic": [],
+        "visual_semantic": []
+      }
+    },
+    {
+      "retrieval_id": "ret_scene_002",
+      "scene_id": "scene_002",
+      "llm_tags": {
+        "entities": ["基层医生", "患者家属", "医学影像", "诊室", "排班表"],
+        "relations": ["医生面对复杂病例", "家属等待判断", "专业能力与信息不足"],
+        "actions_and_expressions": ["比对影像", "皱眉思考", "停顿", "家属等待"],
+        "background_and_setting": ["县医院诊室", "狭小空间", "医学屏幕", "临床一线"],
+        "social_relations": ["医生与患者家庭", "基层医院与复杂病例", "专业责任"]
+      },
+      "script_use_sentence": "适合用于setup或需求建立段落，让技术需求从医生困境中自然出现，而不是从产品卖点中出现。",
+      "script_stage": "setup",
+      "creative_purpose": ["establish_need", "show_pressure", "humanize_professional"],
+      "embedding_texts": {
+        "script_usage": "基层医生面对复杂病例和家属等待，适合建立专业压力、需求和不确定性。",
+        "knowledge_semantic": "表现技术价值之前先让观众看见使用者困境，尊重医生专业而不把医生拍弱。",
+        "visual_semantic": "诊室、医学影像屏幕、医生皱眉、家属等待、现实压力。"
+      },
+      "embedding_vectors": {
+        "script_usage": [],
+        "knowledge_semantic": [],
+        "visual_semantic": []
+      }
+    },
+    {
+      "retrieval_id": "ret_scene_003",
+      "scene_id": "scene_003",
+      "llm_tags": {
+        "entities": ["远程会诊平台", "医学影像", "医生", "专家列表", "加密上传"],
+        "relations": ["医生连接专家", "技术辅助判断", "病例与远程资源"],
+        "actions_and_expressions": ["登录系统", "上传影像", "发起会诊", "流程确认"],
+        "background_and_setting": ["诊室屏幕", "远程医疗平台", "数字化医疗流程"],
+        "social_relations": ["基层医生与远程专家", "技术平台与医疗协作"]
+      },
+      "script_use_sentence": "适合用于技术入场或情节转折，让技术作为降低不确定性的工具出现。",
+      "script_stage": "technology_entrance",
+      "creative_purpose": ["introduce_tool", "reduce_uncertainty", "connect_expertise"],
+      "embedding_texts": {
+        "script_usage": "技术自然入场，远程会诊平台连接基层医生和专家，适合从问题转向解决路径。",
+        "knowledge_semantic": "技术产品入场时呈现它如何减少人的不确定性，而不是做功能说明。",
+        "visual_semantic": "登录系统、上传医学影像、加密流程、清晰界面、医生操作。"
+      },
+      "embedding_vectors": {
+        "script_usage": [],
+        "knowledge_semantic": [],
+        "visual_semantic": []
+      }
+    },
+    {
+      "retrieval_id": "ret_scene_004",
+      "scene_id": "scene_004",
+      "llm_tags": {
+        "entities": ["算法工程师", "临床专家", "产品经理", "白板", "病例流程"],
+        "relations": ["跨职能团队协作", "临床问题转产品改进", "专家与工程师共同决策"],
+        "actions_and_expressions": ["围桌讨论", "标注风险点", "复盘医生反馈", "确认方案"],
+        "background_and_setting": ["研发中心", "会议区", "白板流程图", "企业团队空间"],
+        "social_relations": ["研发团队", "医疗专家", "产品组织", "企业内部协作"]
+      },
+      "script_use_sentence": "适合用于团队协作段落，表现年轻专业团队如何围绕真实问题工作，避免互联网大厂式空泛办公感。",
+      "script_stage": "team_work",
+      "creative_purpose": ["show_team", "show_collaboration", "prove_organization_capability"],
+      "embedding_texts": {
+        "script_usage": "年轻团队协作，不要互联网大厂味，跨职能团队围绕真实病例讨论产品改进。",
+        "knowledge_semantic": "拍团队协作要让讨论对象具体可见，避免会议室摆拍和泛泛笑脸蒙太奇。",
+        "visual_semantic": "研发中心、白板、算法工程师、临床专家、产品经理、病例流程。"
+      },
+      "embedding_vectors": {
+        "script_usage": [],
+        "knowledge_semantic": [],
+        "visual_semantic": []
+      }
+    },
+    {
+      "retrieval_id": "ret_scene_005",
+      "scene_id": "scene_005",
+      "llm_tags": {
+        "entities": ["工程师", "AI辅助诊断界面", "医生反馈便签", "人工确认按钮", "模型输出"],
+        "relations": ["AI与医生判断", "技术与伦理边界", "研发与临床反馈"],
+        "actions_and_expressions": ["调试模型", "复核误差", "保留人工确认", "阅读反馈"],
+        "background_and_setting": ["研发测试工位", "医疗AI界面", "工程实验环境"],
+        "social_relations": ["工程师与医生", "算法系统与医疗责任", "企业与患者安全"]
+      },
+      "script_use_sentence": "适合用于科技向善或可信赖技术段落，强调技术辅助人而不是替代人。",
+      "script_stage": "technology_showcase",
+      "creative_purpose": ["show_technology", "build_trust", "human_centered_ai"],
+      "embedding_texts": {
+        "script_usage": "科技向善，可信赖，AI辅助诊断保留医生人工确认，技术服务人的判断。",
+        "knowledge_semantic": "表现AI或算法时用人工确认、反馈便签、误差复核来避免冷感和万能化。",
+        "visual_semantic": "工程师调试模型、医生反馈便签、人工确认按钮、医疗AI界面。"
+      },
+      "embedding_vectors": {
+        "script_usage": [],
+        "knowledge_semantic": [],
+        "visual_semantic": []
+      }
+    },
+    {
+      "retrieval_id": "ret_scene_006",
+      "scene_id": "scene_006",
+      "llm_tags": {
+        "entities": ["全球协作地图", "多国医生", "视频会议", "病例资料", "医疗网络"],
+        "relations": ["全球规模与本地医疗", "多地专家协作", "企业网络服务基层"],
+        "actions_and_expressions": ["多地连线", "同步病例", "专家确认", "跨地域协作"],
+        "background_and_setting": ["全球远程会诊网络", "多屏窗口", "国际医疗协作"],
+        "social_relations": ["全球专家网络", "跨国企业与地方医院", "医疗资源共享"]
+      },
+      "script_use_sentence": "适合用于规模揭示段落，用协作网络表现世界级企业能力，同时避免冷冰冰的大公司炫耀。",
+      "script_stage": "scale_reveal",
+      "creative_purpose": ["show_scale", "show_global_network", "keep_human_warmth"],
+      "embedding_texts": {
+        "script_usage": "公司很大但不冰冷，全球医疗协作网络连接多国医生和县域医院。",
+        "knowledge_semantic": "世界500强规模感通过协作网络和服务覆盖表达，少用宏大口号和冷数据。",
+        "visual_semantic": "全球地图、多屏视频会议、多国医生、病例同步、克制科技感。"
+      },
+      "embedding_vectors": {
+        "script_usage": [],
+        "knowledge_semantic": [],
+        "visual_semantic": []
+      }
+    },
+    {
+      "retrieval_id": "ret_scene_007",
+      "scene_id": "scene_007",
+      "llm_tags": {
+        "entities": ["县医院医生", "远程专家", "患者家属", "会诊屏幕", "记录本"],
+        "relations": ["专家支持基层医生", "医生向家属解释", "技术促成人与人沟通"],
+        "actions_and_expressions": ["专家解释", "医生记录", "医生安抚家属", "家属倾听"],
+        "background_and_setting": ["县医院会诊室", "面对面远程沟通", "医疗决策现场"],
+        "social_relations": ["医生与专家", "医生与家属", "专业信任", "远程协作关系"]
+      },
+      "script_use_sentence": "适合用于建立信任和价值表达段落，通过面对面沟通证明技术最终服务于人的理解。",
+      "script_stage": "value_expression",
+      "creative_purpose": ["build_trust", "show_face_to_face_communication", "humanize_technology"],
+      "embedding_texts": {
+        "script_usage": "科技向善，可信赖，面对面沟通，专家解释医生记录，家属获得明确建议。",
+        "knowledge_semantic": "可信赖不是字幕说出来，而是靠清楚沟通、认真记录和可执行建议呈现。",
+        "visual_semantic": "远程专家会诊、医生记录、患者家属等待、面对面沟通、人声清晰。"
+      },
+      "embedding_vectors": {
+        "script_usage": [],
+        "knowledge_semantic": [],
+        "visual_semantic": []
+      }
+    },
+    {
+      "retrieval_id": "ret_scene_008",
+      "scene_id": "scene_008",
+      "llm_tags": {
+        "entities": ["患者", "家属", "医生", "病房", "治疗方案"],
+        "relations": ["医生解释方案", "患者获得稳定感", "家庭焦虑被缓解"],
+        "actions_and_expressions": ["解释下一步", "患者点头", "家属松手", "情绪稳定"],
+        "background_and_setting": ["病房", "医疗结果沟通", "温暖自然光"],
+        "social_relations": ["医生与患者", "家属支持", "医疗服务对象"]
+      },
+      "script_use_sentence": "适合用于价值落地或结果段落，不夸大疗效，只表现清晰方案带来的稳定感。",
+      "script_stage": "outcome",
+      "creative_purpose": ["show_outcome", "stabilize_emotion", "avoid_overclaim"],
+      "embedding_texts": {
+        "script_usage": "治疗方案被确认，患者和家属从焦虑转向稳定，适合医疗价值落地。",
+        "knowledge_semantic": "医疗企业片避免神化治疗结果，可以表现行动方向和心理稳定。",
+        "visual_semantic": "病房、医生解释、患者点头、家属手部细节、克制温暖情绪。"
+      },
+      "embedding_vectors": {
+        "script_usage": [],
+        "knowledge_semantic": [],
+        "visual_semantic": []
+      }
+    },
+    {
+      "retrieval_id": "ret_scene_009",
+      "scene_id": "scene_009",
+      "llm_tags": {
+        "entities": ["年轻工程师", "反馈语音", "研发中心夜景", "流程图", "版本记录"],
+        "relations": ["医生反馈推动产品改进", "员工成长与企业使命", "长期主义与真实工作"],
+        "actions_and_expressions": ["收听反馈", "短暂停顿", "修改流程", "保存版本"],
+        "background_and_setting": ["夜间研发中心", "工位灯光", "产品迭代现场"],
+        "social_relations": ["工程师与一线医生", "个人成长与组织使命", "企业内部责任"]
+      },
+      "script_use_sentence": "适合用于成长或使命升温段落，表现年轻员工被真实反馈推动，而不是被口号推动。",
+      "script_stage": "growth",
+      "creative_purpose": ["show_growth", "show_long_termism", "connect_feedback_to_mission"],
+      "embedding_texts": {
+        "script_usage": "年轻工程师成长，长期主义，不要鸡血加班，用医生反馈推动产品改进。",
+        "knowledge_semantic": "表现年轻团队成长时，用真实反馈驱动改进，比喊奋斗口号更高级。",
+        "visual_semantic": "夜间研发中心、反馈语音、工程师沉默、流程修改、版本保存。"
+      },
+      "embedding_vectors": {
+        "script_usage": [],
+        "knowledge_semantic": [],
+        "visual_semantic": []
+      }
+    },
+    {
+      "retrieval_id": "ret_scene_010",
+      "scene_id": "scene_010",
+      "llm_tags": {
+        "entities": ["医生", "县医院", "山路", "晨光", "品牌字幕"],
+        "relations": ["开场与结尾呼应", "企业承诺与真实地点", "医疗服务抵达远方"],
+        "actions_and_expressions": ["医生走出医院", "晨光照亮道路", "字幕出现", "故事闭环"],
+        "background_and_setting": ["县医院外景", "清晨道路", "品牌收束画面"],
+        "social_relations": ["企业与社会价值", "医疗系统与公众", "品牌承诺"]
+      },
+      "script_use_sentence": "适合用于结尾和品牌价值收束，用首尾呼应把企业承诺落在具体行动上。",
+      "script_stage": "ending",
+      "creative_purpose": ["close_loop", "express_value", "leave_trust"],
+      "embedding_texts": {
+        "script_usage": "结尾品牌价值表达，回到县医院和山路，让可靠医疗抵达需要的地方。",
+        "knowledge_semantic": "结尾回到开场空间，让企业承诺像已经发生的行动而不是口号。",
+        "visual_semantic": "晨光、医生、县医院、道路、品牌字幕、温和收束。"
+      },
+      "embedding_vectors": {
+        "script_usage": [],
+        "knowledge_semantic": [],
+        "visual_semantic": []
+      }
+    }
+  ]
+}
+

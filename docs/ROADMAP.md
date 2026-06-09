@@ -15,6 +15,10 @@ Implemented:
 - Streaming and thinking debug output for keyword loop.
 - Core creative-intent prompt and intent scoring for retrieval ranking.
 - Optional embedding reranking for softer creative matching.
+- Script-use-case scoring for experience-card retrieval.
+- LLM connectivity check command.
+- DashScope / Bailian-compatible environment aliases.
+- Stream idle timeout diagnostics with ping reporting.
 
 ## Recommended Near-Term Work
 
@@ -27,15 +31,16 @@ merge-tag-candidate
 reject-tag-candidate
 ```
 
-3. Add optional LLM rerank pass after tag / intent / semantic preselection for the top 10-20 cards.
-4. Add embedding cache for experience cards:
+3. Add a true offline `keyword-loop --offline` mode that searches a collection without any LLM call.
+4. Add optional LLM rerank pass after tag / intent / semantic preselection for the top 10-20 cards.
+5. Add embedding cache for experience cards:
 
 ```text
 analysis/experience_card_embeddings.jsonl
 ```
 
-5. Add semantic retrieval smoke tests that run only when `sentence-transformers` is installed.
-6. Improve retrieval output for creative review:
+6. Add semantic retrieval smoke tests that run only when `sentence-transformers` is installed.
+7. Improve retrieval output for creative review:
 
 - show why tag dimensions matched;
 - show semantic score;

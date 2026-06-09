@@ -1,0 +1,275 @@
+{
+  "method": "llm-judge",
+  "results": [
+    {
+      "case_id": "simple_positive__enterprise_healthtech_story_001__scene_001",
+      "case_type": "simple_positive",
+      "expected_relation": "should_match",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "establish_problem",
+          "show_distance",
+          "build_reality"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "scores": {
+        "llm_judge": {
+          "fits": true,
+          "score": 1.0,
+          "reason": "用户输入与目标摘要完全一致，标签元素（救护车/山路/清晨/急诊响应等）精准支撑距离感与紧迫氛围的构建需求。"
+        }
+      }
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_story_001__scene_001",
+      "case_type": "hard_positive",
+      "expected_relation": "should_match",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "establish_problem",
+          "show_distance",
+          "build_reality"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "scores": {
+        "llm_judge": {
+          "fits": true,
+          "score": 0.95,
+          "reason": "用户输入的场景元素与核心诉求（建立问题、展现距离感、构建现实压力）与目标摘要高度一致，且明确服务于医疗科技品牌表达，符合企业片开场定位。"
+        }
+      }
+    },
+    {
+      "case_id": "hard_negative__enterprise_healthtech_story_001__scene_001",
+      "case_type": "hard_negative",
+      "expected_relation": "should_not_match",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "establish_problem",
+          "show_distance",
+          "build_reality"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "scores": {
+        "llm_judge": {
+          "fits": true,
+          "score": 0.8,
+          "reason": "用户输入强调通过医生困境铺垫技术需求，与目标摘要的问题建立阶段和现实压力营造方向一致，视觉元素高度重合，符合检索原型评估标准。"
+        }
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_healthtech_story_001__scene_002",
+      "case_type": "simple_positive",
+      "expected_relation": "should_match",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_002",
+        "retrieval_id": "ret_scene_002",
+        "script_stage": "setup",
+        "creative_purpose": [
+          "establish_need",
+          "show_pressure",
+          "humanize_professional"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "scores": {
+        "llm_judge": {
+          "fits": true,
+          "score": 0.95,
+          "reason": "用户输入与目标摘要描述完全一致，明确符合setup段落中从医生困境自然引出技术需求的镜头用途。"
+        }
+      }
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_story_001__scene_002",
+      "case_type": "hard_positive",
+      "expected_relation": "should_match",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_002",
+        "retrieval_id": "ret_scene_002",
+        "script_stage": "setup",
+        "creative_purpose": [
+          "establish_need",
+          "show_pressure",
+          "humanize_professional"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "scores": {
+        "llm_judge": {
+          "fits": true,
+          "score": 0.95,
+          "reason": "用户明确要求铺垫与建立需求段落，强调通过医生困境自然引出技术需求，且指定的画面元素与目标标签高度一致，完全契合目标用途。"
+        }
+      }
+    },
+    {
+      "case_id": "hard_negative__enterprise_healthtech_story_001__scene_002",
+      "case_type": "hard_negative",
+      "expected_relation": "should_not_match",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_002",
+        "retrieval_id": "ret_scene_002",
+        "script_stage": "setup",
+        "creative_purpose": [
+          "establish_need",
+          "show_pressure",
+          "humanize_professional"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "scores": {
+        "llm_judge": {
+          "fits": false,
+          "score": 0.4,
+          "reason": "用户强调开场的情感压迫感，而目标摘要侧重技术需求从医生困境中自然引出，叙事逻辑与视觉诉求存在偏差"
+        }
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_healthtech_story_001__scene_003",
+      "case_type": "simple_positive",
+      "expected_relation": "should_match",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_003",
+        "retrieval_id": "ret_scene_003",
+        "script_stage": "technology_entrance",
+        "creative_purpose": [
+          "introduce_tool",
+          "reduce_uncertainty",
+          "connect_expertise"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "scores": {
+        "llm_judge": {
+          "fits": true,
+          "score": 1.0,
+          "reason": "用户输入的描述与目标摘要完全一致，明确符合技术入场及降低不确定性的镜头用途。"
+        }
+      }
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_story_001__scene_003",
+      "case_type": "hard_positive",
+      "expected_relation": "should_match",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_003",
+        "retrieval_id": "ret_scene_003",
+        "script_stage": "technology_entrance",
+        "creative_purpose": [
+          "introduce_tool",
+          "reduce_uncertainty",
+          "connect_expertise"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "scores": {
+        "llm_judge": {
+          "fits": true,
+          "score": 1.0,
+          "reason": "用户明确指定技术入场用途，且核心诉求与视觉元素均与目标摘要及标签高度一致。"
+        }
+      }
+    },
+    {
+      "case_id": "hard_negative__enterprise_healthtech_story_001__scene_003",
+      "case_type": "hard_negative",
+      "expected_relation": "should_not_match",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_003",
+        "retrieval_id": "ret_scene_003",
+        "script_stage": "technology_entrance",
+        "creative_purpose": [
+          "introduce_tool",
+          "reduce_uncertainty",
+          "connect_expertise"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "scores": {
+        "llm_judge": {
+          "fits": false,
+          "score": 0.1,
+          "reason": "用户明确要求用于开场建立问题与紧迫感，而目标描述侧重于技术入场或转折以降低不确定性，两者叙事功能不符。"
+        }
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_healthtech_story_001__scene_004",
+      "case_type": "simple_positive",
+      "expected_relation": "should_match",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_004",
+        "retrieval_id": "ret_scene_004",
+        "script_stage": "team_work",
+        "creative_purpose": [
+          "show_team",
+          "show_collaboration",
+          "prove_organization_capability"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "scores": {
+        "llm_judge": {
+          "fits": true,
+          "score": 1.0,
+          "reason": "用户输入与目标摘要完全一致，且标签内容明确支持该镜头用途。"
+        }
+      }
+    }
+  ]
+}

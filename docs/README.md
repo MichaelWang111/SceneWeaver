@@ -1,30 +1,41 @@
-# SceneWeaver Docs
+# SceneWeaver Documentation
 
-SceneWeaver extracts reusable directing experience from commercial videos and turns it into searchable local knowledge.
+SceneWeaver turns commercial video cases into reusable directing knowledge. The docs are split by enterprise documentation role so each file has one job.
 
-## Documents
+## Executive Layer
 
-- [Usage](USAGE.md): CLI commands, keyword loop, streaming, thinking mode, and semantic retrieval.
-- [Architecture](ARCHITECTURE.md): pipeline, module boundaries, and retrieval design.
-- [Schema](SCHEMA.md): JSON and JSONL artifacts produced by the system.
-- [Roadmap](ROADMAP.md): current status, next work, and non-goals.
+- [Project Overview](../README.md): product positioning, install path, and the shortest useful workflow.
+- [Roadmap](ROADMAP.md): current status, near-term work, non-goals, and deferred platform decisions.
 
-## Current Direction
+## Architecture Layer
 
-The active path is:
+- [Architecture](ARCHITECTURE.md): system boundaries, module ownership, and retrieval design.
+- [Schema](SCHEMA.md): JSON / JSONL contracts, artifact shapes, and compatibility notes.
+
+## Operations Layer
+
+- [CLI Command Book](CLI.md): runnable PowerShell commands for environment checks, video processing, retrieval, LLM diagnostics, and maintenance.
+- [Usage](USAGE.md): workflow-oriented usage guide that explains when to use each command family.
+
+## Working Notes
+
+The `talking/` folder and `now_talk.md` are historical conversation notes. They are useful for product thinking, but they are not the operational source of truth. If a note becomes active policy, move the decision into one of the docs above.
+
+## Current Operating Model
 
 ```text
 video case
--> scene packages
--> scene analysis with tags
--> experience cards
--> keyword loop retrieval
+-> scene package
+-> scene analysis
+-> tags / fingerprint
+-> experience card with script_usecase
+-> retrieval by brief, tags, script use case, and optional LLM intent
 ```
 
-Retrieval now has two layers:
+The current system intentionally stays file-first:
 
-1. tag scoring for explainable matching;
-2. optional core-intent scoring for creator must-match and avoid terms;
-3. optional embedding reranking for softer creative similarity.
-
-The first semantic model target is `BAAI/bge-small-zh-v1.5`. Vector databases are intentionally deferred until the experience-card library is large enough to justify the operational cost.
+- local JSON / JSONL artifacts;
+- Pydantic validation;
+- in-memory retrieval;
+- optional local embeddings;
+- no production database or vector store yet.

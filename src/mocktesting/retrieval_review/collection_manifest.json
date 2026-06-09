@@ -1,0 +1,36 @@
+{
+  "collection_id": "retrieval_review_5_industries_x_3_styles",
+  "target_total": 15,
+  "existing_fixture": "enterprise_healthtech_story_001",
+  "generated_count": 14,
+  "fixtures": [
+    "enterprise_healthtech_story_001",
+    "enterprise_healthtech_documentary_002",
+    "enterprise_healthtech_short_003",
+    "enterprise_energy_business_001",
+    "enterprise_energy_documentary_002",
+    "enterprise_energy_short_003",
+    "enterprise_auto_business_001",
+    "enterprise_auto_story_002",
+    "enterprise_auto_short_003",
+    "enterprise_finance_business_001",
+    "enterprise_finance_documentary_002",
+    "enterprise_finance_story_003",
+    "enterprise_retail_business_001",
+    "enterprise_retail_story_002",
+    "enterprise_retail_short_003"
+  ],
+  "industries": [
+    "medical_technology_and_digital_health",
+    "energy_and_utilities",
+    "automotive_and_mobility",
+    "financial_services_and_insurance",
+    "consumer_retail_and_supply_chain"
+  ],
+  "styles": [
+    "business_corporate_brand_film",
+    "documentary_enterprise_brand_film",
+    "story_driven_enterprise_brand_film",
+    "short_video_vertical_world_500_style"
+  ]
+}

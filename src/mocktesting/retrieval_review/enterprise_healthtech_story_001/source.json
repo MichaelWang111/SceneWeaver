@@ -1,0 +1,286 @@
+{
+  "video_id": "enterprise_healthtech_story_001",
+  "title": "把距离变成抵达",
+  "industry": "medical_technology_and_digital_health",
+  "style": "story_driven_enterprise_brand_film",
+  "logline": "一位县域医院医生、一个跨国研发团队和一次远程会诊，共同完成从清晨急诊到夜间康复回访的医疗协作故事。",
+  "source_layer": {
+    "frames_root": "frames/",
+    "packages_root": "packages/",
+    "frame_policy": "fake_keyframes_only",
+    "package_policy": "scene_level_package"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_001",
+      "time_range": "00:00-00:12",
+      "narrative_role": "opening",
+      "frames": [
+        {
+          "frame_id": "scene_001_f001",
+          "timestamp": "00:00.8",
+          "path": "frames/scene_001/scene_001_f001.jpg",
+          "visual_note": "山谷县城的清晨，薄雾覆盖公路，救护车灯光从远处穿过。"
+        },
+        {
+          "frame_id": "scene_001_f002",
+          "timestamp": "00:07.4",
+          "path": "frames/scene_001/scene_001_f002.jpg",
+          "visual_note": "县医院门口，值班医生抬头看见急诊灯亮起。"
+        }
+      ],
+      "package": {
+        "package_id": "pkg_scene_001",
+        "summary": "用地域距离和清晨急诊建立真实压力，进入医疗可及性的主题。",
+        "visible_entities": ["县医院", "救护车", "值班医生", "山谷公路"],
+        "actions": ["救护车驶入", "医生快步进入急诊", "护士打开通道"],
+        "setting": "县域医院清晨急诊入口",
+        "audio_hint": "低频环境声、远处救护车声、克制钢琴音型"
+      }
+    },
+    {
+      "scene_id": "scene_002",
+      "time_range": "00:12-00:26",
+      "narrative_role": "setup",
+      "frames": [
+        {
+          "frame_id": "scene_002_f001",
+          "timestamp": "00:15.1",
+          "path": "frames/scene_002/scene_002_f001.jpg",
+          "visual_note": "医生在窄小诊室里查看患者影像，墙上贴着排班表。"
+        },
+        {
+          "frame_id": "scene_002_f002",
+          "timestamp": "00:22.8",
+          "path": "frames/scene_002/scene_002_f002.jpg",
+          "visual_note": "屏幕上显示肺部影像和待确认标记，医生眉头微皱。"
+        }
+      ],
+      "package": {
+        "package_id": "pkg_scene_002",
+        "summary": "建立基层医生面对复杂病例时的信息不足和判断压力。",
+        "visible_entities": ["基层医生", "患者家属", "医学影像屏幕", "诊室"],
+        "actions": ["医生比对影像", "家属等待", "医生停顿思考"],
+        "setting": "县医院诊室",
+        "audio_hint": "键盘声、诊室环境声、短促呼吸声"
+      }
+    },
+    {
+      "scene_id": "scene_003",
+      "time_range": "00:26-00:41",
+      "narrative_role": "technology_entrance",
+      "frames": [
+        {
+          "frame_id": "scene_003_f001",
+          "timestamp": "00:29.5",
+          "path": "frames/scene_003/scene_003_f001.jpg",
+          "visual_note": "医生启动远程协作平台，界面显示多地专家可连接。"
+        },
+        {
+          "frame_id": "scene_003_f002",
+          "timestamp": "00:37.0",
+          "path": "frames/scene_003/scene_003_f002.jpg",
+          "visual_note": "患者影像被安全上传，界面没有炫技动画，只有清晰流程。"
+        }
+      ],
+      "package": {
+        "package_id": "pkg_scene_003",
+        "summary": "技术不是主角，而是帮助医生连接专家、降低不确定性的工具。",
+        "visible_entities": ["远程会诊平台", "医学影像", "医生", "加密上传提示"],
+        "actions": ["登录系统", "上传影像", "发起专家会诊"],
+        "setting": "县医院诊室与平台界面",
+        "audio_hint": "轻微电子提示音、环境声逐渐降低"
+      }
+    },
+    {
+      "scene_id": "scene_004",
+      "time_range": "00:41-00:58",
+      "narrative_role": "team_work",
+      "frames": [
+        {
+          "frame_id": "scene_004_f001",
+          "timestamp": "00:45.2",
+          "path": "frames/scene_004/scene_004_f001.jpg",
+          "visual_note": "上海研发中心，算法工程师、临床专家和产品经理围绕同一病例讨论。"
+        },
+        {
+          "frame_id": "scene_004_f002",
+          "timestamp": "00:54.6",
+          "path": "frames/scene_004/scene_004_f002.jpg",
+          "visual_note": "白板上不是口号，而是病例流程、风险点和医生反馈。"
+        }
+      ],
+      "package": {
+        "package_id": "pkg_scene_004",
+        "summary": "展现跨职能团队如何把真实临床问题转化为产品改进。",
+        "visible_entities": ["算法工程师", "临床专家", "产品经理", "白板", "病例流程图"],
+        "actions": ["团队讨论", "标注风险点", "确认医生反馈"],
+        "setting": "研发中心会议区",
+        "audio_hint": "讨论声、白板笔声、节奏略微加快"
+      }
+    },
+    {
+      "scene_id": "scene_005",
+      "time_range": "00:58-01:13",
+      "narrative_role": "human_centered_technology",
+      "frames": [
+        {
+          "frame_id": "scene_005_f001",
+          "timestamp": "01:01.3",
+          "path": "frames/scene_005/scene_005_f001.jpg",
+          "visual_note": "工程师调试模型输出，旁边贴着医生手写的反馈便签。"
+        },
+        {
+          "frame_id": "scene_005_f002",
+          "timestamp": "01:09.8",
+          "path": "frames/scene_005/scene_005_f002.jpg",
+          "visual_note": "模型建议旁边保留人工确认按钮，界面强调医生最终判断。"
+        }
+      ],
+      "package": {
+        "package_id": "pkg_scene_005",
+        "summary": "强调技术向善和人机协作：系统提供辅助，医生保留判断权。",
+        "visible_entities": ["工程师", "AI辅助诊断界面", "医生反馈便签", "确认按钮"],
+        "actions": ["调试模型", "复核误差", "保留人工确认"],
+        "setting": "研发测试工位",
+        "audio_hint": "键盘声、低声交流、音乐进入温暖和弦"
+      }
+    },
+    {
+      "scene_id": "scene_006",
+      "time_range": "01:13-01:28",
+      "narrative_role": "scale_reveal",
+      "frames": [
+        {
+          "frame_id": "scene_006_f001",
+          "timestamp": "01:16.2",
+          "path": "frames/scene_006/scene_006_f001.jpg",
+          "visual_note": "全球协作地图短暂出现，连接亚洲、欧洲和非洲多个医疗点。"
+        },
+        {
+          "frame_id": "scene_006_f002",
+          "timestamp": "01:24.9",
+          "path": "frames/scene_006/scene_006_f002.jpg",
+          "visual_note": "不同国家的医生在视频窗口中查看同一病例，没有夸张科技特效。"
+        }
+      ],
+      "package": {
+        "package_id": "pkg_scene_006",
+        "summary": "揭示企业全球规模，但通过协作网络表达，不做冷冰冰的大公司炫耀。",
+        "visible_entities": ["全球协作地图", "多国医生", "视频会议窗口", "病例资料"],
+        "actions": ["多地连线", "同步病例", "专家点头确认"],
+        "setting": "全球远程会诊网络",
+        "audio_hint": "音乐铺开，加入弦乐和稳定鼓点"
+      }
+    },
+    {
+      "scene_id": "scene_007",
+      "time_range": "01:28-01:43",
+      "narrative_role": "trust_building",
+      "frames": [
+        {
+          "frame_id": "scene_007_f001",
+          "timestamp": "01:31.4",
+          "path": "frames/scene_007/scene_007_f001.jpg",
+          "visual_note": "县医院医生和远程专家面对面连线，医生认真记录关键建议。"
+        },
+        {
+          "frame_id": "scene_007_f002",
+          "timestamp": "01:39.5",
+          "path": "frames/scene_007/scene_007_f002.jpg",
+          "visual_note": "患者家属在门外等待，医生走出诊室时语气更笃定。"
+        }
+      ],
+      "package": {
+        "package_id": "pkg_scene_007",
+        "summary": "通过面对面沟通和明确建议建立可信赖感。",
+        "visible_entities": ["县医院医生", "远程专家", "患者家属", "会诊屏幕"],
+        "actions": ["专家解释", "医生记录", "医生安抚家属"],
+        "setting": "县医院会诊室",
+        "audio_hint": "人声清晰，音乐降低，突出沟通真实感"
+      }
+    },
+    {
+      "scene_id": "scene_008",
+      "time_range": "01:43-01:59",
+      "narrative_role": "outcome",
+      "frames": [
+        {
+          "frame_id": "scene_008_f001",
+          "timestamp": "01:46.8",
+          "path": "frames/scene_008/scene_008_f001.jpg",
+          "visual_note": "治疗方案被确认，医生在病房向患者解释下一步。"
+        },
+        {
+          "frame_id": "scene_008_f002",
+          "timestamp": "01:55.2",
+          "path": "frames/scene_008/scene_008_f002.jpg",
+          "visual_note": "患者轻轻点头，家属握住病床边缘，情绪从焦虑转向稳定。"
+        }
+      ],
+      "package": {
+        "package_id": "pkg_scene_008",
+        "summary": "不夸大疗效，只表现清晰方案带来的心理稳定和行动方向。",
+        "visible_entities": ["患者", "家属", "医生", "病房", "治疗方案"],
+        "actions": ["解释方案", "患者点头", "家属松一口气"],
+        "setting": "病房",
+        "audio_hint": "音乐温暖但克制，保留病房自然声"
+      }
+    },
+    {
+      "scene_id": "scene_009",
+      "time_range": "01:59-02:17",
+      "narrative_role": "growth_and_mission",
+      "frames": [
+        {
+          "frame_id": "scene_009_f001",
+          "timestamp": "02:03.0",
+          "path": "frames/scene_009/scene_009_f001.jpg",
+          "visual_note": "年轻工程师收到县医院医生的反馈语音，沉默几秒后继续修改流程。"
+        },
+        {
+          "frame_id": "scene_009_f002",
+          "timestamp": "02:12.4",
+          "path": "frames/scene_009/scene_009_f002.jpg",
+          "visual_note": "夜色中的研发中心仍有灯光，但画面不鸡血，强调长期主义。"
+        }
+      ],
+      "package": {
+        "package_id": "pkg_scene_009",
+        "summary": "把员工成长和企业使命连接起来：被真实反馈推动，而不是被口号推动。",
+        "visible_entities": ["年轻工程师", "反馈语音", "研发中心夜景", "流程图"],
+        "actions": ["收听反馈", "修改流程", "保存版本"],
+        "setting": "夜间研发中心",
+        "audio_hint": "语音留言、键盘声、音乐进入尾声前的上扬"
+      }
+    },
+    {
+      "scene_id": "scene_010",
+      "time_range": "02:17-02:30",
+      "narrative_role": "ending",
+      "frames": [
+        {
+          "frame_id": "scene_010_f001",
+          "timestamp": "02:20.5",
+          "path": "frames/scene_010/scene_010_f001.jpg",
+          "visual_note": "清晨再次出现，医生推开医院门，远处山路清晰可见。"
+        },
+        {
+          "frame_id": "scene_010_f002",
+          "timestamp": "02:27.6",
+          "path": "frames/scene_010/scene_010_f002.jpg",
+          "visual_note": "品牌字幕出现：让可靠医疗，抵达每一个需要的地方。"
+        }
+      ],
+      "package": {
+        "package_id": "pkg_scene_010",
+        "summary": "回到开场地点，完成从距离到抵达的闭环，并给出品牌价值表达。",
+        "visible_entities": ["医生", "县医院", "山路", "品牌字幕"],
+        "actions": ["医生走出医院", "晨光落在道路上", "字幕出现"],
+        "setting": "县医院清晨外景",
+        "audio_hint": "音乐收束，保留清晨环境声和一句低声旁白"
+      }
+    }
+  ]
+}
+

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import pytest
 
+from sceneweaver.llm.client import LLMConfig
 from sceneweaver.llm.client import PartialStreamError, _collect_stream_text
 
 
@@ -84,3 +85,23 @@ def test_collect_stream_text_raises_partial_stream_error_for_incomplete_json():
 
     assert exc_info.value.partial_text == '{"ok":'
     assert isinstance(exc_info.value.original_error, TimeoutError)
+
+
+def test_llm_config_reads_dashscope_aliases(monkeypatch):
+    monkeypatch.delenv("SCENEWEAVER_API_KEY", raising=False)
+    monkeypatch.delenv("VIDEO_ANALYZER_API_KEY", raising=False)
+    monkeypatch.delenv("SCENEWEAVER_MODEL", raising=False)
+    monkeypatch.delenv("VIDEO_ANALYZER_MODEL", raising=False)
+    monkeypatch.setenv("DASHSCOPE_API_KEY", "dash-key")
+    monkeypatch.setenv("DASHSCOPE_BASE_URL", "https://dashscope.aliyuncs.com/compatible-mode/v1")
+    monkeypatch.setenv("DASHSCOPE_MODEL", "qwen3.7-max")
+    monkeypatch.setenv("DASHSCOPE_TIMEOUT_SECONDS", "42")
+    monkeypatch.setenv("DASHSCOPE_STREAM_IDLE_TIMEOUT_SECONDS", "7")
+
+    config = LLMConfig.from_env()
+
+    assert config.api_key == "dash-key"
+    assert config.base_url == "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    assert config.model == "qwen3.7-max"
+    assert config.request_timeout_seconds == 42.0
+    assert config.stream_idle_timeout_seconds == 7.0

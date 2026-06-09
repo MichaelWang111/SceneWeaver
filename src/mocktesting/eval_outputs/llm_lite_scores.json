@@ -1,0 +1,2243 @@
+{
+  "method": "llm-judge-lite",
+  "description": "Fast LLM judge. Return only fits and score, without commentary.",
+  "scored_case_count": 60,
+  "aggregates": {
+    "overall": {
+      "llm_judge_lite": {
+        "count": 60,
+        "avg": 0.6745,
+        "min": 0.1,
+        "max": 1.0
+      }
+    },
+    "by_case_type": {
+      "simple_positive": {
+        "llm_judge_lite": {
+          "count": 20,
+          "avg": 0.985,
+          "min": 0.95,
+          "max": 1.0
+        }
+      },
+      "hard_positive": {
+        "llm_judge_lite": {
+          "count": 20,
+          "avg": 0.9335,
+          "min": 0.85,
+          "max": 0.95
+        }
+      },
+      "hard_negative": {
+        "llm_judge_lite": {
+          "count": 20,
+          "avg": 0.105,
+          "min": 0.1,
+          "max": 0.2
+        }
+      }
+    }
+  },
+  "results": [
+    {
+      "case_id": "simple_positive__enterprise_healthtech_story_001__scene_001",
+      "case_type": "simple_positive",
+      "expected_relation": "should_match",
+      "user_input": "我需要一个开场镜头：适合用于企业片开场或问题建立阶段，用真实场景先让观众感到距离、紧迫和需要被解决的现实压力。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "establish_problem",
+          "show_distance",
+          "build_reality"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于企业片开场或问题建立阶段，用真实场景先让观众感到距离、紧迫和需要被解决的现实压力。",
+      "target_tags_text": "县医院 救护车 医生 山路 清晨 医疗资源与地域距离 急诊与公共服务 医生与患者即将建立连接 救护车驶入 医生快步进入 抬头观察 紧急响应 县域医院 山谷公路 清晨薄雾 急诊入口 基层医疗系统 公共服务对象 医生对患者的责任",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 1.0
+        }
+      }
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_story_001__scene_001",
+      "case_type": "hard_positive",
+      "expected_relation": "should_match",
+      "user_input": "想找一个世界500强质感的开场段落，不要直白讲道理。画面可以有县医院、救护车、医生、山路、清晨这类元素，重点是建立问题、表现距离感、建立真实感，要能服务于医疗科技与数字健康的品牌表达。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "establish_problem",
+          "show_distance",
+          "build_reality"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于企业片开场或问题建立阶段，用真实场景先让观众感到距离、紧迫和需要被解决的现实压力。",
+      "target_tags_text": "县医院 救护车 医生 山路 清晨 医疗资源与地域距离 急诊与公共服务 医生与患者即将建立连接 救护车驶入 医生快步进入 抬头观察 紧急响应 县域医院 山谷公路 清晨薄雾 急诊入口 基层医疗系统 公共服务对象 医生对患者的责任",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 0.95
+        }
+      }
+    },
+    {
+      "case_id": "hard_negative__enterprise_healthtech_story_001__scene_001",
+      "case_type": "hard_negative",
+      "expected_relation": "should_not_match",
+      "user_input": "画面可以借用县医院、救护车、医生、山路这类相似元素，但不要做成开场。我真正要的是铺垫，重点是建立需求、表现压力、让专业场景更有人味，不要强调开场气势或问题建立，而要让观众看到后续情节的具体铺垫。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "establish_problem",
+          "show_distance",
+          "build_reality"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于企业片开场或问题建立阶段，用真实场景先让观众感到距离、紧迫和需要被解决的现实压力。",
+      "target_tags_text": "县医院 救护车 医生 山路 清晨 医疗资源与地域距离 急诊与公共服务 医生与患者即将建立连接 救护车驶入 医生快步进入 抬头观察 紧急响应 县域医院 山谷公路 清晨薄雾 急诊入口 基层医疗系统 公共服务对象 医生对患者的责任",
+      "expected_prefer": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_002",
+        "retrieval_id": "ret_scene_002",
+        "script_stage": "setup",
+        "creative_purpose": [
+          "establish_need",
+          "show_pressure",
+          "humanize_professional"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": false,
+          "score": 0.1
+        }
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_healthtech_story_001__scene_002",
+      "case_type": "simple_positive",
+      "expected_relation": "should_match",
+      "user_input": "我需要一个铺垫镜头：适合用于setup或需求建立段落，让技术需求从医生困境中自然出现，而不是从产品卖点中出现。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_002",
+        "retrieval_id": "ret_scene_002",
+        "script_stage": "setup",
+        "creative_purpose": [
+          "establish_need",
+          "show_pressure",
+          "humanize_professional"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于setup或需求建立段落，让技术需求从医生困境中自然出现，而不是从产品卖点中出现。",
+      "target_tags_text": "基层医生 患者家属 医学影像 诊室 排班表 医生面对复杂病例 家属等待判断 专业能力与信息不足 比对影像 皱眉思考 停顿 家属等待 县医院诊室 狭小空间 医学屏幕 临床一线 医生与患者家庭 基层医院与复杂病例 专业责任",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 1.0
+        }
+      }
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_story_001__scene_002",
+      "case_type": "hard_positive",
+      "expected_relation": "should_match",
+      "user_input": "想找一个世界500强质感的铺垫段落，不要直白讲道理。画面可以有基层医生、患者家属、医学影像、诊室、排班表这类元素，重点是建立需求、表现压力、让专业场景更有人味，要能服务于医疗科技与数字健康的品牌表达。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_002",
+        "retrieval_id": "ret_scene_002",
+        "script_stage": "setup",
+        "creative_purpose": [
+          "establish_need",
+          "show_pressure",
+          "humanize_professional"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于setup或需求建立段落，让技术需求从医生困境中自然出现，而不是从产品卖点中出现。",
+      "target_tags_text": "基层医生 患者家属 医学影像 诊室 排班表 医生面对复杂病例 家属等待判断 专业能力与信息不足 比对影像 皱眉思考 停顿 家属等待 县医院诊室 狭小空间 医学屏幕 临床一线 医生与患者家庭 基层医院与复杂病例 专业责任",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 0.95
+        }
+      }
+    },
+    {
+      "case_id": "hard_negative__enterprise_healthtech_story_001__scene_002",
+      "case_type": "hard_negative",
+      "expected_relation": "should_not_match",
+      "user_input": "画面可以借用基层医生、患者家属、医学影像、诊室这类相似元素，但不要做成铺垫。我真正要的是开场，重点是建立问题、表现距离感、建立真实感，不要停留在需求铺垫，而要更像一段能直接进入主题的画面。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_002",
+        "retrieval_id": "ret_scene_002",
+        "script_stage": "setup",
+        "creative_purpose": [
+          "establish_need",
+          "show_pressure",
+          "humanize_professional"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于setup或需求建立段落，让技术需求从医生困境中自然出现，而不是从产品卖点中出现。",
+      "target_tags_text": "基层医生 患者家属 医学影像 诊室 排班表 医生面对复杂病例 家属等待判断 专业能力与信息不足 比对影像 皱眉思考 停顿 家属等待 县医院诊室 狭小空间 医学屏幕 临床一线 医生与患者家庭 基层医院与复杂病例 专业责任",
+      "expected_prefer": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "establish_problem",
+          "show_distance",
+          "build_reality"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": false,
+          "score": 0.1
+        }
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_healthtech_story_001__scene_003",
+      "case_type": "simple_positive",
+      "expected_relation": "should_match",
+      "user_input": "我需要一个technology_entrance镜头：适合用于技术入场或情节转折，让技术作为降低不确定性的工具出现。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_003",
+        "retrieval_id": "ret_scene_003",
+        "script_stage": "technology_entrance",
+        "creative_purpose": [
+          "introduce_tool",
+          "reduce_uncertainty",
+          "connect_expertise"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于技术入场或情节转折，让技术作为降低不确定性的工具出现。",
+      "target_tags_text": "远程会诊平台 医学影像 医生 专家列表 加密上传 医生连接专家 技术辅助判断 病例与远程资源 登录系统 上传影像 发起会诊 流程确认 诊室屏幕 远程医疗平台 数字化医疗流程 基层医生与远程专家 技术平台与医疗协作",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 1.0
+        }
+      }
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_story_001__scene_003",
+      "case_type": "hard_positive",
+      "expected_relation": "should_match",
+      "user_input": "想找一个世界500强质感的technology_entrance段落，不要直白讲道理。画面可以有远程会诊平台、医学影像、医生、专家列表、加密上传这类元素，重点是引入工具、降低不确定性、连接专业资源，要能服务于医疗科技与数字健康的品牌表达。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_003",
+        "retrieval_id": "ret_scene_003",
+        "script_stage": "technology_entrance",
+        "creative_purpose": [
+          "introduce_tool",
+          "reduce_uncertainty",
+          "connect_expertise"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于技术入场或情节转折，让技术作为降低不确定性的工具出现。",
+      "target_tags_text": "远程会诊平台 医学影像 医生 专家列表 加密上传 医生连接专家 技术辅助判断 病例与远程资源 登录系统 上传影像 发起会诊 流程确认 诊室屏幕 远程医疗平台 数字化医疗流程 基层医生与远程专家 技术平台与医疗协作",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 0.95
+        }
+      }
+    },
+    {
+      "case_id": "hard_negative__enterprise_healthtech_story_001__scene_003",
+      "case_type": "hard_negative",
+      "expected_relation": "should_not_match",
+      "user_input": "画面可以借用远程会诊平台、医学影像、医生、专家列表这类相似元素，但不要做成technology_entrance。我真正要的是开场，重点是建立问题、表现距离感、建立真实感，希望它的脚本位置和情绪功能明显不同。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_003",
+        "retrieval_id": "ret_scene_003",
+        "script_stage": "technology_entrance",
+        "creative_purpose": [
+          "introduce_tool",
+          "reduce_uncertainty",
+          "connect_expertise"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于技术入场或情节转折，让技术作为降低不确定性的工具出现。",
+      "target_tags_text": "远程会诊平台 医学影像 医生 专家列表 加密上传 医生连接专家 技术辅助判断 病例与远程资源 登录系统 上传影像 发起会诊 流程确认 诊室屏幕 远程医疗平台 数字化医疗流程 基层医生与远程专家 技术平台与医疗协作",
+      "expected_prefer": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "establish_problem",
+          "show_distance",
+          "build_reality"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": false,
+          "score": 0.1
+        }
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_healthtech_story_001__scene_004",
+      "case_type": "simple_positive",
+      "expected_relation": "should_match",
+      "user_input": "我需要一个团队协作镜头：适合用于团队协作段落，表现年轻专业团队如何围绕真实问题工作，避免互联网大厂式空泛办公感。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_004",
+        "retrieval_id": "ret_scene_004",
+        "script_stage": "team_work",
+        "creative_purpose": [
+          "show_team",
+          "show_collaboration",
+          "prove_organization_capability"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于团队协作段落，表现年轻专业团队如何围绕真实问题工作，避免互联网大厂式空泛办公感。",
+      "target_tags_text": "算法工程师 临床专家 产品经理 白板 病例流程 跨职能团队协作 临床问题转产品改进 专家与工程师共同决策 围桌讨论 标注风险点 复盘医生反馈 确认方案 研发中心 会议区 白板流程图 企业团队空间 研发团队 医疗专家 产品组织 企业内部协作",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 0.95
+        }
+      }
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_story_001__scene_004",
+      "case_type": "hard_positive",
+      "expected_relation": "should_match",
+      "user_input": "想找一个世界500强质感的团队协作段落，不要直白讲道理。画面可以有算法工程师、临床专家、产品经理、白板、病例流程这类元素，重点是表现团队、表现协作、证明组织能力，要能服务于医疗科技与数字健康的品牌表达。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_004",
+        "retrieval_id": "ret_scene_004",
+        "script_stage": "team_work",
+        "creative_purpose": [
+          "show_team",
+          "show_collaboration",
+          "prove_organization_capability"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于团队协作段落，表现年轻专业团队如何围绕真实问题工作，避免互联网大厂式空泛办公感。",
+      "target_tags_text": "算法工程师 临床专家 产品经理 白板 病例流程 跨职能团队协作 临床问题转产品改进 专家与工程师共同决策 围桌讨论 标注风险点 复盘医生反馈 确认方案 研发中心 会议区 白板流程图 企业团队空间 研发团队 医疗专家 产品组织 企业内部协作",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 0.85
+        }
+      }
+    },
+    {
+      "case_id": "hard_negative__enterprise_healthtech_story_001__scene_004",
+      "case_type": "hard_negative",
+      "expected_relation": "should_not_match",
+      "user_input": "画面可以借用算法工程师、临床专家、产品经理、白板这类相似元素，但不要做成团队协作。我真正要的是开场，重点是建立问题、表现距离感、建立真实感，不要拍成团队协作或会议共创，而要突出另一个明确的叙事功能。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_004",
+        "retrieval_id": "ret_scene_004",
+        "script_stage": "team_work",
+        "creative_purpose": [
+          "show_team",
+          "show_collaboration",
+          "prove_organization_capability"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于团队协作段落，表现年轻专业团队如何围绕真实问题工作，避免互联网大厂式空泛办公感。",
+      "target_tags_text": "算法工程师 临床专家 产品经理 白板 病例流程 跨职能团队协作 临床问题转产品改进 专家与工程师共同决策 围桌讨论 标注风险点 复盘医生反馈 确认方案 研发中心 会议区 白板流程图 企业团队空间 研发团队 医疗专家 产品组织 企业内部协作",
+      "expected_prefer": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "establish_problem",
+          "show_distance",
+          "build_reality"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": false,
+          "score": 0.1
+        }
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_healthtech_story_001__scene_005",
+      "case_type": "simple_positive",
+      "expected_relation": "should_match",
+      "user_input": "我需要一个技术展示镜头：适合用于科技向善或可信赖技术段落，强调技术辅助人而不是替代人。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_005",
+        "retrieval_id": "ret_scene_005",
+        "script_stage": "technology_showcase",
+        "creative_purpose": [
+          "show_technology",
+          "build_trust",
+          "human_centered_ai"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于科技向善或可信赖技术段落，强调技术辅助人而不是替代人。",
+      "target_tags_text": "工程师 AI辅助诊断界面 医生反馈便签 人工确认按钮 模型输出 AI与医生判断 技术与伦理边界 研发与临床反馈 调试模型 复核误差 保留人工确认 阅读反馈 研发测试工位 医疗AI界面 工程实验环境 工程师与医生 算法系统与医疗责任 企业与患者安全",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 1.0
+        }
+      }
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_story_001__scene_005",
+      "case_type": "hard_positive",
+      "expected_relation": "should_match",
+      "user_input": "想找一个世界500强质感的技术展示段落，不要直白讲道理。画面可以有工程师、AI辅助诊断界面、医生反馈便签、人工确认按钮、模型输出这类元素，重点是表现技术能力、建立信任、表现人本技术，要能服务于医疗科技与数字健康的品牌表达。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_005",
+        "retrieval_id": "ret_scene_005",
+        "script_stage": "technology_showcase",
+        "creative_purpose": [
+          "show_technology",
+          "build_trust",
+          "human_centered_ai"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于科技向善或可信赖技术段落，强调技术辅助人而不是替代人。",
+      "target_tags_text": "工程师 AI辅助诊断界面 医生反馈便签 人工确认按钮 模型输出 AI与医生判断 技术与伦理边界 研发与临床反馈 调试模型 复核误差 保留人工确认 阅读反馈 研发测试工位 医疗AI界面 工程实验环境 工程师与医生 算法系统与医疗责任 企业与患者安全",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 0.92
+        }
+      }
+    },
+    {
+      "case_id": "hard_negative__enterprise_healthtech_story_001__scene_005",
+      "case_type": "hard_negative",
+      "expected_relation": "should_not_match",
+      "user_input": "画面可以借用工程师、AI辅助诊断界面、医生反馈便签、人工确认按钮这类相似元素，但不要做成技术展示。我真正要的是开场，重点是建立问题、表现距离感、建立真实感，不要像技术展示或功能说明，而要让画面承担别的叙事任务。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_005",
+        "retrieval_id": "ret_scene_005",
+        "script_stage": "technology_showcase",
+        "creative_purpose": [
+          "show_technology",
+          "build_trust",
+          "human_centered_ai"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于科技向善或可信赖技术段落，强调技术辅助人而不是替代人。",
+      "target_tags_text": "工程师 AI辅助诊断界面 医生反馈便签 人工确认按钮 模型输出 AI与医生判断 技术与伦理边界 研发与临床反馈 调试模型 复核误差 保留人工确认 阅读反馈 研发测试工位 医疗AI界面 工程实验环境 工程师与医生 算法系统与医疗责任 企业与患者安全",
+      "expected_prefer": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "establish_problem",
+          "show_distance",
+          "build_reality"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": false,
+          "score": 0.2
+        }
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_healthtech_story_001__scene_006",
+      "case_type": "simple_positive",
+      "expected_relation": "should_match",
+      "user_input": "我需要一个规模揭示镜头：适合用于规模揭示段落，用协作网络表现世界级企业能力，同时避免冷冰冰的大公司炫耀。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_006",
+        "retrieval_id": "ret_scene_006",
+        "script_stage": "scale_reveal",
+        "creative_purpose": [
+          "show_scale",
+          "show_global_network",
+          "keep_human_warmth"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于规模揭示段落，用协作网络表现世界级企业能力，同时避免冷冰冰的大公司炫耀。",
+      "target_tags_text": "全球协作地图 多国医生 视频会议 病例资料 医疗网络 全球规模与本地医疗 多地专家协作 企业网络服务基层 多地连线 同步病例 专家确认 跨地域协作 全球远程会诊网络 多屏窗口 国际医疗协作 全球专家网络 跨国企业与地方医院 医疗资源共享",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 1.0
+        }
+      }
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_story_001__scene_006",
+      "case_type": "hard_positive",
+      "expected_relation": "should_match",
+      "user_input": "想找一个世界500强质感的规模揭示段落，不要直白讲道理。画面可以有全球协作地图、多国医生、视频会议、病例资料、医疗网络这类元素，重点是表现规模、表现全球网络、保留人的温度，要能服务于医疗科技与数字健康的品牌表达。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_006",
+        "retrieval_id": "ret_scene_006",
+        "script_stage": "scale_reveal",
+        "creative_purpose": [
+          "show_scale",
+          "show_global_network",
+          "keep_human_warmth"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于规模揭示段落，用协作网络表现世界级企业能力，同时避免冷冰冰的大公司炫耀。",
+      "target_tags_text": "全球协作地图 多国医生 视频会议 病例资料 医疗网络 全球规模与本地医疗 多地专家协作 企业网络服务基层 多地连线 同步病例 专家确认 跨地域协作 全球远程会诊网络 多屏窗口 国际医疗协作 全球专家网络 跨国企业与地方医院 医疗资源共享",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 0.95
+        }
+      }
+    },
+    {
+      "case_id": "hard_negative__enterprise_healthtech_story_001__scene_006",
+      "case_type": "hard_negative",
+      "expected_relation": "should_not_match",
+      "user_input": "画面可以借用全球协作地图、多国医生、视频会议、病例资料这类相似元素，但不要做成规模揭示。我真正要的是开场，重点是建立问题、表现距离感、建立真实感，希望它的脚本位置和情绪功能明显不同。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_006",
+        "retrieval_id": "ret_scene_006",
+        "script_stage": "scale_reveal",
+        "creative_purpose": [
+          "show_scale",
+          "show_global_network",
+          "keep_human_warmth"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于规模揭示段落，用协作网络表现世界级企业能力，同时避免冷冰冰的大公司炫耀。",
+      "target_tags_text": "全球协作地图 多国医生 视频会议 病例资料 医疗网络 全球规模与本地医疗 多地专家协作 企业网络服务基层 多地连线 同步病例 专家确认 跨地域协作 全球远程会诊网络 多屏窗口 国际医疗协作 全球专家网络 跨国企业与地方医院 医疗资源共享",
+      "expected_prefer": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "establish_problem",
+          "show_distance",
+          "build_reality"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": false,
+          "score": 0.1
+        }
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_healthtech_story_001__scene_007",
+      "case_type": "simple_positive",
+      "expected_relation": "should_match",
+      "user_input": "我需要一个价值表达镜头：适合用于建立信任和价值表达段落，通过面对面沟通证明技术最终服务于人的理解。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_007",
+        "retrieval_id": "ret_scene_007",
+        "script_stage": "value_expression",
+        "creative_purpose": [
+          "build_trust",
+          "show_face_to_face_communication",
+          "humanize_technology"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于建立信任和价值表达段落，通过面对面沟通证明技术最终服务于人的理解。",
+      "target_tags_text": "县医院医生 远程专家 患者家属 会诊屏幕 记录本 专家支持基层医生 医生向家属解释 技术促成人与人沟通 专家解释 医生记录 医生安抚家属 家属倾听 县医院会诊室 面对面远程沟通 医疗决策现场 医生与专家 医生与家属 专业信任 远程协作关系",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 1.0
+        }
+      }
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_story_001__scene_007",
+      "case_type": "hard_positive",
+      "expected_relation": "should_match",
+      "user_input": "想找一个世界500强质感的价值表达段落，不要直白讲道理。画面可以有县医院医生、远程专家、患者家属、会诊屏幕、记录本这类元素，重点是建立信任、表现面对面沟通、humanize technology，要能服务于医疗科技与数字健康的品牌表达。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_007",
+        "retrieval_id": "ret_scene_007",
+        "script_stage": "value_expression",
+        "creative_purpose": [
+          "build_trust",
+          "show_face_to_face_communication",
+          "humanize_technology"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于建立信任和价值表达段落，通过面对面沟通证明技术最终服务于人的理解。",
+      "target_tags_text": "县医院医生 远程专家 患者家属 会诊屏幕 记录本 专家支持基层医生 医生向家属解释 技术促成人与人沟通 专家解释 医生记录 医生安抚家属 家属倾听 县医院会诊室 面对面远程沟通 医疗决策现场 医生与专家 医生与家属 专业信任 远程协作关系",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 0.95
+        }
+      }
+    },
+    {
+      "case_id": "hard_negative__enterprise_healthtech_story_001__scene_007",
+      "case_type": "hard_negative",
+      "expected_relation": "should_not_match",
+      "user_input": "画面可以借用县医院医生、远程专家、患者家属、会诊屏幕这类相似元素，但不要做成价值表达。我真正要的是开场，重点是建立问题、表现距离感、建立真实感，不要靠价值表达或信任感收束，而要服务于另一个更具体的段落目标。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_007",
+        "retrieval_id": "ret_scene_007",
+        "script_stage": "value_expression",
+        "creative_purpose": [
+          "build_trust",
+          "show_face_to_face_communication",
+          "humanize_technology"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于建立信任和价值表达段落，通过面对面沟通证明技术最终服务于人的理解。",
+      "target_tags_text": "县医院医生 远程专家 患者家属 会诊屏幕 记录本 专家支持基层医生 医生向家属解释 技术促成人与人沟通 专家解释 医生记录 医生安抚家属 家属倾听 县医院会诊室 面对面远程沟通 医疗决策现场 医生与专家 医生与家属 专业信任 远程协作关系",
+      "expected_prefer": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "establish_problem",
+          "show_distance",
+          "build_reality"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": false,
+          "score": 0.1
+        }
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_healthtech_story_001__scene_008",
+      "case_type": "simple_positive",
+      "expected_relation": "should_match",
+      "user_input": "我需要一个结果落地镜头：适合用于价值落地或结果段落，不夸大疗效，只表现清晰方案带来的稳定感。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_008",
+        "retrieval_id": "ret_scene_008",
+        "script_stage": "outcome",
+        "creative_purpose": [
+          "show_outcome",
+          "stabilize_emotion",
+          "avoid_overclaim"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于价值落地或结果段落，不夸大疗效，只表现清晰方案带来的稳定感。",
+      "target_tags_text": "患者 家属 医生 病房 治疗方案 医生解释方案 患者获得稳定感 家庭焦虑被缓解 解释下一步 患者点头 家属松手 情绪稳定 医疗结果沟通 温暖自然光 医生与患者 家属支持 医疗服务对象",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 0.95
+        }
+      }
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_story_001__scene_008",
+      "case_type": "hard_positive",
+      "expected_relation": "should_match",
+      "user_input": "想找一个世界500强质感的结果落地段落，不要直白讲道理。画面可以有患者、家属、医生、病房、治疗方案这类元素，重点是表现结果、稳定情绪、避免夸大承诺，要能服务于医疗科技与数字健康的品牌表达。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_008",
+        "retrieval_id": "ret_scene_008",
+        "script_stage": "outcome",
+        "creative_purpose": [
+          "show_outcome",
+          "stabilize_emotion",
+          "avoid_overclaim"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于价值落地或结果段落，不夸大疗效，只表现清晰方案带来的稳定感。",
+      "target_tags_text": "患者 家属 医生 病房 治疗方案 医生解释方案 患者获得稳定感 家庭焦虑被缓解 解释下一步 患者点头 家属松手 情绪稳定 医疗结果沟通 温暖自然光 医生与患者 家属支持 医疗服务对象",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 0.85
+        }
+      }
+    },
+    {
+      "case_id": "hard_negative__enterprise_healthtech_story_001__scene_008",
+      "case_type": "hard_negative",
+      "expected_relation": "should_not_match",
+      "user_input": "画面可以借用患者、家属、医生、病房这类相似元素，但不要做成结果落地。我真正要的是开场，重点是建立问题、表现距离感、建立真实感，希望它的脚本位置和情绪功能明显不同。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_008",
+        "retrieval_id": "ret_scene_008",
+        "script_stage": "outcome",
+        "creative_purpose": [
+          "show_outcome",
+          "stabilize_emotion",
+          "avoid_overclaim"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于价值落地或结果段落，不夸大疗效，只表现清晰方案带来的稳定感。",
+      "target_tags_text": "患者 家属 医生 病房 治疗方案 医生解释方案 患者获得稳定感 家庭焦虑被缓解 解释下一步 患者点头 家属松手 情绪稳定 医疗结果沟通 温暖自然光 医生与患者 家属支持 医疗服务对象",
+      "expected_prefer": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "establish_problem",
+          "show_distance",
+          "build_reality"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": false,
+          "score": 0.1
+        }
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_healthtech_story_001__scene_009",
+      "case_type": "simple_positive",
+      "expected_relation": "should_match",
+      "user_input": "我需要一个成长升温镜头：适合用于成长或使命升温段落，表现年轻员工被真实反馈推动，而不是被口号推动。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_009",
+        "retrieval_id": "ret_scene_009",
+        "script_stage": "growth",
+        "creative_purpose": [
+          "show_growth",
+          "show_long_termism",
+          "connect_feedback_to_mission"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于成长或使命升温段落，表现年轻员工被真实反馈推动，而不是被口号推动。",
+      "target_tags_text": "年轻工程师 反馈语音 研发中心夜景 流程图 版本记录 医生反馈推动产品改进 员工成长与企业使命 长期主义与真实工作 收听反馈 短暂停顿 修改流程 保存版本 夜间研发中心 工位灯光 产品迭代现场 工程师与一线医生 个人成长与组织使命 企业内部责任",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 0.95
+        }
+      }
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_story_001__scene_009",
+      "case_type": "hard_positive",
+      "expected_relation": "should_match",
+      "user_input": "想找一个世界500强质感的成长升温段落，不要直白讲道理。画面可以有年轻工程师、反馈语音、研发中心夜景、流程图、版本记录这类元素，重点是表现成长、表现长期主义、把真实反馈和使命感连接起来，要能服务于医疗科技与数字健康的品牌表达。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_009",
+        "retrieval_id": "ret_scene_009",
+        "script_stage": "growth",
+        "creative_purpose": [
+          "show_growth",
+          "show_long_termism",
+          "connect_feedback_to_mission"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于成长或使命升温段落，表现年轻员工被真实反馈推动，而不是被口号推动。",
+      "target_tags_text": "年轻工程师 反馈语音 研发中心夜景 流程图 版本记录 医生反馈推动产品改进 员工成长与企业使命 长期主义与真实工作 收听反馈 短暂停顿 修改流程 保存版本 夜间研发中心 工位灯光 产品迭代现场 工程师与一线医生 个人成长与组织使命 企业内部责任",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 0.95
+        }
+      }
+    },
+    {
+      "case_id": "hard_negative__enterprise_healthtech_story_001__scene_009",
+      "case_type": "hard_negative",
+      "expected_relation": "should_not_match",
+      "user_input": "画面可以借用年轻工程师、反馈语音、研发中心夜景、流程图这类相似元素，但不要做成成长升温。我真正要的是开场，重点是建立问题、表现距离感、建立真实感，希望它的脚本位置和情绪功能明显不同。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_009",
+        "retrieval_id": "ret_scene_009",
+        "script_stage": "growth",
+        "creative_purpose": [
+          "show_growth",
+          "show_long_termism",
+          "connect_feedback_to_mission"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于成长或使命升温段落，表现年轻员工被真实反馈推动，而不是被口号推动。",
+      "target_tags_text": "年轻工程师 反馈语音 研发中心夜景 流程图 版本记录 医生反馈推动产品改进 员工成长与企业使命 长期主义与真实工作 收听反馈 短暂停顿 修改流程 保存版本 夜间研发中心 工位灯光 产品迭代现场 工程师与一线医生 个人成长与组织使命 企业内部责任",
+      "expected_prefer": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "establish_problem",
+          "show_distance",
+          "build_reality"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": false,
+          "score": 0.1
+        }
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_healthtech_story_001__scene_010",
+      "case_type": "simple_positive",
+      "expected_relation": "should_match",
+      "user_input": "我需要一个结尾收束镜头：适合用于结尾和品牌价值收束，用首尾呼应把企业承诺落在具体行动上。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_010",
+        "retrieval_id": "ret_scene_010",
+        "script_stage": "ending",
+        "creative_purpose": [
+          "close_loop",
+          "express_value",
+          "leave_trust"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于结尾和品牌价值收束，用首尾呼应把企业承诺落在具体行动上。",
+      "target_tags_text": "医生 县医院 山路 晨光 品牌字幕 开场与结尾呼应 企业承诺与真实地点 医疗服务抵达远方 医生走出医院 晨光照亮道路 字幕出现 故事闭环 县医院外景 清晨道路 品牌收束画面 企业与社会价值 医疗系统与公众 品牌承诺",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 1.0
+        }
+      }
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_story_001__scene_010",
+      "case_type": "hard_positive",
+      "expected_relation": "should_match",
+      "user_input": "想找一个世界500强质感的结尾收束段落，不要直白讲道理。画面可以有医生、县医院、山路、晨光、品牌字幕这类元素，重点是完成首尾闭环、表达品牌价值、留下可信赖感，要能服务于医疗科技与数字健康的品牌表达。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_010",
+        "retrieval_id": "ret_scene_010",
+        "script_stage": "ending",
+        "creative_purpose": [
+          "close_loop",
+          "express_value",
+          "leave_trust"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于结尾和品牌价值收束，用首尾呼应把企业承诺落在具体行动上。",
+      "target_tags_text": "医生 县医院 山路 晨光 品牌字幕 开场与结尾呼应 企业承诺与真实地点 医疗服务抵达远方 医生走出医院 晨光照亮道路 字幕出现 故事闭环 县医院外景 清晨道路 品牌收束画面 企业与社会价值 医疗系统与公众 品牌承诺",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 0.85
+        }
+      }
+    },
+    {
+      "case_id": "hard_negative__enterprise_healthtech_story_001__scene_010",
+      "case_type": "hard_negative",
+      "expected_relation": "should_not_match",
+      "user_input": "画面可以借用医生、县医院、山路、晨光这类相似元素，但不要做成结尾收束。我真正要的是开场，重点是建立问题、表现距离感、建立真实感，希望它的脚本位置和情绪功能明显不同。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_010",
+        "retrieval_id": "ret_scene_010",
+        "script_stage": "ending",
+        "creative_purpose": [
+          "close_loop",
+          "express_value",
+          "leave_trust"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "target_summary": "适合用于结尾和品牌价值收束，用首尾呼应把企业承诺落在具体行动上。",
+      "target_tags_text": "医生 县医院 山路 晨光 品牌字幕 开场与结尾呼应 企业承诺与真实地点 医疗服务抵达远方 医生走出医院 晨光照亮道路 字幕出现 故事闭环 县医院外景 清晨道路 品牌收束画面 企业与社会价值 医疗系统与公众 品牌承诺",
+      "expected_prefer": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "establish_problem",
+          "show_distance",
+          "build_reality"
+        ],
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film"
+      },
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": false,
+          "score": 0.1
+        }
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_healthtech_documentary_002__scene_001",
+      "case_type": "simple_positive",
+      "expected_relation": "should_match",
+      "user_input": "我需要一个开场镜头：适合用于opening段落，开场建立真实世界压力，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "opening",
+          "establish_problem",
+          "build_reality"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于opening段落，开场建立真实世界压力，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target_tags_text": "医疗设备质控工程师 影像设备质控系统和远程维护平台 校准线、质控标签、复核记录 城市三甲医院、设备质控实验室、患者随访中心 真实用户场景 环境细节 medical_technology_and_digital_health 严谨 医疗设备质控工程师与医生、质控工程师、服务工程师、患者随访专员的关系 影像设备质控系统和远程维护平台与医疗判断需要稳定、可追溯、被反复确认的技术支持的关系 世界500强企业能力与真实用户场景 进入现场 观察环境 问题显现 documentary_enterprise_brand_film 医生、质控工程师、服务工程师、患者随访专员 企业与社会责任 专业服务对象",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 1.0
+        }
+      }
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_documentary_002__scene_001",
+      "case_type": "hard_positive",
+      "expected_relation": "should_match",
+      "user_input": "想找一个世界500强质感的开场段落，不要直白讲道理。画面可以有医疗设备质控工程师、影像设备质控系统和远程维护平台、校准线、质控标签、复核记录、城市三甲医院、设备质控实验室、患者随访中心、真实用户场景这类元素，重点是opening、建立问题、建立真实感，要能服务于医疗科技与数字健康的品牌表达。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "opening",
+          "establish_problem",
+          "build_reality"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于opening段落，开场建立真实世界压力，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target_tags_text": "医疗设备质控工程师 影像设备质控系统和远程维护平台 校准线、质控标签、复核记录 城市三甲医院、设备质控实验室、患者随访中心 真实用户场景 环境细节 medical_technology_and_digital_health 严谨 医疗设备质控工程师与医生、质控工程师、服务工程师、患者随访专员的关系 影像设备质控系统和远程维护平台与医疗判断需要稳定、可追溯、被反复确认的技术支持的关系 世界500强企业能力与真实用户场景 进入现场 观察环境 问题显现 documentary_enterprise_brand_film 医生、质控工程师、服务工程师、患者随访专员 企业与社会责任 专业服务对象",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 0.95
+        }
+      }
+    },
+    {
+      "case_id": "hard_negative__enterprise_healthtech_documentary_002__scene_001",
+      "case_type": "hard_negative",
+      "expected_relation": "should_not_match",
+      "user_input": "画面可以借用医疗设备质控工程师、影像设备质控系统和远程维护平台、校准线、质控标签、复核记录、城市三甲医院、设备质控实验室、患者随访中心这类相似元素，但不要做成开场。我真正要的是铺垫，重点是setup、建立需求、表现压力，不要强调开场气势或问题建立，而要让观众看到后续情节的具体铺垫。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "opening",
+          "establish_problem",
+          "build_reality"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于opening段落，开场建立真实世界压力，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target_tags_text": "医疗设备质控工程师 影像设备质控系统和远程维护平台 校准线、质控标签、复核记录 城市三甲医院、设备质控实验室、患者随访中心 真实用户场景 环境细节 medical_technology_and_digital_health 严谨 医疗设备质控工程师与医生、质控工程师、服务工程师、患者随访专员的关系 影像设备质控系统和远程维护平台与医疗判断需要稳定、可追溯、被反复确认的技术支持的关系 世界500强企业能力与真实用户场景 进入现场 观察环境 问题显现 documentary_enterprise_brand_film 医生、质控工程师、服务工程师、患者随访专员 企业与社会责任 专业服务对象",
+      "expected_prefer": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_002",
+        "retrieval_id": "ret_scene_002",
+        "script_stage": "setup",
+        "creative_purpose": [
+          "setup",
+          "establish_need",
+          "show_pressure"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": false,
+          "score": 0.1
+        }
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_healthtech_documentary_002__scene_002",
+      "case_type": "simple_positive",
+      "expected_relation": "should_match",
+      "user_input": "我需要一个铺垫镜头：适合用于setup段落，进入一线场景，建立具体需求，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_002",
+        "retrieval_id": "ret_scene_002",
+        "script_stage": "setup",
+        "creative_purpose": [
+          "setup",
+          "establish_need",
+          "show_pressure"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于setup段落，进入一线场景，建立具体需求，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target_tags_text": "医疗设备质控工程师 影像设备质控系统和远程维护平台 校准线、质控标签、复核记录 一线人员 等待中的客户或用户 问题线索 medical_technology_and_digital_health 严谨 医疗设备质控工程师与医生、质控工程师、服务工程师、患者随访专员的关系 影像设备质控系统和远程维护平台与医疗判断需要稳定、可追溯、被反复确认的技术支持的关系 世界500强企业能力与真实用户场景 比对信息 等待确认 压力累积 城市三甲医院、设备质控实验室、患者随访中心 documentary_enterprise_brand_film 医生、质控工程师、服务工程师、患者随访专员 企业与社会责任 专业服务对象",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 1.0
+        }
+      }
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_documentary_002__scene_002",
+      "case_type": "hard_positive",
+      "expected_relation": "should_match",
+      "user_input": "想找一个世界500强质感的铺垫段落，不要直白讲道理。画面可以有医疗设备质控工程师、影像设备质控系统和远程维护平台、校准线、质控标签、复核记录、一线人员、等待中的客户或用户这类元素，重点是setup、建立需求、表现压力，要能服务于医疗科技与数字健康的品牌表达。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_002",
+        "retrieval_id": "ret_scene_002",
+        "script_stage": "setup",
+        "creative_purpose": [
+          "setup",
+          "establish_need",
+          "show_pressure"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于setup段落，进入一线场景，建立具体需求，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target_tags_text": "医疗设备质控工程师 影像设备质控系统和远程维护平台 校准线、质控标签、复核记录 一线人员 等待中的客户或用户 问题线索 medical_technology_and_digital_health 严谨 医疗设备质控工程师与医生、质控工程师、服务工程师、患者随访专员的关系 影像设备质控系统和远程维护平台与医疗判断需要稳定、可追溯、被反复确认的技术支持的关系 世界500强企业能力与真实用户场景 比对信息 等待确认 压力累积 城市三甲医院、设备质控实验室、患者随访中心 documentary_enterprise_brand_film 医生、质控工程师、服务工程师、患者随访专员 企业与社会责任 专业服务对象",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 0.95
+        }
+      }
+    },
+    {
+      "case_id": "hard_negative__enterprise_healthtech_documentary_002__scene_002",
+      "case_type": "hard_negative",
+      "expected_relation": "should_not_match",
+      "user_input": "画面可以借用医疗设备质控工程师、影像设备质控系统和远程维护平台、校准线、质控标签、复核记录、一线人员这类相似元素，但不要做成铺垫。我真正要的是开场，重点是opening、建立问题、建立真实感，不要停留在需求铺垫，而要更像一段能直接进入主题的画面。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_002",
+        "retrieval_id": "ret_scene_002",
+        "script_stage": "setup",
+        "creative_purpose": [
+          "setup",
+          "establish_need",
+          "show_pressure"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于setup段落，进入一线场景，建立具体需求，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target_tags_text": "医疗设备质控工程师 影像设备质控系统和远程维护平台 校准线、质控标签、复核记录 一线人员 等待中的客户或用户 问题线索 medical_technology_and_digital_health 严谨 医疗设备质控工程师与医生、质控工程师、服务工程师、患者随访专员的关系 影像设备质控系统和远程维护平台与医疗判断需要稳定、可追溯、被反复确认的技术支持的关系 世界500强企业能力与真实用户场景 比对信息 等待确认 压力累积 城市三甲医院、设备质控实验室、患者随访中心 documentary_enterprise_brand_film 医生、质控工程师、服务工程师、患者随访专员 企业与社会责任 专业服务对象",
+      "expected_prefer": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "opening",
+          "establish_problem",
+          "build_reality"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": false,
+          "score": 0.1
+        }
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_healthtech_documentary_002__scene_003",
+      "case_type": "simple_positive",
+      "expected_relation": "should_match",
+      "user_input": "我需要一个人物出场镜头：适合用于character_intro段落，引入核心人物和专业视角，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_003",
+        "retrieval_id": "ret_scene_003",
+        "script_stage": "character_intro",
+        "creative_purpose": [
+          "character_intro",
+          "introduce_people",
+          "build_empathy"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于character_intro段落，引入核心人物和专业视角，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target_tags_text": "医疗设备质控工程师 影像设备质控系统和远程维护平台 校准线、质控标签、复核记录 工作证件 专业工具 medical_technology_and_digital_health 严谨 医疗设备质控工程师与医生、质控工程师、服务工程师、患者随访专员的关系 影像设备质控系统和远程维护平台与医疗判断需要稳定、可追溯、被反复确认的技术支持的关系 世界500强企业能力与真实用户场景 整理工具 看向现场 做出判断 城市三甲医院、设备质控实验室、患者随访中心 documentary_enterprise_brand_film 医生、质控工程师、服务工程师、患者随访专员 企业与社会责任 专业服务对象",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 0.95
+        }
+      }
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_documentary_002__scene_003",
+      "case_type": "hard_positive",
+      "expected_relation": "should_match",
+      "user_input": "想找一个世界500强质感的人物出场段落，不要直白讲道理。画面可以有医疗设备质控工程师、影像设备质控系统和远程维护平台、校准线、质控标签、复核记录、工作证件、专业工具这类元素，重点是character intro、介绍人物、build empathy，要能服务于医疗科技与数字健康的品牌表达。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_003",
+        "retrieval_id": "ret_scene_003",
+        "script_stage": "character_intro",
+        "creative_purpose": [
+          "character_intro",
+          "introduce_people",
+          "build_empathy"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于character_intro段落，引入核心人物和专业视角，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target_tags_text": "医疗设备质控工程师 影像设备质控系统和远程维护平台 校准线、质控标签、复核记录 工作证件 专业工具 medical_technology_and_digital_health 严谨 医疗设备质控工程师与医生、质控工程师、服务工程师、患者随访专员的关系 影像设备质控系统和远程维护平台与医疗判断需要稳定、可追溯、被反复确认的技术支持的关系 世界500强企业能力与真实用户场景 整理工具 看向现场 做出判断 城市三甲医院、设备质控实验室、患者随访中心 documentary_enterprise_brand_film 医生、质控工程师、服务工程师、患者随访专员 企业与社会责任 专业服务对象",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 0.95
+        }
+      }
+    },
+    {
+      "case_id": "hard_negative__enterprise_healthtech_documentary_002__scene_003",
+      "case_type": "hard_negative",
+      "expected_relation": "should_not_match",
+      "user_input": "画面可以借用医疗设备质控工程师、影像设备质控系统和远程维护平台、校准线、质控标签、复核记录、工作证件这类相似元素，但不要做成人物出场。我真正要的是开场，重点是opening、建立问题、建立真实感，希望它的脚本位置和情绪功能明显不同。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_003",
+        "retrieval_id": "ret_scene_003",
+        "script_stage": "character_intro",
+        "creative_purpose": [
+          "character_intro",
+          "introduce_people",
+          "build_empathy"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于character_intro段落，引入核心人物和专业视角，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target_tags_text": "医疗设备质控工程师 影像设备质控系统和远程维护平台 校准线、质控标签、复核记录 工作证件 专业工具 medical_technology_and_digital_health 严谨 医疗设备质控工程师与医生、质控工程师、服务工程师、患者随访专员的关系 影像设备质控系统和远程维护平台与医疗判断需要稳定、可追溯、被反复确认的技术支持的关系 世界500强企业能力与真实用户场景 整理工具 看向现场 做出判断 城市三甲医院、设备质控实验室、患者随访中心 documentary_enterprise_brand_film 医生、质控工程师、服务工程师、患者随访专员 企业与社会责任 专业服务对象",
+      "expected_prefer": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "opening",
+          "establish_problem",
+          "build_reality"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": false,
+          "score": 0.1
+        }
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_healthtech_documentary_002__scene_004",
+      "case_type": "simple_positive",
+      "expected_relation": "should_match",
+      "user_input": "我需要一个团队协作镜头：适合用于team_work段落，展现跨职能团队如何协作，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_004",
+        "retrieval_id": "ret_scene_004",
+        "script_stage": "team_work",
+        "creative_purpose": [
+          "team_work",
+          "show_team",
+          "show_collaboration"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于team_work段落，展现跨职能团队如何协作，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target_tags_text": "医疗设备质控工程师 影像设备质控系统和远程维护平台 校准线、质控标签、复核记录 医生 质控工程师 服务工程师 患者随访专员 medical_technology_and_digital_health 严谨 医疗设备质控工程师与医生、质控工程师、服务工程师、患者随访专员的关系 影像设备质控系统和远程维护平台与医疗判断需要稳定、可追溯、被反复确认的技术支持的关系 世界500强企业能力与真实用户场景 围绕问题讨论 标注风险点 分配下一步 城市三甲医院、设备质控实验室、患者随访中心 documentary_enterprise_brand_film 医生、质控工程师、服务工程师、患者随访专员 企业与社会责任 专业服务对象",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 1.0
+        }
+      }
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_documentary_002__scene_004",
+      "case_type": "hard_positive",
+      "expected_relation": "should_match",
+      "user_input": "想找一个世界500强质感的团队协作段落，不要直白讲道理。画面可以有医疗设备质控工程师、影像设备质控系统和远程维护平台、校准线、质控标签、复核记录、医生、质控工程师这类元素，重点是team work、表现团队、表现协作，要能服务于医疗科技与数字健康的品牌表达。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_004",
+        "retrieval_id": "ret_scene_004",
+        "script_stage": "team_work",
+        "creative_purpose": [
+          "team_work",
+          "show_team",
+          "show_collaboration"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于team_work段落，展现跨职能团队如何协作，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target_tags_text": "医疗设备质控工程师 影像设备质控系统和远程维护平台 校准线、质控标签、复核记录 医生 质控工程师 服务工程师 患者随访专员 medical_technology_and_digital_health 严谨 医疗设备质控工程师与医生、质控工程师、服务工程师、患者随访专员的关系 影像设备质控系统和远程维护平台与医疗判断需要稳定、可追溯、被反复确认的技术支持的关系 世界500强企业能力与真实用户场景 围绕问题讨论 标注风险点 分配下一步 城市三甲医院、设备质控实验室、患者随访中心 documentary_enterprise_brand_film 医生、质控工程师、服务工程师、患者随访专员 企业与社会责任 专业服务对象",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 0.95
+        }
+      }
+    },
+    {
+      "case_id": "hard_negative__enterprise_healthtech_documentary_002__scene_004",
+      "case_type": "hard_negative",
+      "expected_relation": "should_not_match",
+      "user_input": "画面可以借用医疗设备质控工程师、影像设备质控系统和远程维护平台、校准线、质控标签、复核记录、医生这类相似元素，但不要做成团队协作。我真正要的是开场，重点是opening、建立问题、建立真实感，不要拍成团队协作或会议共创，而要突出另一个明确的叙事功能。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_004",
+        "retrieval_id": "ret_scene_004",
+        "script_stage": "team_work",
+        "creative_purpose": [
+          "team_work",
+          "show_team",
+          "show_collaboration"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于team_work段落，展现跨职能团队如何协作，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target_tags_text": "医疗设备质控工程师 影像设备质控系统和远程维护平台 校准线、质控标签、复核记录 医生 质控工程师 服务工程师 患者随访专员 medical_technology_and_digital_health 严谨 医疗设备质控工程师与医生、质控工程师、服务工程师、患者随访专员的关系 影像设备质控系统和远程维护平台与医疗判断需要稳定、可追溯、被反复确认的技术支持的关系 世界500强企业能力与真实用户场景 围绕问题讨论 标注风险点 分配下一步 城市三甲医院、设备质控实验室、患者随访中心 documentary_enterprise_brand_film 医生、质控工程师、服务工程师、患者随访专员 企业与社会责任 专业服务对象",
+      "expected_prefer": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "opening",
+          "establish_problem",
+          "build_reality"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": false,
+          "score": 0.1
+        }
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_healthtech_documentary_002__scene_005",
+      "case_type": "simple_positive",
+      "expected_relation": "should_match",
+      "user_input": "我需要一个技术展示镜头：适合用于technology_showcase段落，让技术或系统能力自然入场，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_005",
+        "retrieval_id": "ret_scene_005",
+        "script_stage": "technology_showcase",
+        "creative_purpose": [
+          "technology_showcase",
+          "show_technology",
+          "prove_capability"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于technology_showcase段落，让技术或系统能力自然入场，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target_tags_text": "医疗设备质控工程师 影像设备质控系统和远程维护平台 校准线、质控标签、复核记录 操作界面 确认提示 medical_technology_and_digital_health 严谨 医疗设备质控工程师与医生、质控工程师、服务工程师、患者随访专员的关系 影像设备质控系统和远程维护平台与医疗判断需要稳定、可追溯、被反复确认的技术支持的关系 世界500强企业能力与真实用户场景 打开系统 验证数据 确认流程 城市三甲医院、设备质控实验室、患者随访中心 documentary_enterprise_brand_film 医生、质控工程师、服务工程师、患者随访专员 企业与社会责任 专业服务对象",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 1.0
+        }
+      }
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_documentary_002__scene_005",
+      "case_type": "hard_positive",
+      "expected_relation": "should_match",
+      "user_input": "想找一个世界500强质感的技术展示段落，不要直白讲道理。画面可以有医疗设备质控工程师、影像设备质控系统和远程维护平台、校准线、质控标签、复核记录、操作界面、确认提示这类元素，重点是technology showcase、表现技术能力、证明能力，要能服务于医疗科技与数字健康的品牌表达。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_005",
+        "retrieval_id": "ret_scene_005",
+        "script_stage": "technology_showcase",
+        "creative_purpose": [
+          "technology_showcase",
+          "show_technology",
+          "prove_capability"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于technology_showcase段落，让技术或系统能力自然入场，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target_tags_text": "医疗设备质控工程师 影像设备质控系统和远程维护平台 校准线、质控标签、复核记录 操作界面 确认提示 medical_technology_and_digital_health 严谨 医疗设备质控工程师与医生、质控工程师、服务工程师、患者随访专员的关系 影像设备质控系统和远程维护平台与医疗判断需要稳定、可追溯、被反复确认的技术支持的关系 世界500强企业能力与真实用户场景 打开系统 验证数据 确认流程 城市三甲医院、设备质控实验室、患者随访中心 documentary_enterprise_brand_film 医生、质控工程师、服务工程师、患者随访专员 企业与社会责任 专业服务对象",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 0.95
+        }
+      }
+    },
+    {
+      "case_id": "hard_negative__enterprise_healthtech_documentary_002__scene_005",
+      "case_type": "hard_negative",
+      "expected_relation": "should_not_match",
+      "user_input": "画面可以借用医疗设备质控工程师、影像设备质控系统和远程维护平台、校准线、质控标签、复核记录、操作界面这类相似元素，但不要做成技术展示。我真正要的是开场，重点是opening、建立问题、建立真实感，不要像技术展示或功能说明，而要让画面承担别的叙事任务。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_005",
+        "retrieval_id": "ret_scene_005",
+        "script_stage": "technology_showcase",
+        "creative_purpose": [
+          "technology_showcase",
+          "show_technology",
+          "prove_capability"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于technology_showcase段落，让技术或系统能力自然入场，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target_tags_text": "医疗设备质控工程师 影像设备质控系统和远程维护平台 校准线、质控标签、复核记录 操作界面 确认提示 medical_technology_and_digital_health 严谨 医疗设备质控工程师与医生、质控工程师、服务工程师、患者随访专员的关系 影像设备质控系统和远程维护平台与医疗判断需要稳定、可追溯、被反复确认的技术支持的关系 世界500强企业能力与真实用户场景 打开系统 验证数据 确认流程 城市三甲医院、设备质控实验室、患者随访中心 documentary_enterprise_brand_film 医生、质控工程师、服务工程师、患者随访专员 企业与社会责任 专业服务对象",
+      "expected_prefer": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "opening",
+          "establish_problem",
+          "build_reality"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": false,
+          "score": 0.1
+        }
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_healthtech_documentary_002__scene_006",
+      "case_type": "simple_positive",
+      "expected_relation": "should_match",
+      "user_input": "我需要一个规模揭示镜头：适合用于scale_reveal段落，揭示世界级规模和网络能力，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_006",
+        "retrieval_id": "ret_scene_006",
+        "script_stage": "scale_reveal",
+        "creative_purpose": [
+          "scale_reveal",
+          "show_scale",
+          "show_network"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于scale_reveal段落，揭示世界级规模和网络能力，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target_tags_text": "医疗设备质控工程师 影像设备质控系统和远程维护平台 校准线、质控标签、复核记录 全球地图 多地团队 数据看板 medical_technology_and_digital_health 严谨 医疗设备质控工程师与医生、质控工程师、服务工程师、患者随访专员的关系 影像设备质控系统和远程维护平台与医疗判断需要稳定、可追溯、被反复确认的技术支持的关系 世界500强企业能力与真实用户场景 多地连线 同步信息 网络展开 城市三甲医院、设备质控实验室、患者随访中心 documentary_enterprise_brand_film 医生、质控工程师、服务工程师、患者随访专员 企业与社会责任 专业服务对象",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 1.0
+        }
+      }
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_documentary_002__scene_006",
+      "case_type": "hard_positive",
+      "expected_relation": "should_match",
+      "user_input": "想找一个世界500强质感的规模揭示段落，不要直白讲道理。画面可以有医疗设备质控工程师、影像设备质控系统和远程维护平台、校准线、质控标签、复核记录、全球地图、多地团队这类元素，重点是scale reveal、表现规模、表现网络能力，要能服务于医疗科技与数字健康的品牌表达。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_006",
+        "retrieval_id": "ret_scene_006",
+        "script_stage": "scale_reveal",
+        "creative_purpose": [
+          "scale_reveal",
+          "show_scale",
+          "show_network"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于scale_reveal段落，揭示世界级规模和网络能力，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target_tags_text": "医疗设备质控工程师 影像设备质控系统和远程维护平台 校准线、质控标签、复核记录 全球地图 多地团队 数据看板 medical_technology_and_digital_health 严谨 医疗设备质控工程师与医生、质控工程师、服务工程师、患者随访专员的关系 影像设备质控系统和远程维护平台与医疗判断需要稳定、可追溯、被反复确认的技术支持的关系 世界500强企业能力与真实用户场景 多地连线 同步信息 网络展开 城市三甲医院、设备质控实验室、患者随访中心 documentary_enterprise_brand_film 医生、质控工程师、服务工程师、患者随访专员 企业与社会责任 专业服务对象",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 0.95
+        }
+      }
+    },
+    {
+      "case_id": "hard_negative__enterprise_healthtech_documentary_002__scene_006",
+      "case_type": "hard_negative",
+      "expected_relation": "should_not_match",
+      "user_input": "画面可以借用医疗设备质控工程师、影像设备质控系统和远程维护平台、校准线、质控标签、复核记录、全球地图这类相似元素，但不要做成规模揭示。我真正要的是开场，重点是opening、建立问题、建立真实感，希望它的脚本位置和情绪功能明显不同。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_006",
+        "retrieval_id": "ret_scene_006",
+        "script_stage": "scale_reveal",
+        "creative_purpose": [
+          "scale_reveal",
+          "show_scale",
+          "show_network"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于scale_reveal段落，揭示世界级规模和网络能力，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target_tags_text": "医疗设备质控工程师 影像设备质控系统和远程维护平台 校准线、质控标签、复核记录 全球地图 多地团队 数据看板 medical_technology_and_digital_health 严谨 医疗设备质控工程师与医生、质控工程师、服务工程师、患者随访专员的关系 影像设备质控系统和远程维护平台与医疗判断需要稳定、可追溯、被反复确认的技术支持的关系 世界500强企业能力与真实用户场景 多地连线 同步信息 网络展开 城市三甲医院、设备质控实验室、患者随访中心 documentary_enterprise_brand_film 医生、质控工程师、服务工程师、患者随访专员 企业与社会责任 专业服务对象",
+      "expected_prefer": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "opening",
+          "establish_problem",
+          "build_reality"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": false,
+          "score": 0.1
+        }
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_healthtech_documentary_002__scene_007",
+      "case_type": "simple_positive",
+      "expected_relation": "should_match",
+      "user_input": "我需要一个价值表达镜头：适合用于value_expression段落，通过具体互动建立信任和价值，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_007",
+        "retrieval_id": "ret_scene_007",
+        "script_stage": "value_expression",
+        "creative_purpose": [
+          "value_expression",
+          "build_trust",
+          "show_responsibility"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于value_expression段落，通过具体互动建立信任和价值，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target_tags_text": "医疗设备质控工程师 影像设备质控系统和远程维护平台 校准线、质控标签、复核记录 面对面沟通 记录动作 确认反馈 medical_technology_and_digital_health 严谨 医疗设备质控工程师与医生、质控工程师、服务工程师、患者随访专员的关系 影像设备质控系统和远程维护平台与医疗判断需要稳定、可追溯、被反复确认的技术支持的关系 世界500强企业能力与真实用户场景 面对面解释 认真记录 确认承诺 城市三甲医院、设备质控实验室、患者随访中心 documentary_enterprise_brand_film 医生、质控工程师、服务工程师、患者随访专员 企业与社会责任 专业服务对象",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 0.95
+        }
+      }
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_documentary_002__scene_007",
+      "case_type": "hard_positive",
+      "expected_relation": "should_match",
+      "user_input": "想找一个世界500强质感的价值表达段落，不要直白讲道理。画面可以有医疗设备质控工程师、影像设备质控系统和远程维护平台、校准线、质控标签、复核记录、面对面沟通、记录动作这类元素，重点是value expression、建立信任、show responsibility，要能服务于医疗科技与数字健康的品牌表达。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_007",
+        "retrieval_id": "ret_scene_007",
+        "script_stage": "value_expression",
+        "creative_purpose": [
+          "value_expression",
+          "build_trust",
+          "show_responsibility"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于value_expression段落，通过具体互动建立信任和价值，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target_tags_text": "医疗设备质控工程师 影像设备质控系统和远程维护平台 校准线、质控标签、复核记录 面对面沟通 记录动作 确认反馈 medical_technology_and_digital_health 严谨 医疗设备质控工程师与医生、质控工程师、服务工程师、患者随访专员的关系 影像设备质控系统和远程维护平台与医疗判断需要稳定、可追溯、被反复确认的技术支持的关系 世界500强企业能力与真实用户场景 面对面解释 认真记录 确认承诺 城市三甲医院、设备质控实验室、患者随访中心 documentary_enterprise_brand_film 医生、质控工程师、服务工程师、患者随访专员 企业与社会责任 专业服务对象",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 0.95
+        }
+      }
+    },
+    {
+      "case_id": "hard_negative__enterprise_healthtech_documentary_002__scene_007",
+      "case_type": "hard_negative",
+      "expected_relation": "should_not_match",
+      "user_input": "画面可以借用医疗设备质控工程师、影像设备质控系统和远程维护平台、校准线、质控标签、复核记录、面对面沟通这类相似元素，但不要做成价值表达。我真正要的是开场，重点是opening、建立问题、建立真实感，不要靠价值表达或信任感收束，而要服务于另一个更具体的段落目标。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_007",
+        "retrieval_id": "ret_scene_007",
+        "script_stage": "value_expression",
+        "creative_purpose": [
+          "value_expression",
+          "build_trust",
+          "show_responsibility"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于value_expression段落，通过具体互动建立信任和价值，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target_tags_text": "医疗设备质控工程师 影像设备质控系统和远程维护平台 校准线、质控标签、复核记录 面对面沟通 记录动作 确认反馈 medical_technology_and_digital_health 严谨 医疗设备质控工程师与医生、质控工程师、服务工程师、患者随访专员的关系 影像设备质控系统和远程维护平台与医疗判断需要稳定、可追溯、被反复确认的技术支持的关系 世界500强企业能力与真实用户场景 面对面解释 认真记录 确认承诺 城市三甲医院、设备质控实验室、患者随访中心 documentary_enterprise_brand_film 医生、质控工程师、服务工程师、患者随访专员 企业与社会责任 专业服务对象",
+      "expected_prefer": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "opening",
+          "establish_problem",
+          "build_reality"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": false,
+          "score": 0.1
+        }
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_healthtech_documentary_002__scene_008",
+      "case_type": "simple_positive",
+      "expected_relation": "should_match",
+      "user_input": "我需要一个结果落地镜头：适合用于outcome段落，呈现结果落地但避免夸大，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_008",
+        "retrieval_id": "ret_scene_008",
+        "script_stage": "outcome",
+        "creative_purpose": [
+          "outcome",
+          "show_outcome",
+          "land_value"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于outcome段落，呈现结果落地但避免夸大，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target_tags_text": "医疗设备质控工程师 影像设备质控系统和远程维护平台 校准线、质控标签、复核记录 服务对象 结果记录 稳定表情 medical_technology_and_digital_health 严谨 医疗设备质控工程师与医生、质控工程师、服务工程师、患者随访专员的关系 影像设备质控系统和远程维护平台与医疗判断需要稳定、可追溯、被反复确认的技术支持的关系 世界500强企业能力与真实用户场景 方案落地 用户点头 情绪稳定 城市三甲医院、设备质控实验室、患者随访中心 documentary_enterprise_brand_film 医生、质控工程师、服务工程师、患者随访专员 企业与社会责任 专业服务对象",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 0.95
+        }
+      }
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_documentary_002__scene_008",
+      "case_type": "hard_positive",
+      "expected_relation": "should_match",
+      "user_input": "想找一个世界500强质感的结果落地段落，不要直白讲道理。画面可以有医疗设备质控工程师、影像设备质控系统和远程维护平台、校准线、质控标签、复核记录、服务对象、结果记录这类元素，重点是outcome、表现结果、让价值落地，要能服务于医疗科技与数字健康的品牌表达。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_008",
+        "retrieval_id": "ret_scene_008",
+        "script_stage": "outcome",
+        "creative_purpose": [
+          "outcome",
+          "show_outcome",
+          "land_value"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于outcome段落，呈现结果落地但避免夸大，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target_tags_text": "医疗设备质控工程师 影像设备质控系统和远程维护平台 校准线、质控标签、复核记录 服务对象 结果记录 稳定表情 medical_technology_and_digital_health 严谨 医疗设备质控工程师与医生、质控工程师、服务工程师、患者随访专员的关系 影像设备质控系统和远程维护平台与医疗判断需要稳定、可追溯、被反复确认的技术支持的关系 世界500强企业能力与真实用户场景 方案落地 用户点头 情绪稳定 城市三甲医院、设备质控实验室、患者随访中心 documentary_enterprise_brand_film 医生、质控工程师、服务工程师、患者随访专员 企业与社会责任 专业服务对象",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 0.95
+        }
+      }
+    },
+    {
+      "case_id": "hard_negative__enterprise_healthtech_documentary_002__scene_008",
+      "case_type": "hard_negative",
+      "expected_relation": "should_not_match",
+      "user_input": "画面可以借用医疗设备质控工程师、影像设备质控系统和远程维护平台、校准线、质控标签、复核记录、服务对象这类相似元素，但不要做成结果落地。我真正要的是开场，重点是opening、建立问题、建立真实感，希望它的脚本位置和情绪功能明显不同。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_008",
+        "retrieval_id": "ret_scene_008",
+        "script_stage": "outcome",
+        "creative_purpose": [
+          "outcome",
+          "show_outcome",
+          "land_value"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于outcome段落，呈现结果落地但避免夸大，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target_tags_text": "医疗设备质控工程师 影像设备质控系统和远程维护平台 校准线、质控标签、复核记录 服务对象 结果记录 稳定表情 medical_technology_and_digital_health 严谨 医疗设备质控工程师与医生、质控工程师、服务工程师、患者随访专员的关系 影像设备质控系统和远程维护平台与医疗判断需要稳定、可追溯、被反复确认的技术支持的关系 世界500强企业能力与真实用户场景 方案落地 用户点头 情绪稳定 城市三甲医院、设备质控实验室、患者随访中心 documentary_enterprise_brand_film 医生、质控工程师、服务工程师、患者随访专员 企业与社会责任 专业服务对象",
+      "expected_prefer": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "opening",
+          "establish_problem",
+          "build_reality"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": false,
+          "score": 0.1
+        }
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_healthtech_documentary_002__scene_009",
+      "case_type": "simple_positive",
+      "expected_relation": "should_match",
+      "user_input": "我需要一个成长升温镜头：适合用于growth段落，表现员工、客户或系统的成长，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_009",
+        "retrieval_id": "ret_scene_009",
+        "script_stage": "growth",
+        "creative_purpose": [
+          "growth",
+          "show_growth",
+          "show_long_termism"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于growth段落，表现员工、客户或系统的成长，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target_tags_text": "医疗设备质控工程师 影像设备质控系统和远程维护平台 校准线、质控标签、复核记录 年轻员工 反馈信息 版本记录 medical_technology_and_digital_health 严谨 医疗设备质控工程师与医生、质控工程师、服务工程师、患者随访专员的关系 影像设备质控系统和远程维护平台与医疗判断需要稳定、可追溯、被反复确认的技术支持的关系 世界500强企业能力与真实用户场景 接收反馈 复盘问题 继续改进 城市三甲医院、设备质控实验室、患者随访中心 documentary_enterprise_brand_film 医生、质控工程师、服务工程师、患者随访专员 企业与社会责任 专业服务对象",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 1.0
+        }
+      }
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_documentary_002__scene_009",
+      "case_type": "hard_positive",
+      "expected_relation": "should_match",
+      "user_input": "想找一个世界500强质感的成长升温段落，不要直白讲道理。画面可以有医疗设备质控工程师、影像设备质控系统和远程维护平台、校准线、质控标签、复核记录、年轻员工、反馈信息这类元素，重点是growth、表现成长、表现长期主义，要能服务于医疗科技与数字健康的品牌表达。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_009",
+        "retrieval_id": "ret_scene_009",
+        "script_stage": "growth",
+        "creative_purpose": [
+          "growth",
+          "show_growth",
+          "show_long_termism"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于growth段落，表现员工、客户或系统的成长，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target_tags_text": "医疗设备质控工程师 影像设备质控系统和远程维护平台 校准线、质控标签、复核记录 年轻员工 反馈信息 版本记录 medical_technology_and_digital_health 严谨 医疗设备质控工程师与医生、质控工程师、服务工程师、患者随访专员的关系 影像设备质控系统和远程维护平台与医疗判断需要稳定、可追溯、被反复确认的技术支持的关系 世界500强企业能力与真实用户场景 接收反馈 复盘问题 继续改进 城市三甲医院、设备质控实验室、患者随访中心 documentary_enterprise_brand_film 医生、质控工程师、服务工程师、患者随访专员 企业与社会责任 专业服务对象",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 0.95
+        }
+      }
+    },
+    {
+      "case_id": "hard_negative__enterprise_healthtech_documentary_002__scene_009",
+      "case_type": "hard_negative",
+      "expected_relation": "should_not_match",
+      "user_input": "画面可以借用医疗设备质控工程师、影像设备质控系统和远程维护平台、校准线、质控标签、复核记录、年轻员工这类相似元素，但不要做成成长升温。我真正要的是开场，重点是opening、建立问题、建立真实感，希望它的脚本位置和情绪功能明显不同。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_009",
+        "retrieval_id": "ret_scene_009",
+        "script_stage": "growth",
+        "creative_purpose": [
+          "growth",
+          "show_growth",
+          "show_long_termism"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于growth段落，表现员工、客户或系统的成长，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target_tags_text": "医疗设备质控工程师 影像设备质控系统和远程维护平台 校准线、质控标签、复核记录 年轻员工 反馈信息 版本记录 medical_technology_and_digital_health 严谨 医疗设备质控工程师与医生、质控工程师、服务工程师、患者随访专员的关系 影像设备质控系统和远程维护平台与医疗判断需要稳定、可追溯、被反复确认的技术支持的关系 世界500强企业能力与真实用户场景 接收反馈 复盘问题 继续改进 城市三甲医院、设备质控实验室、患者随访中心 documentary_enterprise_brand_film 医生、质控工程师、服务工程师、患者随访专员 企业与社会责任 专业服务对象",
+      "expected_prefer": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "opening",
+          "establish_problem",
+          "build_reality"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": false,
+          "score": 0.1
+        }
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_healthtech_documentary_002__scene_010",
+      "case_type": "simple_positive",
+      "expected_relation": "should_match",
+      "user_input": "我需要一个结尾收束镜头：适合用于ending段落，收束主题并完成品牌表达，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_010",
+        "retrieval_id": "ret_scene_010",
+        "script_stage": "ending",
+        "creative_purpose": [
+          "ending",
+          "close_loop",
+          "express_value"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于ending段落，收束主题并完成品牌表达，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target_tags_text": "医疗设备质控工程师 影像设备质控系统和远程维护平台 校准线、质控标签、复核记录 品牌字幕 回到开场地点 medical_technology_and_digital_health 严谨 医疗设备质控工程师与医生、质控工程师、服务工程师、患者随访专员的关系 影像设备质控系统和远程维护平台与医疗判断需要稳定、可追溯、被反复确认的技术支持的关系 世界500强企业能力与真实用户场景 回到起点 主题字幕出现 音乐收束 城市三甲医院、设备质控实验室、患者随访中心 documentary_enterprise_brand_film 医生、质控工程师、服务工程师、患者随访专员 企业与社会责任 专业服务对象",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 1.0
+        }
+      }
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_documentary_002__scene_010",
+      "case_type": "hard_positive",
+      "expected_relation": "should_match",
+      "user_input": "想找一个世界500强质感的结尾收束段落，不要直白讲道理。画面可以有医疗设备质控工程师、影像设备质控系统和远程维护平台、校准线、质控标签、复核记录、品牌字幕、回到开场地点这类元素，重点是ending、完成首尾闭环、表达品牌价值，要能服务于医疗科技与数字健康的品牌表达。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_010",
+        "retrieval_id": "ret_scene_010",
+        "script_stage": "ending",
+        "creative_purpose": [
+          "ending",
+          "close_loop",
+          "express_value"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于ending段落，收束主题并完成品牌表达，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target_tags_text": "医疗设备质控工程师 影像设备质控系统和远程维护平台 校准线、质控标签、复核记录 品牌字幕 回到开场地点 medical_technology_and_digital_health 严谨 医疗设备质控工程师与医生、质控工程师、服务工程师、患者随访专员的关系 影像设备质控系统和远程维护平台与医疗判断需要稳定、可追溯、被反复确认的技术支持的关系 世界500强企业能力与真实用户场景 回到起点 主题字幕出现 音乐收束 城市三甲医院、设备质控实验室、患者随访中心 documentary_enterprise_brand_film 医生、质控工程师、服务工程师、患者随访专员 企业与社会责任 专业服务对象",
+      "expected_prefer": null,
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": true,
+          "score": 0.95
+        }
+      }
+    },
+    {
+      "case_id": "hard_negative__enterprise_healthtech_documentary_002__scene_010",
+      "case_type": "hard_negative",
+      "expected_relation": "should_not_match",
+      "user_input": "画面可以借用医疗设备质控工程师、影像设备质控系统和远程维护平台、校准线、质控标签、复核记录、品牌字幕这类相似元素，但不要做成结尾收束。我真正要的是开场，重点是opening、建立问题、建立真实感，希望它的脚本位置和情绪功能明显不同。",
+      "target": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_010",
+        "retrieval_id": "ret_scene_010",
+        "script_stage": "ending",
+        "creative_purpose": [
+          "ending",
+          "close_loop",
+          "express_value"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于ending段落，收束主题并完成品牌表达，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。",
+      "target_tags_text": "医疗设备质控工程师 影像设备质控系统和远程维护平台 校准线、质控标签、复核记录 品牌字幕 回到开场地点 medical_technology_and_digital_health 严谨 医疗设备质控工程师与医生、质控工程师、服务工程师、患者随访专员的关系 影像设备质控系统和远程维护平台与医疗判断需要稳定、可追溯、被反复确认的技术支持的关系 世界500强企业能力与真实用户场景 回到起点 主题字幕出现 音乐收束 城市三甲医院、设备质控实验室、患者随访中心 documentary_enterprise_brand_film 医生、质控工程师、服务工程师、患者随访专员 企业与社会责任 专业服务对象",
+      "expected_prefer": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "opening",
+          "establish_problem",
+          "build_reality"
+        ],
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "comparisons": {
+        "llm_judge_lite": {
+          "method": "llm_judge",
+          "mode": "lite",
+          "fits": false,
+          "score": 0.1
+        }
+      }
+    }
+  ]
+}

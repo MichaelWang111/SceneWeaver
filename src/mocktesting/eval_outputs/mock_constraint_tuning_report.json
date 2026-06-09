@@ -1,0 +1,3897 @@
+{
+  "method": "mock_constraint_tuning",
+  "limit": 60,
+  "top_k": 10,
+  "candidate_count": 80,
+  "profile_output": "D:\\WorkSpace\\Codex\\SceneWeaver\\src\\mocktesting\\eval_outputs\\mock_constraint_profile.json",
+  "best": {
+    "weights": {
+      "desired_stage_bonus": 0.06,
+      "forbidden_stage_penalty": 0.1,
+      "negative_constraint_penalty": 0.0
+    },
+    "selection_score": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "metrics": {
+      "overall": {
+        "count": 60,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_10": 1.0,
+        "mrr": 1.0,
+        "hard_negative_expected_prefer_margin_positive_rate": 1.0
+      },
+      "by_case_type": {
+        "simple_positive": {
+          "count": 20,
+          "recall_at_1": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 1.0,
+          "hard_negative_expected_prefer_margin_positive_rate": 0.0
+        },
+        "hard_positive": {
+          "count": 20,
+          "recall_at_1": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 1.0,
+          "hard_negative_expected_prefer_margin_positive_rate": 0.0
+        },
+        "hard_negative": {
+          "count": 20,
+          "recall_at_1": 0.0,
+          "recall_at_3": 0.0,
+          "recall_at_10": 0.0,
+          "mrr": 0.0,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        }
+      }
+    }
+  },
+  "candidates": [
+    {
+      "weights": {
+        "desired_stage_bonus": 0.06,
+        "forbidden_stage_penalty": 0.1,
+        "negative_constraint_penalty": 0.0
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 1.0,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.06,
+        "forbidden_stage_penalty": 0.1,
+        "negative_constraint_penalty": 0.05
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.975,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 0.9875,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.95,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 0.975,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.06,
+        "forbidden_stage_penalty": 0.1,
+        "negative_constraint_penalty": 0.08
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.925,
+          "recall_at_10": 0.975,
+          "mrr": 0.894701,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.85,
+            "recall_at_10": 0.95,
+            "mrr": 0.789402,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.85
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.06,
+        "forbidden_stage_penalty": 0.1,
+        "negative_constraint_penalty": 0.12
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.85,
+          "recall_at_10": 0.875,
+          "mrr": 0.862131,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.7,
+            "recall_at_10": 0.75,
+            "mrr": 0.724263,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.7
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.06,
+        "forbidden_stage_penalty": 0.15,
+        "negative_constraint_penalty": 0.0
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 1.0,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.06,
+        "forbidden_stage_penalty": 0.15,
+        "negative_constraint_penalty": 0.05
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.975,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 0.9875,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.95,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 0.975,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.06,
+        "forbidden_stage_penalty": 0.15,
+        "negative_constraint_penalty": 0.08
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.925,
+          "recall_at_10": 0.975,
+          "mrr": 0.894701,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.85,
+            "recall_at_10": 0.95,
+            "mrr": 0.789402,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.85
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.06,
+        "forbidden_stage_penalty": 0.15,
+        "negative_constraint_penalty": 0.12
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.85,
+          "recall_at_10": 0.875,
+          "mrr": 0.862131,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.7,
+            "recall_at_10": 0.75,
+            "mrr": 0.724263,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.7
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.06,
+        "forbidden_stage_penalty": 0.18,
+        "negative_constraint_penalty": 0.0
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 1.0,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.06,
+        "forbidden_stage_penalty": 0.18,
+        "negative_constraint_penalty": 0.05
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.975,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 0.9875,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.95,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 0.975,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.06,
+        "forbidden_stage_penalty": 0.18,
+        "negative_constraint_penalty": 0.08
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.925,
+          "recall_at_10": 0.975,
+          "mrr": 0.894701,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.85,
+            "recall_at_10": 0.95,
+            "mrr": 0.789402,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.85
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.06,
+        "forbidden_stage_penalty": 0.18,
+        "negative_constraint_penalty": 0.12
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.85,
+          "recall_at_10": 0.875,
+          "mrr": 0.862131,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.7,
+            "recall_at_10": 0.75,
+            "mrr": 0.724263,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.7
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.06,
+        "forbidden_stage_penalty": 0.22,
+        "negative_constraint_penalty": 0.0
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 1.0,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.06,
+        "forbidden_stage_penalty": 0.22,
+        "negative_constraint_penalty": 0.05
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.975,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 0.9875,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.95,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 0.975,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.06,
+        "forbidden_stage_penalty": 0.22,
+        "negative_constraint_penalty": 0.08
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.925,
+          "recall_at_10": 0.975,
+          "mrr": 0.894701,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.85,
+            "recall_at_10": 0.95,
+            "mrr": 0.789402,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.85
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.06,
+        "forbidden_stage_penalty": 0.22,
+        "negative_constraint_penalty": 0.12
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.85,
+          "recall_at_10": 0.875,
+          "mrr": 0.862131,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.7,
+            "recall_at_10": 0.75,
+            "mrr": 0.724263,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.7
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.06,
+        "forbidden_stage_penalty": 0.28,
+        "negative_constraint_penalty": 0.0
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 1.0,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.06,
+        "forbidden_stage_penalty": 0.28,
+        "negative_constraint_penalty": 0.05
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.975,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 0.9875,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.95,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 0.975,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.06,
+        "forbidden_stage_penalty": 0.28,
+        "negative_constraint_penalty": 0.08
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.925,
+          "recall_at_10": 0.975,
+          "mrr": 0.894701,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.85,
+            "recall_at_10": 0.95,
+            "mrr": 0.789402,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.85
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.06,
+        "forbidden_stage_penalty": 0.28,
+        "negative_constraint_penalty": 0.12
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.85,
+          "recall_at_10": 0.875,
+          "mrr": 0.862131,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.7,
+            "recall_at_10": 0.75,
+            "mrr": 0.724263,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.7
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.1,
+        "forbidden_stage_penalty": 0.1,
+        "negative_constraint_penalty": 0.0
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 1.0,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.1,
+        "forbidden_stage_penalty": 0.1,
+        "negative_constraint_penalty": 0.05
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.975,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 0.9875,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.95,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 0.975,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.1,
+        "forbidden_stage_penalty": 0.1,
+        "negative_constraint_penalty": 0.08
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.925,
+          "recall_at_10": 0.975,
+          "mrr": 0.894701,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.85,
+            "recall_at_10": 0.95,
+            "mrr": 0.789402,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.85
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.1,
+        "forbidden_stage_penalty": 0.1,
+        "negative_constraint_penalty": 0.12
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.85,
+          "recall_at_10": 0.875,
+          "mrr": 0.862131,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.7,
+            "recall_at_10": 0.75,
+            "mrr": 0.724263,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.7
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.1,
+        "forbidden_stage_penalty": 0.15,
+        "negative_constraint_penalty": 0.0
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 1.0,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.1,
+        "forbidden_stage_penalty": 0.15,
+        "negative_constraint_penalty": 0.05
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.975,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 0.9875,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.95,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 0.975,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.1,
+        "forbidden_stage_penalty": 0.15,
+        "negative_constraint_penalty": 0.08
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.925,
+          "recall_at_10": 0.975,
+          "mrr": 0.894701,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.85,
+            "recall_at_10": 0.95,
+            "mrr": 0.789402,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.85
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.1,
+        "forbidden_stage_penalty": 0.15,
+        "negative_constraint_penalty": 0.12
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.85,
+          "recall_at_10": 0.875,
+          "mrr": 0.862131,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.7,
+            "recall_at_10": 0.75,
+            "mrr": 0.724263,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.7
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.1,
+        "forbidden_stage_penalty": 0.18,
+        "negative_constraint_penalty": 0.0
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 1.0,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.1,
+        "forbidden_stage_penalty": 0.18,
+        "negative_constraint_penalty": 0.05
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.975,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 0.9875,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.95,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 0.975,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.1,
+        "forbidden_stage_penalty": 0.18,
+        "negative_constraint_penalty": 0.08
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.925,
+          "recall_at_10": 0.975,
+          "mrr": 0.894701,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.85,
+            "recall_at_10": 0.95,
+            "mrr": 0.789402,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.85
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.1,
+        "forbidden_stage_penalty": 0.18,
+        "negative_constraint_penalty": 0.12
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.85,
+          "recall_at_10": 0.875,
+          "mrr": 0.862131,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.7,
+            "recall_at_10": 0.75,
+            "mrr": 0.724263,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.7
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.1,
+        "forbidden_stage_penalty": 0.22,
+        "negative_constraint_penalty": 0.0
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 1.0,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.1,
+        "forbidden_stage_penalty": 0.22,
+        "negative_constraint_penalty": 0.05
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.975,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 0.9875,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.95,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 0.975,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.1,
+        "forbidden_stage_penalty": 0.22,
+        "negative_constraint_penalty": 0.08
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.925,
+          "recall_at_10": 0.975,
+          "mrr": 0.894701,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.85,
+            "recall_at_10": 0.95,
+            "mrr": 0.789402,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.85
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.1,
+        "forbidden_stage_penalty": 0.22,
+        "negative_constraint_penalty": 0.12
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.85,
+          "recall_at_10": 0.875,
+          "mrr": 0.862131,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.7,
+            "recall_at_10": 0.75,
+            "mrr": 0.724263,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.7
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.1,
+        "forbidden_stage_penalty": 0.28,
+        "negative_constraint_penalty": 0.0
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 1.0,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.1,
+        "forbidden_stage_penalty": 0.28,
+        "negative_constraint_penalty": 0.05
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.975,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 0.9875,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.95,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 0.975,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.1,
+        "forbidden_stage_penalty": 0.28,
+        "negative_constraint_penalty": 0.08
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.925,
+          "recall_at_10": 0.975,
+          "mrr": 0.894701,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.85,
+            "recall_at_10": 0.95,
+            "mrr": 0.789402,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.85
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.1,
+        "forbidden_stage_penalty": 0.28,
+        "negative_constraint_penalty": 0.12
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.85,
+          "recall_at_10": 0.875,
+          "mrr": 0.862131,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.7,
+            "recall_at_10": 0.75,
+            "mrr": 0.724263,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.7
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.12,
+        "forbidden_stage_penalty": 0.1,
+        "negative_constraint_penalty": 0.0
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 1.0,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.12,
+        "forbidden_stage_penalty": 0.1,
+        "negative_constraint_penalty": 0.05
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.975,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 0.9875,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.95,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 0.975,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.12,
+        "forbidden_stage_penalty": 0.1,
+        "negative_constraint_penalty": 0.08
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.925,
+          "recall_at_10": 0.975,
+          "mrr": 0.894701,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.85,
+            "recall_at_10": 0.95,
+            "mrr": 0.789402,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.85
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.12,
+        "forbidden_stage_penalty": 0.1,
+        "negative_constraint_penalty": 0.12
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.85,
+          "recall_at_10": 0.875,
+          "mrr": 0.862131,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.7,
+            "recall_at_10": 0.75,
+            "mrr": 0.724263,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.7
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.12,
+        "forbidden_stage_penalty": 0.15,
+        "negative_constraint_penalty": 0.0
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 1.0,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.12,
+        "forbidden_stage_penalty": 0.15,
+        "negative_constraint_penalty": 0.05
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.975,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 0.9875,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.95,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 0.975,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.12,
+        "forbidden_stage_penalty": 0.15,
+        "negative_constraint_penalty": 0.08
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.925,
+          "recall_at_10": 0.975,
+          "mrr": 0.894701,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.85,
+            "recall_at_10": 0.95,
+            "mrr": 0.789402,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.85
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.12,
+        "forbidden_stage_penalty": 0.15,
+        "negative_constraint_penalty": 0.12
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.85,
+          "recall_at_10": 0.875,
+          "mrr": 0.862131,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.7,
+            "recall_at_10": 0.75,
+            "mrr": 0.724263,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.7
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.12,
+        "forbidden_stage_penalty": 0.18,
+        "negative_constraint_penalty": 0.0
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 1.0,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.12,
+        "forbidden_stage_penalty": 0.18,
+        "negative_constraint_penalty": 0.05
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.975,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 0.9875,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.95,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 0.975,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.12,
+        "forbidden_stage_penalty": 0.18,
+        "negative_constraint_penalty": 0.08
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.925,
+          "recall_at_10": 0.975,
+          "mrr": 0.894701,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.85,
+            "recall_at_10": 0.95,
+            "mrr": 0.789402,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.85
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.12,
+        "forbidden_stage_penalty": 0.18,
+        "negative_constraint_penalty": 0.12
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.85,
+          "recall_at_10": 0.875,
+          "mrr": 0.862131,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.7,
+            "recall_at_10": 0.75,
+            "mrr": 0.724263,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.7
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.12,
+        "forbidden_stage_penalty": 0.22,
+        "negative_constraint_penalty": 0.0
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 1.0,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.12,
+        "forbidden_stage_penalty": 0.22,
+        "negative_constraint_penalty": 0.05
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.975,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 0.9875,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.95,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 0.975,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.12,
+        "forbidden_stage_penalty": 0.22,
+        "negative_constraint_penalty": 0.08
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.925,
+          "recall_at_10": 0.975,
+          "mrr": 0.894701,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.85,
+            "recall_at_10": 0.95,
+            "mrr": 0.789402,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.85
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.12,
+        "forbidden_stage_penalty": 0.22,
+        "negative_constraint_penalty": 0.12
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.85,
+          "recall_at_10": 0.875,
+          "mrr": 0.862131,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.7,
+            "recall_at_10": 0.75,
+            "mrr": 0.724263,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.7
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.12,
+        "forbidden_stage_penalty": 0.28,
+        "negative_constraint_penalty": 0.0
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 1.0,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.12,
+        "forbidden_stage_penalty": 0.28,
+        "negative_constraint_penalty": 0.05
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.975,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 0.9875,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.95,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 0.975,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.12,
+        "forbidden_stage_penalty": 0.28,
+        "negative_constraint_penalty": 0.08
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.925,
+          "recall_at_10": 0.975,
+          "mrr": 0.894701,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.85,
+            "recall_at_10": 0.95,
+            "mrr": 0.789402,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.85
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.12,
+        "forbidden_stage_penalty": 0.28,
+        "negative_constraint_penalty": 0.12
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.85,
+          "recall_at_10": 0.875,
+          "mrr": 0.862131,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.7,
+            "recall_at_10": 0.75,
+            "mrr": 0.724263,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.7
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.16,
+        "forbidden_stage_penalty": 0.1,
+        "negative_constraint_penalty": 0.0
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 1.0,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.16,
+        "forbidden_stage_penalty": 0.1,
+        "negative_constraint_penalty": 0.05
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.975,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 0.9875,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.95,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 0.975,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.16,
+        "forbidden_stage_penalty": 0.1,
+        "negative_constraint_penalty": 0.08
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.925,
+          "recall_at_10": 0.975,
+          "mrr": 0.894701,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.85,
+            "recall_at_10": 0.95,
+            "mrr": 0.789402,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.85
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.16,
+        "forbidden_stage_penalty": 0.1,
+        "negative_constraint_penalty": 0.12
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.85,
+          "recall_at_10": 0.875,
+          "mrr": 0.862131,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.7,
+            "recall_at_10": 0.75,
+            "mrr": 0.724263,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.7
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.16,
+        "forbidden_stage_penalty": 0.15,
+        "negative_constraint_penalty": 0.0
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 1.0,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.16,
+        "forbidden_stage_penalty": 0.15,
+        "negative_constraint_penalty": 0.05
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.975,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 0.9875,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.95,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 0.975,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.16,
+        "forbidden_stage_penalty": 0.15,
+        "negative_constraint_penalty": 0.08
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.925,
+          "recall_at_10": 0.975,
+          "mrr": 0.894701,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.85,
+            "recall_at_10": 0.95,
+            "mrr": 0.789402,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.85
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.16,
+        "forbidden_stage_penalty": 0.15,
+        "negative_constraint_penalty": 0.12
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.85,
+          "recall_at_10": 0.875,
+          "mrr": 0.862131,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.7,
+            "recall_at_10": 0.75,
+            "mrr": 0.724263,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.7
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.16,
+        "forbidden_stage_penalty": 0.18,
+        "negative_constraint_penalty": 0.0
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 1.0,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.16,
+        "forbidden_stage_penalty": 0.18,
+        "negative_constraint_penalty": 0.05
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.975,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 0.9875,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.95,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 0.975,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.16,
+        "forbidden_stage_penalty": 0.18,
+        "negative_constraint_penalty": 0.08
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.925,
+          "recall_at_10": 0.975,
+          "mrr": 0.894701,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.85,
+            "recall_at_10": 0.95,
+            "mrr": 0.789402,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.85
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.16,
+        "forbidden_stage_penalty": 0.18,
+        "negative_constraint_penalty": 0.12
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.85,
+          "recall_at_10": 0.875,
+          "mrr": 0.862131,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.7,
+            "recall_at_10": 0.75,
+            "mrr": 0.724263,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.7
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.16,
+        "forbidden_stage_penalty": 0.22,
+        "negative_constraint_penalty": 0.0
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 1.0,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.16,
+        "forbidden_stage_penalty": 0.22,
+        "negative_constraint_penalty": 0.05
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.975,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 0.9875,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.95,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 0.975,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.16,
+        "forbidden_stage_penalty": 0.22,
+        "negative_constraint_penalty": 0.08
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.925,
+          "recall_at_10": 0.975,
+          "mrr": 0.894701,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.85,
+            "recall_at_10": 0.95,
+            "mrr": 0.789402,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.85
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.16,
+        "forbidden_stage_penalty": 0.22,
+        "negative_constraint_penalty": 0.12
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.85,
+          "recall_at_10": 0.875,
+          "mrr": 0.862131,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.7,
+            "recall_at_10": 0.75,
+            "mrr": 0.724263,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.7
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.16,
+        "forbidden_stage_penalty": 0.28,
+        "negative_constraint_penalty": 0.0
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 1.0,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.16,
+        "forbidden_stage_penalty": 0.28,
+        "negative_constraint_penalty": 0.05
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.975,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 0.9875,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.95,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 0.975,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.16,
+        "forbidden_stage_penalty": 0.28,
+        "negative_constraint_penalty": 0.08
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.925,
+          "recall_at_10": 0.975,
+          "mrr": 0.894701,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.85,
+            "recall_at_10": 0.95,
+            "mrr": 0.789402,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.85
+      ]
+    },
+    {
+      "weights": {
+        "desired_stage_bonus": 0.16,
+        "forbidden_stage_penalty": 0.28,
+        "negative_constraint_penalty": 0.12
+      },
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.85,
+          "recall_at_3": 0.85,
+          "recall_at_10": 0.875,
+          "mrr": 0.862131,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.7,
+            "recall_at_10": 0.75,
+            "mrr": 0.724263,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0
+          }
+        }
+      },
+      "selection_score": [
+        1.0,
+        1.0,
+        0.7
+      ]
+    }
+  ]
+}

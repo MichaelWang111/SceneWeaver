@@ -1,0 +1,21 @@
+{
+  "fixture_id": "tech_recruitment_minimal_uncertain_001",
+  "title": "看见问题的人",
+  "industry": "technology_recruitment",
+  "company_profile": "world_500_style_global_technology_company",
+  "film_style": "minimalist_recruitment_brand_film",
+  "duration_seconds": 120,
+  "scene_count": 10,
+  "realism_policy": "observation_first_uncertain_interpretation",
+  "layer_files": {
+    "source": "source.json",
+    "knowledge": "knowledge.json",
+    "retrieval": "retrieval.json"
+  },
+  "notes": [
+    "This fixture avoids assigning a single obvious script purpose to each scene.",
+    "Director interpretation is stored as hypotheses with confidence and alternatives.",
+    "Retrieval script uses are candidate sentences, not final labels."
+  ]
+}
+

@@ -36,6 +36,12 @@ CLI entry:
 src/sceneweaver/cli.py
 ```
 
+Operational command reference:
+
+```text
+docs/CLI.md
+```
+
 Scene packaging:
 
 ```text
@@ -86,6 +92,12 @@ Semantic retrieval:
 
 ```text
 src/sceneweaver/analysis/semantic.py
+```
+
+LLM client and provider diagnostics:
+
+```text
+src/sceneweaver/llm/client.py
 ```
 
 Retrieval policy:
@@ -171,6 +183,12 @@ Default `intent_weight` is `3.0`.
 - avoid terms.
 
 It does not ask for scene concepts, shot ideas, story material, or director possibilities. The result still flows through the same `build_query_tags` and card retrieval logic.
+
+### LLM Diagnostics
+
+`llm-check` sends a minimal JSON request to the configured OpenAI-compatible endpoint. DashScope / Bailian compatible aliases are supported through `DASHSCOPE_*` environment variables.
+
+Streaming calls can emit both answer chunks and Qwen `reasoning_content`. If no streamed reasoning or answer chunk arrives within `stream_idle_timeout_seconds` (default `10`), the request fails and the error includes a ping result.
 
 ## Tag Governance
 
