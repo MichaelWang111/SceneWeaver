@@ -1,8 +1,8 @@
 {
-  "collection_id": "retrieval_review_5_industries_x_3_styles",
-  "target_total": 15,
+  "collection_id": "retrieval_review_expanded_enterprise_fixtures",
+  "target_total": 16,
   "existing_fixture": "enterprise_healthtech_story_001",
-  "generated_count": 14,
+  "generated_count": 15,
   "fixtures": [
     "enterprise_healthtech_story_001",
     "enterprise_healthtech_documentary_002",
@@ -18,14 +18,16 @@
     "enterprise_finance_story_003",
     "enterprise_retail_business_001",
     "enterprise_retail_story_002",
-    "enterprise_retail_short_003"
+    "enterprise_retail_short_003",
+    "enterprise_semiconductor_documentary_004"
   ],
   "industries": [
     "medical_technology_and_digital_health",
     "energy_and_utilities",
     "automotive_and_mobility",
     "financial_services_and_insurance",
-    "consumer_retail_and_supply_chain"
+    "consumer_retail_and_supply_chain",
+    "advanced_manufacturing_and_semiconductors"
   ],
   "styles": [
     "business_corporate_brand_film",

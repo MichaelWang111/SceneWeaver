@@ -3,8 +3,8 @@
   "case_count": 60,
   "top_k": 10,
   "constraints_enabled": true,
-  "elapsed_seconds": 8.368,
-  "seconds_per_case": 0.139467,
+  "elapsed_seconds": 6.405,
+  "seconds_per_case": 0.10675,
   "metrics": {
     "overall": {
       "count": 60,
@@ -12,7 +12,12 @@
       "recall_at_3": 1.0,
       "recall_at_10": 1.0,
       "mrr": 1.0,
-      "hard_negative_expected_prefer_margin_positive_rate": 1.0
+      "hard_negative_expected_prefer_margin_positive_rate": 1.0,
+      "forbidden_stage_violation_at_1": 0.0,
+      "forbidden_stage_violation_at_3": 0.0,
+      "forbidden_stage_violation_at_10": 0.0,
+      "desired_stage_hit_at_1": 1.0,
+      "desired_stage_hit_at_3": 1.0
     },
     "by_case_type": {
       "simple_positive": {
@@ -21,7 +26,12 @@
         "recall_at_3": 1.0,
         "recall_at_10": 1.0,
         "mrr": 1.0,
-        "hard_negative_expected_prefer_margin_positive_rate": 0.0
+        "hard_negative_expected_prefer_margin_positive_rate": 0.0,
+        "forbidden_stage_violation_at_1": 0.0,
+        "forbidden_stage_violation_at_3": 0.0,
+        "forbidden_stage_violation_at_10": 0.0,
+        "desired_stage_hit_at_1": 0.0,
+        "desired_stage_hit_at_3": 0.0
       },
       "hard_positive": {
         "count": 20,
@@ -29,7 +39,12 @@
         "recall_at_3": 1.0,
         "recall_at_10": 1.0,
         "mrr": 1.0,
-        "hard_negative_expected_prefer_margin_positive_rate": 0.0
+        "hard_negative_expected_prefer_margin_positive_rate": 0.0,
+        "forbidden_stage_violation_at_1": 0.0,
+        "forbidden_stage_violation_at_3": 0.0,
+        "forbidden_stage_violation_at_10": 0.0,
+        "desired_stage_hit_at_1": 0.0,
+        "desired_stage_hit_at_3": 0.0
       },
       "hard_negative": {
         "count": 20,
@@ -37,7 +52,12 @@
         "recall_at_3": 0.0,
         "recall_at_10": 0.0,
         "mrr": 0.0,
-        "hard_negative_expected_prefer_margin_positive_rate": 1.0
+        "hard_negative_expected_prefer_margin_positive_rate": 1.0,
+        "forbidden_stage_violation_at_1": 0.0,
+        "forbidden_stage_violation_at_3": 0.0,
+        "forbidden_stage_violation_at_10": 0.0,
+        "desired_stage_hit_at_1": 1.0,
+        "desired_stage_hit_at_3": 1.0
       }
     }
   },
@@ -46,6 +66,12 @@
       "case_id": "simple_positive__enterprise_healthtech_story_001__scene_001",
       "case_type": "simple_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [],
+        "visual_hints": []
+      },
       "target_item_id": "enterprise_healthtech_story_001::scene_001::ret_scene_001",
       "target_rank": 1,
       "target_score": 0.783538,
@@ -360,6 +386,20 @@
       "case_id": "hard_positive__enterprise_healthtech_story_001__scene_001",
       "case_type": "hard_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [
+          "不要直白讲道理"
+        ],
+        "visual_hints": [
+          "县医院",
+          "救护车",
+          "医生",
+          "山路",
+          "清晨"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_story_001::scene_001::ret_scene_001",
       "target_rank": 1,
       "target_score": 0.754053,
@@ -674,6 +714,24 @@
       "case_id": "hard_negative__enterprise_healthtech_story_001__scene_001",
       "case_type": "hard_negative",
       "expected_relation": "should_not_match",
+      "query_constraints": {
+        "desired_stage": [
+          "setup"
+        ],
+        "forbidden_stage": [
+          "opening"
+        ],
+        "negative_constraints": [
+          "不要做成开场",
+          "不要强调开场气势或问题建立"
+        ],
+        "visual_hints": [
+          "县医院",
+          "救护车",
+          "医生",
+          "山路"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_story_001::scene_001::ret_scene_001",
       "target_rank": 22,
       "target_score": 0.638713,
@@ -1028,6 +1086,14 @@
       "case_id": "simple_positive__enterprise_healthtech_story_001__scene_002",
       "case_type": "simple_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [
+          "不是从产品卖点中出现"
+        ],
+        "visual_hints": []
+      },
       "target_item_id": "enterprise_healthtech_story_001::scene_002::ret_scene_002",
       "target_rank": 1,
       "target_score": 0.807642,
@@ -1346,6 +1412,20 @@
       "case_id": "hard_positive__enterprise_healthtech_story_001__scene_002",
       "case_type": "hard_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [
+          "不要直白讲道理"
+        ],
+        "visual_hints": [
+          "基层医生",
+          "患者家属",
+          "医学影像",
+          "诊室",
+          "排班表"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_story_001::scene_002::ret_scene_002",
       "target_rank": 1,
       "target_score": 0.771797,
@@ -1660,6 +1740,24 @@
       "case_id": "hard_negative__enterprise_healthtech_story_001__scene_002",
       "case_type": "hard_negative",
       "expected_relation": "should_not_match",
+      "query_constraints": {
+        "desired_stage": [
+          "opening"
+        ],
+        "forbidden_stage": [
+          "setup"
+        ],
+        "negative_constraints": [
+          "不要做成铺垫",
+          "不要停留在需求铺垫"
+        ],
+        "visual_hints": [
+          "基层医生",
+          "患者家属",
+          "医学影像",
+          "诊室"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_story_001::scene_002::ret_scene_002",
       "target_rank": 14,
       "target_score": 0.68345,
@@ -1998,6 +2096,12 @@
       "case_id": "simple_positive__enterprise_healthtech_story_001__scene_003",
       "case_type": "simple_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [],
+        "visual_hints": []
+      },
       "target_item_id": "enterprise_healthtech_story_001::scene_003::ret_scene_003",
       "target_rank": 1,
       "target_score": 0.781869,
@@ -2312,6 +2416,20 @@
       "case_id": "hard_positive__enterprise_healthtech_story_001__scene_003",
       "case_type": "hard_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [
+          "不要直白讲道理"
+        ],
+        "visual_hints": [
+          "远程会诊平台",
+          "医学影像",
+          "医生",
+          "专家列表",
+          "加密上传"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_story_001::scene_003::ret_scene_003",
       "target_rank": 1,
       "target_score": 0.764711,
@@ -2626,6 +2744,23 @@
       "case_id": "hard_negative__enterprise_healthtech_story_001__scene_003",
       "case_type": "hard_negative",
       "expected_relation": "should_not_match",
+      "query_constraints": {
+        "desired_stage": [
+          "opening"
+        ],
+        "forbidden_stage": [
+          "technology_entrance"
+        ],
+        "negative_constraints": [
+          "不要做成技术入场"
+        ],
+        "visual_hints": [
+          "远程会诊平台",
+          "医学影像",
+          "医生",
+          "专家列表"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_story_001::scene_003::ret_scene_003",
       "target_rank": 21,
       "target_score": 0.679646,
@@ -2956,6 +3091,14 @@
       "case_id": "simple_positive__enterprise_healthtech_story_001__scene_004",
       "case_type": "simple_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [
+          "避免互联网大厂式空泛办公感"
+        ],
+        "visual_hints": []
+      },
       "target_item_id": "enterprise_healthtech_story_001::scene_004::ret_scene_004",
       "target_rank": 1,
       "target_score": 0.77751,
@@ -3274,6 +3417,20 @@
       "case_id": "hard_positive__enterprise_healthtech_story_001__scene_004",
       "case_type": "hard_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [
+          "不要直白讲道理"
+        ],
+        "visual_hints": [
+          "算法工程师",
+          "临床专家",
+          "产品经理",
+          "白板",
+          "病例流程"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_story_001::scene_004::ret_scene_004",
       "target_rank": 1,
       "target_score": 0.765303,
@@ -3588,6 +3745,24 @@
       "case_id": "hard_negative__enterprise_healthtech_story_001__scene_004",
       "case_type": "hard_negative",
       "expected_relation": "should_not_match",
+      "query_constraints": {
+        "desired_stage": [
+          "opening"
+        ],
+        "forbidden_stage": [
+          "team_work"
+        ],
+        "negative_constraints": [
+          "不要做成团队协作",
+          "不要拍成团队协作或会议共创"
+        ],
+        "visual_hints": [
+          "算法工程师",
+          "临床专家",
+          "产品经理",
+          "白板"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_story_001::scene_004::ret_scene_004",
       "target_rank": 24,
       "target_score": 0.659178,
@@ -3938,6 +4113,14 @@
       "case_id": "simple_positive__enterprise_healthtech_story_001__scene_005",
       "case_type": "simple_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [
+          "不是替代人"
+        ],
+        "visual_hints": []
+      },
       "target_item_id": "enterprise_healthtech_story_001::scene_005::ret_scene_005",
       "target_rank": 1,
       "target_score": 0.77628,
@@ -4256,6 +4439,20 @@
       "case_id": "hard_positive__enterprise_healthtech_story_001__scene_005",
       "case_type": "hard_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [
+          "不要直白讲道理"
+        ],
+        "visual_hints": [
+          "工程师",
+          "AI辅助诊断界面",
+          "医生反馈便签",
+          "人工确认按钮",
+          "模型输出"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_story_001::scene_005::ret_scene_005",
       "target_rank": 1,
       "target_score": 0.768269,
@@ -4570,6 +4767,25 @@
       "case_id": "hard_negative__enterprise_healthtech_story_001__scene_005",
       "case_type": "hard_negative",
       "expected_relation": "should_not_match",
+      "query_constraints": {
+        "desired_stage": [
+          "opening"
+        ],
+        "forbidden_stage": [
+          "technology_showcase"
+        ],
+        "negative_constraints": [
+          "不要做成技术展示",
+          "不要像技术展示或功能说明",
+          "别的叙事任务"
+        ],
+        "visual_hints": [
+          "工程师",
+          "AI辅助诊断界面",
+          "医生反馈便签",
+          "人工确认按钮"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_story_001::scene_005::ret_scene_005",
       "target_rank": 31,
       "target_score": 0.623878,
@@ -4900,6 +5116,14 @@
       "case_id": "simple_positive__enterprise_healthtech_story_001__scene_006",
       "case_type": "simple_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [
+          "避免冷冰冰的大公司炫耀"
+        ],
+        "visual_hints": []
+      },
       "target_item_id": "enterprise_healthtech_story_001::scene_006::ret_scene_006",
       "target_rank": 1,
       "target_score": 0.820703,
@@ -5218,6 +5442,20 @@
       "case_id": "hard_positive__enterprise_healthtech_story_001__scene_006",
       "case_type": "hard_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [
+          "不要直白讲道理"
+        ],
+        "visual_hints": [
+          "全球协作地图",
+          "多国医生",
+          "视频会议",
+          "病例资料",
+          "医疗网络"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_story_001::scene_006::ret_scene_006",
       "target_rank": 1,
       "target_score": 0.820843,
@@ -5532,6 +5770,23 @@
       "case_id": "hard_negative__enterprise_healthtech_story_001__scene_006",
       "case_type": "hard_negative",
       "expected_relation": "should_not_match",
+      "query_constraints": {
+        "desired_stage": [
+          "opening"
+        ],
+        "forbidden_stage": [
+          "scale_reveal"
+        ],
+        "negative_constraints": [
+          "不要做成规模揭示"
+        ],
+        "visual_hints": [
+          "全球协作地图",
+          "多国医生",
+          "视频会议",
+          "病例资料"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_story_001::scene_006::ret_scene_006",
       "target_rank": 41,
       "target_score": 0.620501,
@@ -5862,6 +6117,12 @@
       "case_id": "simple_positive__enterprise_healthtech_story_001__scene_007",
       "case_type": "simple_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [],
+        "visual_hints": []
+      },
       "target_item_id": "enterprise_healthtech_story_001::scene_007::ret_scene_007",
       "target_rank": 1,
       "target_score": 0.778642,
@@ -6176,6 +6437,20 @@
       "case_id": "hard_positive__enterprise_healthtech_story_001__scene_007",
       "case_type": "hard_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [
+          "不要直白讲道理"
+        ],
+        "visual_hints": [
+          "县医院医生",
+          "远程专家",
+          "患者家属",
+          "会诊屏幕",
+          "记录本"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_story_001::scene_007::ret_scene_007",
       "target_rank": 1,
       "target_score": 0.784638,
@@ -6490,6 +6765,24 @@
       "case_id": "hard_negative__enterprise_healthtech_story_001__scene_007",
       "case_type": "hard_negative",
       "expected_relation": "should_not_match",
+      "query_constraints": {
+        "desired_stage": [
+          "opening"
+        ],
+        "forbidden_stage": [
+          "value_expression"
+        ],
+        "negative_constraints": [
+          "不要做成价值表达",
+          "不要靠价值表达或信任感收束"
+        ],
+        "visual_hints": [
+          "县医院医生",
+          "远程专家",
+          "患者家属",
+          "会诊屏幕"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_story_001::scene_007::ret_scene_007",
       "target_rank": 36,
       "target_score": 0.644205,
@@ -6820,6 +7113,12 @@
       "case_id": "simple_positive__enterprise_healthtech_story_001__scene_008",
       "case_type": "simple_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [],
+        "visual_hints": []
+      },
       "target_item_id": "enterprise_healthtech_story_001::scene_008::ret_scene_008",
       "target_rank": 1,
       "target_score": 0.789663,
@@ -7134,6 +7433,21 @@
       "case_id": "hard_positive__enterprise_healthtech_story_001__scene_008",
       "case_type": "hard_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [
+          "不要直白讲道理",
+          "避免夸大承诺"
+        ],
+        "visual_hints": [
+          "患者",
+          "家属",
+          "医生",
+          "病房",
+          "治疗方案"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_story_001::scene_008::ret_scene_008",
       "target_rank": 1,
       "target_score": 0.776558,
@@ -7448,6 +7762,23 @@
       "case_id": "hard_negative__enterprise_healthtech_story_001__scene_008",
       "case_type": "hard_negative",
       "expected_relation": "should_not_match",
+      "query_constraints": {
+        "desired_stage": [
+          "opening"
+        ],
+        "forbidden_stage": [
+          "outcome"
+        ],
+        "negative_constraints": [
+          "不要做成结果落地"
+        ],
+        "visual_hints": [
+          "患者",
+          "家属",
+          "医生",
+          "病房"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_story_001::scene_008::ret_scene_008",
       "target_rank": 25,
       "target_score": 0.663224,
@@ -7786,6 +8117,14 @@
       "case_id": "simple_positive__enterprise_healthtech_story_001__scene_009",
       "case_type": "simple_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [
+          "不是被口号推动"
+        ],
+        "visual_hints": []
+      },
       "target_item_id": "enterprise_healthtech_story_001::scene_009::ret_scene_009",
       "target_rank": 1,
       "target_score": 0.7795,
@@ -8104,6 +8443,20 @@
       "case_id": "hard_positive__enterprise_healthtech_story_001__scene_009",
       "case_type": "hard_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [
+          "不要直白讲道理"
+        ],
+        "visual_hints": [
+          "年轻工程师",
+          "反馈语音",
+          "研发中心夜景",
+          "流程图",
+          "版本记录"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_story_001::scene_009::ret_scene_009",
       "target_rank": 1,
       "target_score": 0.787629,
@@ -8418,6 +8771,23 @@
       "case_id": "hard_negative__enterprise_healthtech_story_001__scene_009",
       "case_type": "hard_negative",
       "expected_relation": "should_not_match",
+      "query_constraints": {
+        "desired_stage": [
+          "opening"
+        ],
+        "forbidden_stage": [
+          "growth"
+        ],
+        "negative_constraints": [
+          "不要做成成长升温"
+        ],
+        "visual_hints": [
+          "年轻工程师",
+          "反馈语音",
+          "研发中心夜景",
+          "流程图"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_story_001::scene_009::ret_scene_009",
       "target_rank": 57,
       "target_score": 0.633175,
@@ -8772,6 +9142,12 @@
       "case_id": "simple_positive__enterprise_healthtech_story_001__scene_010",
       "case_type": "simple_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [],
+        "visual_hints": []
+      },
       "target_item_id": "enterprise_healthtech_story_001::scene_010::ret_scene_010",
       "target_rank": 1,
       "target_score": 0.76582,
@@ -9086,6 +9462,20 @@
       "case_id": "hard_positive__enterprise_healthtech_story_001__scene_010",
       "case_type": "hard_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [
+          "不要直白讲道理"
+        ],
+        "visual_hints": [
+          "医生",
+          "县医院",
+          "山路",
+          "晨光",
+          "品牌字幕"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_story_001::scene_010::ret_scene_010",
       "target_rank": 1,
       "target_score": 0.796379,
@@ -9400,6 +9790,23 @@
       "case_id": "hard_negative__enterprise_healthtech_story_001__scene_010",
       "case_type": "hard_negative",
       "expected_relation": "should_not_match",
+      "query_constraints": {
+        "desired_stage": [
+          "opening"
+        ],
+        "forbidden_stage": [
+          "ending"
+        ],
+        "negative_constraints": [
+          "不要做成结尾收束"
+        ],
+        "visual_hints": [
+          "医生",
+          "县医院",
+          "山路",
+          "晨光"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_story_001::scene_010::ret_scene_010",
       "target_rank": 79,
       "target_score": 0.571089,
@@ -9742,6 +10149,12 @@
       "case_id": "simple_positive__enterprise_healthtech_documentary_002__scene_001",
       "case_type": "simple_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [],
+        "visual_hints": []
+      },
       "target_item_id": "enterprise_healthtech_documentary_002::scene_001::ret_scene_001",
       "target_rank": 1,
       "target_score": 0.828709,
@@ -10056,6 +10469,24 @@
       "case_id": "hard_positive__enterprise_healthtech_documentary_002__scene_001",
       "case_type": "hard_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [
+          "不要直白讲道理"
+        ],
+        "visual_hints": [
+          "医疗设备质控工程师",
+          "影像设备质控系统和远程维护平台",
+          "校准线",
+          "质控标签",
+          "复核记录",
+          "城市三甲医院",
+          "设备质控实验室",
+          "患者随访中心",
+          "真实用户场景"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_documentary_002::scene_001::ret_scene_001",
       "target_rank": 1,
       "target_score": 0.830579,
@@ -10370,6 +10801,28 @@
       "case_id": "hard_negative__enterprise_healthtech_documentary_002__scene_001",
       "case_type": "hard_negative",
       "expected_relation": "should_not_match",
+      "query_constraints": {
+        "desired_stage": [
+          "setup"
+        ],
+        "forbidden_stage": [
+          "opening"
+        ],
+        "negative_constraints": [
+          "不要做成开场",
+          "不要强调开场气势或问题建立"
+        ],
+        "visual_hints": [
+          "医疗设备质控工程师",
+          "影像设备质控系统和远程维护平台",
+          "校准线",
+          "质控标签",
+          "复核记录",
+          "城市三甲医院",
+          "设备质控实验室",
+          "患者随访中心"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_documentary_002::scene_001::ret_scene_001",
       "target_rank": 19,
       "target_score": 0.70835,
@@ -10696,6 +11149,12 @@
       "case_id": "simple_positive__enterprise_healthtech_documentary_002__scene_002",
       "case_type": "simple_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [],
+        "visual_hints": []
+      },
       "target_item_id": "enterprise_healthtech_documentary_002::scene_002::ret_scene_002",
       "target_rank": 1,
       "target_score": 0.858555,
@@ -11010,6 +11469,22 @@
       "case_id": "hard_positive__enterprise_healthtech_documentary_002__scene_002",
       "case_type": "hard_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [
+          "不要直白讲道理"
+        ],
+        "visual_hints": [
+          "医疗设备质控工程师",
+          "影像设备质控系统和远程维护平台",
+          "校准线",
+          "质控标签",
+          "复核记录",
+          "一线人员",
+          "等待中的客户或用户"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_documentary_002::scene_002::ret_scene_002",
       "target_rank": 1,
       "target_score": 0.825384,
@@ -11324,6 +11799,26 @@
       "case_id": "hard_negative__enterprise_healthtech_documentary_002__scene_002",
       "case_type": "hard_negative",
       "expected_relation": "should_not_match",
+      "query_constraints": {
+        "desired_stage": [
+          "opening"
+        ],
+        "forbidden_stage": [
+          "setup"
+        ],
+        "negative_constraints": [
+          "不要做成铺垫",
+          "不要停留在需求铺垫"
+        ],
+        "visual_hints": [
+          "医疗设备质控工程师",
+          "影像设备质控系统和远程维护平台",
+          "校准线",
+          "质控标签",
+          "复核记录",
+          "一线人员"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_documentary_002::scene_002::ret_scene_002",
       "target_rank": 11,
       "target_score": 0.734558,
@@ -11650,6 +12145,12 @@
       "case_id": "simple_positive__enterprise_healthtech_documentary_002__scene_003",
       "case_type": "simple_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [],
+        "visual_hints": []
+      },
       "target_item_id": "enterprise_healthtech_documentary_002::scene_003::ret_scene_003",
       "target_rank": 1,
       "target_score": 0.868519,
@@ -11964,6 +12465,22 @@
       "case_id": "hard_positive__enterprise_healthtech_documentary_002__scene_003",
       "case_type": "hard_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [
+          "不要直白讲道理"
+        ],
+        "visual_hints": [
+          "医疗设备质控工程师",
+          "影像设备质控系统和远程维护平台",
+          "校准线",
+          "质控标签",
+          "复核记录",
+          "工作证件",
+          "专业工具"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_documentary_002::scene_003::ret_scene_003",
       "target_rank": 1,
       "target_score": 0.852789,
@@ -12278,6 +12795,25 @@
       "case_id": "hard_negative__enterprise_healthtech_documentary_002__scene_003",
       "case_type": "hard_negative",
       "expected_relation": "should_not_match",
+      "query_constraints": {
+        "desired_stage": [
+          "opening"
+        ],
+        "forbidden_stage": [
+          "character_intro"
+        ],
+        "negative_constraints": [
+          "不要做成人物出场"
+        ],
+        "visual_hints": [
+          "医疗设备质控工程师",
+          "影像设备质控系统和远程维护平台",
+          "校准线",
+          "质控标签",
+          "复核记录",
+          "工作证件"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_documentary_002::scene_003::ret_scene_003",
       "target_rank": 11,
       "target_score": 0.71887,
@@ -12604,6 +13140,12 @@
       "case_id": "simple_positive__enterprise_healthtech_documentary_002__scene_004",
       "case_type": "simple_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [],
+        "visual_hints": []
+      },
       "target_item_id": "enterprise_healthtech_documentary_002::scene_004::ret_scene_004",
       "target_rank": 1,
       "target_score": 0.820742,
@@ -12918,6 +13460,22 @@
       "case_id": "hard_positive__enterprise_healthtech_documentary_002__scene_004",
       "case_type": "hard_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [
+          "不要直白讲道理"
+        ],
+        "visual_hints": [
+          "医疗设备质控工程师",
+          "影像设备质控系统和远程维护平台",
+          "校准线",
+          "质控标签",
+          "复核记录",
+          "医生",
+          "质控工程师"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_documentary_002::scene_004::ret_scene_004",
       "target_rank": 1,
       "target_score": 0.830154,
@@ -13232,6 +13790,26 @@
       "case_id": "hard_negative__enterprise_healthtech_documentary_002__scene_004",
       "case_type": "hard_negative",
       "expected_relation": "should_not_match",
+      "query_constraints": {
+        "desired_stage": [
+          "opening"
+        ],
+        "forbidden_stage": [
+          "team_work"
+        ],
+        "negative_constraints": [
+          "不要做成团队协作",
+          "不要拍成团队协作或会议共创"
+        ],
+        "visual_hints": [
+          "医疗设备质控工程师",
+          "影像设备质控系统和远程维护平台",
+          "校准线",
+          "质控标签",
+          "复核记录",
+          "医生"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_documentary_002::scene_004::ret_scene_004",
       "target_rank": 18,
       "target_score": 0.697259,
@@ -13558,6 +14136,12 @@
       "case_id": "simple_positive__enterprise_healthtech_documentary_002__scene_005",
       "case_type": "simple_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [],
+        "visual_hints": []
+      },
       "target_item_id": "enterprise_healthtech_documentary_002::scene_005::ret_scene_005",
       "target_rank": 1,
       "target_score": 0.856292,
@@ -13872,6 +14456,22 @@
       "case_id": "hard_positive__enterprise_healthtech_documentary_002__scene_005",
       "case_type": "hard_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [
+          "不要直白讲道理"
+        ],
+        "visual_hints": [
+          "医疗设备质控工程师",
+          "影像设备质控系统和远程维护平台",
+          "校准线",
+          "质控标签",
+          "复核记录",
+          "操作界面",
+          "确认提示"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_documentary_002::scene_005::ret_scene_005",
       "target_rank": 1,
       "target_score": 0.859407,
@@ -14186,6 +14786,27 @@
       "case_id": "hard_negative__enterprise_healthtech_documentary_002__scene_005",
       "case_type": "hard_negative",
       "expected_relation": "should_not_match",
+      "query_constraints": {
+        "desired_stage": [
+          "opening"
+        ],
+        "forbidden_stage": [
+          "technology_showcase"
+        ],
+        "negative_constraints": [
+          "不要做成技术展示",
+          "不要像技术展示或功能说明",
+          "别的叙事任务"
+        ],
+        "visual_hints": [
+          "医疗设备质控工程师",
+          "影像设备质控系统和远程维护平台",
+          "校准线",
+          "质控标签",
+          "复核记录",
+          "操作界面"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_documentary_002::scene_005::ret_scene_005",
       "target_rank": 12,
       "target_score": 0.711565,
@@ -14512,6 +15133,12 @@
       "case_id": "simple_positive__enterprise_healthtech_documentary_002__scene_006",
       "case_type": "simple_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [],
+        "visual_hints": []
+      },
       "target_item_id": "enterprise_healthtech_documentary_002::scene_006::ret_scene_006",
       "target_rank": 1,
       "target_score": 0.862107,
@@ -14826,6 +15453,22 @@
       "case_id": "hard_positive__enterprise_healthtech_documentary_002__scene_006",
       "case_type": "hard_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [
+          "不要直白讲道理"
+        ],
+        "visual_hints": [
+          "医疗设备质控工程师",
+          "影像设备质控系统和远程维护平台",
+          "校准线",
+          "质控标签",
+          "复核记录",
+          "全球地图",
+          "多地团队"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_documentary_002::scene_006::ret_scene_006",
       "target_rank": 1,
       "target_score": 0.879062,
@@ -15140,6 +15783,25 @@
       "case_id": "hard_negative__enterprise_healthtech_documentary_002__scene_006",
       "case_type": "hard_negative",
       "expected_relation": "should_not_match",
+      "query_constraints": {
+        "desired_stage": [
+          "opening"
+        ],
+        "forbidden_stage": [
+          "scale_reveal"
+        ],
+        "negative_constraints": [
+          "不要做成规模揭示"
+        ],
+        "visual_hints": [
+          "医疗设备质控工程师",
+          "影像设备质控系统和远程维护平台",
+          "校准线",
+          "质控标签",
+          "复核记录",
+          "全球地图"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_documentary_002::scene_006::ret_scene_006",
       "target_rank": 28,
       "target_score": 0.66176,
@@ -15466,6 +16128,12 @@
       "case_id": "simple_positive__enterprise_healthtech_documentary_002__scene_007",
       "case_type": "simple_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [],
+        "visual_hints": []
+      },
       "target_item_id": "enterprise_healthtech_documentary_002::scene_007::ret_scene_007",
       "target_rank": 1,
       "target_score": 0.869765,
@@ -15780,6 +16448,22 @@
       "case_id": "hard_positive__enterprise_healthtech_documentary_002__scene_007",
       "case_type": "hard_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [
+          "不要直白讲道理"
+        ],
+        "visual_hints": [
+          "医疗设备质控工程师",
+          "影像设备质控系统和远程维护平台",
+          "校准线",
+          "质控标签",
+          "复核记录",
+          "面对面沟通",
+          "记录动作"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_documentary_002::scene_007::ret_scene_007",
       "target_rank": 1,
       "target_score": 0.85973,
@@ -16094,6 +16778,26 @@
       "case_id": "hard_negative__enterprise_healthtech_documentary_002__scene_007",
       "case_type": "hard_negative",
       "expected_relation": "should_not_match",
+      "query_constraints": {
+        "desired_stage": [
+          "opening"
+        ],
+        "forbidden_stage": [
+          "value_expression"
+        ],
+        "negative_constraints": [
+          "不要做成价值表达",
+          "不要靠价值表达或信任感收束"
+        ],
+        "visual_hints": [
+          "医疗设备质控工程师",
+          "影像设备质控系统和远程维护平台",
+          "校准线",
+          "质控标签",
+          "复核记录",
+          "面对面沟通"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_documentary_002::scene_007::ret_scene_007",
       "target_rank": 11,
       "target_score": 0.732177,
@@ -16420,6 +17124,14 @@
       "case_id": "simple_positive__enterprise_healthtech_documentary_002__scene_008",
       "case_type": "simple_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [
+          "避免夸大"
+        ],
+        "visual_hints": []
+      },
       "target_item_id": "enterprise_healthtech_documentary_002::scene_008::ret_scene_008",
       "target_rank": 1,
       "target_score": 0.891132,
@@ -16742,6 +17454,22 @@
       "case_id": "hard_positive__enterprise_healthtech_documentary_002__scene_008",
       "case_type": "hard_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [
+          "不要直白讲道理"
+        ],
+        "visual_hints": [
+          "医疗设备质控工程师",
+          "影像设备质控系统和远程维护平台",
+          "校准线",
+          "质控标签",
+          "复核记录",
+          "服务对象",
+          "结果记录"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_documentary_002::scene_008::ret_scene_008",
       "target_rank": 1,
       "target_score": 0.859104,
@@ -17056,6 +17784,25 @@
       "case_id": "hard_negative__enterprise_healthtech_documentary_002__scene_008",
       "case_type": "hard_negative",
       "expected_relation": "should_not_match",
+      "query_constraints": {
+        "desired_stage": [
+          "opening"
+        ],
+        "forbidden_stage": [
+          "outcome"
+        ],
+        "negative_constraints": [
+          "不要做成结果落地"
+        ],
+        "visual_hints": [
+          "医疗设备质控工程师",
+          "影像设备质控系统和远程维护平台",
+          "校准线",
+          "质控标签",
+          "复核记录",
+          "服务对象"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_documentary_002::scene_008::ret_scene_008",
       "target_rank": 12,
       "target_score": 0.726656,
@@ -17382,6 +18129,12 @@
       "case_id": "simple_positive__enterprise_healthtech_documentary_002__scene_009",
       "case_type": "simple_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [],
+        "visual_hints": []
+      },
       "target_item_id": "enterprise_healthtech_documentary_002::scene_009::ret_scene_009",
       "target_rank": 1,
       "target_score": 0.827436,
@@ -17696,6 +18449,22 @@
       "case_id": "hard_positive__enterprise_healthtech_documentary_002__scene_009",
       "case_type": "hard_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [
+          "不要直白讲道理"
+        ],
+        "visual_hints": [
+          "医疗设备质控工程师",
+          "影像设备质控系统和远程维护平台",
+          "校准线",
+          "质控标签",
+          "复核记录",
+          "年轻员工",
+          "反馈信息"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_documentary_002::scene_009::ret_scene_009",
       "target_rank": 1,
       "target_score": 0.833937,
@@ -18010,6 +18779,25 @@
       "case_id": "hard_negative__enterprise_healthtech_documentary_002__scene_009",
       "case_type": "hard_negative",
       "expected_relation": "should_not_match",
+      "query_constraints": {
+        "desired_stage": [
+          "opening"
+        ],
+        "forbidden_stage": [
+          "growth"
+        ],
+        "negative_constraints": [
+          "不要做成成长升温"
+        ],
+        "visual_hints": [
+          "医疗设备质控工程师",
+          "影像设备质控系统和远程维护平台",
+          "校准线",
+          "质控标签",
+          "复核记录",
+          "年轻员工"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_documentary_002::scene_009::ret_scene_009",
       "target_rank": 18,
       "target_score": 0.70038,
@@ -18340,6 +19128,12 @@
       "case_id": "simple_positive__enterprise_healthtech_documentary_002__scene_010",
       "case_type": "simple_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [],
+        "visual_hints": []
+      },
       "target_item_id": "enterprise_healthtech_documentary_002::scene_010::ret_scene_010",
       "target_rank": 1,
       "target_score": 0.84183,
@@ -18654,6 +19448,22 @@
       "case_id": "hard_positive__enterprise_healthtech_documentary_002__scene_010",
       "case_type": "hard_positive",
       "expected_relation": "should_match",
+      "query_constraints": {
+        "desired_stage": [],
+        "forbidden_stage": [],
+        "negative_constraints": [
+          "不要直白讲道理"
+        ],
+        "visual_hints": [
+          "医疗设备质控工程师",
+          "影像设备质控系统和远程维护平台",
+          "校准线",
+          "质控标签",
+          "复核记录",
+          "品牌字幕",
+          "回到开场地点"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_documentary_002::scene_010::ret_scene_010",
       "target_rank": 1,
       "target_score": 0.851708,
@@ -18968,6 +19778,25 @@
       "case_id": "hard_negative__enterprise_healthtech_documentary_002__scene_010",
       "case_type": "hard_negative",
       "expected_relation": "should_not_match",
+      "query_constraints": {
+        "desired_stage": [
+          "opening"
+        ],
+        "forbidden_stage": [
+          "ending"
+        ],
+        "negative_constraints": [
+          "不要做成结尾收束"
+        ],
+        "visual_hints": [
+          "医疗设备质控工程师",
+          "影像设备质控系统和远程维护平台",
+          "校准线",
+          "质控标签",
+          "复核记录",
+          "品牌字幕"
+        ]
+      },
       "target_item_id": "enterprise_healthtech_documentary_002::scene_010::ret_scene_010",
       "target_rank": 25,
       "target_score": 0.685122,
@@ -19291,5 +20120,6 @@
       ]
     }
   ],
+  "split": "all",
   "constraint_profile": "D:\\WorkSpace\\Codex\\SceneWeaver\\src\\mocktesting\\eval_outputs\\mock_constraint_profile.json"
 }

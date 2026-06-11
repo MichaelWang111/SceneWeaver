@@ -1,0 +1,393 @@
+{
+  "video_id": "enterprise_semiconductor_documentary_004",
+  "title": "良率之外",
+  "industry": "advanced_manufacturing_and_semiconductors",
+  "style": "documentary_enterprise_brand_film",
+  "logline": "跟随一名工艺工程师、一位设备维护负责人和一支客户质量团队，记录芯片制造里看不见的重复确认、协作和责任。",
+  "source_layer": {
+    "frames_root": "frames/",
+    "packages_root": "packages/",
+    "frame_policy": "fake_keyframes_only",
+    "package_policy": "scene_level_package"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_001",
+      "time_range": "00:00-00:18",
+      "narrative_role": "opening",
+      "frames": [
+        {
+          "frame_id": "scene_001_f001",
+          "timestamp": "00:05.2",
+          "path": "frames/scene_001/scene_001_f001.jpg",
+          "visual_note": "洁净车间、设备维护通道、质量实验室、跨国客户会议室中的半导体工艺工程师出现在画面里，承担“开场建立真实世界压力”的叙事功能。"
+        },
+        {
+          "frame_id": "scene_001_f002",
+          "timestamp": "00:10.4",
+          "path": "frames/scene_001/scene_001_f002.jpg",
+          "visual_note": "画面强调洁净服、晶圆盒、缺陷标记、复核记录，把先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付转化为可观察的现场细节。"
+        }
+      ],
+      "package": {
+        "package_id": "pkg_scene_001",
+        "summary": "用洁净车间、设备维护通道、质量实验室、跨国客户会议室建立真实业务场景和先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付。",
+        "visible_entities": [
+          "半导体工艺工程师",
+          "制程监控系统、缺陷检测平台和设备预测维护模型",
+          "洁净服、晶圆盒、缺陷标记、复核记录",
+          "洁净车间、设备维护通道、质量实验室、跨国客户会议室",
+          "真实用户场景",
+          "环境细节"
+        ],
+        "actions": [
+          "进入现场",
+          "观察环境",
+          "问题显现"
+        ],
+        "setting": "洁净车间、设备维护通道、质量实验室、跨国客户会议室",
+        "audio_hint": "保留同期声、人声和环境声，音乐克制后置。"
+      }
+    },
+    {
+      "scene_id": "scene_002",
+      "time_range": "00:18-00:37",
+      "narrative_role": "setup",
+      "frames": [
+        {
+          "frame_id": "scene_002_f001",
+          "timestamp": "00:20.2",
+          "path": "frames/scene_002/scene_002_f001.jpg",
+          "visual_note": "洁净车间、设备维护通道、质量实验室、跨国客户会议室中的半导体工艺工程师出现在画面里，承担“进入一线场景，建立具体需求”的叙事功能。"
+        },
+        {
+          "frame_id": "scene_002_f002",
+          "timestamp": "00:25.4",
+          "path": "frames/scene_002/scene_002_f002.jpg",
+          "visual_note": "画面强调洁净服、晶圆盒、缺陷标记、复核记录，把先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付转化为可观察的现场细节。"
+        }
+      ],
+      "package": {
+        "package_id": "pkg_scene_002",
+        "summary": "把先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付具体化，让企业能力有进入理由。",
+        "visible_entities": [
+          "半导体工艺工程师",
+          "制程监控系统、缺陷检测平台和设备预测维护模型",
+          "洁净服、晶圆盒、缺陷标记、复核记录",
+          "一线人员",
+          "等待中的客户或用户",
+          "问题线索"
+        ],
+        "actions": [
+          "比对信息",
+          "等待确认",
+          "压力累积"
+        ],
+        "setting": "洁净车间、设备维护通道、质量实验室、跨国客户会议室",
+        "audio_hint": "保留同期声、人声和环境声，音乐克制后置。"
+      }
+    },
+    {
+      "scene_id": "scene_003",
+      "time_range": "00:37-00:56",
+      "narrative_role": "character_intro",
+      "frames": [
+        {
+          "frame_id": "scene_003_f001",
+          "timestamp": "00:35.2",
+          "path": "frames/scene_003/scene_003_f001.jpg",
+          "visual_note": "洁净车间、设备维护通道、质量实验室、跨国客户会议室中的半导体工艺工程师出现在画面里，承担“引入核心人物和专业视角”的叙事功能。"
+        },
+        {
+          "frame_id": "scene_003_f002",
+          "timestamp": "00:40.4",
+          "path": "frames/scene_003/scene_003_f002.jpg",
+          "visual_note": "画面强调洁净服、晶圆盒、缺陷标记、复核记录，把先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付转化为可观察的现场细节。"
+        }
+      ],
+      "package": {
+        "package_id": "pkg_scene_003",
+        "summary": "通过半导体工艺工程师进入专业视角，避免空泛品牌叙述。",
+        "visible_entities": [
+          "半导体工艺工程师",
+          "制程监控系统、缺陷检测平台和设备预测维护模型",
+          "洁净服、晶圆盒、缺陷标记、复核记录",
+          "工作证件",
+          "专业工具"
+        ],
+        "actions": [
+          "整理工具",
+          "看向现场",
+          "做出判断"
+        ],
+        "setting": "洁净车间、设备维护通道、质量实验室、跨国客户会议室",
+        "audio_hint": "保留同期声、人声和环境声，音乐克制后置。"
+      }
+    },
+    {
+      "scene_id": "scene_004",
+      "time_range": "00:56-01:14",
+      "narrative_role": "team_work",
+      "frames": [
+        {
+          "frame_id": "scene_004_f001",
+          "timestamp": "00:50.2",
+          "path": "frames/scene_004/scene_004_f001.jpg",
+          "visual_note": "洁净车间、设备维护通道、质量实验室、跨国客户会议室中的半导体工艺工程师出现在画面里，承担“展现跨职能团队如何协作”的叙事功能。"
+        },
+        {
+          "frame_id": "scene_004_f002",
+          "timestamp": "00:55.4",
+          "path": "frames/scene_004/scene_004_f002.jpg",
+          "visual_note": "画面强调洁净服、晶圆盒、缺陷标记、复核记录，把先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付转化为可观察的现场细节。"
+        }
+      ],
+      "package": {
+        "package_id": "pkg_scene_004",
+        "summary": "展现工艺工程师、设备维护团队、质量工程师、客户技术支持如何围绕同一个问题协作。",
+        "visible_entities": [
+          "半导体工艺工程师",
+          "制程监控系统、缺陷检测平台和设备预测维护模型",
+          "洁净服、晶圆盒、缺陷标记、复核记录",
+          "工艺工程师",
+          "设备维护团队",
+          "质量工程师",
+          "客户技术支持"
+        ],
+        "actions": [
+          "围绕问题讨论",
+          "标注风险点",
+          "分配下一步"
+        ],
+        "setting": "洁净车间、设备维护通道、质量实验室、跨国客户会议室",
+        "audio_hint": "保留同期声、人声和环境声，音乐克制后置。"
+      }
+    },
+    {
+      "scene_id": "scene_005",
+      "time_range": "01:14-01:32",
+      "narrative_role": "technology_showcase",
+      "frames": [
+        {
+          "frame_id": "scene_005_f001",
+          "timestamp": "01:05.2",
+          "path": "frames/scene_005/scene_005_f001.jpg",
+          "visual_note": "洁净车间、设备维护通道、质量实验室、跨国客户会议室中的半导体工艺工程师出现在画面里，承担“让技术或系统能力自然入场”的叙事功能。"
+        },
+        {
+          "frame_id": "scene_005_f002",
+          "timestamp": "01:10.4",
+          "path": "frames/scene_005/scene_005_f002.jpg",
+          "visual_note": "画面强调洁净服、晶圆盒、缺陷标记、复核记录，把先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付转化为可观察的现场细节。"
+        }
+      ],
+      "package": {
+        "package_id": "pkg_scene_005",
+        "summary": "让制程监控系统、缺陷检测平台和设备预测维护模型作为解决路径自然出现。",
+        "visible_entities": [
+          "半导体工艺工程师",
+          "制程监控系统、缺陷检测平台和设备预测维护模型",
+          "洁净服、晶圆盒、缺陷标记、复核记录",
+          "操作界面",
+          "确认提示"
+        ],
+        "actions": [
+          "打开系统",
+          "验证数据",
+          "确认流程"
+        ],
+        "setting": "洁净车间、设备维护通道、质量实验室、跨国客户会议室",
+        "audio_hint": "保留同期声、人声和环境声，音乐克制后置。"
+      }
+    },
+    {
+      "scene_id": "scene_006",
+      "time_range": "01:32-01:51",
+      "narrative_role": "scale_reveal",
+      "frames": [
+        {
+          "frame_id": "scene_006_f001",
+          "timestamp": "01:20.2",
+          "path": "frames/scene_006/scene_006_f001.jpg",
+          "visual_note": "洁净车间、设备维护通道、质量实验室、跨国客户会议室中的半导体工艺工程师出现在画面里，承担“揭示世界级规模和网络能力”的叙事功能。"
+        },
+        {
+          "frame_id": "scene_006_f002",
+          "timestamp": "01:25.4",
+          "path": "frames/scene_006/scene_006_f002.jpg",
+          "visual_note": "画面强调洁净服、晶圆盒、缺陷标记、复核记录，把先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付转化为可观察的现场细节。"
+        }
+      ],
+      "package": {
+        "package_id": "pkg_scene_006",
+        "summary": "揭示世界500强企业的网络、系统和跨地域能力。",
+        "visible_entities": [
+          "半导体工艺工程师",
+          "制程监控系统、缺陷检测平台和设备预测维护模型",
+          "洁净服、晶圆盒、缺陷标记、复核记录",
+          "全球地图",
+          "多地团队",
+          "数据看板"
+        ],
+        "actions": [
+          "多地连线",
+          "同步信息",
+          "网络展开"
+        ],
+        "setting": "洁净车间、设备维护通道、质量实验室、跨国客户会议室",
+        "audio_hint": "保留同期声、人声和环境声，音乐克制后置。"
+      }
+    },
+    {
+      "scene_id": "scene_007",
+      "time_range": "01:51-02:10",
+      "narrative_role": "value_expression",
+      "frames": [
+        {
+          "frame_id": "scene_007_f001",
+          "timestamp": "01:35.2",
+          "path": "frames/scene_007/scene_007_f001.jpg",
+          "visual_note": "洁净车间、设备维护通道、质量实验室、跨国客户会议室中的半导体工艺工程师出现在画面里，承担“通过具体互动建立信任和价值”的叙事功能。"
+        },
+        {
+          "frame_id": "scene_007_f002",
+          "timestamp": "01:40.4",
+          "path": "frames/scene_007/scene_007_f002.jpg",
+          "visual_note": "画面强调洁净服、晶圆盒、缺陷标记、复核记录，把先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付转化为可观察的现场细节。"
+        }
+      ],
+      "package": {
+        "package_id": "pkg_scene_007",
+        "summary": "用具体沟通和责任动作表达精密与可信赖。",
+        "visible_entities": [
+          "半导体工艺工程师",
+          "制程监控系统、缺陷检测平台和设备预测维护模型",
+          "洁净服、晶圆盒、缺陷标记、复核记录",
+          "面对面沟通",
+          "记录动作",
+          "确认反馈"
+        ],
+        "actions": [
+          "面对面解释",
+          "认真记录",
+          "确认承诺"
+        ],
+        "setting": "洁净车间、设备维护通道、质量实验室、跨国客户会议室",
+        "audio_hint": "保留同期声、人声和环境声，音乐克制后置。"
+      }
+    },
+    {
+      "scene_id": "scene_008",
+      "time_range": "02:10-02:28",
+      "narrative_role": "outcome",
+      "frames": [
+        {
+          "frame_id": "scene_008_f001",
+          "timestamp": "01:50.2",
+          "path": "frames/scene_008/scene_008_f001.jpg",
+          "visual_note": "洁净车间、设备维护通道、质量实验室、跨国客户会议室中的半导体工艺工程师出现在画面里，承担“呈现结果落地但避免夸大”的叙事功能。"
+        },
+        {
+          "frame_id": "scene_008_f002",
+          "timestamp": "01:55.4",
+          "path": "frames/scene_008/scene_008_f002.jpg",
+          "visual_note": "画面强调洁净服、晶圆盒、缺陷标记、复核记录，把先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付转化为可观察的现场细节。"
+        }
+      ],
+      "package": {
+        "package_id": "pkg_scene_008",
+        "summary": "呈现异常被提前发现，客户生产计划保持稳定，团队把风险处理在交付之前，但不过度承诺。",
+        "visible_entities": [
+          "半导体工艺工程师",
+          "制程监控系统、缺陷检测平台和设备预测维护模型",
+          "洁净服、晶圆盒、缺陷标记、复核记录",
+          "服务对象",
+          "结果记录",
+          "稳定表情"
+        ],
+        "actions": [
+          "方案落地",
+          "用户点头",
+          "情绪稳定"
+        ],
+        "setting": "洁净车间、设备维护通道、质量实验室、跨国客户会议室",
+        "audio_hint": "保留同期声、人声和环境声，音乐克制后置。"
+      }
+    },
+    {
+      "scene_id": "scene_009",
+      "time_range": "02:28-02:46",
+      "narrative_role": "growth",
+      "frames": [
+        {
+          "frame_id": "scene_009_f001",
+          "timestamp": "02:05.2",
+          "path": "frames/scene_009/scene_009_f001.jpg",
+          "visual_note": "洁净车间、设备维护通道、质量实验室、跨国客户会议室中的半导体工艺工程师出现在画面里，承担“表现员工、客户或系统的成长”的叙事功能。"
+        },
+        {
+          "frame_id": "scene_009_f002",
+          "timestamp": "02:10.4",
+          "path": "frames/scene_009/scene_009_f002.jpg",
+          "visual_note": "画面强调洁净服、晶圆盒、缺陷标记、复核记录，把先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付转化为可观察的现场细节。"
+        }
+      ],
+      "package": {
+        "package_id": "pkg_scene_009",
+        "summary": "把长期主义和改进动作落在具体人物身上。",
+        "visible_entities": [
+          "半导体工艺工程师",
+          "制程监控系统、缺陷检测平台和设备预测维护模型",
+          "洁净服、晶圆盒、缺陷标记、复核记录",
+          "年轻员工",
+          "反馈信息",
+          "版本记录"
+        ],
+        "actions": [
+          "接收反馈",
+          "复盘问题",
+          "继续改进"
+        ],
+        "setting": "洁净车间、设备维护通道、质量实验室、跨国客户会议室",
+        "audio_hint": "保留同期声、人声和环境声，音乐克制后置。"
+      }
+    },
+    {
+      "scene_id": "scene_010",
+      "time_range": "02:46-03:05",
+      "narrative_role": "ending",
+      "frames": [
+        {
+          "frame_id": "scene_010_f001",
+          "timestamp": "02:20.2",
+          "path": "frames/scene_010/scene_010_f001.jpg",
+          "visual_note": "洁净车间、设备维护通道、质量实验室、跨国客户会议室中的半导体工艺工程师出现在画面里，承担“收束主题并完成品牌表达”的叙事功能。"
+        },
+        {
+          "frame_id": "scene_010_f002",
+          "timestamp": "02:25.4",
+          "path": "frames/scene_010/scene_010_f002.jpg",
+          "visual_note": "画面强调洁净服、晶圆盒、缺陷标记、复核记录，把先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付转化为可观察的现场细节。"
+        }
+      ],
+      "package": {
+        "package_id": "pkg_scene_010",
+        "summary": "回到核心场景，完成良率之外的品牌收束。",
+        "visible_entities": [
+          "半导体工艺工程师",
+          "制程监控系统、缺陷检测平台和设备预测维护模型",
+          "洁净服、晶圆盒、缺陷标记、复核记录",
+          "品牌字幕",
+          "回到开场地点"
+        ],
+        "actions": [
+          "回到起点",
+          "主题字幕出现",
+          "音乐收束"
+        ],
+        "setting": "洁净车间、设备维护通道、质量实验室、跨国客户会议室",
+        "audio_hint": "保留同期声、人声和环境声，音乐克制后置。"
+      }
+    }
+  ]
+}

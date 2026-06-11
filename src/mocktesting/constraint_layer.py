@@ -5,7 +5,7 @@ import re
 from pathlib import Path
 from typing import Any
 
-from mocktesting.eval_input_generator import STAGE_WORDS
+from mocktesting.eval_input_generator import STAGE_WORDS, canonical_stage
 
 DEFAULT_CONSTRAINT_PROFILE_PATH = Path(__file__).resolve().parent / "eval_outputs" / "mock_constraint_profile.json"
 
@@ -62,9 +62,9 @@ def score_constraints(
 ) -> tuple[float, dict[str, list[str]]]:
     active_profile = profile or DEFAULT_PROFILE
     weights = active_profile.get("weights", {})
-    item_stage = item_metadata.get("script_stage", "")
-    desired = set(query_constraints.get("desired_stage", []))
-    forbidden = set(query_constraints.get("forbidden_stage", []))
+    item_stage = canonical_stage(item_metadata.get("script_stage", ""))
+    desired = {canonical_stage(stage) for stage in query_constraints.get("desired_stage", [])}
+    forbidden = {canonical_stage(stage) for stage in query_constraints.get("forbidden_stage", [])}
     negative_constraints = query_constraints.get("negative_constraints", [])
     score = 0.0
     hits: dict[str, list[str]] = {}
@@ -106,9 +106,10 @@ def write_constraint_profile(path: Path, profile: dict[str, Any]) -> None:
 def stage_alias_map(profile: dict[str, Any]) -> dict[str, str]:
     aliases: dict[str, str] = {}
     for stage, word in STAGE_WORDS.items():
-        aliases[word] = stage
-        aliases[stage] = stage
-        aliases[stage.replace("_", " ")] = stage
+        canonical = canonical_stage(stage)
+        aliases[word] = canonical
+        aliases[stage] = canonical
+        aliases[stage.replace("_", " ")] = canonical
     aliases.update(profile.get("stage_aliases", {}))
     return aliases
 

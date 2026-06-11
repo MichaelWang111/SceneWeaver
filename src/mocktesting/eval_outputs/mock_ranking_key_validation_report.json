@@ -1,0 +1,1520 @@
+{
+  "method": "mock_ranking_key_validation",
+  "split": "all",
+  "case_count": 60,
+  "top_k": 10,
+  "ranking_keys": {
+    "final_score": {
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 1.0,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0,
+          "forbidden_stage_violation_at_1": 0.0,
+          "forbidden_stage_violation_at_3": 0.0,
+          "forbidden_stage_violation_at_10": 0.0,
+          "desired_stage_hit_at_1": 1.0,
+          "desired_stage_hit_at_3": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0,
+            "forbidden_stage_violation_at_1": 0.0,
+            "forbidden_stage_violation_at_3": 0.0,
+            "forbidden_stage_violation_at_10": 0.0,
+            "desired_stage_hit_at_1": 0.0,
+            "desired_stage_hit_at_3": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0,
+            "forbidden_stage_violation_at_1": 0.0,
+            "forbidden_stage_violation_at_3": 0.0,
+            "forbidden_stage_violation_at_10": 0.0,
+            "desired_stage_hit_at_1": 0.0,
+            "desired_stage_hit_at_3": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0,
+            "forbidden_stage_violation_at_1": 0.0,
+            "forbidden_stage_violation_at_3": 0.0,
+            "forbidden_stage_violation_at_10": 0.0,
+            "desired_stage_hit_at_1": 1.0,
+            "desired_stage_hit_at_3": 1.0
+          }
+        }
+      },
+      "case_count": 60
+    },
+    "embedding_only": {
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 1.0,
+          "hard_negative_expected_prefer_margin_positive_rate": 0.4,
+          "forbidden_stage_violation_at_1": 0.3,
+          "forbidden_stage_violation_at_3": 0.75,
+          "forbidden_stage_violation_at_10": 1.0,
+          "desired_stage_hit_at_1": 0.2,
+          "desired_stage_hit_at_3": 0.8
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0,
+            "forbidden_stage_violation_at_1": 0.0,
+            "forbidden_stage_violation_at_3": 0.0,
+            "forbidden_stage_violation_at_10": 0.0,
+            "desired_stage_hit_at_1": 0.0,
+            "desired_stage_hit_at_3": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0,
+            "forbidden_stage_violation_at_1": 0.0,
+            "forbidden_stage_violation_at_3": 0.0,
+            "forbidden_stage_violation_at_10": 0.0,
+            "desired_stage_hit_at_1": 0.0,
+            "desired_stage_hit_at_3": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.4,
+            "forbidden_stage_violation_at_1": 0.3,
+            "forbidden_stage_violation_at_3": 0.75,
+            "forbidden_stage_violation_at_10": 1.0,
+            "desired_stage_hit_at_1": 0.2,
+            "desired_stage_hit_at_3": 0.8
+          }
+        }
+      },
+      "case_count": 60
+    },
+    "script_use_only": {
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.925,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 0.954167,
+          "hard_negative_expected_prefer_margin_positive_rate": 0.9,
+          "forbidden_stage_violation_at_1": 0.1,
+          "forbidden_stage_violation_at_3": 0.6,
+          "forbidden_stage_violation_at_10": 1.0,
+          "desired_stage_hit_at_1": 0.85,
+          "desired_stage_hit_at_3": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0,
+            "forbidden_stage_violation_at_1": 0.0,
+            "forbidden_stage_violation_at_3": 0.0,
+            "forbidden_stage_violation_at_10": 0.0,
+            "desired_stage_hit_at_1": 0.0,
+            "desired_stage_hit_at_3": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 0.85,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 0.908333,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0,
+            "forbidden_stage_violation_at_1": 0.0,
+            "forbidden_stage_violation_at_3": 0.0,
+            "forbidden_stage_violation_at_10": 0.0,
+            "desired_stage_hit_at_1": 0.0,
+            "desired_stage_hit_at_3": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.9,
+            "forbidden_stage_violation_at_1": 0.1,
+            "forbidden_stage_violation_at_3": 0.6,
+            "forbidden_stage_violation_at_10": 1.0,
+            "desired_stage_hit_at_1": 0.85,
+            "desired_stage_hit_at_3": 1.0
+          }
+        }
+      },
+      "case_count": 60
+    },
+    "visual_tags_only": {
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.575,
+          "recall_at_3": 0.625,
+          "recall_at_10": 0.85,
+          "mrr": 0.634366,
+          "hard_negative_expected_prefer_margin_positive_rate": 0.05,
+          "forbidden_stage_violation_at_1": 0.65,
+          "forbidden_stage_violation_at_3": 0.8,
+          "forbidden_stage_violation_at_10": 1.0,
+          "desired_stage_hit_at_1": 0.0,
+          "desired_stage_hit_at_3": 0.25
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.35,
+            "recall_at_3": 0.45,
+            "recall_at_10": 0.7,
+            "mrr": 0.436113,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0,
+            "forbidden_stage_violation_at_1": 0.0,
+            "forbidden_stage_violation_at_3": 0.0,
+            "forbidden_stage_violation_at_10": 0.0,
+            "desired_stage_hit_at_1": 0.0,
+            "desired_stage_hit_at_3": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 0.8,
+            "recall_at_3": 0.8,
+            "recall_at_10": 1.0,
+            "mrr": 0.832619,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0,
+            "forbidden_stage_violation_at_1": 0.0,
+            "forbidden_stage_violation_at_3": 0.0,
+            "forbidden_stage_violation_at_10": 0.0,
+            "desired_stage_hit_at_1": 0.0,
+            "desired_stage_hit_at_3": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.05,
+            "forbidden_stage_violation_at_1": 0.65,
+            "forbidden_stage_violation_at_3": 0.8,
+            "forbidden_stage_violation_at_10": 1.0,
+            "desired_stage_hit_at_1": 0.0,
+            "desired_stage_hit_at_3": 0.25
+          }
+        }
+      },
+      "case_count": 60
+    },
+    "experience_only": {
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.65,
+          "recall_at_3": 0.775,
+          "recall_at_10": 0.85,
+          "mrr": 0.732918,
+          "hard_negative_expected_prefer_margin_positive_rate": 0.3,
+          "forbidden_stage_violation_at_1": 0.2,
+          "forbidden_stage_violation_at_3": 0.55,
+          "forbidden_stage_violation_at_10": 0.75,
+          "desired_stage_hit_at_1": 0.1,
+          "desired_stage_hit_at_3": 0.15
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 0.7,
+            "recall_at_3": 0.75,
+            "recall_at_10": 0.8,
+            "mrr": 0.748627,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0,
+            "forbidden_stage_violation_at_1": 0.0,
+            "forbidden_stage_violation_at_3": 0.0,
+            "forbidden_stage_violation_at_10": 0.0,
+            "desired_stage_hit_at_1": 0.0,
+            "desired_stage_hit_at_3": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 0.6,
+            "recall_at_3": 0.8,
+            "recall_at_10": 0.9,
+            "mrr": 0.717209,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0,
+            "forbidden_stage_violation_at_1": 0.0,
+            "forbidden_stage_violation_at_3": 0.0,
+            "forbidden_stage_violation_at_10": 0.0,
+            "desired_stage_hit_at_1": 0.0,
+            "desired_stage_hit_at_3": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.3,
+            "forbidden_stage_violation_at_1": 0.2,
+            "forbidden_stage_violation_at_3": 0.55,
+            "forbidden_stage_violation_at_10": 0.75,
+            "desired_stage_hit_at_1": 0.1,
+            "desired_stage_hit_at_3": 0.15
+          }
+        }
+      },
+      "case_count": 60
+    },
+    "combined_only": {
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 0.975,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 0.9875,
+          "hard_negative_expected_prefer_margin_positive_rate": 0.6,
+          "forbidden_stage_violation_at_1": 0.3,
+          "forbidden_stage_violation_at_3": 0.8,
+          "forbidden_stage_violation_at_10": 1.0,
+          "desired_stage_hit_at_1": 0.6,
+          "desired_stage_hit_at_3": 0.95
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0,
+            "forbidden_stage_violation_at_1": 0.0,
+            "forbidden_stage_violation_at_3": 0.0,
+            "forbidden_stage_violation_at_10": 0.0,
+            "desired_stage_hit_at_1": 0.0,
+            "desired_stage_hit_at_3": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 0.95,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 0.975,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0,
+            "forbidden_stage_violation_at_1": 0.0,
+            "forbidden_stage_violation_at_3": 0.0,
+            "forbidden_stage_violation_at_10": 0.0,
+            "desired_stage_hit_at_1": 0.0,
+            "desired_stage_hit_at_3": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.6,
+            "forbidden_stage_violation_at_1": 0.3,
+            "forbidden_stage_violation_at_3": 0.8,
+            "forbidden_stage_violation_at_10": 1.0,
+            "desired_stage_hit_at_1": 0.6,
+            "desired_stage_hit_at_3": 0.95
+          }
+        }
+      },
+      "case_count": 60
+    },
+    "constraints_only": {
+      "metrics": {
+        "overall": {
+          "count": 60,
+          "recall_at_1": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_10": 1.0,
+          "mrr": 1.0,
+          "hard_negative_expected_prefer_margin_positive_rate": 1.0,
+          "forbidden_stage_violation_at_1": 0.0,
+          "forbidden_stage_violation_at_3": 0.0,
+          "forbidden_stage_violation_at_10": 0.0,
+          "desired_stage_hit_at_1": 1.0,
+          "desired_stage_hit_at_3": 1.0
+        },
+        "by_case_type": {
+          "simple_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0,
+            "forbidden_stage_violation_at_1": 0.0,
+            "forbidden_stage_violation_at_3": 0.0,
+            "forbidden_stage_violation_at_10": 0.0,
+            "desired_stage_hit_at_1": 0.0,
+            "desired_stage_hit_at_3": 0.0
+          },
+          "hard_positive": {
+            "count": 20,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_10": 1.0,
+            "mrr": 1.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 0.0,
+            "forbidden_stage_violation_at_1": 0.0,
+            "forbidden_stage_violation_at_3": 0.0,
+            "forbidden_stage_violation_at_10": 0.0,
+            "desired_stage_hit_at_1": 0.0,
+            "desired_stage_hit_at_3": 0.0
+          },
+          "hard_negative": {
+            "count": 20,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_10": 0.0,
+            "mrr": 0.0,
+            "hard_negative_expected_prefer_margin_positive_rate": 1.0,
+            "forbidden_stage_violation_at_1": 0.0,
+            "forbidden_stage_violation_at_3": 0.0,
+            "forbidden_stage_violation_at_10": 0.0,
+            "desired_stage_hit_at_1": 1.0,
+            "desired_stage_hit_at_3": 1.0
+          }
+        }
+      },
+      "case_count": 60
+    }
+  },
+  "pairwise": {
+    "positive_vs_random": {
+      "final_score": {
+        "count": 40,
+        "correct": 40,
+        "skipped_pairs": 0,
+        "accuracy": 1.0,
+        "mean_margin": 0.233409
+      },
+      "embedding_only": {
+        "count": 40,
+        "correct": 40,
+        "skipped_pairs": 0,
+        "accuracy": 1.0,
+        "mean_margin": 0.233409
+      },
+      "script_use_only": {
+        "count": 40,
+        "correct": 40,
+        "skipped_pairs": 0,
+        "accuracy": 1.0,
+        "mean_margin": 0.118071
+      },
+      "visual_tags_only": {
+        "count": 40,
+        "correct": 40,
+        "skipped_pairs": 0,
+        "accuracy": 1.0,
+        "mean_margin": 0.038783
+      },
+      "experience_only": {
+        "count": 40,
+        "correct": 40,
+        "skipped_pairs": 0,
+        "accuracy": 1.0,
+        "mean_margin": 0.049533
+      },
+      "combined_only": {
+        "count": 40,
+        "correct": 40,
+        "skipped_pairs": 0,
+        "accuracy": 1.0,
+        "mean_margin": 0.027022
+      },
+      "constraints_only": {
+        "count": 40,
+        "correct": 0,
+        "skipped_pairs": 0,
+        "accuracy": 0.0,
+        "mean_margin": 0.0
+      }
+    },
+    "positive_vs_wrong_stage": {
+      "final_score": {
+        "count": 35,
+        "correct": 35,
+        "skipped_pairs": 0,
+        "accuracy": 1.0,
+        "mean_margin": 0.066061
+      },
+      "embedding_only": {
+        "count": 35,
+        "correct": 35,
+        "skipped_pairs": 0,
+        "accuracy": 1.0,
+        "mean_margin": 0.066061
+      },
+      "script_use_only": {
+        "count": 35,
+        "correct": 35,
+        "skipped_pairs": 0,
+        "accuracy": 1.0,
+        "mean_margin": 0.040665
+      },
+      "visual_tags_only": {
+        "count": 35,
+        "correct": 23,
+        "skipped_pairs": 0,
+        "accuracy": 0.657143,
+        "mean_margin": 0.005436
+      },
+      "experience_only": {
+        "count": 35,
+        "correct": 31,
+        "skipped_pairs": 0,
+        "accuracy": 0.885714,
+        "mean_margin": 0.010009
+      },
+      "combined_only": {
+        "count": 35,
+        "correct": 35,
+        "skipped_pairs": 0,
+        "accuracy": 1.0,
+        "mean_margin": 0.009951
+      },
+      "constraints_only": {
+        "count": 35,
+        "correct": 0,
+        "skipped_pairs": 0,
+        "accuracy": 0.0,
+        "mean_margin": 0.0
+      }
+    },
+    "expected_prefer_vs_forbidden": {
+      "final_score": {
+        "count": 20,
+        "correct": 20,
+        "skipped_pairs": 0,
+        "accuracy": 1.0,
+        "mean_margin": 0.160004
+      },
+      "embedding_only": {
+        "count": 20,
+        "correct": 8,
+        "skipped_pairs": 0,
+        "accuracy": 0.4,
+        "mean_margin": 4e-06
+      },
+      "script_use_only": {
+        "count": 20,
+        "correct": 18,
+        "skipped_pairs": 0,
+        "accuracy": 0.9,
+        "mean_margin": 0.017876
+      },
+      "visual_tags_only": {
+        "count": 20,
+        "correct": 1,
+        "skipped_pairs": 0,
+        "accuracy": 0.05,
+        "mean_margin": -0.014636
+      },
+      "experience_only": {
+        "count": 20,
+        "correct": 6,
+        "skipped_pairs": 0,
+        "accuracy": 0.3,
+        "mean_margin": -0.004116
+      },
+      "combined_only": {
+        "count": 20,
+        "correct": 12,
+        "skipped_pairs": 0,
+        "accuracy": 0.6,
+        "mean_margin": 0.00088
+      },
+      "constraints_only": {
+        "count": 20,
+        "correct": 20,
+        "skipped_pairs": 0,
+        "accuracy": 1.0,
+        "mean_margin": 0.16
+      }
+    }
+  },
+  "margin": {
+    "count": 60,
+    "low_confidence_rate": 0.066667,
+    "medium_confidence_rate": 0.233333,
+    "high_confidence_rate": 0.7,
+    "mean_margin": 0.085959,
+    "mean_top1_top2_margin": 0.045885,
+    "mean_expected_prefer_minus_forbidden_margin": 0.160004,
+    "cases": [
+      {
+        "case_id": "simple_positive__enterprise_healthtech_story_001__scene_001",
+        "case_type": "simple_positive",
+        "margin": 0.054417,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_story_001::scene_001::ret_scene_001"
+      },
+      {
+        "case_id": "hard_positive__enterprise_healthtech_story_001__scene_001",
+        "case_type": "hard_positive",
+        "margin": 0.019006,
+        "confidence": "low",
+        "top1_item_id": "enterprise_healthtech_story_001::scene_001::ret_scene_001"
+      },
+      {
+        "case_id": "hard_negative__enterprise_healthtech_story_001__scene_001",
+        "case_type": "hard_negative",
+        "margin": 0.177889,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_story_001::scene_002::ret_scene_002"
+      },
+      {
+        "case_id": "simple_positive__enterprise_healthtech_story_001__scene_002",
+        "case_type": "simple_positive",
+        "margin": 0.052594,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_story_001::scene_002::ret_scene_002"
+      },
+      {
+        "case_id": "hard_positive__enterprise_healthtech_story_001__scene_002",
+        "case_type": "hard_positive",
+        "margin": 0.038998,
+        "confidence": "medium",
+        "top1_item_id": "enterprise_healthtech_story_001::scene_002::ret_scene_002"
+      },
+      {
+        "case_id": "hard_negative__enterprise_healthtech_story_001__scene_002",
+        "case_type": "hard_negative",
+        "margin": 0.144816,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_story_001::scene_001::ret_scene_001"
+      },
+      {
+        "case_id": "simple_positive__enterprise_healthtech_story_001__scene_003",
+        "case_type": "simple_positive",
+        "margin": 0.085553,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_story_001::scene_003::ret_scene_003"
+      },
+      {
+        "case_id": "hard_positive__enterprise_healthtech_story_001__scene_003",
+        "case_type": "hard_positive",
+        "margin": 0.031943,
+        "confidence": "medium",
+        "top1_item_id": "enterprise_healthtech_story_001::scene_003::ret_scene_003"
+      },
+      {
+        "case_id": "hard_negative__enterprise_healthtech_story_001__scene_003",
+        "case_type": "hard_negative",
+        "margin": 0.129256,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_story_001::scene_001::ret_scene_001"
+      },
+      {
+        "case_id": "simple_positive__enterprise_healthtech_story_001__scene_004",
+        "case_type": "simple_positive",
+        "margin": 0.055129,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_story_001::scene_004::ret_scene_004"
+      },
+      {
+        "case_id": "hard_positive__enterprise_healthtech_story_001__scene_004",
+        "case_type": "hard_positive",
+        "margin": 0.021982,
+        "confidence": "medium",
+        "top1_item_id": "enterprise_healthtech_story_001::scene_004::ret_scene_004"
+      },
+      {
+        "case_id": "hard_negative__enterprise_healthtech_story_001__scene_004",
+        "case_type": "hard_negative",
+        "margin": 0.101744,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_story_001::scene_001::ret_scene_001"
+      },
+      {
+        "case_id": "simple_positive__enterprise_healthtech_story_001__scene_005",
+        "case_type": "simple_positive",
+        "margin": 0.065094,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_story_001::scene_005::ret_scene_005"
+      },
+      {
+        "case_id": "hard_positive__enterprise_healthtech_story_001__scene_005",
+        "case_type": "hard_positive",
+        "margin": 0.023965,
+        "confidence": "medium",
+        "top1_item_id": "enterprise_healthtech_story_001::scene_005::ret_scene_005"
+      },
+      {
+        "case_id": "hard_negative__enterprise_healthtech_story_001__scene_005",
+        "case_type": "hard_negative",
+        "margin": 0.100436,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_documentary_002::scene_001::ret_scene_001"
+      },
+      {
+        "case_id": "simple_positive__enterprise_healthtech_story_001__scene_006",
+        "case_type": "simple_positive",
+        "margin": 0.034405,
+        "confidence": "medium",
+        "top1_item_id": "enterprise_healthtech_story_001::scene_006::ret_scene_006"
+      },
+      {
+        "case_id": "hard_positive__enterprise_healthtech_story_001__scene_006",
+        "case_type": "hard_positive",
+        "margin": 0.042033,
+        "confidence": "medium",
+        "top1_item_id": "enterprise_healthtech_story_001::scene_006::ret_scene_006"
+      },
+      {
+        "case_id": "hard_negative__enterprise_healthtech_story_001__scene_006",
+        "case_type": "hard_negative",
+        "margin": 0.175011,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_story_001::scene_001::ret_scene_001"
+      },
+      {
+        "case_id": "simple_positive__enterprise_healthtech_story_001__scene_007",
+        "case_type": "simple_positive",
+        "margin": 0.030146,
+        "confidence": "medium",
+        "top1_item_id": "enterprise_healthtech_story_001::scene_007::ret_scene_007"
+      },
+      {
+        "case_id": "hard_positive__enterprise_healthtech_story_001__scene_007",
+        "case_type": "hard_positive",
+        "margin": 0.017289,
+        "confidence": "low",
+        "top1_item_id": "enterprise_healthtech_story_001::scene_007::ret_scene_007"
+      },
+      {
+        "case_id": "hard_negative__enterprise_healthtech_story_001__scene_007",
+        "case_type": "hard_negative",
+        "margin": 0.172644,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_story_001::scene_001::ret_scene_001"
+      },
+      {
+        "case_id": "simple_positive__enterprise_healthtech_story_001__scene_008",
+        "case_type": "simple_positive",
+        "margin": 0.052757,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_story_001::scene_008::ret_scene_008"
+      },
+      {
+        "case_id": "hard_positive__enterprise_healthtech_story_001__scene_008",
+        "case_type": "hard_positive",
+        "margin": 0.020536,
+        "confidence": "medium",
+        "top1_item_id": "enterprise_healthtech_story_001::scene_008::ret_scene_008"
+      },
+      {
+        "case_id": "hard_negative__enterprise_healthtech_story_001__scene_008",
+        "case_type": "hard_negative",
+        "margin": 0.155647,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_story_001::scene_001::ret_scene_001"
+      },
+      {
+        "case_id": "simple_positive__enterprise_healthtech_story_001__scene_009",
+        "case_type": "simple_positive",
+        "margin": 0.067409,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_story_001::scene_009::ret_scene_009"
+      },
+      {
+        "case_id": "hard_positive__enterprise_healthtech_story_001__scene_009",
+        "case_type": "hard_positive",
+        "margin": 0.029789,
+        "confidence": "medium",
+        "top1_item_id": "enterprise_healthtech_story_001::scene_009::ret_scene_009"
+      },
+      {
+        "case_id": "hard_negative__enterprise_healthtech_story_001__scene_009",
+        "case_type": "hard_negative",
+        "margin": 0.114262,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_story_001::scene_001::ret_scene_001"
+      },
+      {
+        "case_id": "simple_positive__enterprise_healthtech_story_001__scene_010",
+        "case_type": "simple_positive",
+        "margin": 0.045333,
+        "confidence": "medium",
+        "top1_item_id": "enterprise_healthtech_story_001::scene_010::ret_scene_010"
+      },
+      {
+        "case_id": "hard_positive__enterprise_healthtech_story_001__scene_010",
+        "case_type": "hard_positive",
+        "margin": 0.016246,
+        "confidence": "low",
+        "top1_item_id": "enterprise_healthtech_story_001::scene_010::ret_scene_010"
+      },
+      {
+        "case_id": "hard_negative__enterprise_healthtech_story_001__scene_010",
+        "case_type": "hard_negative",
+        "margin": 0.248907,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_story_001::scene_001::ret_scene_001"
+      },
+      {
+        "case_id": "simple_positive__enterprise_healthtech_documentary_002__scene_001",
+        "case_type": "simple_positive",
+        "margin": 0.006484,
+        "confidence": "low",
+        "top1_item_id": "enterprise_healthtech_documentary_002::scene_001::ret_scene_001"
+      },
+      {
+        "case_id": "hard_positive__enterprise_healthtech_documentary_002__scene_001",
+        "case_type": "hard_positive",
+        "margin": 0.026328,
+        "confidence": "medium",
+        "top1_item_id": "enterprise_healthtech_documentary_002::scene_001::ret_scene_001"
+      },
+      {
+        "case_id": "hard_negative__enterprise_healthtech_documentary_002__scene_001",
+        "case_type": "hard_negative",
+        "margin": 0.21597,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_documentary_002::scene_002::ret_scene_002"
+      },
+      {
+        "case_id": "simple_positive__enterprise_healthtech_documentary_002__scene_002",
+        "case_type": "simple_positive",
+        "margin": 0.049869,
+        "confidence": "medium",
+        "top1_item_id": "enterprise_healthtech_documentary_002::scene_002::ret_scene_002"
+      },
+      {
+        "case_id": "hard_positive__enterprise_healthtech_documentary_002__scene_002",
+        "case_type": "hard_positive",
+        "margin": 0.025172,
+        "confidence": "medium",
+        "top1_item_id": "enterprise_healthtech_documentary_002::scene_002::ret_scene_002"
+      },
+      {
+        "case_id": "hard_negative__enterprise_healthtech_documentary_002__scene_002",
+        "case_type": "hard_negative",
+        "margin": 0.143021,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_documentary_002::scene_001::ret_scene_001"
+      },
+      {
+        "case_id": "simple_positive__enterprise_healthtech_documentary_002__scene_003",
+        "case_type": "simple_positive",
+        "margin": 0.067814,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_documentary_002::scene_003::ret_scene_003"
+      },
+      {
+        "case_id": "hard_positive__enterprise_healthtech_documentary_002__scene_003",
+        "case_type": "hard_positive",
+        "margin": 0.070666,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_documentary_002::scene_003::ret_scene_003"
+      },
+      {
+        "case_id": "hard_negative__enterprise_healthtech_documentary_002__scene_003",
+        "case_type": "hard_negative",
+        "margin": 0.154432,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_documentary_002::scene_001::ret_scene_001"
+      },
+      {
+        "case_id": "simple_positive__enterprise_healthtech_documentary_002__scene_004",
+        "case_type": "simple_positive",
+        "margin": 0.05909,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_documentary_002::scene_004::ret_scene_004"
+      },
+      {
+        "case_id": "hard_positive__enterprise_healthtech_documentary_002__scene_004",
+        "case_type": "hard_positive",
+        "margin": 0.07513,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_documentary_002::scene_004::ret_scene_004"
+      },
+      {
+        "case_id": "hard_negative__enterprise_healthtech_documentary_002__scene_004",
+        "case_type": "hard_negative",
+        "margin": 0.171091,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_documentary_002::scene_001::ret_scene_001"
+      },
+      {
+        "case_id": "simple_positive__enterprise_healthtech_documentary_002__scene_005",
+        "case_type": "simple_positive",
+        "margin": 0.045374,
+        "confidence": "medium",
+        "top1_item_id": "enterprise_healthtech_documentary_002::scene_005::ret_scene_005"
+      },
+      {
+        "case_id": "hard_positive__enterprise_healthtech_documentary_002__scene_005",
+        "case_type": "hard_positive",
+        "margin": 0.053503,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_documentary_002::scene_005::ret_scene_005"
+      },
+      {
+        "case_id": "hard_negative__enterprise_healthtech_documentary_002__scene_005",
+        "case_type": "hard_negative",
+        "margin": 0.158377,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_documentary_002::scene_001::ret_scene_001"
+      },
+      {
+        "case_id": "simple_positive__enterprise_healthtech_documentary_002__scene_006",
+        "case_type": "simple_positive",
+        "margin": 0.100438,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_documentary_002::scene_006::ret_scene_006"
+      },
+      {
+        "case_id": "hard_positive__enterprise_healthtech_documentary_002__scene_006",
+        "case_type": "hard_positive",
+        "margin": 0.100807,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_documentary_002::scene_006::ret_scene_006"
+      },
+      {
+        "case_id": "hard_negative__enterprise_healthtech_documentary_002__scene_006",
+        "case_type": "hard_negative",
+        "margin": 0.203552,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_documentary_002::scene_001::ret_scene_001"
+      },
+      {
+        "case_id": "simple_positive__enterprise_healthtech_documentary_002__scene_007",
+        "case_type": "simple_positive",
+        "margin": 0.051659,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_documentary_002::scene_007::ret_scene_007"
+      },
+      {
+        "case_id": "hard_positive__enterprise_healthtech_documentary_002__scene_007",
+        "case_type": "hard_positive",
+        "margin": 0.053624,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_documentary_002::scene_007::ret_scene_007"
+      },
+      {
+        "case_id": "hard_negative__enterprise_healthtech_documentary_002__scene_007",
+        "case_type": "hard_negative",
+        "margin": 0.143155,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_documentary_002::scene_001::ret_scene_001"
+      },
+      {
+        "case_id": "simple_positive__enterprise_healthtech_documentary_002__scene_008",
+        "case_type": "simple_positive",
+        "margin": 0.069797,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_documentary_002::scene_008::ret_scene_008"
+      },
+      {
+        "case_id": "hard_positive__enterprise_healthtech_documentary_002__scene_008",
+        "case_type": "hard_positive",
+        "margin": 0.05878,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_documentary_002::scene_008::ret_scene_008"
+      },
+      {
+        "case_id": "hard_negative__enterprise_healthtech_documentary_002__scene_008",
+        "case_type": "hard_negative",
+        "margin": 0.144015,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_documentary_002::scene_001::ret_scene_001"
+      },
+      {
+        "case_id": "simple_positive__enterprise_healthtech_documentary_002__scene_009",
+        "case_type": "simple_positive",
+        "margin": 0.053358,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_documentary_002::scene_009::ret_scene_009"
+      },
+      {
+        "case_id": "hard_positive__enterprise_healthtech_documentary_002__scene_009",
+        "case_type": "hard_positive",
+        "margin": 0.067143,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_documentary_002::scene_009::ret_scene_009"
+      },
+      {
+        "case_id": "hard_negative__enterprise_healthtech_documentary_002__scene_009",
+        "case_type": "hard_negative",
+        "margin": 0.153082,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_documentary_002::scene_001::ret_scene_001"
+      },
+      {
+        "case_id": "simple_positive__enterprise_healthtech_documentary_002__scene_010",
+        "case_type": "simple_positive",
+        "margin": 0.065295,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_documentary_002::scene_010::ret_scene_010"
+      },
+      {
+        "case_id": "hard_positive__enterprise_healthtech_documentary_002__scene_010",
+        "case_type": "hard_positive",
+        "margin": 0.052485,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_documentary_002::scene_010::ret_scene_010"
+      },
+      {
+        "case_id": "hard_negative__enterprise_healthtech_documentary_002__scene_010",
+        "case_type": "hard_negative",
+        "margin": 0.192782,
+        "confidence": "high",
+        "top1_item_id": "enterprise_healthtech_documentary_002::scene_001::ret_scene_001"
+      }
+    ]
+  },
+  "llm_sample_judge": null,
+  "worst_cases": [
+    {
+      "case_id": "simple_positive__enterprise_healthtech_documentary_002__scene_001",
+      "case_type": "simple_positive",
+      "margin": 0.006484,
+      "confidence": "low",
+      "target_rank": 1,
+      "expected_prefer_rank": null,
+      "top_results": [
+        {
+          "item_id": "enterprise_healthtech_documentary_002::scene_001::ret_scene_001",
+          "score": 0.828709,
+          "script_stage": "opening"
+        },
+        {
+          "item_id": "enterprise_healthtech_documentary_002::scene_002::ret_scene_002",
+          "score": 0.822225,
+          "script_stage": "setup"
+        },
+        {
+          "item_id": "enterprise_healthtech_documentary_002::scene_003::ret_scene_003",
+          "score": 0.802599,
+          "script_stage": "character_intro"
+        }
+      ]
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_story_001__scene_010",
+      "case_type": "hard_positive",
+      "margin": 0.016246,
+      "confidence": "low",
+      "target_rank": 1,
+      "expected_prefer_rank": null,
+      "top_results": [
+        {
+          "item_id": "enterprise_healthtech_story_001::scene_010::ret_scene_010",
+          "score": 0.796379,
+          "script_stage": "ending"
+        },
+        {
+          "item_id": "enterprise_healthtech_documentary_002::scene_010::ret_scene_010",
+          "score": 0.780133,
+          "script_stage": "ending"
+        },
+        {
+          "item_id": "enterprise_healthtech_short_003::scene_010::ret_scene_010",
+          "score": 0.764612,
+          "script_stage": "ending"
+        }
+      ]
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_story_001__scene_007",
+      "case_type": "hard_positive",
+      "margin": 0.017289,
+      "confidence": "low",
+      "target_rank": 1,
+      "expected_prefer_rank": null,
+      "top_results": [
+        {
+          "item_id": "enterprise_healthtech_story_001::scene_007::ret_scene_007",
+          "score": 0.784638,
+          "script_stage": "value_expression"
+        },
+        {
+          "item_id": "enterprise_healthtech_documentary_002::scene_007::ret_scene_007",
+          "score": 0.767349,
+          "script_stage": "value_expression"
+        },
+        {
+          "item_id": "enterprise_healthtech_short_003::scene_007::ret_scene_007",
+          "score": 0.75378,
+          "script_stage": "value_expression"
+        }
+      ]
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_story_001__scene_001",
+      "case_type": "hard_positive",
+      "margin": 0.019006,
+      "confidence": "low",
+      "target_rank": 1,
+      "expected_prefer_rank": null,
+      "top_results": [
+        {
+          "item_id": "enterprise_healthtech_story_001::scene_001::ret_scene_001",
+          "score": 0.754053,
+          "script_stage": "opening"
+        },
+        {
+          "item_id": "enterprise_healthtech_short_003::scene_001::ret_scene_001",
+          "score": 0.735047,
+          "script_stage": "opening"
+        },
+        {
+          "item_id": "enterprise_healthtech_documentary_002::scene_001::ret_scene_001",
+          "score": 0.720873,
+          "script_stage": "opening"
+        }
+      ]
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_story_001__scene_008",
+      "case_type": "hard_positive",
+      "margin": 0.020536,
+      "confidence": "medium",
+      "target_rank": 1,
+      "expected_prefer_rank": null,
+      "top_results": [
+        {
+          "item_id": "enterprise_healthtech_story_001::scene_008::ret_scene_008",
+          "score": 0.776558,
+          "script_stage": "outcome"
+        },
+        {
+          "item_id": "enterprise_healthtech_documentary_002::scene_008::ret_scene_008",
+          "score": 0.756022,
+          "script_stage": "outcome"
+        },
+        {
+          "item_id": "enterprise_healthtech_short_003::scene_008::ret_scene_008",
+          "score": 0.743578,
+          "script_stage": "outcome"
+        }
+      ]
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_story_001__scene_004",
+      "case_type": "hard_positive",
+      "margin": 0.021982,
+      "confidence": "medium",
+      "target_rank": 1,
+      "expected_prefer_rank": null,
+      "top_results": [
+        {
+          "item_id": "enterprise_healthtech_story_001::scene_004::ret_scene_004",
+          "score": 0.765303,
+          "script_stage": "team_work"
+        },
+        {
+          "item_id": "enterprise_healthtech_documentary_002::scene_004::ret_scene_004",
+          "score": 0.743321,
+          "script_stage": "team_work"
+        },
+        {
+          "item_id": "enterprise_healthtech_short_003::scene_004::ret_scene_004",
+          "score": 0.704352,
+          "script_stage": "team_work"
+        }
+      ]
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_story_001__scene_005",
+      "case_type": "hard_positive",
+      "margin": 0.023965,
+      "confidence": "medium",
+      "target_rank": 1,
+      "expected_prefer_rank": null,
+      "top_results": [
+        {
+          "item_id": "enterprise_healthtech_story_001::scene_005::ret_scene_005",
+          "score": 0.768269,
+          "script_stage": "technology_showcase"
+        },
+        {
+          "item_id": "enterprise_healthtech_documentary_002::scene_005::ret_scene_005",
+          "score": 0.744304,
+          "script_stage": "technology_showcase"
+        },
+        {
+          "item_id": "enterprise_healthtech_short_003::scene_005::ret_scene_005",
+          "score": 0.72278,
+          "script_stage": "technology_showcase"
+        }
+      ]
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_documentary_002__scene_002",
+      "case_type": "hard_positive",
+      "margin": 0.025172,
+      "confidence": "medium",
+      "target_rank": 1,
+      "expected_prefer_rank": null,
+      "top_results": [
+        {
+          "item_id": "enterprise_healthtech_documentary_002::scene_002::ret_scene_002",
+          "score": 0.825384,
+          "script_stage": "setup"
+        },
+        {
+          "item_id": "enterprise_healthtech_documentary_002::scene_008::ret_scene_008",
+          "score": 0.800212,
+          "script_stage": "outcome"
+        },
+        {
+          "item_id": "enterprise_healthtech_documentary_002::scene_003::ret_scene_003",
+          "score": 0.792587,
+          "script_stage": "character_intro"
+        }
+      ]
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_documentary_002__scene_001",
+      "case_type": "hard_positive",
+      "margin": 0.026328,
+      "confidence": "medium",
+      "target_rank": 1,
+      "expected_prefer_rank": null,
+      "top_results": [
+        {
+          "item_id": "enterprise_healthtech_documentary_002::scene_001::ret_scene_001",
+          "score": 0.830579,
+          "script_stage": "opening"
+        },
+        {
+          "item_id": "enterprise_healthtech_documentary_002::scene_003::ret_scene_003",
+          "score": 0.804251,
+          "script_stage": "character_intro"
+        },
+        {
+          "item_id": "enterprise_healthtech_documentary_002::scene_002::ret_scene_002",
+          "score": 0.79413,
+          "script_stage": "setup"
+        }
+      ]
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_story_001__scene_009",
+      "case_type": "hard_positive",
+      "margin": 0.029789,
+      "confidence": "medium",
+      "target_rank": 1,
+      "expected_prefer_rank": null,
+      "top_results": [
+        {
+          "item_id": "enterprise_healthtech_story_001::scene_009::ret_scene_009",
+          "score": 0.787629,
+          "script_stage": "growth"
+        },
+        {
+          "item_id": "enterprise_healthtech_documentary_002::scene_009::ret_scene_009",
+          "score": 0.75784,
+          "script_stage": "growth"
+        },
+        {
+          "item_id": "enterprise_healthtech_short_003::scene_009::ret_scene_009",
+          "score": 0.735583,
+          "script_stage": "growth"
+        }
+      ]
+    },
+    {
+      "case_id": "simple_positive__enterprise_healthtech_story_001__scene_007",
+      "case_type": "simple_positive",
+      "margin": 0.030146,
+      "confidence": "medium",
+      "target_rank": 1,
+      "expected_prefer_rank": null,
+      "top_results": [
+        {
+          "item_id": "enterprise_healthtech_story_001::scene_007::ret_scene_007",
+          "score": 0.778642,
+          "script_stage": "value_expression"
+        },
+        {
+          "item_id": "enterprise_finance_business_001::scene_007::ret_scene_007",
+          "score": 0.748496,
+          "script_stage": "value_expression"
+        },
+        {
+          "item_id": "enterprise_healthtech_documentary_002::scene_007::ret_scene_007",
+          "score": 0.737401,
+          "script_stage": "value_expression"
+        }
+      ]
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_story_001__scene_003",
+      "case_type": "hard_positive",
+      "margin": 0.031943,
+      "confidence": "medium",
+      "target_rank": 1,
+      "expected_prefer_rank": null,
+      "top_results": [
+        {
+          "item_id": "enterprise_healthtech_story_001::scene_003::ret_scene_003",
+          "score": 0.764711,
+          "script_stage": "technology_entrance"
+        },
+        {
+          "item_id": "enterprise_healthtech_documentary_002::scene_005::ret_scene_005",
+          "score": 0.732768,
+          "script_stage": "technology_showcase"
+        },
+        {
+          "item_id": "enterprise_healthtech_short_003::scene_005::ret_scene_005",
+          "score": 0.726885,
+          "script_stage": "technology_showcase"
+        }
+      ]
+    },
+    {
+      "case_id": "simple_positive__enterprise_healthtech_story_001__scene_006",
+      "case_type": "simple_positive",
+      "margin": 0.034405,
+      "confidence": "medium",
+      "target_rank": 1,
+      "expected_prefer_rank": null,
+      "top_results": [
+        {
+          "item_id": "enterprise_healthtech_story_001::scene_006::ret_scene_006",
+          "score": 0.820703,
+          "script_stage": "scale_reveal"
+        },
+        {
+          "item_id": "enterprise_finance_business_001::scene_006::ret_scene_006",
+          "score": 0.786298,
+          "script_stage": "scale_reveal"
+        },
+        {
+          "item_id": "enterprise_finance_documentary_002::scene_006::ret_scene_006",
+          "score": 0.770155,
+          "script_stage": "scale_reveal"
+        }
+      ]
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_story_001__scene_002",
+      "case_type": "hard_positive",
+      "margin": 0.038998,
+      "confidence": "medium",
+      "target_rank": 1,
+      "expected_prefer_rank": null,
+      "top_results": [
+        {
+          "item_id": "enterprise_healthtech_story_001::scene_002::ret_scene_002",
+          "score": 0.771797,
+          "script_stage": "setup"
+        },
+        {
+          "item_id": "enterprise_healthtech_documentary_002::scene_002::ret_scene_002",
+          "score": 0.732799,
+          "script_stage": "setup"
+        },
+        {
+          "item_id": "enterprise_healthtech_short_003::scene_002::ret_scene_002",
+          "score": 0.722156,
+          "script_stage": "setup"
+        }
+      ]
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_story_001__scene_006",
+      "case_type": "hard_positive",
+      "margin": 0.042033,
+      "confidence": "medium",
+      "target_rank": 1,
+      "expected_prefer_rank": null,
+      "top_results": [
+        {
+          "item_id": "enterprise_healthtech_story_001::scene_006::ret_scene_006",
+          "score": 0.820843,
+          "script_stage": "scale_reveal"
+        },
+        {
+          "item_id": "enterprise_healthtech_short_003::scene_006::ret_scene_006",
+          "score": 0.77881,
+          "script_stage": "scale_reveal"
+        },
+        {
+          "item_id": "enterprise_healthtech_documentary_002::scene_006::ret_scene_006",
+          "score": 0.777054,
+          "script_stage": "scale_reveal"
+        }
+      ]
+    },
+    {
+      "case_id": "simple_positive__enterprise_healthtech_story_001__scene_010",
+      "case_type": "simple_positive",
+      "margin": 0.045333,
+      "confidence": "medium",
+      "target_rank": 1,
+      "expected_prefer_rank": null,
+      "top_results": [
+        {
+          "item_id": "enterprise_healthtech_story_001::scene_010::ret_scene_010",
+          "score": 0.76582,
+          "script_stage": "ending"
+        },
+        {
+          "item_id": "enterprise_retail_business_001::scene_010::ret_scene_010",
+          "score": 0.720487,
+          "script_stage": "ending"
+        },
+        {
+          "item_id": "enterprise_healthtech_documentary_002::scene_010::ret_scene_010",
+          "score": 0.711699,
+          "script_stage": "ending"
+        }
+      ]
+    },
+    {
+      "case_id": "simple_positive__enterprise_healthtech_documentary_002__scene_005",
+      "case_type": "simple_positive",
+      "margin": 0.045374,
+      "confidence": "medium",
+      "target_rank": 1,
+      "expected_prefer_rank": null,
+      "top_results": [
+        {
+          "item_id": "enterprise_healthtech_documentary_002::scene_005::ret_scene_005",
+          "score": 0.856292,
+          "script_stage": "technology_showcase"
+        },
+        {
+          "item_id": "enterprise_healthtech_documentary_002::scene_008::ret_scene_008",
+          "score": 0.810918,
+          "script_stage": "outcome"
+        },
+        {
+          "item_id": "enterprise_healthtech_documentary_002::scene_003::ret_scene_003",
+          "score": 0.801588,
+          "script_stage": "character_intro"
+        }
+      ]
+    },
+    {
+      "case_id": "simple_positive__enterprise_healthtech_documentary_002__scene_002",
+      "case_type": "simple_positive",
+      "margin": 0.049869,
+      "confidence": "medium",
+      "target_rank": 1,
+      "expected_prefer_rank": null,
+      "top_results": [
+        {
+          "item_id": "enterprise_healthtech_documentary_002::scene_002::ret_scene_002",
+          "score": 0.858555,
+          "script_stage": "setup"
+        },
+        {
+          "item_id": "enterprise_healthtech_documentary_002::scene_008::ret_scene_008",
+          "score": 0.808686,
+          "script_stage": "outcome"
+        },
+        {
+          "item_id": "enterprise_healthtech_documentary_002::scene_003::ret_scene_003",
+          "score": 0.806949,
+          "script_stage": "character_intro"
+        }
+      ]
+    },
+    {
+      "case_id": "simple_positive__enterprise_healthtech_documentary_002__scene_007",
+      "case_type": "simple_positive",
+      "margin": 0.051659,
+      "confidence": "high",
+      "target_rank": 1,
+      "expected_prefer_rank": null,
+      "top_results": [
+        {
+          "item_id": "enterprise_healthtech_documentary_002::scene_007::ret_scene_007",
+          "score": 0.869765,
+          "script_stage": "value_expression"
+        },
+        {
+          "item_id": "enterprise_healthtech_documentary_002::scene_008::ret_scene_008",
+          "score": 0.818106,
+          "script_stage": "outcome"
+        },
+        {
+          "item_id": "enterprise_healthtech_documentary_002::scene_002::ret_scene_002",
+          "score": 0.805592,
+          "script_stage": "setup"
+        }
+      ]
+    },
+    {
+      "case_id": "hard_positive__enterprise_healthtech_documentary_002__scene_010",
+      "case_type": "hard_positive",
+      "margin": 0.052485,
+      "confidence": "high",
+      "target_rank": 1,
+      "expected_prefer_rank": null,
+      "top_results": [
+        {
+          "item_id": "enterprise_healthtech_documentary_002::scene_010::ret_scene_010",
+          "score": 0.851708,
+          "script_stage": "ending"
+        },
+        {
+          "item_id": "enterprise_healthtech_documentary_002::scene_008::ret_scene_008",
+          "score": 0.799223,
+          "script_stage": "outcome"
+        },
+        {
+          "item_id": "enterprise_healthtech_documentary_002::scene_005::ret_scene_005",
+          "score": 0.764504,
+          "script_stage": "technology_showcase"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "case_count": 60,
+    "split": "all",
+    "final_score_expected_prefer_vs_forbidden_accuracy": 1.0,
+    "embedding_only_expected_prefer_vs_forbidden_accuracy": 0.4,
+    "final_score_positive_vs_random_accuracy": 1.0,
+    "final_score_positive_vs_wrong_stage_accuracy": 1.0,
+    "final_score_forbidden_stage_violation_at_3": 0.0,
+    "low_confidence_rate": 0.066667
+  }
+}

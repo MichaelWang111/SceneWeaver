@@ -23,6 +23,15 @@ STAGE_WORDS = {
     "transition": "过渡",
 }
 
+STAGE_CANONICAL_ALIASES = {
+    "technology_entrance": "technology_showcase",
+}
+
+
+def canonical_stage(stage: str | None) -> str:
+    value = str(stage or "")
+    return STAGE_CANONICAL_ALIASES.get(value, value)
+
 INDUSTRY_WORDS = {
     "medical_technology_and_digital_health": "医疗科技与数字健康",
     "energy_and_utilities": "能源与公共事业",

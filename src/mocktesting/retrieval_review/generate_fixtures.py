@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import json
 from pathlib import Path
@@ -273,13 +273,31 @@ FIXTURES = [
             "symbol": "缺货预警、扫码枪、倒计时、货架补齐"
         },
     },
+    {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film",
+        "duration_seconds": 185,
+        "logline": "跟随一名工艺工程师、一位设备维护负责人和一支客户质量团队，记录芯片制造里看不见的重复确认、协作和责任。",
+        "brand_personality": ["精密", "克制", "可信", "长期主义", "全球协作"],
+        "world": {
+            "place": "洁净车间、设备维护通道、质量实验室、跨国客户会议室",
+            "hero": "半导体工艺工程师",
+            "problem": "先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付",
+            "technology": "制程监控系统、缺陷检测平台和设备预测维护模型",
+            "team": "工艺工程师、设备维护团队、质量工程师、客户技术支持",
+            "outcome": "异常被提前发现，客户生产计划保持稳定，团队把风险处理在交付之前",
+            "symbol": "洁净服、晶圆盒、缺陷标记、复核记录"
+        },
+    },
 ]
 
 
 def main() -> None:
     collection = {
-        "collection_id": "retrieval_review_5_industries_x_3_styles",
-        "target_total": 15,
+        "collection_id": "retrieval_review_expanded_enterprise_fixtures",
+        "target_total": 16,
         "existing_fixture": "enterprise_healthtech_story_001",
         "generated_count": len(FIXTURES),
         "fixtures": ["enterprise_healthtech_story_001"] + [fixture["fixture_id"] for fixture in FIXTURES],
@@ -289,6 +307,7 @@ def main() -> None:
             "automotive_and_mobility",
             "financial_services_and_insurance",
             "consumer_retail_and_supply_chain",
+            "advanced_manufacturing_and_semiconductors",
         ],
         "styles": [
             "business_corporate_brand_film",

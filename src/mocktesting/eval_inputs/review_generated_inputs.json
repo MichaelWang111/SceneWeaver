@@ -6,7 +6,7 @@
     "hard_positive": "根据脚本阶段、创作目的、标签和行业语境改写的困难正例。",
     "hard_negative": "保留部分相似视觉元素，但明确要求另一个脚本阶段或用途的困难负例。"
   },
-  "case_count": 450,
+  "case_count": 480,
   "cases": [
     {
       "case_id": "simple_positive__enterprise_healthtech_story_001__scene_001",
@@ -15756,6 +15756,1056 @@
         "title": "15分钟补货",
         "industry": "consumer_retail_and_supply_chain",
         "style": "short_video_vertical_world_500_style"
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_semiconductor_documentary_004__scene_001",
+      "case_type": "simple_positive",
+      "difficulty": "easy",
+      "user_input": "我需要一个开场镜头：适合用于opening段落，开场建立真实世界压力，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "expected_relation": "should_match",
+      "target": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "opening",
+          "establish_problem",
+          "build_reality"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于opening段落，开场建立真实世界压力，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "target_tags_text": "半导体工艺工程师 制程监控系统、缺陷检测平台和设备预测维护模型 洁净服、晶圆盒、缺陷标记、复核记录 洁净车间、设备维护通道、质量实验室、跨国客户会议室 真实用户场景 环境细节 advanced_manufacturing_and_semiconductors 精密 半导体工艺工程师与工艺工程师、设备维护团队、质量工程师、客户技术支持的关系 制程监控系统、缺陷检测平台和设备预测维护模型与先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付的关系 世界500强企业能力与真实用户场景 进入现场 观察环境 问题显现 documentary_enterprise_brand_film 工艺工程师、设备维护团队、质量工程师、客户技术支持 企业与社会责任 专业服务对象",
+      "target_embedding_texts": {
+        "script_usage": "适合开场、问题建立、真实场景进入。 良率之外 advanced_manufacturing_and_semiconductors documentary_enterprise_brand_film 先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付 制程监控系统、缺陷检测平台和设备预测维护模型 异常被提前发现，客户生产计划保持稳定，团队把风险处理在交付之前",
+        "knowledge_semantic": "advanced_manufacturing_and_semiconductors企业片可以先拍真实问题，再进入企业能力。",
+        "visual_semantic": "洁净车间、设备维护通道、质量实验室、跨国客户会议室、半导体工艺工程师、洁净服、晶圆盒、缺陷标记、复核记录、制程监控系统、缺陷检测平台和设备预测维护模型、精密质感。"
+      },
+      "notes": "Intentionally close to the review script-use sentence."
+    },
+    {
+      "case_id": "hard_positive__enterprise_semiconductor_documentary_004__scene_001",
+      "case_type": "hard_positive",
+      "difficulty": "hard",
+      "user_input": "想找一个世界500强质感的开场段落，不要直白讲道理。画面可以有半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型、洁净服、晶圆盒、缺陷标记、复核记录、洁净车间、设备维护通道、质量实验室、跨国客户会议室、真实用户场景这类元素，重点是opening、建立问题、建立真实感，要能服务于advanced_manufacturing_and_semiconductors的品牌表达。",
+      "expected_relation": "should_match",
+      "target": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "opening",
+          "establish_problem",
+          "build_reality"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于opening段落，开场建立真实世界压力，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "target_tags_text": "半导体工艺工程师 制程监控系统、缺陷检测平台和设备预测维护模型 洁净服、晶圆盒、缺陷标记、复核记录 洁净车间、设备维护通道、质量实验室、跨国客户会议室 真实用户场景 环境细节 advanced_manufacturing_and_semiconductors 精密 半导体工艺工程师与工艺工程师、设备维护团队、质量工程师、客户技术支持的关系 制程监控系统、缺陷检测平台和设备预测维护模型与先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付的关系 世界500强企业能力与真实用户场景 进入现场 观察环境 问题显现 documentary_enterprise_brand_film 工艺工程师、设备维护团队、质量工程师、客户技术支持 企业与社会责任 专业服务对象",
+      "target_embedding_texts": {
+        "script_usage": "适合开场、问题建立、真实场景进入。 良率之外 advanced_manufacturing_and_semiconductors documentary_enterprise_brand_film 先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付 制程监控系统、缺陷检测平台和设备预测维护模型 异常被提前发现，客户生产计划保持稳定，团队把风险处理在交付之前",
+        "knowledge_semantic": "advanced_manufacturing_and_semiconductors企业片可以先拍真实问题，再进入企业能力。",
+        "visual_semantic": "洁净车间、设备维护通道、质量实验室、跨国客户会议室、半导体工艺工程师、洁净服、晶圆盒、缺陷标记、复核记录、制程监控系统、缺陷检测平台和设备预测维护模型、精密质感。"
+      },
+      "notes": "根据标签、脚本阶段和中文创作目的改写，不直接复制目标 summary。"
+    },
+    {
+      "case_id": "hard_negative__enterprise_semiconductor_documentary_004__scene_001",
+      "case_type": "hard_negative",
+      "difficulty": "hard",
+      "user_input": "画面可以借用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型、洁净服、晶圆盒、缺陷标记、复核记录、洁净车间、设备维护通道、质量实验室、跨国客户会议室这类相似元素，但不要做成开场。我真正要的是铺垫，重点是setup、建立需求、表现压力，不要强调开场气势或问题建立，而要让观众看到后续情节的具体铺垫。",
+      "expected_relation": "should_not_match",
+      "target": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "opening",
+          "establish_problem",
+          "build_reality"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于opening段落，开场建立真实世界压力，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "target_tags_text": "半导体工艺工程师 制程监控系统、缺陷检测平台和设备预测维护模型 洁净服、晶圆盒、缺陷标记、复核记录 洁净车间、设备维护通道、质量实验室、跨国客户会议室 真实用户场景 环境细节 advanced_manufacturing_and_semiconductors 精密 半导体工艺工程师与工艺工程师、设备维护团队、质量工程师、客户技术支持的关系 制程监控系统、缺陷检测平台和设备预测维护模型与先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付的关系 世界500强企业能力与真实用户场景 进入现场 观察环境 问题显现 documentary_enterprise_brand_film 工艺工程师、设备维护团队、质量工程师、客户技术支持 企业与社会责任 专业服务对象",
+      "target_embedding_texts": {
+        "script_usage": "适合开场、问题建立、真实场景进入。 良率之外 advanced_manufacturing_and_semiconductors documentary_enterprise_brand_film 先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付 制程监控系统、缺陷检测平台和设备预测维护模型 异常被提前发现，客户生产计划保持稳定，团队把风险处理在交付之前",
+        "knowledge_semantic": "advanced_manufacturing_and_semiconductors企业片可以先拍真实问题，再进入企业能力。",
+        "visual_semantic": "洁净车间、设备维护通道、质量实验室、跨国客户会议室、半导体工艺工程师、洁净服、晶圆盒、缺陷标记、复核记录、制程监控系统、缺陷检测平台和设备预测维护模型、精密质感。"
+      },
+      "notes": "保留目标的部分表面元素，但自然地要求另一个脚本阶段，不引用另一个 summary 原文。",
+      "expected_prefer": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_002",
+        "retrieval_id": "ret_scene_002",
+        "script_stage": "setup",
+        "creative_purpose": [
+          "setup",
+          "establish_need",
+          "show_pressure"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_semiconductor_documentary_004__scene_002",
+      "case_type": "simple_positive",
+      "difficulty": "easy",
+      "user_input": "我需要一个铺垫镜头：适合用于setup段落，进入一线场景，建立具体需求，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "expected_relation": "should_match",
+      "target": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_002",
+        "retrieval_id": "ret_scene_002",
+        "script_stage": "setup",
+        "creative_purpose": [
+          "setup",
+          "establish_need",
+          "show_pressure"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于setup段落，进入一线场景，建立具体需求，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "target_tags_text": "半导体工艺工程师 制程监控系统、缺陷检测平台和设备预测维护模型 洁净服、晶圆盒、缺陷标记、复核记录 一线人员 等待中的客户或用户 问题线索 advanced_manufacturing_and_semiconductors 精密 半导体工艺工程师与工艺工程师、设备维护团队、质量工程师、客户技术支持的关系 制程监控系统、缺陷检测平台和设备预测维护模型与先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付的关系 世界500强企业能力与真实用户场景 比对信息 等待确认 压力累积 洁净车间、设备维护通道、质量实验室、跨国客户会议室 documentary_enterprise_brand_film 工艺工程师、设备维护团队、质量工程师、客户技术支持 企业与社会责任 专业服务对象",
+      "target_embedding_texts": {
+        "script_usage": "适合需求铺垫、矛盾建立、一线压力表达。 良率之外 advanced_manufacturing_and_semiconductors documentary_enterprise_brand_film 先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付 制程监控系统、缺陷检测平台和设备预测维护模型 异常被提前发现，客户生产计划保持稳定，团队把风险处理在交付之前",
+        "knowledge_semantic": "需求建立必须来自具体人物和场景，不应直接从产品卖点开始。",
+        "visual_semantic": "洁净车间、设备维护通道、质量实验室、跨国客户会议室、半导体工艺工程师、洁净服、晶圆盒、缺陷标记、复核记录、制程监控系统、缺陷检测平台和设备预测维护模型、精密质感。"
+      },
+      "notes": "Intentionally close to the review script-use sentence."
+    },
+    {
+      "case_id": "hard_positive__enterprise_semiconductor_documentary_004__scene_002",
+      "case_type": "hard_positive",
+      "difficulty": "hard",
+      "user_input": "想找一个世界500强质感的铺垫段落，不要直白讲道理。画面可以有半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型、洁净服、晶圆盒、缺陷标记、复核记录、一线人员、等待中的客户或用户这类元素，重点是setup、建立需求、表现压力，要能服务于advanced_manufacturing_and_semiconductors的品牌表达。",
+      "expected_relation": "should_match",
+      "target": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_002",
+        "retrieval_id": "ret_scene_002",
+        "script_stage": "setup",
+        "creative_purpose": [
+          "setup",
+          "establish_need",
+          "show_pressure"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于setup段落，进入一线场景，建立具体需求，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "target_tags_text": "半导体工艺工程师 制程监控系统、缺陷检测平台和设备预测维护模型 洁净服、晶圆盒、缺陷标记、复核记录 一线人员 等待中的客户或用户 问题线索 advanced_manufacturing_and_semiconductors 精密 半导体工艺工程师与工艺工程师、设备维护团队、质量工程师、客户技术支持的关系 制程监控系统、缺陷检测平台和设备预测维护模型与先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付的关系 世界500强企业能力与真实用户场景 比对信息 等待确认 压力累积 洁净车间、设备维护通道、质量实验室、跨国客户会议室 documentary_enterprise_brand_film 工艺工程师、设备维护团队、质量工程师、客户技术支持 企业与社会责任 专业服务对象",
+      "target_embedding_texts": {
+        "script_usage": "适合需求铺垫、矛盾建立、一线压力表达。 良率之外 advanced_manufacturing_and_semiconductors documentary_enterprise_brand_film 先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付 制程监控系统、缺陷检测平台和设备预测维护模型 异常被提前发现，客户生产计划保持稳定，团队把风险处理在交付之前",
+        "knowledge_semantic": "需求建立必须来自具体人物和场景，不应直接从产品卖点开始。",
+        "visual_semantic": "洁净车间、设备维护通道、质量实验室、跨国客户会议室、半导体工艺工程师、洁净服、晶圆盒、缺陷标记、复核记录、制程监控系统、缺陷检测平台和设备预测维护模型、精密质感。"
+      },
+      "notes": "根据标签、脚本阶段和中文创作目的改写，不直接复制目标 summary。"
+    },
+    {
+      "case_id": "hard_negative__enterprise_semiconductor_documentary_004__scene_002",
+      "case_type": "hard_negative",
+      "difficulty": "hard",
+      "user_input": "画面可以借用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型、洁净服、晶圆盒、缺陷标记、复核记录、一线人员这类相似元素，但不要做成铺垫。我真正要的是开场，重点是opening、建立问题、建立真实感，不要停留在需求铺垫，而要更像一段能直接进入主题的画面。",
+      "expected_relation": "should_not_match",
+      "target": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_002",
+        "retrieval_id": "ret_scene_002",
+        "script_stage": "setup",
+        "creative_purpose": [
+          "setup",
+          "establish_need",
+          "show_pressure"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于setup段落，进入一线场景，建立具体需求，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "target_tags_text": "半导体工艺工程师 制程监控系统、缺陷检测平台和设备预测维护模型 洁净服、晶圆盒、缺陷标记、复核记录 一线人员 等待中的客户或用户 问题线索 advanced_manufacturing_and_semiconductors 精密 半导体工艺工程师与工艺工程师、设备维护团队、质量工程师、客户技术支持的关系 制程监控系统、缺陷检测平台和设备预测维护模型与先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付的关系 世界500强企业能力与真实用户场景 比对信息 等待确认 压力累积 洁净车间、设备维护通道、质量实验室、跨国客户会议室 documentary_enterprise_brand_film 工艺工程师、设备维护团队、质量工程师、客户技术支持 企业与社会责任 专业服务对象",
+      "target_embedding_texts": {
+        "script_usage": "适合需求铺垫、矛盾建立、一线压力表达。 良率之外 advanced_manufacturing_and_semiconductors documentary_enterprise_brand_film 先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付 制程监控系统、缺陷检测平台和设备预测维护模型 异常被提前发现，客户生产计划保持稳定，团队把风险处理在交付之前",
+        "knowledge_semantic": "需求建立必须来自具体人物和场景，不应直接从产品卖点开始。",
+        "visual_semantic": "洁净车间、设备维护通道、质量实验室、跨国客户会议室、半导体工艺工程师、洁净服、晶圆盒、缺陷标记、复核记录、制程监控系统、缺陷检测平台和设备预测维护模型、精密质感。"
+      },
+      "notes": "保留目标的部分表面元素，但自然地要求另一个脚本阶段，不引用另一个 summary 原文。",
+      "expected_prefer": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "opening",
+          "establish_problem",
+          "build_reality"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_semiconductor_documentary_004__scene_003",
+      "case_type": "simple_positive",
+      "difficulty": "easy",
+      "user_input": "我需要一个人物出场镜头：适合用于character_intro段落，引入核心人物和专业视角，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "expected_relation": "should_match",
+      "target": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_003",
+        "retrieval_id": "ret_scene_003",
+        "script_stage": "character_intro",
+        "creative_purpose": [
+          "character_intro",
+          "introduce_people",
+          "build_empathy"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于character_intro段落，引入核心人物和专业视角，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "target_tags_text": "半导体工艺工程师 制程监控系统、缺陷检测平台和设备预测维护模型 洁净服、晶圆盒、缺陷标记、复核记录 工作证件 专业工具 advanced_manufacturing_and_semiconductors 精密 半导体工艺工程师与工艺工程师、设备维护团队、质量工程师、客户技术支持的关系 制程监控系统、缺陷检测平台和设备预测维护模型与先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付的关系 世界500强企业能力与真实用户场景 整理工具 看向现场 做出判断 洁净车间、设备维护通道、质量实验室、跨国客户会议室 documentary_enterprise_brand_film 工艺工程师、设备维护团队、质量工程师、客户技术支持 企业与社会责任 专业服务对象",
+      "target_embedding_texts": {
+        "script_usage": "适合人物出场、专业身份建立。 良率之外 advanced_manufacturing_and_semiconductors documentary_enterprise_brand_film 先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付 制程监控系统、缺陷检测平台和设备预测维护模型 异常被提前发现，客户生产计划保持稳定，团队把风险处理在交付之前",
+        "knowledge_semantic": "人物介绍要通过专业动作建立可信，而不是靠头衔字幕。",
+        "visual_semantic": "洁净车间、设备维护通道、质量实验室、跨国客户会议室、半导体工艺工程师、洁净服、晶圆盒、缺陷标记、复核记录、制程监控系统、缺陷检测平台和设备预测维护模型、精密质感。"
+      },
+      "notes": "Intentionally close to the review script-use sentence."
+    },
+    {
+      "case_id": "hard_positive__enterprise_semiconductor_documentary_004__scene_003",
+      "case_type": "hard_positive",
+      "difficulty": "hard",
+      "user_input": "想找一个世界500强质感的人物出场段落，不要直白讲道理。画面可以有半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型、洁净服、晶圆盒、缺陷标记、复核记录、工作证件、专业工具这类元素，重点是character intro、介绍人物、build empathy，要能服务于advanced_manufacturing_and_semiconductors的品牌表达。",
+      "expected_relation": "should_match",
+      "target": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_003",
+        "retrieval_id": "ret_scene_003",
+        "script_stage": "character_intro",
+        "creative_purpose": [
+          "character_intro",
+          "introduce_people",
+          "build_empathy"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于character_intro段落，引入核心人物和专业视角，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "target_tags_text": "半导体工艺工程师 制程监控系统、缺陷检测平台和设备预测维护模型 洁净服、晶圆盒、缺陷标记、复核记录 工作证件 专业工具 advanced_manufacturing_and_semiconductors 精密 半导体工艺工程师与工艺工程师、设备维护团队、质量工程师、客户技术支持的关系 制程监控系统、缺陷检测平台和设备预测维护模型与先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付的关系 世界500强企业能力与真实用户场景 整理工具 看向现场 做出判断 洁净车间、设备维护通道、质量实验室、跨国客户会议室 documentary_enterprise_brand_film 工艺工程师、设备维护团队、质量工程师、客户技术支持 企业与社会责任 专业服务对象",
+      "target_embedding_texts": {
+        "script_usage": "适合人物出场、专业身份建立。 良率之外 advanced_manufacturing_and_semiconductors documentary_enterprise_brand_film 先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付 制程监控系统、缺陷检测平台和设备预测维护模型 异常被提前发现，客户生产计划保持稳定，团队把风险处理在交付之前",
+        "knowledge_semantic": "人物介绍要通过专业动作建立可信，而不是靠头衔字幕。",
+        "visual_semantic": "洁净车间、设备维护通道、质量实验室、跨国客户会议室、半导体工艺工程师、洁净服、晶圆盒、缺陷标记、复核记录、制程监控系统、缺陷检测平台和设备预测维护模型、精密质感。"
+      },
+      "notes": "根据标签、脚本阶段和中文创作目的改写，不直接复制目标 summary。"
+    },
+    {
+      "case_id": "hard_negative__enterprise_semiconductor_documentary_004__scene_003",
+      "case_type": "hard_negative",
+      "difficulty": "hard",
+      "user_input": "画面可以借用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型、洁净服、晶圆盒、缺陷标记、复核记录、工作证件这类相似元素，但不要做成人物出场。我真正要的是开场，重点是opening、建立问题、建立真实感，希望它的脚本位置和情绪功能明显不同。",
+      "expected_relation": "should_not_match",
+      "target": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_003",
+        "retrieval_id": "ret_scene_003",
+        "script_stage": "character_intro",
+        "creative_purpose": [
+          "character_intro",
+          "introduce_people",
+          "build_empathy"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于character_intro段落，引入核心人物和专业视角，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "target_tags_text": "半导体工艺工程师 制程监控系统、缺陷检测平台和设备预测维护模型 洁净服、晶圆盒、缺陷标记、复核记录 工作证件 专业工具 advanced_manufacturing_and_semiconductors 精密 半导体工艺工程师与工艺工程师、设备维护团队、质量工程师、客户技术支持的关系 制程监控系统、缺陷检测平台和设备预测维护模型与先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付的关系 世界500强企业能力与真实用户场景 整理工具 看向现场 做出判断 洁净车间、设备维护通道、质量实验室、跨国客户会议室 documentary_enterprise_brand_film 工艺工程师、设备维护团队、质量工程师、客户技术支持 企业与社会责任 专业服务对象",
+      "target_embedding_texts": {
+        "script_usage": "适合人物出场、专业身份建立。 良率之外 advanced_manufacturing_and_semiconductors documentary_enterprise_brand_film 先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付 制程监控系统、缺陷检测平台和设备预测维护模型 异常被提前发现，客户生产计划保持稳定，团队把风险处理在交付之前",
+        "knowledge_semantic": "人物介绍要通过专业动作建立可信，而不是靠头衔字幕。",
+        "visual_semantic": "洁净车间、设备维护通道、质量实验室、跨国客户会议室、半导体工艺工程师、洁净服、晶圆盒、缺陷标记、复核记录、制程监控系统、缺陷检测平台和设备预测维护模型、精密质感。"
+      },
+      "notes": "保留目标的部分表面元素，但自然地要求另一个脚本阶段，不引用另一个 summary 原文。",
+      "expected_prefer": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "opening",
+          "establish_problem",
+          "build_reality"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_semiconductor_documentary_004__scene_004",
+      "case_type": "simple_positive",
+      "difficulty": "easy",
+      "user_input": "我需要一个团队协作镜头：适合用于team_work段落，展现跨职能团队如何协作，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "expected_relation": "should_match",
+      "target": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_004",
+        "retrieval_id": "ret_scene_004",
+        "script_stage": "team_work",
+        "creative_purpose": [
+          "team_work",
+          "show_team",
+          "show_collaboration"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于team_work段落，展现跨职能团队如何协作，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "target_tags_text": "半导体工艺工程师 制程监控系统、缺陷检测平台和设备预测维护模型 洁净服、晶圆盒、缺陷标记、复核记录 工艺工程师 设备维护团队 质量工程师 客户技术支持 advanced_manufacturing_and_semiconductors 精密 半导体工艺工程师与工艺工程师、设备维护团队、质量工程师、客户技术支持的关系 制程监控系统、缺陷检测平台和设备预测维护模型与先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付的关系 世界500强企业能力与真实用户场景 围绕问题讨论 标注风险点 分配下一步 洁净车间、设备维护通道、质量实验室、跨国客户会议室 documentary_enterprise_brand_film 工艺工程师、设备维护团队、质量工程师、客户技术支持 企业与社会责任 专业服务对象",
+      "target_embedding_texts": {
+        "script_usage": "适合团队协作、组织能力、跨职能工作流。 良率之外 advanced_manufacturing_and_semiconductors documentary_enterprise_brand_film 先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付 制程监控系统、缺陷检测平台和设备预测维护模型 异常被提前发现，客户生产计划保持稳定，团队把风险处理在交付之前",
+        "knowledge_semantic": "团队协作要有明确讨论对象，避免空泛办公蒙太奇。",
+        "visual_semantic": "洁净车间、设备维护通道、质量实验室、跨国客户会议室、半导体工艺工程师、洁净服、晶圆盒、缺陷标记、复核记录、制程监控系统、缺陷检测平台和设备预测维护模型、精密质感。"
+      },
+      "notes": "Intentionally close to the review script-use sentence."
+    },
+    {
+      "case_id": "hard_positive__enterprise_semiconductor_documentary_004__scene_004",
+      "case_type": "hard_positive",
+      "difficulty": "hard",
+      "user_input": "想找一个世界500强质感的团队协作段落，不要直白讲道理。画面可以有半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型、洁净服、晶圆盒、缺陷标记、复核记录、工艺工程师、设备维护团队这类元素，重点是team work、表现团队、表现协作，要能服务于advanced_manufacturing_and_semiconductors的品牌表达。",
+      "expected_relation": "should_match",
+      "target": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_004",
+        "retrieval_id": "ret_scene_004",
+        "script_stage": "team_work",
+        "creative_purpose": [
+          "team_work",
+          "show_team",
+          "show_collaboration"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于team_work段落，展现跨职能团队如何协作，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "target_tags_text": "半导体工艺工程师 制程监控系统、缺陷检测平台和设备预测维护模型 洁净服、晶圆盒、缺陷标记、复核记录 工艺工程师 设备维护团队 质量工程师 客户技术支持 advanced_manufacturing_and_semiconductors 精密 半导体工艺工程师与工艺工程师、设备维护团队、质量工程师、客户技术支持的关系 制程监控系统、缺陷检测平台和设备预测维护模型与先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付的关系 世界500强企业能力与真实用户场景 围绕问题讨论 标注风险点 分配下一步 洁净车间、设备维护通道、质量实验室、跨国客户会议室 documentary_enterprise_brand_film 工艺工程师、设备维护团队、质量工程师、客户技术支持 企业与社会责任 专业服务对象",
+      "target_embedding_texts": {
+        "script_usage": "适合团队协作、组织能力、跨职能工作流。 良率之外 advanced_manufacturing_and_semiconductors documentary_enterprise_brand_film 先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付 制程监控系统、缺陷检测平台和设备预测维护模型 异常被提前发现，客户生产计划保持稳定，团队把风险处理在交付之前",
+        "knowledge_semantic": "团队协作要有明确讨论对象，避免空泛办公蒙太奇。",
+        "visual_semantic": "洁净车间、设备维护通道、质量实验室、跨国客户会议室、半导体工艺工程师、洁净服、晶圆盒、缺陷标记、复核记录、制程监控系统、缺陷检测平台和设备预测维护模型、精密质感。"
+      },
+      "notes": "根据标签、脚本阶段和中文创作目的改写，不直接复制目标 summary。"
+    },
+    {
+      "case_id": "hard_negative__enterprise_semiconductor_documentary_004__scene_004",
+      "case_type": "hard_negative",
+      "difficulty": "hard",
+      "user_input": "画面可以借用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型、洁净服、晶圆盒、缺陷标记、复核记录、工艺工程师这类相似元素，但不要做成团队协作。我真正要的是开场，重点是opening、建立问题、建立真实感，不要拍成团队协作或会议共创，而要突出另一个明确的叙事功能。",
+      "expected_relation": "should_not_match",
+      "target": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_004",
+        "retrieval_id": "ret_scene_004",
+        "script_stage": "team_work",
+        "creative_purpose": [
+          "team_work",
+          "show_team",
+          "show_collaboration"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于team_work段落，展现跨职能团队如何协作，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "target_tags_text": "半导体工艺工程师 制程监控系统、缺陷检测平台和设备预测维护模型 洁净服、晶圆盒、缺陷标记、复核记录 工艺工程师 设备维护团队 质量工程师 客户技术支持 advanced_manufacturing_and_semiconductors 精密 半导体工艺工程师与工艺工程师、设备维护团队、质量工程师、客户技术支持的关系 制程监控系统、缺陷检测平台和设备预测维护模型与先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付的关系 世界500强企业能力与真实用户场景 围绕问题讨论 标注风险点 分配下一步 洁净车间、设备维护通道、质量实验室、跨国客户会议室 documentary_enterprise_brand_film 工艺工程师、设备维护团队、质量工程师、客户技术支持 企业与社会责任 专业服务对象",
+      "target_embedding_texts": {
+        "script_usage": "适合团队协作、组织能力、跨职能工作流。 良率之外 advanced_manufacturing_and_semiconductors documentary_enterprise_brand_film 先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付 制程监控系统、缺陷检测平台和设备预测维护模型 异常被提前发现，客户生产计划保持稳定，团队把风险处理在交付之前",
+        "knowledge_semantic": "团队协作要有明确讨论对象，避免空泛办公蒙太奇。",
+        "visual_semantic": "洁净车间、设备维护通道、质量实验室、跨国客户会议室、半导体工艺工程师、洁净服、晶圆盒、缺陷标记、复核记录、制程监控系统、缺陷检测平台和设备预测维护模型、精密质感。"
+      },
+      "notes": "保留目标的部分表面元素，但自然地要求另一个脚本阶段，不引用另一个 summary 原文。",
+      "expected_prefer": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "opening",
+          "establish_problem",
+          "build_reality"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_semiconductor_documentary_004__scene_005",
+      "case_type": "simple_positive",
+      "difficulty": "easy",
+      "user_input": "我需要一个技术展示镜头：适合用于technology_showcase段落，让技术或系统能力自然入场，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "expected_relation": "should_match",
+      "target": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_005",
+        "retrieval_id": "ret_scene_005",
+        "script_stage": "technology_showcase",
+        "creative_purpose": [
+          "technology_showcase",
+          "show_technology",
+          "prove_capability"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于technology_showcase段落，让技术或系统能力自然入场，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "target_tags_text": "半导体工艺工程师 制程监控系统、缺陷检测平台和设备预测维护模型 洁净服、晶圆盒、缺陷标记、复核记录 操作界面 确认提示 advanced_manufacturing_and_semiconductors 精密 半导体工艺工程师与工艺工程师、设备维护团队、质量工程师、客户技术支持的关系 制程监控系统、缺陷检测平台和设备预测维护模型与先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付的关系 世界500强企业能力与真实用户场景 打开系统 验证数据 确认流程 洁净车间、设备维护通道、质量实验室、跨国客户会议室 documentary_enterprise_brand_film 工艺工程师、设备维护团队、质量工程师、客户技术支持 企业与社会责任 专业服务对象",
+      "target_embedding_texts": {
+        "script_usage": "适合技术能力、人机协作、系统价值展示。 良率之外 advanced_manufacturing_and_semiconductors documentary_enterprise_brand_film 先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付 制程监控系统、缺陷检测平台和设备预测维护模型 异常被提前发现，客户生产计划保持稳定，团队把风险处理在交付之前",
+        "knowledge_semantic": "表现制程监控系统、缺陷检测平台和设备预测维护模型时要让技术和人的判断同框。",
+        "visual_semantic": "洁净车间、设备维护通道、质量实验室、跨国客户会议室、半导体工艺工程师、洁净服、晶圆盒、缺陷标记、复核记录、制程监控系统、缺陷检测平台和设备预测维护模型、精密质感。"
+      },
+      "notes": "Intentionally close to the review script-use sentence."
+    },
+    {
+      "case_id": "hard_positive__enterprise_semiconductor_documentary_004__scene_005",
+      "case_type": "hard_positive",
+      "difficulty": "hard",
+      "user_input": "想找一个世界500强质感的技术展示段落，不要直白讲道理。画面可以有半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型、洁净服、晶圆盒、缺陷标记、复核记录、操作界面、确认提示这类元素，重点是technology showcase、表现技术能力、证明能力，要能服务于advanced_manufacturing_and_semiconductors的品牌表达。",
+      "expected_relation": "should_match",
+      "target": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_005",
+        "retrieval_id": "ret_scene_005",
+        "script_stage": "technology_showcase",
+        "creative_purpose": [
+          "technology_showcase",
+          "show_technology",
+          "prove_capability"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于technology_showcase段落，让技术或系统能力自然入场，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "target_tags_text": "半导体工艺工程师 制程监控系统、缺陷检测平台和设备预测维护模型 洁净服、晶圆盒、缺陷标记、复核记录 操作界面 确认提示 advanced_manufacturing_and_semiconductors 精密 半导体工艺工程师与工艺工程师、设备维护团队、质量工程师、客户技术支持的关系 制程监控系统、缺陷检测平台和设备预测维护模型与先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付的关系 世界500强企业能力与真实用户场景 打开系统 验证数据 确认流程 洁净车间、设备维护通道、质量实验室、跨国客户会议室 documentary_enterprise_brand_film 工艺工程师、设备维护团队、质量工程师、客户技术支持 企业与社会责任 专业服务对象",
+      "target_embedding_texts": {
+        "script_usage": "适合技术能力、人机协作、系统价值展示。 良率之外 advanced_manufacturing_and_semiconductors documentary_enterprise_brand_film 先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付 制程监控系统、缺陷检测平台和设备预测维护模型 异常被提前发现，客户生产计划保持稳定，团队把风险处理在交付之前",
+        "knowledge_semantic": "表现制程监控系统、缺陷检测平台和设备预测维护模型时要让技术和人的判断同框。",
+        "visual_semantic": "洁净车间、设备维护通道、质量实验室、跨国客户会议室、半导体工艺工程师、洁净服、晶圆盒、缺陷标记、复核记录、制程监控系统、缺陷检测平台和设备预测维护模型、精密质感。"
+      },
+      "notes": "根据标签、脚本阶段和中文创作目的改写，不直接复制目标 summary。"
+    },
+    {
+      "case_id": "hard_negative__enterprise_semiconductor_documentary_004__scene_005",
+      "case_type": "hard_negative",
+      "difficulty": "hard",
+      "user_input": "画面可以借用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型、洁净服、晶圆盒、缺陷标记、复核记录、操作界面这类相似元素，但不要做成技术展示。我真正要的是开场，重点是opening、建立问题、建立真实感，不要像技术展示或功能说明，而要让画面承担别的叙事任务。",
+      "expected_relation": "should_not_match",
+      "target": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_005",
+        "retrieval_id": "ret_scene_005",
+        "script_stage": "technology_showcase",
+        "creative_purpose": [
+          "technology_showcase",
+          "show_technology",
+          "prove_capability"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于technology_showcase段落，让技术或系统能力自然入场，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "target_tags_text": "半导体工艺工程师 制程监控系统、缺陷检测平台和设备预测维护模型 洁净服、晶圆盒、缺陷标记、复核记录 操作界面 确认提示 advanced_manufacturing_and_semiconductors 精密 半导体工艺工程师与工艺工程师、设备维护团队、质量工程师、客户技术支持的关系 制程监控系统、缺陷检测平台和设备预测维护模型与先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付的关系 世界500强企业能力与真实用户场景 打开系统 验证数据 确认流程 洁净车间、设备维护通道、质量实验室、跨国客户会议室 documentary_enterprise_brand_film 工艺工程师、设备维护团队、质量工程师、客户技术支持 企业与社会责任 专业服务对象",
+      "target_embedding_texts": {
+        "script_usage": "适合技术能力、人机协作、系统价值展示。 良率之外 advanced_manufacturing_and_semiconductors documentary_enterprise_brand_film 先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付 制程监控系统、缺陷检测平台和设备预测维护模型 异常被提前发现，客户生产计划保持稳定，团队把风险处理在交付之前",
+        "knowledge_semantic": "表现制程监控系统、缺陷检测平台和设备预测维护模型时要让技术和人的判断同框。",
+        "visual_semantic": "洁净车间、设备维护通道、质量实验室、跨国客户会议室、半导体工艺工程师、洁净服、晶圆盒、缺陷标记、复核记录、制程监控系统、缺陷检测平台和设备预测维护模型、精密质感。"
+      },
+      "notes": "保留目标的部分表面元素，但自然地要求另一个脚本阶段，不引用另一个 summary 原文。",
+      "expected_prefer": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "opening",
+          "establish_problem",
+          "build_reality"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_semiconductor_documentary_004__scene_006",
+      "case_type": "simple_positive",
+      "difficulty": "easy",
+      "user_input": "我需要一个规模揭示镜头：适合用于scale_reveal段落，揭示世界级规模和网络能力，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "expected_relation": "should_match",
+      "target": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_006",
+        "retrieval_id": "ret_scene_006",
+        "script_stage": "scale_reveal",
+        "creative_purpose": [
+          "scale_reveal",
+          "show_scale",
+          "show_network"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于scale_reveal段落，揭示世界级规模和网络能力，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "target_tags_text": "半导体工艺工程师 制程监控系统、缺陷检测平台和设备预测维护模型 洁净服、晶圆盒、缺陷标记、复核记录 全球地图 多地团队 数据看板 advanced_manufacturing_and_semiconductors 精密 半导体工艺工程师与工艺工程师、设备维护团队、质量工程师、客户技术支持的关系 制程监控系统、缺陷检测平台和设备预测维护模型与先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付的关系 世界500强企业能力与真实用户场景 多地连线 同步信息 网络展开 洁净车间、设备维护通道、质量实验室、跨国客户会议室 documentary_enterprise_brand_film 工艺工程师、设备维护团队、质量工程师、客户技术支持 企业与社会责任 专业服务对象",
+      "target_embedding_texts": {
+        "script_usage": "适合规模揭示、全球网络、企业能力展开。 良率之外 advanced_manufacturing_and_semiconductors documentary_enterprise_brand_film 先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付 制程监控系统、缺陷检测平台和设备预测维护模型 异常被提前发现，客户生产计划保持稳定，团队把风险处理在交付之前",
+        "knowledge_semantic": "世界500强规模感适合通过网络、流程和服务覆盖表达。",
+        "visual_semantic": "洁净车间、设备维护通道、质量实验室、跨国客户会议室、半导体工艺工程师、洁净服、晶圆盒、缺陷标记、复核记录、制程监控系统、缺陷检测平台和设备预测维护模型、精密质感。"
+      },
+      "notes": "Intentionally close to the review script-use sentence."
+    },
+    {
+      "case_id": "hard_positive__enterprise_semiconductor_documentary_004__scene_006",
+      "case_type": "hard_positive",
+      "difficulty": "hard",
+      "user_input": "想找一个世界500强质感的规模揭示段落，不要直白讲道理。画面可以有半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型、洁净服、晶圆盒、缺陷标记、复核记录、全球地图、多地团队这类元素，重点是scale reveal、表现规模、表现网络能力，要能服务于advanced_manufacturing_and_semiconductors的品牌表达。",
+      "expected_relation": "should_match",
+      "target": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_006",
+        "retrieval_id": "ret_scene_006",
+        "script_stage": "scale_reveal",
+        "creative_purpose": [
+          "scale_reveal",
+          "show_scale",
+          "show_network"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于scale_reveal段落，揭示世界级规模和网络能力，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "target_tags_text": "半导体工艺工程师 制程监控系统、缺陷检测平台和设备预测维护模型 洁净服、晶圆盒、缺陷标记、复核记录 全球地图 多地团队 数据看板 advanced_manufacturing_and_semiconductors 精密 半导体工艺工程师与工艺工程师、设备维护团队、质量工程师、客户技术支持的关系 制程监控系统、缺陷检测平台和设备预测维护模型与先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付的关系 世界500强企业能力与真实用户场景 多地连线 同步信息 网络展开 洁净车间、设备维护通道、质量实验室、跨国客户会议室 documentary_enterprise_brand_film 工艺工程师、设备维护团队、质量工程师、客户技术支持 企业与社会责任 专业服务对象",
+      "target_embedding_texts": {
+        "script_usage": "适合规模揭示、全球网络、企业能力展开。 良率之外 advanced_manufacturing_and_semiconductors documentary_enterprise_brand_film 先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付 制程监控系统、缺陷检测平台和设备预测维护模型 异常被提前发现，客户生产计划保持稳定，团队把风险处理在交付之前",
+        "knowledge_semantic": "世界500强规模感适合通过网络、流程和服务覆盖表达。",
+        "visual_semantic": "洁净车间、设备维护通道、质量实验室、跨国客户会议室、半导体工艺工程师、洁净服、晶圆盒、缺陷标记、复核记录、制程监控系统、缺陷检测平台和设备预测维护模型、精密质感。"
+      },
+      "notes": "根据标签、脚本阶段和中文创作目的改写，不直接复制目标 summary。"
+    },
+    {
+      "case_id": "hard_negative__enterprise_semiconductor_documentary_004__scene_006",
+      "case_type": "hard_negative",
+      "difficulty": "hard",
+      "user_input": "画面可以借用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型、洁净服、晶圆盒、缺陷标记、复核记录、全球地图这类相似元素，但不要做成规模揭示。我真正要的是开场，重点是opening、建立问题、建立真实感，希望它的脚本位置和情绪功能明显不同。",
+      "expected_relation": "should_not_match",
+      "target": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_006",
+        "retrieval_id": "ret_scene_006",
+        "script_stage": "scale_reveal",
+        "creative_purpose": [
+          "scale_reveal",
+          "show_scale",
+          "show_network"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于scale_reveal段落，揭示世界级规模和网络能力，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "target_tags_text": "半导体工艺工程师 制程监控系统、缺陷检测平台和设备预测维护模型 洁净服、晶圆盒、缺陷标记、复核记录 全球地图 多地团队 数据看板 advanced_manufacturing_and_semiconductors 精密 半导体工艺工程师与工艺工程师、设备维护团队、质量工程师、客户技术支持的关系 制程监控系统、缺陷检测平台和设备预测维护模型与先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付的关系 世界500强企业能力与真实用户场景 多地连线 同步信息 网络展开 洁净车间、设备维护通道、质量实验室、跨国客户会议室 documentary_enterprise_brand_film 工艺工程师、设备维护团队、质量工程师、客户技术支持 企业与社会责任 专业服务对象",
+      "target_embedding_texts": {
+        "script_usage": "适合规模揭示、全球网络、企业能力展开。 良率之外 advanced_manufacturing_and_semiconductors documentary_enterprise_brand_film 先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付 制程监控系统、缺陷检测平台和设备预测维护模型 异常被提前发现，客户生产计划保持稳定，团队把风险处理在交付之前",
+        "knowledge_semantic": "世界500强规模感适合通过网络、流程和服务覆盖表达。",
+        "visual_semantic": "洁净车间、设备维护通道、质量实验室、跨国客户会议室、半导体工艺工程师、洁净服、晶圆盒、缺陷标记、复核记录、制程监控系统、缺陷检测平台和设备预测维护模型、精密质感。"
+      },
+      "notes": "保留目标的部分表面元素，但自然地要求另一个脚本阶段，不引用另一个 summary 原文。",
+      "expected_prefer": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "opening",
+          "establish_problem",
+          "build_reality"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_semiconductor_documentary_004__scene_007",
+      "case_type": "simple_positive",
+      "difficulty": "easy",
+      "user_input": "我需要一个价值表达镜头：适合用于value_expression段落，通过具体互动建立信任和价值，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "expected_relation": "should_match",
+      "target": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_007",
+        "retrieval_id": "ret_scene_007",
+        "script_stage": "value_expression",
+        "creative_purpose": [
+          "value_expression",
+          "build_trust",
+          "show_responsibility"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于value_expression段落，通过具体互动建立信任和价值，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "target_tags_text": "半导体工艺工程师 制程监控系统、缺陷检测平台和设备预测维护模型 洁净服、晶圆盒、缺陷标记、复核记录 面对面沟通 记录动作 确认反馈 advanced_manufacturing_and_semiconductors 精密 半导体工艺工程师与工艺工程师、设备维护团队、质量工程师、客户技术支持的关系 制程监控系统、缺陷检测平台和设备预测维护模型与先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付的关系 世界500强企业能力与真实用户场景 面对面解释 认真记录 确认承诺 洁净车间、设备维护通道、质量实验室、跨国客户会议室 documentary_enterprise_brand_film 工艺工程师、设备维护团队、质量工程师、客户技术支持 企业与社会责任 专业服务对象",
+      "target_embedding_texts": {
+        "script_usage": "适合建立信任、表达责任、价值观落地。 良率之外 advanced_manufacturing_and_semiconductors documentary_enterprise_brand_film 先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付 制程监控系统、缺陷检测平台和设备预测维护模型 异常被提前发现，客户生产计划保持稳定，团队把风险处理在交付之前",
+        "knowledge_semantic": "价值观要通过面对面沟通、记录、确认和承担责任体现。",
+        "visual_semantic": "洁净车间、设备维护通道、质量实验室、跨国客户会议室、半导体工艺工程师、洁净服、晶圆盒、缺陷标记、复核记录、制程监控系统、缺陷检测平台和设备预测维护模型、精密质感。"
+      },
+      "notes": "Intentionally close to the review script-use sentence."
+    },
+    {
+      "case_id": "hard_positive__enterprise_semiconductor_documentary_004__scene_007",
+      "case_type": "hard_positive",
+      "difficulty": "hard",
+      "user_input": "想找一个世界500强质感的价值表达段落，不要直白讲道理。画面可以有半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型、洁净服、晶圆盒、缺陷标记、复核记录、面对面沟通、记录动作这类元素，重点是value expression、建立信任、show responsibility，要能服务于advanced_manufacturing_and_semiconductors的品牌表达。",
+      "expected_relation": "should_match",
+      "target": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_007",
+        "retrieval_id": "ret_scene_007",
+        "script_stage": "value_expression",
+        "creative_purpose": [
+          "value_expression",
+          "build_trust",
+          "show_responsibility"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于value_expression段落，通过具体互动建立信任和价值，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "target_tags_text": "半导体工艺工程师 制程监控系统、缺陷检测平台和设备预测维护模型 洁净服、晶圆盒、缺陷标记、复核记录 面对面沟通 记录动作 确认反馈 advanced_manufacturing_and_semiconductors 精密 半导体工艺工程师与工艺工程师、设备维护团队、质量工程师、客户技术支持的关系 制程监控系统、缺陷检测平台和设备预测维护模型与先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付的关系 世界500强企业能力与真实用户场景 面对面解释 认真记录 确认承诺 洁净车间、设备维护通道、质量实验室、跨国客户会议室 documentary_enterprise_brand_film 工艺工程师、设备维护团队、质量工程师、客户技术支持 企业与社会责任 专业服务对象",
+      "target_embedding_texts": {
+        "script_usage": "适合建立信任、表达责任、价值观落地。 良率之外 advanced_manufacturing_and_semiconductors documentary_enterprise_brand_film 先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付 制程监控系统、缺陷检测平台和设备预测维护模型 异常被提前发现，客户生产计划保持稳定，团队把风险处理在交付之前",
+        "knowledge_semantic": "价值观要通过面对面沟通、记录、确认和承担责任体现。",
+        "visual_semantic": "洁净车间、设备维护通道、质量实验室、跨国客户会议室、半导体工艺工程师、洁净服、晶圆盒、缺陷标记、复核记录、制程监控系统、缺陷检测平台和设备预测维护模型、精密质感。"
+      },
+      "notes": "根据标签、脚本阶段和中文创作目的改写，不直接复制目标 summary。"
+    },
+    {
+      "case_id": "hard_negative__enterprise_semiconductor_documentary_004__scene_007",
+      "case_type": "hard_negative",
+      "difficulty": "hard",
+      "user_input": "画面可以借用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型、洁净服、晶圆盒、缺陷标记、复核记录、面对面沟通这类相似元素，但不要做成价值表达。我真正要的是开场，重点是opening、建立问题、建立真实感，不要靠价值表达或信任感收束，而要服务于另一个更具体的段落目标。",
+      "expected_relation": "should_not_match",
+      "target": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_007",
+        "retrieval_id": "ret_scene_007",
+        "script_stage": "value_expression",
+        "creative_purpose": [
+          "value_expression",
+          "build_trust",
+          "show_responsibility"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于value_expression段落，通过具体互动建立信任和价值，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "target_tags_text": "半导体工艺工程师 制程监控系统、缺陷检测平台和设备预测维护模型 洁净服、晶圆盒、缺陷标记、复核记录 面对面沟通 记录动作 确认反馈 advanced_manufacturing_and_semiconductors 精密 半导体工艺工程师与工艺工程师、设备维护团队、质量工程师、客户技术支持的关系 制程监控系统、缺陷检测平台和设备预测维护模型与先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付的关系 世界500强企业能力与真实用户场景 面对面解释 认真记录 确认承诺 洁净车间、设备维护通道、质量实验室、跨国客户会议室 documentary_enterprise_brand_film 工艺工程师、设备维护团队、质量工程师、客户技术支持 企业与社会责任 专业服务对象",
+      "target_embedding_texts": {
+        "script_usage": "适合建立信任、表达责任、价值观落地。 良率之外 advanced_manufacturing_and_semiconductors documentary_enterprise_brand_film 先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付 制程监控系统、缺陷检测平台和设备预测维护模型 异常被提前发现，客户生产计划保持稳定，团队把风险处理在交付之前",
+        "knowledge_semantic": "价值观要通过面对面沟通、记录、确认和承担责任体现。",
+        "visual_semantic": "洁净车间、设备维护通道、质量实验室、跨国客户会议室、半导体工艺工程师、洁净服、晶圆盒、缺陷标记、复核记录、制程监控系统、缺陷检测平台和设备预测维护模型、精密质感。"
+      },
+      "notes": "保留目标的部分表面元素，但自然地要求另一个脚本阶段，不引用另一个 summary 原文。",
+      "expected_prefer": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "opening",
+          "establish_problem",
+          "build_reality"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_semiconductor_documentary_004__scene_008",
+      "case_type": "simple_positive",
+      "difficulty": "easy",
+      "user_input": "我需要一个结果落地镜头：适合用于outcome段落，呈现结果落地但避免夸大，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "expected_relation": "should_match",
+      "target": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_008",
+        "retrieval_id": "ret_scene_008",
+        "script_stage": "outcome",
+        "creative_purpose": [
+          "outcome",
+          "show_outcome",
+          "land_value"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于outcome段落，呈现结果落地但避免夸大，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "target_tags_text": "半导体工艺工程师 制程监控系统、缺陷检测平台和设备预测维护模型 洁净服、晶圆盒、缺陷标记、复核记录 服务对象 结果记录 稳定表情 advanced_manufacturing_and_semiconductors 精密 半导体工艺工程师与工艺工程师、设备维护团队、质量工程师、客户技术支持的关系 制程监控系统、缺陷检测平台和设备预测维护模型与先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付的关系 世界500强企业能力与真实用户场景 方案落地 用户点头 情绪稳定 洁净车间、设备维护通道、质量实验室、跨国客户会议室 documentary_enterprise_brand_film 工艺工程师、设备维护团队、质量工程师、客户技术支持 企业与社会责任 专业服务对象",
+      "target_embedding_texts": {
+        "script_usage": "适合结果落地、情绪释放、客户价值确认。 良率之外 advanced_manufacturing_and_semiconductors documentary_enterprise_brand_film 先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付 制程监控系统、缺陷检测平台和设备预测维护模型 异常被提前发现，客户生产计划保持稳定，团队把风险处理在交付之前",
+        "knowledge_semantic": "结果段落要落地但克制，避免夸大承诺。",
+        "visual_semantic": "洁净车间、设备维护通道、质量实验室、跨国客户会议室、半导体工艺工程师、洁净服、晶圆盒、缺陷标记、复核记录、制程监控系统、缺陷检测平台和设备预测维护模型、精密质感。"
+      },
+      "notes": "Intentionally close to the review script-use sentence."
+    },
+    {
+      "case_id": "hard_positive__enterprise_semiconductor_documentary_004__scene_008",
+      "case_type": "hard_positive",
+      "difficulty": "hard",
+      "user_input": "想找一个世界500强质感的结果落地段落，不要直白讲道理。画面可以有半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型、洁净服、晶圆盒、缺陷标记、复核记录、服务对象、结果记录这类元素，重点是outcome、表现结果、让价值落地，要能服务于advanced_manufacturing_and_semiconductors的品牌表达。",
+      "expected_relation": "should_match",
+      "target": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_008",
+        "retrieval_id": "ret_scene_008",
+        "script_stage": "outcome",
+        "creative_purpose": [
+          "outcome",
+          "show_outcome",
+          "land_value"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于outcome段落，呈现结果落地但避免夸大，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "target_tags_text": "半导体工艺工程师 制程监控系统、缺陷检测平台和设备预测维护模型 洁净服、晶圆盒、缺陷标记、复核记录 服务对象 结果记录 稳定表情 advanced_manufacturing_and_semiconductors 精密 半导体工艺工程师与工艺工程师、设备维护团队、质量工程师、客户技术支持的关系 制程监控系统、缺陷检测平台和设备预测维护模型与先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付的关系 世界500强企业能力与真实用户场景 方案落地 用户点头 情绪稳定 洁净车间、设备维护通道、质量实验室、跨国客户会议室 documentary_enterprise_brand_film 工艺工程师、设备维护团队、质量工程师、客户技术支持 企业与社会责任 专业服务对象",
+      "target_embedding_texts": {
+        "script_usage": "适合结果落地、情绪释放、客户价值确认。 良率之外 advanced_manufacturing_and_semiconductors documentary_enterprise_brand_film 先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付 制程监控系统、缺陷检测平台和设备预测维护模型 异常被提前发现，客户生产计划保持稳定，团队把风险处理在交付之前",
+        "knowledge_semantic": "结果段落要落地但克制，避免夸大承诺。",
+        "visual_semantic": "洁净车间、设备维护通道、质量实验室、跨国客户会议室、半导体工艺工程师、洁净服、晶圆盒、缺陷标记、复核记录、制程监控系统、缺陷检测平台和设备预测维护模型、精密质感。"
+      },
+      "notes": "根据标签、脚本阶段和中文创作目的改写，不直接复制目标 summary。"
+    },
+    {
+      "case_id": "hard_negative__enterprise_semiconductor_documentary_004__scene_008",
+      "case_type": "hard_negative",
+      "difficulty": "hard",
+      "user_input": "画面可以借用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型、洁净服、晶圆盒、缺陷标记、复核记录、服务对象这类相似元素，但不要做成结果落地。我真正要的是开场，重点是opening、建立问题、建立真实感，希望它的脚本位置和情绪功能明显不同。",
+      "expected_relation": "should_not_match",
+      "target": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_008",
+        "retrieval_id": "ret_scene_008",
+        "script_stage": "outcome",
+        "creative_purpose": [
+          "outcome",
+          "show_outcome",
+          "land_value"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于outcome段落，呈现结果落地但避免夸大，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "target_tags_text": "半导体工艺工程师 制程监控系统、缺陷检测平台和设备预测维护模型 洁净服、晶圆盒、缺陷标记、复核记录 服务对象 结果记录 稳定表情 advanced_manufacturing_and_semiconductors 精密 半导体工艺工程师与工艺工程师、设备维护团队、质量工程师、客户技术支持的关系 制程监控系统、缺陷检测平台和设备预测维护模型与先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付的关系 世界500强企业能力与真实用户场景 方案落地 用户点头 情绪稳定 洁净车间、设备维护通道、质量实验室、跨国客户会议室 documentary_enterprise_brand_film 工艺工程师、设备维护团队、质量工程师、客户技术支持 企业与社会责任 专业服务对象",
+      "target_embedding_texts": {
+        "script_usage": "适合结果落地、情绪释放、客户价值确认。 良率之外 advanced_manufacturing_and_semiconductors documentary_enterprise_brand_film 先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付 制程监控系统、缺陷检测平台和设备预测维护模型 异常被提前发现，客户生产计划保持稳定，团队把风险处理在交付之前",
+        "knowledge_semantic": "结果段落要落地但克制，避免夸大承诺。",
+        "visual_semantic": "洁净车间、设备维护通道、质量实验室、跨国客户会议室、半导体工艺工程师、洁净服、晶圆盒、缺陷标记、复核记录、制程监控系统、缺陷检测平台和设备预测维护模型、精密质感。"
+      },
+      "notes": "保留目标的部分表面元素，但自然地要求另一个脚本阶段，不引用另一个 summary 原文。",
+      "expected_prefer": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "opening",
+          "establish_problem",
+          "build_reality"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_semiconductor_documentary_004__scene_009",
+      "case_type": "simple_positive",
+      "difficulty": "easy",
+      "user_input": "我需要一个成长升温镜头：适合用于growth段落，表现员工、客户或系统的成长，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "expected_relation": "should_match",
+      "target": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_009",
+        "retrieval_id": "ret_scene_009",
+        "script_stage": "growth",
+        "creative_purpose": [
+          "growth",
+          "show_growth",
+          "show_long_termism"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于growth段落，表现员工、客户或系统的成长，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "target_tags_text": "半导体工艺工程师 制程监控系统、缺陷检测平台和设备预测维护模型 洁净服、晶圆盒、缺陷标记、复核记录 年轻员工 反馈信息 版本记录 advanced_manufacturing_and_semiconductors 精密 半导体工艺工程师与工艺工程师、设备维护团队、质量工程师、客户技术支持的关系 制程监控系统、缺陷检测平台和设备预测维护模型与先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付的关系 世界500强企业能力与真实用户场景 接收反馈 复盘问题 继续改进 洁净车间、设备维护通道、质量实验室、跨国客户会议室 documentary_enterprise_brand_film 工艺工程师、设备维护团队、质量工程师、客户技术支持 企业与社会责任 专业服务对象",
+      "target_embedding_texts": {
+        "script_usage": "适合员工成长、长期主义、使命升温。 良率之外 advanced_manufacturing_and_semiconductors documentary_enterprise_brand_film 先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付 制程监控系统、缺陷检测平台和设备预测维护模型 异常被提前发现，客户生产计划保持稳定，团队把风险处理在交付之前",
+        "knowledge_semantic": "成长段落最好由真实反馈推动，而不是靠奋斗口号推动。",
+        "visual_semantic": "洁净车间、设备维护通道、质量实验室、跨国客户会议室、半导体工艺工程师、洁净服、晶圆盒、缺陷标记、复核记录、制程监控系统、缺陷检测平台和设备预测维护模型、精密质感。"
+      },
+      "notes": "Intentionally close to the review script-use sentence."
+    },
+    {
+      "case_id": "hard_positive__enterprise_semiconductor_documentary_004__scene_009",
+      "case_type": "hard_positive",
+      "difficulty": "hard",
+      "user_input": "想找一个世界500强质感的成长升温段落，不要直白讲道理。画面可以有半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型、洁净服、晶圆盒、缺陷标记、复核记录、年轻员工、反馈信息这类元素，重点是growth、表现成长、表现长期主义，要能服务于advanced_manufacturing_and_semiconductors的品牌表达。",
+      "expected_relation": "should_match",
+      "target": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_009",
+        "retrieval_id": "ret_scene_009",
+        "script_stage": "growth",
+        "creative_purpose": [
+          "growth",
+          "show_growth",
+          "show_long_termism"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于growth段落，表现员工、客户或系统的成长，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "target_tags_text": "半导体工艺工程师 制程监控系统、缺陷检测平台和设备预测维护模型 洁净服、晶圆盒、缺陷标记、复核记录 年轻员工 反馈信息 版本记录 advanced_manufacturing_and_semiconductors 精密 半导体工艺工程师与工艺工程师、设备维护团队、质量工程师、客户技术支持的关系 制程监控系统、缺陷检测平台和设备预测维护模型与先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付的关系 世界500强企业能力与真实用户场景 接收反馈 复盘问题 继续改进 洁净车间、设备维护通道、质量实验室、跨国客户会议室 documentary_enterprise_brand_film 工艺工程师、设备维护团队、质量工程师、客户技术支持 企业与社会责任 专业服务对象",
+      "target_embedding_texts": {
+        "script_usage": "适合员工成长、长期主义、使命升温。 良率之外 advanced_manufacturing_and_semiconductors documentary_enterprise_brand_film 先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付 制程监控系统、缺陷检测平台和设备预测维护模型 异常被提前发现，客户生产计划保持稳定，团队把风险处理在交付之前",
+        "knowledge_semantic": "成长段落最好由真实反馈推动，而不是靠奋斗口号推动。",
+        "visual_semantic": "洁净车间、设备维护通道、质量实验室、跨国客户会议室、半导体工艺工程师、洁净服、晶圆盒、缺陷标记、复核记录、制程监控系统、缺陷检测平台和设备预测维护模型、精密质感。"
+      },
+      "notes": "根据标签、脚本阶段和中文创作目的改写，不直接复制目标 summary。"
+    },
+    {
+      "case_id": "hard_negative__enterprise_semiconductor_documentary_004__scene_009",
+      "case_type": "hard_negative",
+      "difficulty": "hard",
+      "user_input": "画面可以借用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型、洁净服、晶圆盒、缺陷标记、复核记录、年轻员工这类相似元素，但不要做成成长升温。我真正要的是开场，重点是opening、建立问题、建立真实感，希望它的脚本位置和情绪功能明显不同。",
+      "expected_relation": "should_not_match",
+      "target": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_009",
+        "retrieval_id": "ret_scene_009",
+        "script_stage": "growth",
+        "creative_purpose": [
+          "growth",
+          "show_growth",
+          "show_long_termism"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于growth段落，表现员工、客户或系统的成长，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "target_tags_text": "半导体工艺工程师 制程监控系统、缺陷检测平台和设备预测维护模型 洁净服、晶圆盒、缺陷标记、复核记录 年轻员工 反馈信息 版本记录 advanced_manufacturing_and_semiconductors 精密 半导体工艺工程师与工艺工程师、设备维护团队、质量工程师、客户技术支持的关系 制程监控系统、缺陷检测平台和设备预测维护模型与先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付的关系 世界500强企业能力与真实用户场景 接收反馈 复盘问题 继续改进 洁净车间、设备维护通道、质量实验室、跨国客户会议室 documentary_enterprise_brand_film 工艺工程师、设备维护团队、质量工程师、客户技术支持 企业与社会责任 专业服务对象",
+      "target_embedding_texts": {
+        "script_usage": "适合员工成长、长期主义、使命升温。 良率之外 advanced_manufacturing_and_semiconductors documentary_enterprise_brand_film 先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付 制程监控系统、缺陷检测平台和设备预测维护模型 异常被提前发现，客户生产计划保持稳定，团队把风险处理在交付之前",
+        "knowledge_semantic": "成长段落最好由真实反馈推动，而不是靠奋斗口号推动。",
+        "visual_semantic": "洁净车间、设备维护通道、质量实验室、跨国客户会议室、半导体工艺工程师、洁净服、晶圆盒、缺陷标记、复核记录、制程监控系统、缺陷检测平台和设备预测维护模型、精密质感。"
+      },
+      "notes": "保留目标的部分表面元素，但自然地要求另一个脚本阶段，不引用另一个 summary 原文。",
+      "expected_prefer": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "opening",
+          "establish_problem",
+          "build_reality"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      }
+    },
+    {
+      "case_id": "simple_positive__enterprise_semiconductor_documentary_004__scene_010",
+      "case_type": "simple_positive",
+      "difficulty": "easy",
+      "user_input": "我需要一个结尾收束镜头：适合用于ending段落，收束主题并完成品牌表达，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "expected_relation": "should_match",
+      "target": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_010",
+        "retrieval_id": "ret_scene_010",
+        "script_stage": "ending",
+        "creative_purpose": [
+          "ending",
+          "close_loop",
+          "express_value"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于ending段落，收束主题并完成品牌表达，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "target_tags_text": "半导体工艺工程师 制程监控系统、缺陷检测平台和设备预测维护模型 洁净服、晶圆盒、缺陷标记、复核记录 品牌字幕 回到开场地点 advanced_manufacturing_and_semiconductors 精密 半导体工艺工程师与工艺工程师、设备维护团队、质量工程师、客户技术支持的关系 制程监控系统、缺陷检测平台和设备预测维护模型与先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付的关系 世界500强企业能力与真实用户场景 回到起点 主题字幕出现 音乐收束 洁净车间、设备维护通道、质量实验室、跨国客户会议室 documentary_enterprise_brand_film 工艺工程师、设备维护团队、质量工程师、客户技术支持 企业与社会责任 专业服务对象",
+      "target_embedding_texts": {
+        "script_usage": "适合片尾收束、品牌价值表达、温和号召。 良率之外 advanced_manufacturing_and_semiconductors documentary_enterprise_brand_film 先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付 制程监控系统、缺陷检测平台和设备预测维护模型 异常被提前发现，客户生产计划保持稳定，团队把风险处理在交付之前",
+        "knowledge_semantic": "结尾回到开场问题，会让品牌承诺显得像已经发生的行动。",
+        "visual_semantic": "洁净车间、设备维护通道、质量实验室、跨国客户会议室、半导体工艺工程师、洁净服、晶圆盒、缺陷标记、复核记录、制程监控系统、缺陷检测平台和设备预测维护模型、精密质感。"
+      },
+      "notes": "Intentionally close to the review script-use sentence."
+    },
+    {
+      "case_id": "hard_positive__enterprise_semiconductor_documentary_004__scene_010",
+      "case_type": "hard_positive",
+      "difficulty": "hard",
+      "user_input": "想找一个世界500强质感的结尾收束段落，不要直白讲道理。画面可以有半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型、洁净服、晶圆盒、缺陷标记、复核记录、品牌字幕、回到开场地点这类元素，重点是ending、完成首尾闭环、表达品牌价值，要能服务于advanced_manufacturing_and_semiconductors的品牌表达。",
+      "expected_relation": "should_match",
+      "target": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_010",
+        "retrieval_id": "ret_scene_010",
+        "script_stage": "ending",
+        "creative_purpose": [
+          "ending",
+          "close_loop",
+          "express_value"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于ending段落，收束主题并完成品牌表达，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "target_tags_text": "半导体工艺工程师 制程监控系统、缺陷检测平台和设备预测维护模型 洁净服、晶圆盒、缺陷标记、复核记录 品牌字幕 回到开场地点 advanced_manufacturing_and_semiconductors 精密 半导体工艺工程师与工艺工程师、设备维护团队、质量工程师、客户技术支持的关系 制程监控系统、缺陷检测平台和设备预测维护模型与先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付的关系 世界500强企业能力与真实用户场景 回到起点 主题字幕出现 音乐收束 洁净车间、设备维护通道、质量实验室、跨国客户会议室 documentary_enterprise_brand_film 工艺工程师、设备维护团队、质量工程师、客户技术支持 企业与社会责任 专业服务对象",
+      "target_embedding_texts": {
+        "script_usage": "适合片尾收束、品牌价值表达、温和号召。 良率之外 advanced_manufacturing_and_semiconductors documentary_enterprise_brand_film 先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付 制程监控系统、缺陷检测平台和设备预测维护模型 异常被提前发现，客户生产计划保持稳定，团队把风险处理在交付之前",
+        "knowledge_semantic": "结尾回到开场问题，会让品牌承诺显得像已经发生的行动。",
+        "visual_semantic": "洁净车间、设备维护通道、质量实验室、跨国客户会议室、半导体工艺工程师、洁净服、晶圆盒、缺陷标记、复核记录、制程监控系统、缺陷检测平台和设备预测维护模型、精密质感。"
+      },
+      "notes": "根据标签、脚本阶段和中文创作目的改写，不直接复制目标 summary。"
+    },
+    {
+      "case_id": "hard_negative__enterprise_semiconductor_documentary_004__scene_010",
+      "case_type": "hard_negative",
+      "difficulty": "hard",
+      "user_input": "画面可以借用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型、洁净服、晶圆盒、缺陷标记、复核记录、品牌字幕这类相似元素，但不要做成结尾收束。我真正要的是开场，重点是opening、建立问题、建立真实感，希望它的脚本位置和情绪功能明显不同。",
+      "expected_relation": "should_not_match",
+      "target": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_010",
+        "retrieval_id": "ret_scene_010",
+        "script_stage": "ending",
+        "creative_purpose": [
+          "ending",
+          "close_loop",
+          "express_value"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
+      },
+      "target_summary": "适合用于ending段落，收束主题并完成品牌表达，用半导体工艺工程师、制程监控系统、缺陷检测平台和设备预测维护模型和洁净服、晶圆盒、缺陷标记、复核记录表达精密的世界500强品牌质感。",
+      "target_tags_text": "半导体工艺工程师 制程监控系统、缺陷检测平台和设备预测维护模型 洁净服、晶圆盒、缺陷标记、复核记录 品牌字幕 回到开场地点 advanced_manufacturing_and_semiconductors 精密 半导体工艺工程师与工艺工程师、设备维护团队、质量工程师、客户技术支持的关系 制程监控系统、缺陷检测平台和设备预测维护模型与先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付的关系 世界500强企业能力与真实用户场景 回到起点 主题字幕出现 音乐收束 洁净车间、设备维护通道、质量实验室、跨国客户会议室 documentary_enterprise_brand_film 工艺工程师、设备维护团队、质量工程师、客户技术支持 企业与社会责任 专业服务对象",
+      "target_embedding_texts": {
+        "script_usage": "适合片尾收束、品牌价值表达、温和号召。 良率之外 advanced_manufacturing_and_semiconductors documentary_enterprise_brand_film 先进制造的可靠性不是一次成功，而是每个批次都能被追溯、复核和稳定交付 制程监控系统、缺陷检测平台和设备预测维护模型 异常被提前发现，客户生产计划保持稳定，团队把风险处理在交付之前",
+        "knowledge_semantic": "结尾回到开场问题，会让品牌承诺显得像已经发生的行动。",
+        "visual_semantic": "洁净车间、设备维护通道、质量实验室、跨国客户会议室、半导体工艺工程师、洁净服、晶圆盒、缺陷标记、复核记录、制程监控系统、缺陷检测平台和设备预测维护模型、精密质感。"
+      },
+      "notes": "保留目标的部分表面元素，但自然地要求另一个脚本阶段，不引用另一个 summary 原文。",
+      "expected_prefer": {
+        "fixture_id": "enterprise_semiconductor_documentary_004",
+        "video_id": "enterprise_semiconductor_documentary_004",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "opening",
+          "establish_problem",
+          "build_reality"
+        ],
+        "title": "良率之外",
+        "industry": "advanced_manufacturing_and_semiconductors",
+        "style": "documentary_enterprise_brand_film"
       }
     }
   ]

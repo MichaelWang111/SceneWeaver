@@ -3,9 +3,8 @@
   "case_count": 60,
   "top_k": 10,
   "constraints_enabled": false,
-  "constraint_profile": "D:\\WorkSpace\\Codex\\SceneWeaver\\src\\mocktesting\\eval_outputs\\mock_constraint_profile.json",
-  "elapsed_seconds": 8.861,
-  "seconds_per_case": 0.147683,
+  "elapsed_seconds": 8.525,
+  "seconds_per_case": 0.142083,
   "metrics": {
     "overall": {
       "count": 60,
@@ -18883,5 +18882,6 @@
         }
       ]
     }
-  ]
+  ],
+  "constraint_profile": "D:\\WorkSpace\\Codex\\SceneWeaver\\src\\mocktesting\\eval_outputs\\mock_constraint_profile.json"
 }
