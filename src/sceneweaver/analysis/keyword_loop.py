@@ -22,10 +22,14 @@ from sceneweaver.analysis.semantic import (
     EmbeddingBackend,
     SentenceTransformerBackend,
     build_query_embedding_text,
-    semantic_scores,
+    semantic_channel_scores,
 )
 from sceneweaver.analysis.tag_expander import expand_input_tags
 from sceneweaver.analysis.tags import RetrievalResult
+from sceneweaver.llm.client import VisionLLMClient
+from sceneweaver.retrieval.models import QueryPlan
+from sceneweaver.retrieval.query_plan import build_query_plan
+from sceneweaver.retrieval.rerank import rerank_matches_with_llm
 from sceneweaver.retrieval.service import retrieve_experience_matches
 from sceneweaver.schemas import AssociationAnalysis, CreativeIntentAnalysis, ExperienceCard, TagExpansionAnalysis
 from sceneweaver.schemas.common import StrictBaseModel
@@ -47,7 +51,13 @@ class KeywordLoopResult(StrictBaseModel):
     semantic_enabled: bool = False
     embedding_model: str | None = None
     semantic_weight: float = 0.0
+    lexical_weight: float = 0.0
+    retrieval_workflow: str = "semantic_constraints"
+    rrf_k: int = 60
     intent_weight: float = 0.0
+    query_plan: QueryPlan | None = None
+    llm_rerank_enabled: bool = False
+    llm_rerank_top_n: int = 0
     top_matches: list["KeywordLoopMatchSummary"] = Field(default_factory=list)
     association_analysis: AssociationAnalysis | None = None
     tag_expansion_analysis: TagExpansionAnalysis | None = None
@@ -64,8 +74,13 @@ class KeywordLoopMatchSummary(StrictBaseModel):
     tag_score: float
     usecase_score: float = 0.0
     intent_score: float = 0.0
+    constraint_score: float = 0.0
+    constraint_hits: dict[str, list[str]] = Field(default_factory=dict)
     quality_score: float = 0.0
     semantic_score: float | None = None
+    lexical_score: float | None = None
+    rrf_score: float = 0.0
+    ranking_workflow: str = "semantic_constraints"
     matched_dimensions: dict[str, list[str]]
     matched_usecase: dict[str, list[str]] = Field(default_factory=dict)
     script_stage: str = "general"
@@ -90,7 +105,12 @@ def run_keyword_loop(
     semantic: bool = False,
     embedding_model: str = DEFAULT_EMBEDDING_MODEL,
     semantic_weight: float = DEFAULT_SEMANTIC_WEIGHT,
+    lexical_weight: float = 2.0,
+    retrieval_workflow: str = "semantic_constraints",
+    rrf_k: int = 60,
     embedding_backend: EmbeddingBackend | None = None,
+    llm_rerank: bool = False,
+    llm_rerank_top_n: int = 20,
     max_items: int = DEFAULT_MAX_ITEMS,
     prompt_path: Path | None = None,
     timeout_seconds: float = DEFAULT_TIMEOUT_SECONDS,
@@ -108,8 +128,14 @@ def run_keyword_loop(
         raise ValueError("top_k must be >= 1")
     if semantic_weight < 0:
         raise ValueError("semantic_weight must be >= 0")
+    if lexical_weight < 0:
+        raise ValueError("lexical_weight must be >= 0")
+    if rrf_k < 1:
+        raise ValueError("rrf_k must be >= 1")
     if intent_weight < 0:
         raise ValueError("intent_weight must be >= 0")
+    if llm_rerank_top_n < 1:
+        raise ValueError("llm_rerank_top_n must be >= 1")
     if just_tags and intent:
         raise ValueError("just_tags and intent cannot both be enabled")
 
@@ -188,10 +214,14 @@ def run_keyword_loop(
         query_tags = association.query_tags
 
     _log(log, "Phase 2/2: matching query tags and script use case against experience cards.")
+    extra_text = _extra_text_from_analysis(association, tag_expansion, intent_analysis)
+    query_plan = build_query_plan(clean_input)
     query_context_text = build_query_embedding_text(
         clean_input,
-        _extra_text_from_analysis(association, tag_expansion, intent_analysis),
+        extra_text,
+        query_plan=query_plan,
     )
+    retrieval_top_k = max(top_k, llm_rerank_top_n) if llm_rerank else top_k
     if semantic:
         _log(log, f"Semantic rerank enabled: model={embedding_model}, weight={semantic_weight:g}")
         retrieval = match_experience_cards_semantic(
@@ -199,10 +229,14 @@ def run_keyword_loop(
             tag_expansion=tag_expansion,
             intent_analysis=intent_analysis,
             cards=cards,
-            top_k=top_k,
+            top_k=retrieval_top_k,
             input_text=clean_input,
+            query_plan=query_plan,
             embedding_model=embedding_model,
             semantic_weight=semantic_weight,
+            lexical_weight=lexical_weight,
+            retrieval_workflow=retrieval_workflow,
+            rrf_k=rrf_k,
             intent_weight=intent_weight,
             embedding_backend=embedding_backend,
         )
@@ -210,10 +244,27 @@ def run_keyword_loop(
         retrieval = retrieve_experience_matches(
             query_tags=query_tags,
             cards=cards,
-            top_k=top_k,
+            top_k=retrieval_top_k,
             input_text=query_context_text,
+            query_plan=query_plan,
             intent_analysis=intent_analysis,
             intent_weight=intent_weight if intent_analysis is not None else 0.0,
+            lexical_weight=lexical_weight,
+            retrieval_workflow=retrieval_workflow,
+            rrf_k=rrf_k,
+        )
+    if llm_rerank:
+        _log(log, f"LLM rerank enabled: candidates={len(retrieval.results)}, top_k={top_k}")
+        rerank_client = client or VisionLLMClient()
+        retrieval = rerank_matches_with_llm(
+            input_text=clean_input,
+            query_tags=query_tags,
+            query_plan=query_plan,
+            matches=retrieval.results,
+            client=rerank_client,
+            top_k=top_k,
+            timeout_seconds=timeout_seconds,
+            retries=retries,
         )
     _log(log, f"Experience card matches: {len(retrieval.results)}")
     for match in retrieval.results[:3]:
@@ -238,7 +289,13 @@ def run_keyword_loop(
         semantic_enabled=semantic,
         embedding_model=embedding_model if semantic else None,
         semantic_weight=semantic_weight if semantic else 0.0,
+        lexical_weight=lexical_weight,
+        retrieval_workflow=retrieval_workflow,
+        rrf_k=rrf_k,
         intent_weight=intent_weight if intent else 0.0,
+        query_plan=query_plan,
+        llm_rerank_enabled=llm_rerank,
+        llm_rerank_top_n=llm_rerank_top_n if llm_rerank else 0,
         top_matches=summarize_matches(retrieval),
         association_analysis=association,
         tag_expansion_analysis=tag_expansion,
@@ -258,26 +315,40 @@ def match_experience_cards_semantic(
     cards: list[ExperienceCard],
     *,
     input_text: str,
+    query_plan: QueryPlan | None = None,
     top_k: int,
     embedding_model: str,
     semantic_weight: float,
+    lexical_weight: float = 2.0,
+    retrieval_workflow: str = "semantic_constraints",
+    rrf_k: int = 60,
     intent_weight: float = 0.0,
     embedding_backend: EmbeddingBackend | None = None,
 ) -> RetrievalResult:
     backend = embedding_backend or SentenceTransformerBackend(embedding_model)
     query_tags = _query_tags_from_analysis(association, tag_expansion, intent_analysis)
     extra_text = _extra_text_from_analysis(association, tag_expansion, intent_analysis)
-    query_text = build_query_embedding_text(input_text, extra_text)
-    scores = semantic_scores(query_text, cards, backend=backend)
+    query_text = build_query_embedding_text(input_text, extra_text, query_plan=query_plan)
+    scores = semantic_channel_scores(
+        input_text,
+        cards,
+        backend=backend,
+        association_text=extra_text,
+        query_plan=query_plan,
+    )
     return retrieve_experience_matches(
         query_tags=query_tags,
         cards=cards,
         top_k=top_k,
         input_text=query_text,
+        query_plan=query_plan,
         intent_analysis=intent_analysis,
         intent_weight=intent_weight if intent_analysis is not None else 0.0,
         semantic_scores=scores,
         semantic_weight=semantic_weight,
+        lexical_weight=lexical_weight,
+        retrieval_workflow=retrieval_workflow,
+        rrf_k=rrf_k,
     )
 
 
@@ -349,8 +420,13 @@ def summarize_matches(retrieval: RetrievalResult, *, limit: int = 5) -> list[Key
             tag_score=match.tag_score,
             usecase_score=match.usecase_score,
             intent_score=match.intent_score,
+            constraint_score=match.constraint_score,
+            constraint_hits=match.constraint_hits,
             quality_score=match.quality_score,
             semantic_score=match.semantic_score,
+            lexical_score=match.lexical_score,
+            rrf_score=match.rrf_score,
+            ranking_workflow=match.ranking_workflow,
             matched_dimensions=match.matched_dimensions,
             matched_usecase=match.matched_usecase,
             script_stage=match.script_stage,

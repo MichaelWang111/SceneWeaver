@@ -5,6 +5,7 @@ import hashlib
 import json
 import math
 from pathlib import Path
+import sys
 import time
 from typing import Any
 
@@ -32,6 +33,14 @@ from mocktesting.embedding_text_builder import (
     target_item_id,
 )
 from mocktesting.eval_input_generator import PURPOSE_WORDS, STAGE_WORDS, canonical_stage
+from sceneweaver.retrieval.lexical import (
+    DEFAULT_RRF_K,
+    bm25_scores,
+    ranked_indices_from_scores,
+    reciprocal_rank_fusion,
+    tokenize,
+)
+from sceneweaver.retrieval.query_plan import build_query_plan
 
 DEFAULT_INDEX_PATH = Path(__file__).resolve().parent / "eval_outputs" / "mock_embedding_index.json"
 DEFAULT_REPORT_PATH = Path(__file__).resolve().parent / "eval_outputs" / "mock_retrieval_report.json"
@@ -47,11 +56,22 @@ DEFAULT_RANKING_VALIDATION_REPORT_PATH = (
 DEFAULT_PARAPHRASE_STRESS_REPORT_PATH = (
     Path(__file__).resolve().parent / "eval_outputs" / "mock_paraphrase_stress_report.json"
 )
+DEFAULT_WORKFLOW_COMPARISON_REPORT_PATH = (
+    Path(__file__).resolve().parent / "eval_outputs" / "mock_workflow_comparison_report.json"
+)
+DEFAULT_STYLE_NEGATIVE_REPORT_PATH = (
+    Path(__file__).resolve().parent / "eval_outputs" / "mock_style_negative_report.json"
+)
 
 VALID_SPLITS = {"dev", "test", "hidden", "all"}
 RANKING_KEYS = (
     "final_score",
     "embedding_only",
+    "semantic_only",
+    "lexical_only",
+    "hybrid_rrf",
+    "hybrid_rrf_constraints",
+    "hybrid_rrf_constraints_rerank",
     "script_use_only",
     "visual_tags_only",
     "experience_only",
@@ -63,6 +83,15 @@ TUNING_GRID = {
     "desired_stage_bonus": [0.06, 0.10, 0.12, 0.16],
     "forbidden_stage_penalty": [0.10, 0.15, 0.18, 0.22, 0.28],
     "negative_constraint_penalty": [0.00, 0.05, 0.08, 0.12],
+}
+HARD_FORBIDDEN_STAGE_VETO = 1000.0
+STYLE_POSITIVE_BONUS = 0.8
+STYLE_NEGATIVE_PENALTY = 1.5
+CONSTRAINT_RANKING_KEYS = {
+    "final_score",
+    "constraints_only",
+    "hybrid_rrf_constraints",
+    "hybrid_rrf_constraints_rerank",
 }
 
 
@@ -119,6 +148,40 @@ def main() -> None:
     validate_parser.add_argument("--constraint-profile", type=Path, default=DEFAULT_CONSTRAINT_PROFILE_PATH)
     validate_parser.add_argument("--output", type=Path, default=DEFAULT_RANKING_VALIDATION_REPORT_PATH)
 
+    hybrid_parser = subparsers.add_parser("evaluate-hybrid")
+    add_common_paths(hybrid_parser)
+    hybrid_parser.add_argument("--inputs", type=Path, default=DEFAULT_INPUTS_PATH)
+    hybrid_parser.add_argument("--limit", type=int, default=0)
+    hybrid_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="all")
+    hybrid_parser.add_argument("--top-k", type=int, default=10)
+    hybrid_parser.add_argument("--ranking-key", choices=RANKING_KEYS, default="hybrid_rrf_constraints")
+    hybrid_parser.add_argument("--constraint-profile", type=Path, default=DEFAULT_CONSTRAINT_PROFILE_PATH)
+    hybrid_parser.add_argument("--output", type=Path, default=DEFAULT_REPORT_PATH)
+
+    compare_parser = subparsers.add_parser("compare-ranking-workflows")
+    add_common_paths(compare_parser)
+    compare_parser.add_argument("--inputs", type=Path, default=DEFAULT_INPUTS_PATH)
+    compare_parser.add_argument("--limit", type=int, default=0)
+    compare_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test")
+    compare_parser.add_argument("--top-k", type=int, default=10)
+    compare_parser.add_argument("--constraint-profile", type=Path, default=DEFAULT_CONSTRAINT_PROFILE_PATH)
+    compare_parser.add_argument("--output", type=Path, default=DEFAULT_WORKFLOW_COMPARISON_REPORT_PATH)
+    compare_parser.add_argument("--markdown-output", type=Path, default=None)
+
+    style_parser = subparsers.add_parser("validate-style-negatives")
+    add_common_paths(style_parser)
+    style_parser.add_argument("--inputs", type=Path, default=DEFAULT_INPUTS_PATH)
+    style_parser.add_argument("--limit", type=int, default=0)
+    style_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test")
+    style_parser.add_argument("--top-k", type=int, default=10)
+    style_parser.add_argument("--ranking-key", choices=RANKING_KEYS, default="hybrid_rrf_constraints")
+    style_parser.add_argument("--constraint-profile", type=Path, default=DEFAULT_CONSTRAINT_PROFILE_PATH)
+    style_parser.add_argument("--output", type=Path, default=DEFAULT_STYLE_NEGATIVE_REPORT_PATH)
+
+    report_parser = subparsers.add_parser("generate-eval-report")
+    report_parser.add_argument("--input", type=Path, default=DEFAULT_WORKFLOW_COMPARISON_REPORT_PATH)
+    report_parser.add_argument("--output", type=Path, default=Path(__file__).resolve().parent / "eval_outputs" / "mock_eval_report.md")
+
     paraphrase_parser = subparsers.add_parser("validate-paraphrase-stress")
     add_common_paths(paraphrase_parser)
     paraphrase_parser.add_argument("--inputs", type=Path, default=DEFAULT_INPUTS_PATH)
@@ -130,6 +193,7 @@ def main() -> None:
         default="simple_positive",
     )
     paraphrase_parser.add_argument("--top-k", type=int, default=10)
+    paraphrase_parser.add_argument("--ranking-key", choices=RANKING_KEYS, default="final_score")
     paraphrase_parser.add_argument("--constraint-profile", type=Path, default=DEFAULT_CONSTRAINT_PROFILE_PATH)
     paraphrase_parser.add_argument("--output", type=Path, default=DEFAULT_PARAPHRASE_STRESS_REPORT_PATH)
     paraphrase_parser.add_argument("--dry-run", action="store_true")
@@ -158,6 +222,26 @@ def main() -> None:
         result = validate_ranking_keys_command(args)
         write_json(args.output, result)
         print(json.dumps(result["summary"], ensure_ascii=False, indent=2))
+    elif args.command == "evaluate-hybrid":
+        result = evaluate_hybrid_command(args)
+        write_json(args.output, result)
+        print(json.dumps(result["metrics"], ensure_ascii=False, indent=2))
+    elif args.command == "compare-ranking-workflows":
+        result = compare_ranking_workflows_command(args)
+        write_json(args.output, result)
+        if args.markdown_output is not None:
+            args.markdown_output.parent.mkdir(parents=True, exist_ok=True)
+            args.markdown_output.write_text(markdown_report(result), encoding="utf-8")
+        print(json.dumps(result["summary"], ensure_ascii=False, indent=2))
+    elif args.command == "validate-style-negatives":
+        result = validate_style_negatives_command(args)
+        write_json(args.output, result)
+        print(json.dumps(result["summary"], ensure_ascii=False, indent=2))
+    elif args.command == "generate-eval-report":
+        result = json.loads(args.input.read_text(encoding="utf-8"))
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        args.output.write_text(markdown_report(result), encoding="utf-8")
+        print(str(args.output))
     elif args.command == "validate-paraphrase-stress":
         result = validate_paraphrase_stress_command(args)
         write_json(args.output, result)
@@ -483,6 +567,248 @@ def validate_ranking_keys_command(args: argparse.Namespace) -> dict[str, Any]:
     }
 
 
+def evaluate_hybrid_command(args: argparse.Namespace) -> dict[str, Any]:
+    profile = load_constraint_profile(args.constraint_profile)
+    index = read_index(args.index)
+    cache = EmbeddingCache(
+        cache_path=args.cache,
+        model=args.model,
+        dimension=args.dimension,
+        batch_size=args.embedding_batch_size,
+    )
+    cases = read_cases(args.inputs, args.limit, split=args.split)
+    query_texts = [channel["text"] for case in cases for channel in build_query_channels(case["user_input"])]
+    cache.embed_texts(query_texts)
+    precomputed = precompute_embedding_rankings(index, cache, cases)
+    rows = rank_precomputed_cases(
+        precomputed,
+        ranking_key=args.ranking_key,
+        constraint_profile=profile,
+        top_k=args.top_k,
+    )
+    compact_rows = [{key: value for key, value in row.items() if key != "all_results"} for row in rows]
+    return {
+        "method": "mock_hybrid_retrieval",
+        "split": args.split,
+        "ranking_key": args.ranking_key,
+        "case_count": len(rows),
+        "top_k": args.top_k,
+        "metrics": build_metrics(compact_rows),
+        "cases": compact_rows,
+    }
+
+
+def compare_ranking_workflows_command(args: argparse.Namespace) -> dict[str, Any]:
+    profile = load_constraint_profile(args.constraint_profile)
+    index = read_index(args.index)
+    cache = EmbeddingCache(
+        cache_path=args.cache,
+        model=args.model,
+        dimension=args.dimension,
+        batch_size=args.embedding_batch_size,
+    )
+    cases = read_cases(args.inputs, args.limit, split=args.split)
+    query_texts = [channel["text"] for case in cases for channel in build_query_channels(case["user_input"])]
+    cache.embed_texts(query_texts)
+    precomputed = precompute_embedding_rankings(index, cache, cases)
+    workflow_keys = [
+        "semantic_only",
+        "semantic_constraints",
+        "lexical_only",
+        "hybrid_rrf",
+        "hybrid_rrf_constraints",
+    ]
+    key_map = {
+        "semantic_constraints": "final_score",
+    }
+    ranked_by_workflow = {
+        workflow: rank_precomputed_cases(
+            precomputed,
+            ranking_key=key_map.get(workflow, workflow),
+            constraint_profile=profile,
+            top_k=args.top_k,
+        )
+        for workflow in workflow_keys
+    }
+    reports = {
+        workflow: summarize_ranking_key_results(rows)
+        for workflow, rows in ranked_by_workflow.items()
+    }
+    baseline = reports["semantic_only"]["metrics"]
+    best_workflow = max(
+        reports,
+        key=lambda workflow: workflow_selection_score(reports[workflow]["metrics"]),
+    )
+    return {
+        "method": "mock_workflow_comparison",
+        "split": args.split,
+        "case_count": len(cases),
+        "top_k": args.top_k,
+        "workflows": reports,
+        "summary": {
+            "best_workflow": best_workflow,
+            "best_selection_score": workflow_selection_score(reports[best_workflow]["metrics"]),
+            "workflow_delta_vs_baseline": {
+                workflow: workflow_delta(reports[workflow]["metrics"], baseline)
+                for workflow in reports
+            },
+        },
+        "worst_cases": {
+            workflow: select_worst_cases(rows, limit=10)
+            for workflow, rows in ranked_by_workflow.items()
+        },
+    }
+
+
+def validate_style_negatives_command(args: argparse.Namespace) -> dict[str, Any]:
+    profile = load_constraint_profile(args.constraint_profile)
+    index = read_index(args.index)
+    index_items = {item["item_id"]: item for item in index["items"]}
+    cache = EmbeddingCache(
+        cache_path=args.cache,
+        model=args.model,
+        dimension=args.dimension,
+        batch_size=args.embedding_batch_size,
+    )
+    source_cases = [
+        case
+        for case in read_cases(args.inputs, args.limit, split=args.split)
+        if case["expected_relation"] == "should_match"
+    ]
+    generated_variants = [build_style_negative_case(case) for case in source_cases]
+    skipped_cases = []
+    variants = []
+    for variant in generated_variants:
+        target_hits = target_negative_style_hits(variant, index_items)
+        if target_hits:
+            skipped_cases.append(
+                {
+                    "case_id": variant["case_id"],
+                    "target_item_id": target_item_id(variant["target"]),
+                    "negative_style_hits": target_hits,
+                }
+            )
+            continue
+        variants.append(variant)
+    query_texts = [channel["text"] for case in variants for channel in build_query_channels(case["user_input"])]
+    cache.embed_texts(query_texts)
+    precomputed = precompute_embedding_rankings(index, cache, variants)
+    rows = rank_precomputed_cases(
+        precomputed,
+        ranking_key=args.ranking_key,
+        constraint_profile=profile,
+        top_k=args.top_k,
+    )
+    compact_rows = [{key: value for key, value in row.items() if key != "all_results"} for row in rows]
+    return {
+        "method": "mock_style_negative_validation",
+        "split": args.split,
+        "ranking_key": args.ranking_key,
+        "case_count": len(compact_rows),
+        "generated_case_count": len(generated_variants),
+        "skipped_target_style_violation_count": len(skipped_cases),
+        "skipped_target_style_violation_cases": skipped_cases[:20],
+        "top_k": args.top_k,
+        "summary": style_negative_summary(compact_rows),
+        "cases": compact_rows,
+    }
+
+
+def workflow_selection_score(metrics: dict[str, Any]) -> list[float]:
+    overall = metrics.get("overall", {})
+    by_type = metrics.get("by_case_type", {})
+    hard_negative = by_type.get("hard_negative", {})
+    return [
+        float(hard_negative.get("hard_negative_expected_prefer_margin_positive_rate", 0.0)),
+        float(overall.get("recall_at_10", 0.0)),
+        -float(overall.get("forbidden_stage_violation_at_3", 0.0)),
+    ]
+
+
+def workflow_delta(metrics: dict[str, Any], baseline: dict[str, Any]) -> dict[str, float]:
+    overall = metrics.get("overall", {})
+    base_overall = baseline.get("overall", {})
+    keys = ("recall_at_1", "recall_at_3", "recall_at_10", "forbidden_stage_violation_at_3")
+    return {
+        key: round(float(overall.get(key, 0.0)) - float(base_overall.get(key, 0.0)), 6)
+        for key in keys
+    }
+
+
+def markdown_report(report: dict[str, Any]) -> str:
+    lines = [
+        "# Mock Retrieval Evaluation Report",
+        "",
+        f"- method: `{report.get('method', '')}`",
+        f"- split: `{report.get('split', '')}`",
+        f"- case_count: `{report.get('case_count', 0)}`",
+        f"- top_k: `{report.get('top_k', 0)}`",
+        "",
+    ]
+    summary = report.get("summary", {})
+    if summary:
+        lines.extend(["## Summary", ""])
+        if summary.get("best_workflow") is not None:
+            lines.append(f"- best_workflow: `{summary.get('best_workflow', '')}`")
+        if summary.get("best_selection_score") is not None:
+            lines.append(f"- best_selection_score: `{summary.get('best_selection_score', '')}`")
+        metric_rows = simple_metric_rows(summary, skip={"best_workflow", "best_selection_score"})
+        if metric_rows:
+            lines.extend(["", "| metric | value |", "|---|---:|"])
+            lines.extend(f"| {key} | {value} |" for key, value in metric_rows)
+        lines.append("")
+    metrics = report.get("metrics", {})
+    if metrics:
+        overall_metrics = metrics.get("overall", metrics)
+        metric_rows = simple_metric_rows(overall_metrics)
+        if metric_rows:
+            lines.extend(["## Metrics", "", "| metric | value |", "|---|---:|"])
+            lines.extend(f"| {key} | {value} |" for key, value in metric_rows)
+            lines.append("")
+    workflows = report.get("workflows", {})
+    if workflows:
+        lines.extend(["## Workflow Metrics", "", "| workflow | recall@1 | recall@3 | recall@10 | hard_neg_prefer | forbidden@3 |", "|---|---:|---:|---:|---:|---:|"])
+        for workflow, row in workflows.items():
+            metrics = row.get("metrics", {})
+            overall = metrics.get("overall", {})
+            hard_negative = metrics.get("by_case_type", {}).get("hard_negative", {})
+            lines.append(
+                "| "
+                + " | ".join(
+                    [
+                        workflow,
+                        str(overall.get("recall_at_1", "")),
+                        str(overall.get("recall_at_3", "")),
+                        str(overall.get("recall_at_10", "")),
+                        str(hard_negative.get("hard_negative_expected_prefer_margin_positive_rate", "")),
+                        str(overall.get("forbidden_stage_violation_at_3", "")),
+                    ]
+                )
+                + " |"
+            )
+        lines.append("")
+    lines.extend(
+        [
+            "## Notes",
+            "",
+            "- LLM judgement is not run by default; use explicit sample flags for token-safe spot checks.",
+            "- Treat this report as an experiment comparison, not a production default decision by itself.",
+            "",
+        ]
+    )
+    return "\n".join(lines)
+
+
+def simple_metric_rows(data: dict[str, Any], *, skip: set[str] | None = None) -> list[tuple[str, str]]:
+    skip = skip or set()
+    rows = []
+    for key, value in data.items():
+        if key in skip or isinstance(value, (dict, list)):
+            continue
+        rows.append((key, str(value)))
+    return rows
+
+
 def validate_paraphrase_stress_command(args: argparse.Namespace) -> dict[str, Any]:
     source_cases = [
         case
@@ -535,6 +861,15 @@ def validate_paraphrase_stress_command(args: argparse.Namespace) -> dict[str, An
             constraint_profile=profile,
             constraints_enabled=True,
         )
+        if args.ranking_key != "final_score":
+            query_constraints = parse_query_constraints(variant["user_input"], profile)
+            ranked = rank_items_for_key(
+                ranked,
+                ranking_key=args.ranking_key,
+                user_input=variant["user_input"],
+                query_constraints=query_constraints,
+                constraint_profile=profile,
+            )
         target_id = target_item_id(variant["target"])
         target_stage = canonical_stage(variant["target"].get("script_stage"))
         target_purposes = set(variant["target"].get("creative_purpose", []))
@@ -565,6 +900,7 @@ def validate_paraphrase_stress_command(args: argparse.Namespace) -> dict[str, An
         "source_case_count": len(source_cases),
         "variant_count": len(rows),
         "top_k": args.top_k,
+        "ranking_key": args.ranking_key,
         "summary": summarize_paraphrase_rows(rows),
         "by_variant_type": {
             variant_type: summarize_paraphrase_rows([row for row in rows if row["variant_type"] == variant_type])
@@ -852,6 +1188,7 @@ def rank_precomputed_cases(
         ranked = rank_items_for_key(
             row["embedding_ranked"],
             ranking_key=ranking_key,
+            user_input=case["user_input"],
             query_constraints=query_constraints,
             constraint_profile=constraint_profile,
         )
@@ -887,35 +1224,60 @@ def rank_items_for_key(
     embedding_ranked: list[dict[str, Any]],
     *,
     ranking_key: str,
+    user_input: str = "",
     query_constraints: dict[str, Any],
     constraint_profile: dict[str, Any],
 ) -> list[dict[str, Any]]:
+    lexical_scores = lexical_scores_for_ranked(user_input, embedding_ranked)
+    semantic_scores = [float(row["embedding_score"]) for row in embedding_ranked]
+    rrf_scores = reciprocal_rank_fusion(
+        [
+            ranked_indices_from_scores(semantic_scores),
+            ranked_indices_from_scores(lexical_scores),
+        ],
+        item_count=len(embedding_ranked),
+        k=DEFAULT_RRF_K,
+    )
     ranked = []
-    for row in embedding_ranked:
+    for index, row in enumerate(embedding_ranked):
         constraint_score, constraint_hits = score_constraints(
             query_constraints,
             row.get("metadata", {}),
             constraint_profile,
         )
+        style_score, style_hits = score_mock_style_constraints(user_input, row)
+        full_constraint_score = constraint_score + style_score
+        full_constraint_hits = {**constraint_hits}
+        full_constraint_hits.update(style_hits)
         if ranking_key == "final_score":
-            score = float(row["embedding_score"]) + constraint_score
-        elif ranking_key == "embedding_only":
+            score = float(row["embedding_score"]) + full_constraint_score
+        elif ranking_key in {"embedding_only", "semantic_only"}:
             score = float(row["embedding_score"])
+        elif ranking_key == "lexical_only":
+            score = lexical_scores[index]
+        elif ranking_key == "hybrid_rrf":
+            score = rrf_scores[index] * 100
+        elif ranking_key in {"hybrid_rrf_constraints", "hybrid_rrf_constraints_rerank"}:
+            score = (rrf_scores[index] * 100) + full_constraint_score
         elif ranking_key == "constraints_only":
-            score = constraint_score
+            score = full_constraint_score
         elif ranking_key.endswith("_only"):
             channel = ranking_key.removesuffix("_only")
             score = float(row.get("channel_scores", {}).get(channel, 0.0))
         else:
             raise ValueError(f"Unknown ranking key: {ranking_key}")
+        if ranking_key in CONSTRAINT_RANKING_KEYS and has_forbidden_stage_hit(query_constraints, row.get("metadata", {})):
+            score -= HARD_FORBIDDEN_STAGE_VETO
         ranked.append(
             {
                 **row,
                 "score": round(score, 6),
                 "final_score": round(score, 6),
                 "ranking_key": ranking_key,
-                "constraint_score": round(constraint_score, 6),
-                "constraint_hits": constraint_hits,
+                "lexical_score": round(lexical_scores[index], 6),
+                "rrf_score": round(rrf_scores[index] * 100, 6),
+                "constraint_score": round(full_constraint_score, 6),
+                "constraint_hits": full_constraint_hits,
             }
         )
     ranked.sort(key=lambda item: item["score"], reverse=True)
@@ -931,6 +1293,83 @@ def summarize_ranking_key_results(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "metrics": build_metrics(compact_rows),
         "case_count": len(compact_rows),
     }
+
+
+def lexical_scores_for_ranked(user_input: str, rows: list[dict[str, Any]]) -> list[float]:
+    if not rows:
+        return []
+    plan = build_query_plan(user_input)
+    query_text = " ".join(
+        part
+        for part in (
+            plan.positive_query,
+            " ".join(plan.desired_stage),
+            " ".join(plan.positive_purposes),
+            " ".join(plan.positive_style),
+            " ".join(plan.visual_hints),
+        )
+        if part
+    )
+    docs = [tokenize(row.get("lexical_text") or mock_item_lexical_text(row)) for row in rows]
+    return bm25_scores(tokenize(query_text), docs)
+
+
+def score_mock_style_constraints(user_input: str, row: dict[str, Any]) -> tuple[float, dict[str, list[str]]]:
+    plan = build_query_plan(user_input)
+    text = (row.get("lexical_text") or mock_item_lexical_text(row)).lower()
+    score = 0.0
+    hits: dict[str, list[str]] = {}
+    negative_hits = [style for style in plan.negative_style if style in text or style_alias_hit(style, text)]
+    if negative_hits:
+        score -= STYLE_NEGATIVE_PENALTY * len(negative_hits)
+        hits["negative_style"] = negative_hits
+    positive_hits = [style for style in plan.positive_style if style in text or style_alias_hit(style, text)]
+    if positive_hits:
+        score += STYLE_POSITIVE_BONUS * len(positive_hits)
+        hits["positive_style"] = positive_hits
+    return round(score, 6), hits
+
+
+def style_alias_hit(style: str, text: str) -> bool:
+    aliases = {
+        "big_company_office": ("大厂", "互联网大厂", "泛泛办公", "空泛办公", "generic office"),
+        "ad_like": ("广告", "宣传片腔", "硬广", "口号", "slogan"),
+        "tech_showoff": ("炫技", "技术炫耀", "功能说明", "产品说明", "纯科技", "冷冰冰"),
+        "human_warmth": ("有人味", "人味", "人的温度", "human"),
+        "documentary": ("纪录片", "纪实", "观察", "documentary"),
+        "real_location": ("真实现场", "真实场景", "现场感"),
+    }
+    return any(alias.lower() in text for alias in aliases.get(style, ()))
+
+
+def target_negative_style_hits(case: dict[str, Any], index_items: dict[str, dict[str, Any]]) -> list[str]:
+    item = index_items.get(target_item_id(case["target"]))
+    if item is None:
+        return []
+    row = {
+        "metadata": item.get("metadata", {}),
+        "lexical_text": index_item_lexical_text(item),
+    }
+    _score, hits = score_mock_style_constraints(case["user_input"], row)
+    return list(hits.get("negative_style", []))
+
+
+def has_forbidden_stage_hit(query_constraints: dict[str, Any], metadata: dict[str, Any]) -> bool:
+    forbidden = {canonical_stage(stage) for stage in query_constraints.get("forbidden_stage", [])}
+    return bool(forbidden and canonical_stage(metadata.get("script_stage", "")) in forbidden)
+
+
+def mock_item_lexical_text(row: dict[str, Any]) -> str:
+    metadata = row.get("metadata", {})
+    parts = [
+        metadata.get("script_stage", ""),
+        " ".join(metadata.get("creative_purpose", [])),
+        metadata.get("script_use_sentence", ""),
+        metadata.get("industry", ""),
+        metadata.get("style", ""),
+        row.get("lexical_text", ""),
+    ]
+    return " ".join(str(part) for part in parts if part)
 
 
 def build_pairwise_report(
@@ -1322,6 +1761,26 @@ def build_paraphrase_variants(case: dict[str, Any]) -> list[dict[str, Any]]:
     ]
 
 
+def build_style_negative_case(case: dict[str, Any]) -> dict[str, Any]:
+    target = case["target"]
+    stage = stage_word(target.get("script_stage", ""))
+    purposes = purpose_text(target.get("creative_purpose", []))
+    return {
+        **case,
+        "case_id": f"{case['case_id']}__style_negative",
+        "case_type": "style_negative",
+        "difficulty": "hard",
+        "expected_relation": "should_match",
+        "variant_type": "style_negative",
+        "source_case_id": case["case_id"],
+        "user_input": (
+            f"需要一个{stage}段落，重点是{purposes}，要有人味、像纪录片、真实现场。"
+            "不要大厂味，不要广告感，不要炫技，也不要技术炫耀。"
+            f"参考语义：{case.get('target_summary', '')}"
+        ),
+    }
+
+
 def mixed_paraphrase(stage: str, purposes: str, tags: str) -> str:
     if "技术展示" in stage or "技术入场" in stage:
         return f"真正要的是{stage}：{purposes}。画面可以借用{tags}，但不要做成冷冰冰的功能说明。"
@@ -1398,6 +1857,40 @@ def summarize_paraphrase_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
+def style_negative_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    if not rows:
+        return {
+            "count": 0,
+            "target_recall_at_1": 0.0,
+            "target_recall_at_3": 0.0,
+            "target_recall_at_10": 0.0,
+            "style_negative_violation_at_1": 0.0,
+            "style_negative_violation_at_3": 0.0,
+            "style_negative_violation_at_10": 0.0,
+            "low_confidence_rate": 0.0,
+        }
+    return {
+        "count": len(rows),
+        "target_recall_at_1": recall_at(rows, 1),
+        "target_recall_at_3": recall_at(rows, 3),
+        "target_recall_at_10": recall_at(rows, 10),
+        "style_negative_violation_at_1": style_violation_at(rows, 1),
+        "style_negative_violation_at_3": style_violation_at(rows, 3),
+        "style_negative_violation_at_10": style_violation_at(rows, 10),
+        "low_confidence_rate": round(sum(1 for row in rows if confidence_bucket(case_margin(row)) == "low") / len(rows), 6),
+    }
+
+
+def style_violation_at(rows: list[dict[str, Any]], k: int) -> float:
+    if not rows:
+        return 0.0
+    violations = 0
+    for row in rows:
+        if any(result.get("constraint_hits", {}).get("negative_style") for result in row.get("top_results", [])[:k]):
+            violations += 1
+    return round(violations / len(rows), 6)
+
+
 def summarize_paraphrase_by_source_case(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     source_ids = sorted({row["source_case_id"] for row in rows})
     return [
@@ -1422,6 +1915,8 @@ def rerank_with_constraints(
             constraint_profile,
         )
         final_score = float(row["embedding_score"]) + constraint_score
+        if has_forbidden_stage_hit(query_constraints, row.get("metadata", {})):
+            final_score -= HARD_FORBIDDEN_STAGE_VETO
         reranked.append(
             {
                 **row,
@@ -1521,6 +2016,8 @@ def search_index(
             else (0.0, {})
         )
         final_score = embedding_score + constraint_score
+        if constraints_enabled and has_forbidden_stage_hit(query_constraints, item.get("metadata", {})):
+            final_score -= HARD_FORBIDDEN_STAGE_VETO
         scored.append(
             {
                 "item_id": item["item_id"],
@@ -1531,6 +2028,7 @@ def search_index(
                 "constraint_hits": constraint_hits,
                 "channel_scores": channel_scores,
                 "metadata": item["metadata"],
+                "lexical_text": index_item_lexical_text(item),
             }
         )
     scored.sort(key=lambda row: row["final_score"], reverse=True)
@@ -1559,6 +2057,24 @@ def score_item(
         channel_scores[target_channel] = round(contribution, 6)
         total += contribution
     return total, channel_scores
+
+
+def index_item_lexical_text(item: dict[str, Any]) -> str:
+    metadata = item.get("metadata", {})
+    channel_text = " ".join(
+        channel.get("text", "")
+        for channel in item.get("channels", [])
+        if isinstance(channel, dict)
+    )
+    parts = [
+        metadata.get("script_stage", ""),
+        " ".join(metadata.get("creative_purpose", [])),
+        metadata.get("script_use_sentence", ""),
+        metadata.get("industry", ""),
+        metadata.get("style", ""),
+        channel_text,
+    ]
+    return " ".join(str(part) for part in parts if part)
 
 
 def build_metrics(case_results: list[dict[str, Any]]) -> dict[str, Any]:
@@ -1692,5 +2208,31 @@ def write_json(path: Path, data: dict[str, Any]) -> None:
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
+def is_embedding_setup_error(exc: RuntimeError) -> bool:
+    message = str(exc)
+    return (
+        "dashscope package is required" in message
+        or "DASHSCOPE_API_KEY" in message
+        or "embedding missing for text key=" in message
+    )
+
+
+def embedding_setup_error_payload(exc: RuntimeError) -> dict[str, Any]:
+    return {
+        "error": "embedding_setup_unavailable",
+        "message": str(exc),
+        "hint": (
+            "Activate the environment with dashscope and API credentials before uncached embedding runs, "
+            "for example: conda activate video_expert_analyzer and set DASHSCOPE_API_KEY."
+        ),
+    }
+
+
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except RuntimeError as exc:
+        if not is_embedding_setup_error(exc):
+            raise
+        print(json.dumps(embedding_setup_error_payload(exc), ensure_ascii=False, indent=2), file=sys.stderr)
+        raise SystemExit(2) from None

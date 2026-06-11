@@ -32,8 +32,13 @@ class ExperienceCardMatch(StrictBaseModel):
     tag_score: float = Field(default=0, ge=0)
     usecase_score: float = Field(default=0, ge=0)
     intent_score: float = Field(default=0)
+    constraint_score: float = Field(default=0)
+    constraint_hits: dict[str, list[str]] = Field(default_factory=dict)
     quality_score: float = Field(default=0, ge=0)
     semantic_score: float | None = Field(default=None, ge=-1, le=1)
+    lexical_score: float | None = Field(default=None, ge=0)
+    rrf_score: float = Field(default=0, ge=0)
+    ranking_workflow: str = "semantic_constraints"
     matched_dimensions: dict[str, list[str]]
     matched_usecase: dict[str, list[str]] = Field(default_factory=dict)
     script_stage: str = "general"

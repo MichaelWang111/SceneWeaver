@@ -53,6 +53,8 @@ class ExperienceCard(StrictBaseModel):
     director_strategy: str
     shooting_techniques: list[str] = Field(min_length=1)
     visual_symbols: list[str] = Field(default_factory=list)
+    style_traits: list[str] = Field(default_factory=list)
+    style_risks: list[str] = Field(default_factory=list)
     copywriting_tone: str
     avoid: list[str] = Field(default_factory=list)
     emotion_temperature_range: tuple[float, float]

@@ -2,7 +2,8 @@ from __future__ import annotations
 
 from sceneweaver.analysis.semantic import build_card_embedding_text
 from sceneweaver.analysis.tags import ExperienceCardMatch, score_experience_card
-from sceneweaver.retrieval.models import QueryUseCase, RetrievalWeights
+from sceneweaver.retrieval.models import QueryPlan, QueryUseCase, RetrievalWeights
+from sceneweaver.retrieval.query_plan import score_query_constraints
 from sceneweaver.schemas import CreativeIntentAnalysis, ExperienceCard
 from sceneweaver.schemas.experience_card import ScriptUseCase
 from sceneweaver.schemas.tags import TagProfile
@@ -17,6 +18,12 @@ def score_experience_match(
     intent_weight: float = 0.0,
     semantic_score: float | None = None,
     semantic_weight: float = 0.0,
+    lexical_score: float | None = None,
+    lexical_weight: float = 0.0,
+    rrf_score: float = 0.0,
+    ranking_workflow: str = "semantic_constraints",
+    query_plan: QueryPlan | None = None,
+    constraints_enabled: bool = True,
     weights: RetrievalWeights | None = None,
 ) -> ExperienceCardMatch:
     active_weights = weights or RetrievalWeights()
@@ -29,15 +36,35 @@ def score_experience_match(
     )
     quality_score = card.confidence * active_weights.quality
     semantic_contribution = max(0.0, semantic_score or 0.0) * semantic_weight
-    final_score = tag_match.score + usecase_score + intent_score + semantic_contribution + quality_score
+    lexical_contribution = max(0.0, lexical_score or 0.0) * lexical_weight
+    constraint_score, constraint_hits = (
+        score_query_constraints(query_plan, card, weights=active_weights)
+        if constraints_enabled
+        else (0.0, {})
+    )
+    final_score = (
+        tag_match.score
+        + usecase_score
+        + intent_score
+        + semantic_contribution
+        + lexical_contribution
+        + quality_score
+        + constraint_score
+        + rrf_score
+    )
     return ExperienceCardMatch(
         card_id=card.card_id,
-        score=round(final_score, 3),
+        score=round(max(0.0, final_score), 3),
         tag_score=round(tag_match.score, 3),
         usecase_score=round(usecase_score, 3),
         intent_score=round(intent_score, 3),
+        constraint_score=round(constraint_score, 3),
+        constraint_hits=constraint_hits,
         quality_score=round(quality_score, 3),
         semantic_score=round(semantic_score, 4) if semantic_score is not None else None,
+        lexical_score=round(lexical_score, 4) if lexical_score is not None else None,
+        rrf_score=round(rrf_score, 6),
+        ranking_workflow=ranking_workflow,
         matched_dimensions=tag_match.matched_dimensions,
         matched_usecase=matched_usecase,
         script_stage=card.script_usecase.script_stage,

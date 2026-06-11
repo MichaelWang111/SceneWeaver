@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from sceneweaver.retrieval.models import QueryUseCase
+from sceneweaver.retrieval.policy import score_experience_match
+from sceneweaver.retrieval.query_plan import build_query_plan
 from sceneweaver.retrieval.service import retrieve_experience_matches
 from sceneweaver.schemas import ExperienceCard, ScriptUseCase, TagProfile
 
@@ -52,7 +55,100 @@ def test_human_centered_technology_query_prefers_trust_or_technology_usecase_car
     assert "build_trust" in result.results[0].creative_purpose
 
 
-def _card(card_id: str, script_stage: str, creative_purpose: list[str]) -> ExperienceCard:
+def test_forbidden_stage_is_filtered_and_desired_stage_is_explained():
+    result = retrieve_experience_matches(
+        query_tags=_query_tags(),
+        input_text="画面可以借用办公室、团队这类相似元素，但不要做成开场。我真正要的是铺垫。",
+        cards=[
+            _card("exp_000008", "opening", ["show_scale"]),
+            _card("exp_000009", "setup", ["establish_context"]),
+        ],
+        top_k=2,
+    )
+
+    assert [match.card_id for match in result.results] == ["exp_000009"]
+    assert result.results[0].constraint_score > 0
+    assert result.results[0].constraint_hits == {"desired_stage": ["setup"]}
+
+
+def test_forbidden_stage_can_be_soft_penalized_with_constraint_hits():
+    result = retrieve_experience_matches(
+        query_tags=_query_tags(),
+        input_text="不要做成开场，我真正要的是铺垫",
+        cards=[
+            _card("exp_000012", "opening", ["show_scale"]),
+            _card("exp_000013", "setup", ["establish_context"]),
+        ],
+        top_k=2,
+        hard_filter_forbidden_stage=False,
+        semantic_scores=[0.8, 0.8],
+        semantic_weight=10.0,
+    )
+
+    by_id = {match.card_id: match for match in result.results}
+    assert by_id["exp_000012"].constraint_score < 0
+    assert by_id["exp_000012"].constraint_hits == {"forbidden_stage": ["opening"]}
+    assert result.results[0].card_id == "exp_000013"
+
+
+def test_hybrid_rrf_constraints_can_use_lexical_signal_and_style_penalty():
+    result = retrieve_experience_matches(
+        query_tags=_query_tags(),
+        input_text="要有人味、像纪录片、真实现场，不要大厂味",
+        cards=[
+            _card(
+                "exp_000014",
+                "setup",
+                ["establish_context"],
+                keywords=["互联网大厂", "办公", "口号"],
+                style_risks=["big_company_office"],
+            ),
+            _card(
+                "exp_000015",
+                "setup",
+                ["establish_context"],
+                keywords=["纪录片", "真实现场", "人的温度"],
+                style_traits=["documentary", "human_warmth", "real_location"],
+            ),
+        ],
+        top_k=2,
+        retrieval_workflow="hybrid_rrf_constraints",
+        lexical_weight=2.0,
+    )
+
+    assert result.results[0].card_id == "exp_000015"
+    assert result.results[0].lexical_score is not None
+    assert result.results[0].rrf_score > 0
+
+
+def test_style_penalty_exposes_negative_style_hits():
+    match = score_experience_match(
+        query_tags=_query_tags(),
+        query_usecase=QueryUseCase(script_stage="setup", creative_purpose=["establish_context"]),
+        card=_card(
+            "exp_000016",
+            "setup",
+            ["establish_context"],
+            keywords=["互联网大厂", "办公", "口号"],
+            style_risks=["big_company_office"],
+        ),
+        query_plan=build_query_plan("要有人味，不要大厂味"),
+    )
+
+    assert match.constraint_score < 0
+    assert match.constraint_hits["negative_style"] == ["big_company_office"]
+    assert match.constraint_hits["negative_constraints"] == ["大厂味"]
+
+
+def _card(
+    card_id: str,
+    script_stage: str,
+    creative_purpose: list[str],
+    *,
+    keywords: list[str] | None = None,
+    style_traits: list[str] | None = None,
+    style_risks: list[str] | None = None,
+) -> ExperienceCard:
     scene_id = f"scene_{int(card_id.split('_')[1]):03d}"
     tags = TagProfile(
         symbolic_logic=["general_expression"],
@@ -71,12 +167,14 @@ def _card(card_id: str, script_stage: str, creative_purpose: list[str]) -> Exper
         source_video_id="video_001",
         source_scene_ids=[scene_id],
         tags=tags,
-        keywords=creative_purpose,
+        keywords=keywords or creative_purpose,
         underlying_emotion="test emotion",
         narrative_logic="test narrative",
         director_strategy="test strategy",
         shooting_techniques=["test technique"],
         visual_symbols=[],
+        style_traits=style_traits or [],
+        style_risks=style_risks or [],
         copywriting_tone="test tone",
         avoid=[],
         emotion_temperature_range=(0.3, 0.7),
