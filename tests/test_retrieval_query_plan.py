@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from sceneweaver.retrieval import query_plan as query_plan_module
 from sceneweaver.retrieval.query_plan import build_query_plan
 
 
@@ -32,3 +33,14 @@ def test_query_plan_extracts_style_constraints():
         "negative": ["big_company_office", "ad_like", "tech_showoff"],
     }
     assert "大厂味" not in plan.positive_query
+
+
+def test_query_plan_chinese_aliases_are_utf8_not_mojibake():
+    alias_text = (
+        repr(query_plan_module.STAGE_ALIASES)
+        + repr(query_plan_module.NEGATIVE_ALIAS_CANDIDATES)
+        + query_plan_module.NEGATIVE_SPAN_RE.pattern
+    )
+
+    for token in ("不要", "开场", "铺垫", "大厂味", "广告感", "炫技"):
+        assert token.encode("unicode_escape").decode("ascii") in alias_text.encode("unicode_escape").decode("ascii")

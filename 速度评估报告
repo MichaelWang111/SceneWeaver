@@ -1,0 +1,387 @@
+Windows PowerShell
+版权所有（C） Microsoft Corporation。保留所有权利。
+
+安装最新的 PowerShell，了解新功能和改进！https://aka.ms/PSWindows
+
+加载个人及系统配置文件用了 7810 毫秒。
+(video_expert_analyzer) PS D:\WorkSpace\Codex\SceneWeaver> Measure-Command {
+>>   python -m mocktesting.mock_retriever search "不要大厂味，不要广告感，要有人味，像纪录片一样先让观众进入现场" `
+>>     --query-planner rule `
+>>     --top-k 5 `
+>>     --cache-format matrix `
+>>     --cache-load-mode lazy `
+>>     --output .tmp\search_speed.json | Out-Host
+>> } | Select-Object TotalSeconds
+{
+  "user_input": "不要大厂味，不要广告感，要有人味，像纪录片一样先让观众进入现场",
+  "query_planner": "rule",
+  "query_plan": {
+    "planner": "rule",
+    "original_text": "不要大厂味，不要广告感，要有人味，像纪录片一样先让观众进入现场",
+    "positive_query": "要有人味，像纪录片一样先让观众进入现场",
+    "desired_stage": [],
+    "forbidden_stage": [],
+    "positive_purposes": [
+      "keep_human_warmth"
+    ],
+    "negative_constraints": [
+      "大厂味",
+      "广告感"
+    ],
+    "visual_hints": [],
+    "positive_style": [
+      "human_warmth",
+      "documentary"
+    ],
+    "negative_style": [
+      "big_company_office",
+      "ad_like"
+    ],
+    "scene_signature": {
+      "people": [],
+      "place": [],
+      "actions": [],
+      "objects": [],
+      "emotional_function": "保留人的温度",
+      "raw_positive_query": "要有人味，像纪录片一样先让观众进入现场"
+    },
+    "hard_constraints": [],
+    "soft_constraints": [
+      "negative_style:big_company_office",
+      "negative_style:ad_like"
+    ],
+    "ambiguity": {
+      "level": "medium",
+      "reasons": [
+        "missing_explicit_stage"
+      ]
+    },
+    "rewrites": [],
+    "hyde_text": "",
+    "confidence": 0.75,
+    "planner_metadata": {
+      "source": "sceneweaver.retrieval.build_query_plan"
+    }
+  },
+  "planner_stats": {
+    "planner": "rule",
+    "input_count": 1,
+    "cache_hits": 0,
+    "cache_misses": 0,
+    "llm_call_count": 0,
+    "fallback_count": 0,
+    "planner_errors": [],
+    "negative_leak_count": 0,
+    "cache_hit_rate": 0.0,
+    "negative_leak_rate": 0.0
+  },
+  "embedding_cache": {
+    "load_mode": "lazy",
+    "loaded_rows": 0,
+    "load_all_seconds": 0.0,
+    "lazy_scan_count": 1,
+    "lazy_scan_seconds": 0.465452,
+    "lazy_loaded_rows": 0,
+    "matrix_enabled": true,
+    "matrix_status": "loaded",
+    "matrix_rows": 4216,
+    "matrix_load_seconds": 0.030705,
+    "matrix_saved_rows": 4216,
+    "matrix_save_seconds": 0.0186,
+    "resident_rows": 4,
+    "cache_path": "D:\\WorkSpace\\Codex\\SceneWeaver\\src\\mocktesting\\embedding_cache\\qwen_text_embedding_v4_1024.jsonl",
+    "matrix_path": "D:\\WorkSpace\\Codex\\SceneWeaver\\src\\mocktesting\\embedding_cache\\qwen_text_embedding_v4_1024.npz",
+    "matrix_dtype": "float16",
+    "last_embed_requested": 4,
+    "last_embed_missing": 4,
+    "last_embed_written": 4
+  },
+  "top_k": 5,
+  "constraints_enabled": true,
+  "constraint_profile": "D:\\WorkSpace\\Codex\\SceneWeaver\\src\\mocktesting\\eval_outputs\\mock_constraint_profile.json",
+  "results": [
+    {
+      "item_id": "enterprise_healthtech_story_001::scene_002::ret_scene_002",
+      "score": 2.243146,
+      "final_score": 2.243146,
+      "embedding_score": 0.643146,
+      "constraint_score": 1.6,
+      "constraint_hits": {
+        "positive_style": [
+          "human_warmth",
+          "documentary"
+        ]
+      },
+      "channel_scores": {
+        "script_use": 0.354373,
+        "experience": 0.169588,
+        "visual_tags": 0.071337,
+        "combined": 0.047847
+      },
+      "metadata": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_002",
+        "retrieval_id": "ret_scene_002",
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film",
+        "script_stage": "setup",
+        "creative_purpose": [
+          "establish_need",
+          "show_pressure",
+          "humanize_professional"
+        ],
+        "script_use_sentence": "适合用于setup或需求建立段落，让技术需求从医生困境中自然出现，而不是从产品卖点中出现。"
+      },
+      "ranking_key": "final_score",
+      "lexical_score": 0.0,
+      "rrf_score": 0.0
+    },
+    {
+      "item_id": "enterprise_healthtech_story_001::scene_001::ret_scene_001",
+      "score": 1.411123,
+      "final_score": 1.411123,
+      "embedding_score": 0.611123,
+      "constraint_score": 0.8,
+      "constraint_hits": {
+        "positive_style": [
+          "documentary"
+        ]
+      },
+      "channel_scores": {
+        "script_use": 0.342713,
+        "experience": 0.154534,
+        "visual_tags": 0.065343,
+        "combined": 0.048534
+      },
+      "metadata": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_001",
+        "retrieval_id": "ret_scene_001",
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film",
+        "script_stage": "opening",
+        "creative_purpose": [
+          "establish_problem",
+          "show_distance",
+          "build_reality"
+        ],
+        "script_use_sentence": "适合用于企业片开场或问题建立阶段，用真实场景先让观众感到距离、紧迫和需要被解决的现实压力。"
+      },
+      "ranking_key": "final_score",
+      "lexical_score": 0.0,
+      "rrf_score": 0.0
+    },
+    {
+      "item_id": "enterprise_healthtech_documentary_002::scene_002::ret_scene_002",
+      "score": 1.408317,
+      "final_score": 1.408317,
+      "embedding_score": 0.608317,
+      "constraint_score": 0.8,
+      "constraint_hits": {
+        "positive_style": [
+          "documentary"
+        ]
+      },
+      "channel_scores": {
+        "script_use": 0.320307,
+        "experience": 0.171057,
+        "visual_tags": 0.070335,
+        "combined": 0.046618
+      },
+      "metadata": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_002",
+        "retrieval_id": "ret_scene_002",
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film",
+        "script_stage": "setup",
+        "creative_purpose": [
+          "setup",
+          "establish_need",
+          "show_pressure"
+        ],
+        "script_use_sentence": "适合用于setup段落，进入一线场景，建立具体需求，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。"
+      },
+      "ranking_key": "final_score",
+      "lexical_score": 0.0,
+      "rrf_score": 0.0
+    },
+    {
+      "item_id": "enterprise_healthtech_story_001::scene_007::ret_scene_007",
+      "score": 1.400318,
+      "final_score": 1.400318,
+      "embedding_score": 0.600318,
+      "constraint_score": 0.8,
+      "constraint_hits": {
+        "positive_style": [
+          "human_warmth"
+        ]
+      },
+      "channel_scores": {
+        "script_use": 0.337277,
+        "experience": 0.142928,
+        "visual_tags": 0.073773,
+        "combined": 0.04634
+      },
+      "metadata": {
+        "fixture_id": "enterprise_healthtech_story_001",
+        "video_id": "enterprise_healthtech_story_001",
+        "scene_id": "scene_007",
+        "retrieval_id": "ret_scene_007",
+        "title": "把距离变成抵达",
+        "industry": "medical_technology_and_digital_health",
+        "style": "story_driven_enterprise_brand_film",
+        "script_stage": "value_expression",
+        "creative_purpose": [
+          "build_trust",
+          "show_face_to_face_communication",
+          "humanize_technology"
+        ],
+        "script_use_sentence": "适合用于建立信任和价值表达段落，通过面对面沟通证明技术最终服务于人的理解。"
+      },
+      "ranking_key": "final_score",
+      "lexical_score": 0.0,
+      "rrf_score": 0.0
+    },
+    {
+      "item_id": "enterprise_healthtech_documentary_002::scene_003::ret_scene_003",
+      "score": 1.399813,
+      "final_score": 1.399813,
+      "embedding_score": 0.599813,
+      "constraint_score": 0.8,
+      "constraint_hits": {
+        "positive_style": [
+          "documentary"
+        ]
+      },
+      "channel_scores": {
+        "script_use": 0.323491,
+        "experience": 0.156272,
+        "visual_tags": 0.066244,
+        "combined": 0.053805
+      },
+      "metadata": {
+        "fixture_id": "enterprise_healthtech_documentary_002",
+        "video_id": "enterprise_healthtech_documentary_002",
+        "scene_id": "scene_003",
+        "retrieval_id": "ret_scene_003",
+        "title": "每一次确认都算数",
+        "industry": "medical_technology_and_digital_health",
+        "style": "documentary_enterprise_brand_film",
+        "script_stage": "character_intro",
+        "creative_purpose": [
+          "character_intro",
+          "introduce_people",
+          "build_empathy"
+        ],
+        "script_use_sentence": "适合用于character_intro段落，引入核心人物和专业视角，用医疗设备质控工程师、影像设备质控系统和远程维护平台和校准线、质控标签、复核记录表达严谨的世界500强品牌质感。"
+      },
+      "ranking_key": "final_score",
+      "lexical_score": 0.0,
+      "rrf_score": 0.0
+    }
+  ]
+}
+                                                           Measure-Command {
+>>   python -m mocktesting.mock_retriever compare-query-understanding `
+>>     --split test `
+>>     --limit 60 `
+>>     --query-planners rule,multi_query,hyde_card `
+>>     --output .tmp\query_understanding_speed.json | Out-Host
+>> } | Select-Object TotalSecondskSpace\Codex\SceneWeaver>
+{
+  "best_planner": "rule",
+  "best_selection_score": [
+    1.0,
+    0.7,
+    0.7,
+    -0.0,
+    -0.0
+  ],
+  "planner_delta_vs_baseline": {
+    "rule": {
+      "target_recall_at_1": 0.0,
+      "target_recall_at_3": 0.0,
+      "target_recall_at_10": 0.0,
+      "stage_hit_at_3": 0.0,
+      "purpose_hit_at_3": 0.0,
+      "style_violation_at_3": 0.0,
+      "low_confidence_rate": 0.0,
+      "negative_leak_rate": 0.0
+    },
+    "multi_query": {
+      "target_recall_at_1": -0.102564,
+      "target_recall_at_3": -0.076923,
+      "target_recall_at_10": 0.0,
+      "stage_hit_at_3": -0.083333,
+      "purpose_hit_at_3": -0.083333,
+      "style_violation_at_3": 0.0,
+      "low_confidence_rate": 0.0,
+      "negative_leak_rate": 0.0
+    },
+    "hyde_card": {
+      "target_recall_at_1": 0.0,
+      "target_recall_at_3": 0.0,
+      "target_recall_at_10": 0.0,
+      "stage_hit_at_3": -0.033333,
+      "purpose_hit_at_3": -0.033333,
+      "style_violation_at_3": 0.0,
+      "low_confidence_rate": 0.0,
+      "negative_leak_rate": 0.0
+    }
+  }
+}
+
+TotalSeconds
+------------
+   2.6234357
+
+
+(video_expert_analyzer) PS D:\WorkSpace\Codex\SceneWeaver> Measure-Command {
+>>   python -m mocktesting.mock_retriever validate-fuzzy-understanding `
+>>     --split test `
+>>     --limit 60 `
+>>     --query-planner multi_query `
+>>     --output .tmp\fuzzy_speed.json | Out-Host
+>> } | Select-Object TotalSeconds
+{
+  "count": 300,
+  "scene_level_recall_at_1": 0.243333,
+  "scene_level_recall_at_3": 0.333333,
+  "scene_level_recall_at_10": 0.606667,
+  "stage_level_hit_at_1": 0.853333,
+  "stage_level_hit_at_3": 0.923333,
+  "purpose_level_hit_at_3": 0.923333,
+  "style_violation_at_3": 0.0,
+  "low_confidence_rate": 0.106667,
+  "mean_top1_top2_margin": 0.153139,
+  "planner_cache_hit_rate": 0.0,
+  "llm_call_count": 0,
+  "planner_fallback_count": 0,
+  "negative_leak_rate": 0.0
+}
+
+TotalSeconds
+------------
+    3.919781
+
+
+(video_expert_analyzer) PS D:\WorkSpace\Codex\SceneWeaver> python -m mocktesting.mock_retriever compact-embedding-cache --matrix-dtype float16
+{
+  "cache_path": "D:\\WorkSpace\\Codex\\SceneWeaver\\src\\mocktesting\\embedding_cache\\qwen_text_embedding_v4_1024.jsonl",
+  "matrix_path": "D:\\WorkSpace\\Codex\\SceneWeaver\\src\\mocktesting\\embedding_cache\\qwen_text_embedding_v4_1024.npz",
+  "rows": 4216,
+  "dimension": 1024,
+  "dtype": "float16",
+  "jsonl_bytes": 98725234,
+  "matrix_bytes": 9714178,
+  "save_seconds": 0.021586,
+  "elapsed_seconds": 3.630286
+}
+(video_expert_analyzer) PS D:\WorkSpace\Codex\SceneWeaver>

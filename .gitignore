@@ -10,6 +10,7 @@ __pycache__/
 venv/
 dist/
 build/
+src/mocktesting/embedding_cache/*.npz
 
 outputs/
 .env
