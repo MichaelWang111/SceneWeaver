@@ -34,6 +34,7 @@ video = [
 
 [project.scripts]
 sceneweaver = "sceneweaver.cli:app"
+retrieval-lab = "retreieval_lab.cli:main"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
