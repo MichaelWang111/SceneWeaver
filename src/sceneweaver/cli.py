@@ -224,6 +224,7 @@ def llm_check(
     client = VisionLLMClient()
     if model is not None:
         client.config = client.config.__class__(
+            provider=getattr(client.config, "provider", "auto"),
             api_key=client.config.api_key,
             base_url=client.config.base_url,
             model=model,

@@ -9,12 +9,35 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Callable, Iterable
 
+from sceneweaver.llm.providers import (
+    api_key_info,
+    infer_provider_from_env,
+    model_limits,
+    model_pricing,
+    model_pricing_dict,
+    normalize_provider,
+    provider_limits_dict,
+    resolve_api_key,
+    resolve_base_url,
+    resolve_model,
+)
+
+
+@dataclass(frozen=True)
+class LLMTextJSONResult:
+    data: dict[str, Any]
+    usage: dict[str, Any]
+    request_id: str | None = None
+    raw_usage: dict[str, Any] | None = None
+    model: str | None = None
+
 
 @dataclass(frozen=True)
 class LLMConfig:
     api_key: str
     base_url: str
     model: str
+    provider: str = "auto"
     temperature: float = 0.2
     max_tokens: int = 1800
     request_timeout_seconds: float = 180.0
@@ -24,21 +47,10 @@ class LLMConfig:
 
     @classmethod
     def from_env(cls) -> "LLMConfig":
-        # VIDEO_ANALYZER_* aliases keep reuse convenient in the existing conda env.
-        api_key = (
-            os.environ.get("SCENEWEAVER_API_KEY")
-            or os.environ.get("VIDEO_ANALYZER_API_KEY")
-            or os.environ.get("DASHSCOPE_API_KEY", "")
-        )
-        base_url = os.environ.get("SCENEWEAVER_BASE_URL") or os.environ.get(
-            "VIDEO_ANALYZER_BASE_URL",
-            os.environ.get("DASHSCOPE_BASE_URL", "https://generativelanguage.googleapis.com/v1beta/openai"),
-        )
-        model = (
-            os.environ.get("SCENEWEAVER_MODEL")
-            or os.environ.get("VIDEO_ANALYZER_MODEL")
-            or os.environ.get("DASHSCOPE_MODEL", "gemini-2.0-flash")
-        )
+        provider = infer_provider_from_env()
+        api_key = resolve_api_key(provider)
+        base_url = resolve_base_url(provider)
+        model = resolve_model(provider)
         max_tokens = int(
             os.environ.get("SCENEWEAVER_MAX_TOKENS")
             or os.environ.get("VIDEO_ANALYZER_MAX_TOKENS")
@@ -69,6 +81,7 @@ class LLMConfig:
             api_key=api_key,
             base_url=base_url,
             model=model,
+            provider=provider,
             max_tokens=max_tokens,
             request_timeout_seconds=request_timeout_seconds,
             stream_idle_timeout_seconds=stream_idle_timeout_seconds,
@@ -94,6 +107,31 @@ class VisionLLMClient:
         enable_thinking: bool | None = None,
         thinking_budget: int | None = None,
     ) -> dict[str, Any]:
+        return self.analyze_text_json_result(
+            system_prompt=system_prompt,
+            user_prompt=user_prompt,
+            max_tokens=max_tokens,
+            timeout_seconds=timeout_seconds,
+            retries=retries,
+            stream_callback=stream_callback,
+            reasoning_callback=reasoning_callback,
+            enable_thinking=enable_thinking,
+            thinking_budget=thinking_budget,
+        ).data
+
+    def analyze_text_json_result(
+        self,
+        *,
+        system_prompt: str,
+        user_prompt: str,
+        max_tokens: int | None = None,
+        timeout_seconds: float | None = None,
+        retries: int = 0,
+        stream_callback: Callable[[str], None] | None = None,
+        reasoning_callback: Callable[[str], None] | None = None,
+        enable_thinking: bool | None = None,
+        thinking_budget: int | None = None,
+    ) -> LLMTextJSONResult:
         try:
             from openai import APIConnectionError
             from openai import APIStatusError
@@ -103,7 +141,7 @@ class VisionLLMClient:
             raise RuntimeError("openai package is required for API mode") from exc
 
         if not self.config.api_key:
-            raise RuntimeError("SCENEWEAVER_API_KEY or VIDEO_ANALYZER_API_KEY is required")
+            raise RuntimeError(_missing_api_key_message(self.config))
         if retries < 0:
             raise ValueError("retries must be >= 0")
 
@@ -149,7 +187,14 @@ class VisionLLMClient:
                     text = response.choices[0].message.content or ""
                 else:
                     text = _collect_stream_text(response, stream_callback, reasoning_callback=reasoning_callback)
-                return extract_json_object(text)
+                usage = _response_usage_dict(response) if not should_stream else {}
+                return LLMTextJSONResult(
+                    data=extract_json_object(text),
+                    usage=usage,
+                    request_id=_response_request_id(response) if not should_stream else None,
+                    raw_usage=usage or None,
+                    model=getattr(response, "model", None) if not should_stream else self.config.model,
+                )
             except APIStatusError as exc:
                 if _should_retry_status(exc) and attempt_index < retries:
                     time.sleep(_retry_delay_seconds(attempt_index))
@@ -189,7 +234,7 @@ class VisionLLMClient:
             raise RuntimeError("openai package is required for API mode") from exc
 
         if not self.config.api_key:
-            raise RuntimeError("SCENEWEAVER_API_KEY or VIDEO_ANALYZER_API_KEY is required")
+            raise RuntimeError(_missing_api_key_message(self.config))
 
         client = OpenAI(api_key=self.config.api_key, base_url=self.config.base_url)
         content: list[dict[str, Any]] = [{"type": "text", "text": user_prompt}]
@@ -223,6 +268,34 @@ class PartialStreamError(RuntimeError):
         super().__init__(str(original_error))
         self.partial_text = partial_text
         self.original_error = original_error
+
+
+def llm_config_metadata(config: LLMConfig) -> dict[str, Any]:
+    provider = normalize_provider(getattr(config, "provider", "auto") or "auto")
+    if provider == "auto":
+        provider = infer_provider_from_env()
+    model = str(getattr(config, "model", ""))
+    base_url = str(getattr(config, "base_url", ""))
+    pricing = model_pricing(provider, model, required=False)
+    limits = model_limits(provider, model)
+    key_info = api_key_info(provider)
+    return {
+        "provider": provider,
+        "model": model,
+        "base_url": base_url,
+        "api_key_env": key_info.active_env_name,
+        "pricing": model_pricing_dict(pricing),
+        "limits": provider_limits_dict(limits),
+    }
+
+
+def _missing_api_key_message(config: LLMConfig) -> str:
+    provider = normalize_provider(config.provider or "auto")
+    if provider == "auto":
+        provider = infer_provider_from_env()
+    info = api_key_info(provider)
+    names = ", ".join(info.accepted_env_names) or "SCENEWEAVER_API_KEY"
+    return f"LLM provider {provider!r} requires one of these API key env vars: {names}"
 
 
 def _collect_stream_text(
@@ -301,10 +374,38 @@ def _image_data_url(path: Path) -> str:
 
 
 def extract_json_object(text: str) -> dict[str, Any]:
-    match = re.search(r"\{[\s\S]*\}", text)
-    if not match:
-        raise ValueError("LLM response did not contain a JSON object")
-    return json.loads(match.group())
+    decoder = json.JSONDecoder()
+    for match in re.finditer(r"\{", text):
+        try:
+            value, _end = decoder.raw_decode(text[match.start() :])
+        except json.JSONDecodeError:
+            continue
+        if isinstance(value, dict):
+            return value
+    raise ValueError("LLM response did not contain a JSON object")
+
+
+def _response_usage_dict(response: Any) -> dict[str, Any]:
+    usage = getattr(response, "usage", None)
+    if usage is None:
+        return {}
+    if isinstance(usage, dict):
+        return dict(usage)
+    model_dump = getattr(usage, "model_dump", None)
+    if callable(model_dump):
+        dumped = model_dump(mode="json")
+        return dict(dumped) if isinstance(dumped, dict) else {}
+    result: dict[str, Any] = {}
+    for key in ("prompt_tokens", "completion_tokens", "total_tokens"):
+        value = getattr(usage, key, None)
+        if value is not None:
+            result[key] = value
+    return result
+
+
+def _response_request_id(response: Any) -> str | None:
+    value = getattr(response, "id", None)
+    return value if isinstance(value, str) else None
 
 
 def _format_api_status_error(exc: Exception, config: LLMConfig) -> str:
