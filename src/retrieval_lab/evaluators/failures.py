@@ -126,6 +126,7 @@ def failure_analysis_row_from_artifact(
         top_k=top_k,
         candidate_depth=candidate_depth,
         target_result=target_result,
+        target_position=target_position,
     )
     target_scores = component_scores(target_result or {})
     top1_scores = component_scores(top1)
@@ -160,9 +161,11 @@ def classify_failure_from_artifact(
     top_k: int,
     candidate_depth: int,
     target_result: dict[str, Any] | None,
+    target_position: int | None = None,
 ) -> str:
     target_rank = row.get("target_rank")
-    if target_rank is None or int(target_rank) > candidate_depth:
+    candidate_rank = target_position if target_position is not None else target_rank
+    if candidate_rank is None or int(candidate_rank) > candidate_depth:
         return "candidate_recall_failure"
     if top1.get("constraint_hits", {}).get("negative_style"):
         return "style_risk_miss"
@@ -176,7 +179,7 @@ def classify_failure_from_artifact(
         return "fusion_ranking_failure"
     if target_result is not None and component_scores(target_result).get("semantic", 0.0) <= 0:
         return "candidate_recall_failure"
-    if target_rank and int(target_rank) <= candidate_depth:
+    if candidate_rank and int(candidate_rank) <= candidate_depth:
         return "fusion_ranking_failure"
     return "weak_target_label"
 
@@ -271,6 +274,9 @@ def find_target_result(row: dict[str, Any]) -> tuple[dict[str, Any] | None, int 
 
 
 def target_in_candidate_depth(row: dict[str, Any], *, candidate_depth: int) -> bool:
+    _target, position = find_target_result(row)
+    if position is not None:
+        return position <= candidate_depth
     rank = row.get("target_rank")
     if rank is None:
         return False

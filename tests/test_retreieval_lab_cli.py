@@ -14,12 +14,15 @@ from retrieval_lab.config import project_paths
 from retrieval_lab.compat import translate_argv
 from retrieval_lab.evaluators import (
     analyze_failure_rows,
+    build_round2_taxonomy_gate_report,
+    classify_round2_residual,
     classify_failure_from_artifact,
     evaluate_run_rows,
     graded_metrics,
     recall_bound_rows,
     recall_bound_summary,
     run_metric_selection_score,
+    validate_round2_gate,
 )
 from retrieval_lab.experiments import extract_run_rows_from_report
 from retrieval_lab.experiments.compare import extract_report_metrics
@@ -47,6 +50,7 @@ from retrieval_lab.ranking import (
     rerank_run_rows_by_workflow,
     workflow_score,
 )
+from retrieval_lab.ranking.diagnostics import classify_attribution_failure
 from retrieval_lab.indexes import build_index_manifest, index_items_from_cases
 from retrieval_lab.retrieval import retrieval_run, score_item
 from retrieval_lab.retrieval.benchmark import retrieval_benchmark_command
@@ -167,6 +171,7 @@ def test_retreieval_lab_command_aliases_are_decision_complete():
     assert translate_argv(["llm", "generate-natural-fuzzy"]) == ["llm-generate-natural-fuzzy"]
     assert translate_argv(["llm", "status"]) == ["llm-status"]
     assert translate_argv(["report", "eval", "--input", "r.json"]) == ["generate-eval-report", "--input", "r.json"]
+    assert translate_argv(["eval", "round2-taxonomy-gate"]) == ["round2-taxonomy-gate"]
     assert translate_argv(["retrieval-flywheel-guide"]) == ["retrieval-flywheel-guide"]
 
 
@@ -605,6 +610,25 @@ def test_hard_budget_guard_marks_missing_usage_as_charged_failure(tmp_path):
     assert row["status"] == "usage_missing"
     assert row["actual_cost_cny"] == row["reserved_cny"]
     assert guard.summary()["budget_stop_reason"] == "provider_usage_missing"
+
+
+def test_hard_budget_guard_charges_reserved_on_request_failure(tmp_path):
+    guard = ProviderBudgetGuard(
+        client=FakeBudgetClient(["10.00", "10.00"]),
+        hard_budget_cny=1.0,
+        safety_cny=0.0,
+        ledger_path=tmp_path / "usage.jsonl",
+    )
+    guard.preflight()
+    reservation = guard.reserve(batch_id=1, sample_count=1, prompt_tokens_upper_bound=1000, max_completion_tokens=500)
+
+    guard.settle_failure(reservation, error=RuntimeError("provider returned invalid JSON"))
+    row = json.loads((tmp_path / "usage.jsonl").read_text(encoding="utf-8"))
+
+    assert row["status"] == "error"
+    assert row["actual_cost_cny"] == row["reserved_cny"]
+    assert guard.summary()["charged_cost_cny"] == row["reserved_cny"]
+    assert guard.summary()["budget_stop_reason"] == "provider_request_failed_charged_reserved"
 
 
 def test_dashscope_hard_budget_fails_closed_without_bss_credentials(monkeypatch):
@@ -1709,6 +1733,24 @@ def test_retreieval_lab_rerank_diagnostic_feature_ltr_cli_cycle(tmp_path):
     assert attribution_md.read_text(encoding="utf-8").startswith("# Rerank Attribution Report")
 
 
+def test_retreieval_lab_attribution_separates_qrels_preference_boundary():
+    top1_features = {"stage_match": 0.0, "purpose_match": 0.0, "style_violation": 0.0}
+    oracle_features = {"stage_match": 1.0, "purpose_match": 1.0, "style_violation": 0.0}
+
+    assert classify_attribution_failure(
+        top1_features,
+        oracle_features,
+        {"grade": 2},
+        {"grade": 3},
+    ) == "qrels_preference_boundary"
+    assert classify_attribution_failure(
+        top1_features,
+        oracle_features,
+        {"grade": 1},
+        {"grade": 3},
+    ) == "stage_purpose_mismatch"
+
+
 def test_retreieval_lab_judge_calibration_cli_is_offline_and_slice_aware(tmp_path):
     qrels = tmp_path / "qrels.jsonl"
     samples = tmp_path / "samples.jsonl"
@@ -1855,6 +1897,34 @@ def test_retreieval_lab_failure_analysis_uses_qrels_for_ambiguous_multi_answer()
     assert by_case["q-ambiguous"]["suggested_next_action"] == "use graded qrels and avoid single-target-only scoring"
 
 
+def test_retreieval_lab_failure_analysis_uses_all_results_for_reranked_candidate_depth():
+    base = representative_workflow_row()
+    reranked_row = {
+        **base,
+        "case_id": "q-reranked-out-of-topk",
+        "target_rank": None,
+        "top_results": [
+            {
+                **base["top_results"][2],
+                "metadata": {"script_stage": "setup", "creative_purpose": ["show_outcome"]},
+            }
+        ],
+        "all_results": [
+            {
+                **base["top_results"][2],
+                "metadata": {"script_stage": "setup", "creative_purpose": ["show_outcome"]},
+            },
+            base["top_results"][1],
+        ],
+    }
+
+    failures = analyze_failure_rows({"base": [reranked_row]}, qrels=[], top_k=1, candidate_depth=100)
+
+    assert failures[0]["failure_type"] == "fusion_ranking_failure"
+    assert failures[0]["target_in_candidate_depth"] is True
+    assert failures[0]["target_position_in_artifact"] == 2
+
+
 def test_retreieval_lab_failure_analysis_cli_is_native(tmp_path):
     runs = tmp_path / "runs.json"
     qrels = tmp_path / "qrels.jsonl"
@@ -1901,6 +1971,79 @@ def test_retreieval_lab_failure_analysis_cli_is_native(tmp_path):
     assert report["method"] == "retrieval_lab_failure_analysis_from_runs"
     assert report["summary"]["failure_type_counts"]["ambiguous_multi_valid_answer"] == 1
     assert markdown.read_text(encoding="utf-8").startswith("# Failure Analysis Report")
+
+
+def test_retreieval_lab_round2_taxonomy_gate_validator_splits_blind_boundary_and_gate():
+    failure = {
+        "run_name": "baseline::native_retrieval::feature_rerank_signature::calibrated_coordinate_search",
+        "case_id": "case-1",
+        "user_input": "no ad feel, keep it restrained",
+        "failure_type": "ambiguous_multi_valid_answer",
+        "target_item_id": "target-1",
+        "target_position_in_artifact": 3,
+        "top1_item_id": "top1-1",
+        "top1_qrel_grade": 1,
+    }
+    run_rows = {
+        failure["run_name"]: [
+            {
+                "case_id": failure["case_id"],
+                "user_input": failure["user_input"],
+                "planner_confidence": 0.55,
+                "variant_type": "natural_negative_style",
+                "query_plan": {"ambiguity": {"level": "medium"}, "negative_style": ["generic_brand_film"]},
+                "top_results": [
+                    {
+                        "item_id": "top1-1",
+                        "score": 0.9,
+                        "metadata": {"style_risks": ["generic_brand_film", "fortune_500_polish"]},
+                    }
+                ],
+            }
+        ]
+    }
+    blind_analysis = {
+        "rows": [
+            {
+                "run_name": failure["run_name"],
+                "case_id": failure["case_id"],
+                "top1_item_id": failure["top1_item_id"],
+                "blind_grade": 2,
+                "blind_relevant": True,
+                "refined_failure_type": "topk_valid_but_top1_invalid",
+                "blind_reason": "boundary shift",
+                "blind_confidence": 0.8,
+                "top10_relevant_count": 1,
+                "top1_qrel_grade": 1,
+            }
+        ],
+        "summary": {"blind_relevant_rate": 1.0},
+    }
+    report = build_round2_taxonomy_gate_report(
+        failures={"summary": {"failure_type_counts": {"ambiguous_multi_valid_answer": 1}}, "failures": [failure]},
+        runs={"run_rows": run_rows},
+        blind_analysis=blind_analysis,
+        qrels=[{"query_id": failure["case_id"], "item_id": "top1-1", "grade": 1}],
+        round1_gate={"default_strategy_accepted": False, "gates": {"all_coverage": {"evidence": {"after_Judged@10": 0.9}}}},
+        inputs={},
+    )
+    taxonomy = report["taxonomy_rows"][0]
+    decision = report["gate_decisions"][0]
+
+    assert taxonomy["round2_primary_failure_type"] == "qrels_boundary_shift"
+    assert taxonomy["flags"]["blind_adjudicated"] is True
+    assert decision["gated_decision"] == "accept_gated_with_qrels_boundary_monitoring"
+    assert decision["default_allowed"] is False
+
+    reject = validate_round2_gate(
+        {
+            **taxonomy,
+            "round2_primary_failure_type": "qrels_over_generous_top1",
+            "flags": {**taxonomy["flags"], "blind_top1_relevant": False, "old_top1_relevant": True},
+        }
+    )
+    assert reject["gated_decision"] == "reject_and_review_qrels"
+    assert "old_qrels_overjudged_top1" in reject["validator_reasons"]
 
 
 def test_retreieval_lab_extract_report_metrics_handles_nested_summaries():

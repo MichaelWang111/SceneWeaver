@@ -249,6 +249,8 @@ class ProviderBudgetGuard:
     def settle_failure(self, reservation: BudgetReservation, *, error: Exception) -> None:
         with self.lock:
             self.reserved_cny = max(Decimal("0"), self.reserved_cny - reservation.reserved_cny)
+            self.actual_usage_cost_cny += reservation.reserved_cny
+            self.stop_reason = self.stop_reason or "provider_request_failed_charged_reserved"
             error_text = str(error)[:1000]
             try:
                 balance_after = self._maybe_check_balance_locked(force=True)
@@ -261,7 +263,7 @@ class ProviderBudgetGuard:
                 reservation,
                 status="error",
                 usage={},
-                actual_cost_cny=Decimal("0"),
+                actual_cost_cny=reservation.reserved_cny,
                 request_id=None,
                 error=error_text,
                 balance_after_cny=balance_after,

@@ -87,6 +87,7 @@ COMMAND_ALIASES: dict[tuple[str, ...], str] = {
     ("eval", "leave-one-fixture-out"): "evaluate-leave-one-fixture-out",
     ("eval", "rerank-upper-bound"): "compare-rerank-upper-bound",
     ("eval", "rerank-gates"): "compare-rerank-gates",
+    ("eval", "round2-taxonomy-gate"): "round2-taxonomy-gate",
     ("eval", "failures"): "analyze-failures",
     ("eval", "recall-bound"): "analyze-recall-bound",
     ("rerank", "upper-bound"): "compare-rerank-upper-bound",

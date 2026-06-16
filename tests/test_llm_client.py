@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import os
+import sys
+import types
 
 import pytest
 
@@ -29,6 +31,55 @@ class _BadChoicesChunk:
     @property
     def choices(self):
         raise IndexError("list index out of range")
+
+
+class _Message:
+    def __init__(self, content: str) -> None:
+        self.content = content
+
+
+class _ResponseChoice:
+    def __init__(self, content: str) -> None:
+        self.message = _Message(content)
+
+
+class _Response:
+    def __init__(self, content: str) -> None:
+        self.choices = [_ResponseChoice(content)]
+        self.usage = {"prompt_tokens": 1, "completion_tokens": 1, "total_tokens": 2}
+        self.id = "response-id"
+        self.model = "mock-model"
+
+
+class _MockCompletions:
+    calls = 0
+
+    def create(self, **_kwargs):
+        type(self).calls += 1
+        if type(self).calls == 1:
+            return _Response("not json")
+        return _Response('{"reply":"pong"}')
+
+
+class _MockChat:
+    def __init__(self) -> None:
+        self.completions = _MockCompletions()
+
+
+class _MockOpenAI:
+    def __init__(self, **_kwargs) -> None:
+        self.chat = _MockChat()
+
+
+def _install_mock_openai(monkeypatch) -> None:
+    _MockCompletions.calls = 0
+    module = types.SimpleNamespace(
+        OpenAI=_MockOpenAI,
+        APIConnectionError=RuntimeError,
+        APIStatusError=RuntimeError,
+        APITimeoutError=TimeoutError,
+    )
+    monkeypatch.setitem(sys.modules, "openai", module)
 
 
 def test_collect_stream_text_ignores_empty_and_malformed_choice_chunks():
@@ -94,6 +145,37 @@ def test_extract_json_object_uses_first_complete_object_with_extra_data():
     text = 'preface {"judgements":[{"grade":2}]} {"extra": true}'
 
     assert extract_json_object(text) == {"judgements": [{"grade": 2}]}
+
+
+def test_llm_client_does_not_ping_on_parse_failure_by_default(monkeypatch):
+    from sceneweaver.llm.client import VisionLLMClient
+
+    _install_mock_openai(monkeypatch)
+    config = LLMConfig(api_key="key", base_url="https://example.test", model="mock-model")
+
+    with pytest.raises(RuntimeError) as exc_info:
+        VisionLLMClient(config).analyze_text_json_result(system_prompt="", user_prompt="")
+
+    assert _MockCompletions.calls == 1
+    assert "Failure ping disabled" in str(exc_info.value)
+
+
+def test_llm_client_ping_on_parse_failure_is_explicit(monkeypatch):
+    from sceneweaver.llm.client import VisionLLMClient
+
+    _install_mock_openai(monkeypatch)
+    config = LLMConfig(
+        api_key="key",
+        base_url="https://example.test",
+        model="mock-model",
+        enable_failure_ping=True,
+    )
+
+    with pytest.raises(RuntimeError) as exc_info:
+        VisionLLMClient(config).analyze_text_json_result(system_prompt="", user_prompt="")
+
+    assert _MockCompletions.calls == 2
+    assert "Ping ok" in str(exc_info.value)
 
 
 def test_llm_config_reads_dashscope_aliases(monkeypatch):

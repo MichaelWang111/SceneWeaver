@@ -43,9 +43,11 @@ from retrieval_lab.planners import (
 )
 from retrieval_lab.evaluators import (
     DEFAULT_FAILURE_REPORT_PATH,
+    DEFAULT_ROUND2_OUTPUT_DIR,
     DEFAULT_RUN_EVAL_REPORT_PATH,
     analyze_failures_from_runs_command,
     evaluate_run_artifact_command,
+    round2_taxonomy_gate_report_command,
 )
 from retrieval_lab.indexes import DEFAULT_INDEX_MANIFEST_PATH, index_inspect_command, index_manifest_command
 from retrieval_lab.graph import DEFAULT_SCENE_GRAPH_MANIFEST, DEFAULT_SCENE_GRAPH_REPORT, build_scene_graph_manifest_command
@@ -126,6 +128,7 @@ Modern command groups:
   dataset inspect
   qrels build-pooled | pool-from-runs | audit | sample-active | sample-active-from-runs | merge-adjudicated
   eval fuzzy | graded | pooled | rerank-upper-bound | failures | recall-bound
+  eval round2-taxonomy-gate
   cycle record
   report capability | eval
   artifact manifest
@@ -372,6 +375,12 @@ def run_native_infra_command(args: Sequence[str]) -> bool:
             report = json.loads(namespace.output.read_text(encoding="utf-8"))
             namespace.markdown_output.parent.mkdir(parents=True, exist_ok=True)
             namespace.markdown_output.write_text(markdown_report(report), encoding="utf-8")
+        print(json.dumps(result["summary"], ensure_ascii=False, indent=2))
+        return True
+    if command == "round2-taxonomy-gate":
+        namespace = round2_taxonomy_gate_parser().parse_args(list(args[1:]))
+        namespace.command = command
+        result = round2_taxonomy_gate_report_command(namespace)
         print(json.dumps(result["summary"], ensure_ascii=False, indent=2))
         return True
     if command == "compare-experiments":
@@ -768,6 +777,17 @@ def run_evaluate_parser() -> argparse.ArgumentParser:
     parser.add_argument("--markdown-output", type=Path, default=None)
     parser.add_argument("--baseline-run", default="")
     parser.add_argument("--top-k", type=int, default=10)
+    return parser
+
+
+def round2_taxonomy_gate_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(prog="retrieval_lab eval round2-taxonomy-gate")
+    parser.add_argument("--failures", type=Path, required=True)
+    parser.add_argument("--runs", type=Path, required=True)
+    parser.add_argument("--blind-analysis", type=Path, required=True)
+    parser.add_argument("--qrels", type=Path, default=Path(""))
+    parser.add_argument("--round1-gate", type=Path, default=Path(""))
+    parser.add_argument("--output-dir", type=Path, default=DEFAULT_ROUND2_OUTPUT_DIR)
     return parser
 
 

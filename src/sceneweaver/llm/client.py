@@ -44,6 +44,7 @@ class LLMConfig:
     stream_idle_timeout_seconds: float = 10.0
     enable_thinking: bool | None = None
     thinking_budget: int | None = None
+    enable_failure_ping: bool = False
 
     @classmethod
     def from_env(cls) -> "LLMConfig":
@@ -77,6 +78,11 @@ class LLMConfig:
             or os.environ.get("DASHSCOPE_THINKING_BUDGET")
         )
         thinking_budget = int(thinking_budget_raw) if thinking_budget_raw else None
+        enable_failure_ping = _parse_optional_bool(
+            os.environ.get("SCENEWEAVER_ENABLE_FAILURE_PING")
+            or os.environ.get("VIDEO_ANALYZER_ENABLE_FAILURE_PING")
+            or os.environ.get("DASHSCOPE_ENABLE_FAILURE_PING")
+        )
         return cls(
             api_key=api_key,
             base_url=base_url,
@@ -87,6 +93,7 @@ class LLMConfig:
             stream_idle_timeout_seconds=stream_idle_timeout_seconds,
             enable_thinking=enable_thinking,
             thinking_budget=thinking_budget,
+            enable_failure_ping=bool(enable_failure_ping),
         )
 
 
@@ -207,7 +214,7 @@ class VisionLLMClient:
                 partial_note = ""
                 if exc.partial_text:
                     partial_note = f" partial_chars={len(exc.partial_text)}."
-                ping_note = _format_ping_note(client, self.config)
+                ping_note = _failure_ping_note(client, self.config)
                 raise RuntimeError(
                     "LLM text JSON stream failed before a complete JSON object could be parsed. "
                     f"attempts={attempts}, base_url={self.config.base_url!r}, "
@@ -219,7 +226,7 @@ class VisionLLMClient:
                 if attempt_index < retries:
                     time.sleep(_retry_delay_seconds(attempt_index))
                     continue
-                ping_note = _format_ping_note(client, self.config)
+                ping_note = _failure_ping_note(client, self.config)
                 raise RuntimeError(
                     "LLM text JSON request failed. "
                     f"attempts={attempts}, base_url={self.config.base_url!r}, "
@@ -442,6 +449,12 @@ def _format_api_status_error(exc: Exception, config: LLMConfig) -> str:
         f"LLM provider request failed with status {status_code}. "
         f"base_url={config.base_url!r}, model={config.model!r}."
     )
+
+
+def _failure_ping_note(client: Any, config: LLMConfig) -> str:
+    if config.enable_failure_ping:
+        return _format_ping_note(client, config)
+    return "Failure ping disabled; set SCENEWEAVER_ENABLE_FAILURE_PING=1 to run an extra diagnostic LLM call."
 
 
 def _format_ping_note(client: Any, config: LLMConfig) -> str:

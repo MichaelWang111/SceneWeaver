@@ -521,13 +521,17 @@ def attribution_for_row(
 def classify_attribution_failure(top1_features: dict[str, Any], oracle_features: dict[str, Any], top1_qrel: dict[str, Any], oracle_qrel: dict[str, Any]) -> str:
     if qrel_has_vote_conflict(top1_qrel) or qrel_has_vote_conflict(oracle_qrel):
         return "qrels_conflict"
+    top1_grade = int(top1_qrel.get("grade", -1)) if top1_qrel else -1
+    oracle_grade = int(oracle_qrel.get("grade", 0))
+    if top1_grade >= 2 and oracle_grade > top1_grade:
+        return "qrels_preference_boundary"
     if not top1_features or not oracle_features:
         return "feature_missing"
     if numeric(top1_features.get("style_violation")) > numeric(oracle_features.get("style_violation")):
         return "style_penalty_over_or_under_applied"
     if numeric(oracle_features.get("stage_match")) > numeric(top1_features.get("stage_match")) or numeric(oracle_features.get("purpose_match")) > numeric(top1_features.get("purpose_match")):
         return "stage_purpose_mismatch"
-    if int(oracle_qrel.get("grade", 0)) <= 2:
+    if oracle_grade <= 2:
         return "ambiguous_multi_valid_answer"
     return "feature_weight_misaligned"
 
