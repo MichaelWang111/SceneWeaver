@@ -308,7 +308,7 @@ def suggested_next_action(failure_type: str) -> str:
     return {
         "query_understanding_failure": "inspect planner output and add ambiguous query understanding cases",
         "candidate_recall_failure": "improve recall pool or query expansion before reranking",
-        "fusion_ranking_failure": "tune fusion/signature weights or test reranker",
+        "fusion_ranking_failure": "tune fusion/signature weights or test.md reranker",
         "constraint_failure": "tighten hard filters and constraint evidence",
         "style_risk_miss": "expand style risk mining and negative-style penalties",
         "ambiguous_multi_valid_answer": "use graded qrels and avoid single-target-only scoring",

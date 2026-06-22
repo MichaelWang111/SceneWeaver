@@ -116,7 +116,7 @@ DEFAULT_CAPABILITY_CYCLE_PATH = Path(".tmp") / "capability_cycle_latest.json"
 DEFAULT_CAPABILITY_REPORT_PATH = Path(".tmp") / "capability_report.md"
 DEFAULT_CAPABILITY_CHART_DIR = Path(".tmp") / "capability_charts"
 
-VALID_SPLITS = {"dev", "test", "hidden", "all"}
+VALID_SPLITS = {"dev", "test.md", "hidden", "all"}
 RANKING_KEYS = (
     "final_score",
     "embedding_only",
@@ -328,7 +328,7 @@ def main() -> None:
     add_common_paths(validate_parser)
     validate_parser.add_argument("--inputs", type=Path, default=DEFAULT_INPUTS_PATH)
     validate_parser.add_argument("--limit", type=int, default=0)
-    validate_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test")
+    validate_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test.md")
     validate_parser.add_argument("--top-k", type=int, default=10)
     validate_parser.add_argument("--llm-sample-size", type=int, default=0)
     validate_parser.add_argument("--llm-timeout-seconds", type=float, default=60.0)
@@ -353,7 +353,7 @@ def main() -> None:
     add_common_paths(compare_parser)
     compare_parser.add_argument("--inputs", type=Path, default=DEFAULT_INPUTS_PATH)
     compare_parser.add_argument("--limit", type=int, default=0)
-    compare_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test")
+    compare_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test.md")
     compare_parser.add_argument("--top-k", type=int, default=10)
     compare_parser.add_argument("--constraint-profile", type=Path, default=DEFAULT_CONSTRAINT_PROFILE_PATH)
     compare_parser.add_argument("--output", type=Path, default=DEFAULT_WORKFLOW_COMPARISON_REPORT_PATH)
@@ -366,7 +366,7 @@ def main() -> None:
     add_common_paths(understanding_parser)
     understanding_parser.add_argument("--inputs", type=Path, default=DEFAULT_INPUTS_PATH)
     understanding_parser.add_argument("--limit", type=int, default=0)
-    understanding_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test")
+    understanding_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test.md")
     understanding_parser.add_argument("--top-k", type=int, default=10)
     understanding_parser.add_argument("--ranking-key", choices=RANKING_KEYS, default="hybrid_rrf_constraints")
     understanding_parser.add_argument("--query-planners", default="rule,multi_query,hyde_card")
@@ -381,7 +381,7 @@ def main() -> None:
     add_common_paths(style_parser)
     style_parser.add_argument("--inputs", type=Path, default=DEFAULT_INPUTS_PATH)
     style_parser.add_argument("--limit", type=int, default=0)
-    style_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test")
+    style_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test.md")
     style_parser.add_argument("--top-k", type=int, default=10)
     style_parser.add_argument("--ranking-key", choices=RANKING_KEYS, default="hybrid_rrf_constraints")
     style_parser.add_argument("--constraint-profile", type=Path, default=DEFAULT_CONSTRAINT_PROFILE_PATH)
@@ -394,7 +394,7 @@ def main() -> None:
     add_common_paths(fuzzy_parser)
     fuzzy_parser.add_argument("--inputs", type=Path, default=DEFAULT_INPUTS_PATH)
     fuzzy_parser.add_argument("--limit", type=int, default=10)
-    fuzzy_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test")
+    fuzzy_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test.md")
     fuzzy_parser.add_argument("--case-type", choices=["simple_positive", "hard_positive"], default="simple_positive")
     fuzzy_parser.add_argument("--top-k", type=int, default=10)
     fuzzy_parser.add_argument("--ranking-key", choices=RANKING_KEYS, default="hybrid_rrf_constraints")
@@ -410,7 +410,7 @@ def main() -> None:
     add_common_paths(qrels_parser)
     qrels_parser.add_argument("--inputs", type=Path, default=DEFAULT_INPUTS_PATH)
     qrels_parser.add_argument("--limit", type=int, default=60)
-    qrels_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test")
+    qrels_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test.md")
     qrels_parser.add_argument("--top-k", type=int, default=20)
     qrels_parser.add_argument("--ranking-key", choices=RANKING_KEYS, default="hybrid_rrf_constraints_signature")
     qrels_parser.add_argument("--constraint-profile", type=Path, default=DEFAULT_CONSTRAINT_PROFILE_PATH)
@@ -423,7 +423,7 @@ def main() -> None:
     add_common_paths(graded_parser)
     graded_parser.add_argument("--inputs", type=Path, default=DEFAULT_INPUTS_PATH)
     graded_parser.add_argument("--limit", type=int, default=60)
-    graded_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test")
+    graded_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test.md")
     graded_parser.add_argument("--top-k", type=int, default=10)
     graded_parser.add_argument("--ranking-key", choices=RANKING_KEYS, default="hybrid_rrf_constraints_signature")
     graded_parser.add_argument("--constraint-profile", type=Path, default=DEFAULT_CONSTRAINT_PROFILE_PATH)
@@ -436,7 +436,7 @@ def main() -> None:
     add_common_paths(pooled_qrels_parser)
     pooled_qrels_parser.add_argument("--inputs", type=Path, default=DEFAULT_INPUTS_PATH)
     pooled_qrels_parser.add_argument("--limit", type=int, default=60)
-    pooled_qrels_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test")
+    pooled_qrels_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test.md")
     pooled_qrels_parser.add_argument("--pool-depth", type=int, default=20)
     pooled_qrels_parser.add_argument("--top-k", type=int, default=10)
     pooled_qrels_parser.add_argument("--pool-ranking-keys", default=",".join(DEFAULT_POOL_RANKING_KEYS))
@@ -450,7 +450,7 @@ def main() -> None:
     add_common_paths(pooled_eval_parser)
     pooled_eval_parser.add_argument("--inputs", type=Path, default=DEFAULT_INPUTS_PATH)
     pooled_eval_parser.add_argument("--limit", type=int, default=60)
-    pooled_eval_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test")
+    pooled_eval_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test.md")
     pooled_eval_parser.add_argument("--top-k", type=int, default=10)
     pooled_eval_parser.add_argument("--ranking-key", choices=RANKING_KEYS, default="hybrid_rrf_constraints")
     pooled_eval_parser.add_argument("--constraint-profile", type=Path, default=DEFAULT_CONSTRAINT_PROFILE_PATH)
@@ -463,7 +463,7 @@ def main() -> None:
     add_common_paths(failure_parser)
     failure_parser.add_argument("--inputs", type=Path, default=DEFAULT_INPUTS_PATH)
     failure_parser.add_argument("--limit", type=int, default=60)
-    failure_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test")
+    failure_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test.md")
     failure_parser.add_argument("--top-k", type=int, default=10)
     failure_parser.add_argument("--ranking-key", choices=RANKING_KEYS, default="hybrid_rrf_constraints_signature")
     failure_parser.add_argument("--constraint-profile", type=Path, default=DEFAULT_CONSTRAINT_PROFILE_PATH)
@@ -475,7 +475,7 @@ def main() -> None:
     add_common_paths(recall_bound_parser)
     recall_bound_parser.add_argument("--inputs", type=Path, default=DEFAULT_INPUTS_PATH)
     recall_bound_parser.add_argument("--limit", type=int, default=60)
-    recall_bound_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test")
+    recall_bound_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test.md")
     recall_bound_parser.add_argument("--candidate-depth", type=int, default=100)
     recall_bound_parser.add_argument("--top-k", type=int, default=10)
     recall_bound_parser.add_argument("--baseline-ranking-key", choices=RANKING_KEYS, default="hybrid_rrf_constraints")
@@ -489,7 +489,7 @@ def main() -> None:
     add_common_paths(active_qrels_parser)
     active_qrels_parser.add_argument("--inputs", type=Path, default=DEFAULT_INPUTS_PATH)
     active_qrels_parser.add_argument("--limit", type=int, default=60)
-    active_qrels_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test")
+    active_qrels_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test.md")
     active_qrels_parser.add_argument("--pool-depth", type=int, default=20)
     active_qrels_parser.add_argument("--sample-size", type=int, default=80)
     active_qrels_parser.add_argument("--pool-ranking-keys", default=",".join(DEFAULT_POOL_RANKING_KEYS))
@@ -518,7 +518,7 @@ def main() -> None:
     add_common_paths(strong_baseline_parser)
     strong_baseline_parser.add_argument("--inputs", type=Path, default=DEFAULT_INPUTS_PATH)
     strong_baseline_parser.add_argument("--limit", type=int, default=60)
-    strong_baseline_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test")
+    strong_baseline_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test.md")
     strong_baseline_parser.add_argument("--top-k", type=int, default=10)
     strong_baseline_parser.add_argument("--rerank-depth", type=int, default=20)
     strong_baseline_parser.add_argument("--ranking-keys", default=",".join(DEFAULT_STRONG_BASELINE_KEYS))
@@ -536,7 +536,7 @@ def main() -> None:
     add_common_paths(rerank_upper_parser)
     rerank_upper_parser.add_argument("--inputs", type=Path, default=DEFAULT_INPUTS_PATH)
     rerank_upper_parser.add_argument("--limit", type=int, default=60)
-    rerank_upper_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test")
+    rerank_upper_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test.md")
     rerank_upper_parser.add_argument("--top-k", type=int, default=10)
     rerank_upper_parser.add_argument("--rerank-depth", type=int, default=20)
     rerank_upper_parser.add_argument("--ranking-keys", default=",".join(DEFAULT_STRONG_BASELINE_KEYS))
@@ -554,7 +554,7 @@ def main() -> None:
     add_common_paths(fuzzy_multi_parser)
     fuzzy_multi_parser.add_argument("--inputs", type=Path, default=DEFAULT_INPUTS_PATH)
     fuzzy_multi_parser.add_argument("--limit", type=int, default=60)
-    fuzzy_multi_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test")
+    fuzzy_multi_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test.md")
     fuzzy_multi_parser.add_argument("--case-type", choices=["simple_positive", "hard_positive"], default="simple_positive")
     fuzzy_multi_parser.add_argument("--top-k", type=int, default=10)
     fuzzy_multi_parser.add_argument("--pool-depth", type=int, default=20)
@@ -572,7 +572,7 @@ def main() -> None:
     add_common_paths(signature_parser)
     signature_parser.add_argument("--inputs", type=Path, default=DEFAULT_INPUTS_PATH)
     signature_parser.add_argument("--limit", type=int, default=60)
-    signature_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test")
+    signature_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test.md")
     signature_parser.add_argument("--top-k", type=int, default=10)
     signature_parser.add_argument("--constraint-profile", type=Path, default=DEFAULT_CONSTRAINT_PROFILE_PATH)
     signature_parser.add_argument("--output", type=Path, default=DEFAULT_SCENE_SIGNATURE_REPORT_PATH)
@@ -583,7 +583,7 @@ def main() -> None:
     add_common_paths(style_risk_parser)
     style_risk_parser.add_argument("--inputs", type=Path, default=DEFAULT_INPUTS_PATH)
     style_risk_parser.add_argument("--limit", type=int, default=60)
-    style_risk_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test")
+    style_risk_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test.md")
     style_risk_parser.add_argument("--top-k", type=int, default=10)
     style_risk_parser.add_argument("--ranking-key", choices=RANKING_KEYS, default="hybrid_rrf_constraints_signature")
     style_risk_parser.add_argument("--constraint-profile", type=Path, default=DEFAULT_CONSTRAINT_PROFILE_PATH)
@@ -594,7 +594,7 @@ def main() -> None:
     add_common_paths(hard_negative_parser)
     hard_negative_parser.add_argument("--inputs", type=Path, default=DEFAULT_INPUTS_PATH)
     hard_negative_parser.add_argument("--limit", type=int, default=60)
-    hard_negative_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test")
+    hard_negative_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test.md")
     hard_negative_parser.add_argument("--top-k", type=int, default=10)
     hard_negative_parser.add_argument("--ranking-key", choices=RANKING_KEYS, default="hybrid_rrf_constraints_signature")
     hard_negative_parser.add_argument("--constraint-profile", type=Path, default=DEFAULT_CONSTRAINT_PROFILE_PATH)
@@ -605,7 +605,7 @@ def main() -> None:
     add_common_paths(rerank_gate_parser)
     rerank_gate_parser.add_argument("--inputs", type=Path, default=DEFAULT_INPUTS_PATH)
     rerank_gate_parser.add_argument("--limit", type=int, default=60)
-    rerank_gate_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test")
+    rerank_gate_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test.md")
     rerank_gate_parser.add_argument("--top-k", type=int, default=10)
     rerank_gate_parser.add_argument("--constraint-profile", type=Path, default=DEFAULT_CONSTRAINT_PROFILE_PATH)
     rerank_gate_parser.add_argument("--output", type=Path, default=DEFAULT_RERANK_GATE_REPORT_PATH)
@@ -616,7 +616,7 @@ def main() -> None:
     add_common_paths(compare_rerank_parser)
     compare_rerank_parser.add_argument("--inputs", type=Path, default=DEFAULT_INPUTS_PATH)
     compare_rerank_parser.add_argument("--limit", type=int, default=60)
-    compare_rerank_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test")
+    compare_rerank_parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test.md")
     compare_rerank_parser.add_argument("--top-k", type=int, default=10)
     compare_rerank_parser.add_argument("--constraint-profile", type=Path, default=DEFAULT_CONSTRAINT_PROFILE_PATH)
     compare_rerank_parser.add_argument("--output", type=Path, default=DEFAULT_RERANK_GATE_REPORT_PATH)
@@ -998,7 +998,7 @@ def tune_constraints_command(args: argparse.Namespace) -> dict[str, Any]:
     index = read_index(args.index)
     cache = make_embedding_cache(args)
     dev_cases = read_cases(args.inputs, args.limit, split=args.split)
-    test_cases = read_cases(args.inputs, 0, split="test")
+    test_cases = read_cases(args.inputs, 0, split="test.md")
     query_texts = [
         channel["text"]
         for case in dev_cases + test_cases
@@ -2477,7 +2477,7 @@ def retrieval_flywheel_guide() -> dict[str, Any]:
             "step": 1,
             "name": "build-pooled-qrels",
             "purpose": "Build a pooled bootstrap relevance set from multiple planners/workflows.",
-            "command": "python -m mocktesting.mock_retriever build-pooled-qrels --split test --limit 60 --qrels-output .tmp\\pooled_qrels_next.jsonl",
+            "command": "python -m mocktesting.mock_retriever build-pooled-qrels --split test.md --limit 60 --qrels-output .tmp\\pooled_qrels_next.jsonl",
         },
         {
             "step": 2,
@@ -2489,7 +2489,7 @@ def retrieval_flywheel_guide() -> dict[str, Any]:
             "step": 3,
             "name": "sample-active-qrels",
             "purpose": "Sample low-confidence, disagreement, miss, and style-risk rows for human/LLM review.",
-            "command": "python -m mocktesting.mock_retriever sample-active-qrels --split test --limit 60 --sample-size 80 --qrels .tmp\\pooled_qrels_next.jsonl --output .tmp\\active_qrels_next.jsonl",
+            "command": "python -m mocktesting.mock_retriever sample-active-qrels --split test.md --limit 60 --sample-size 80 --qrels .tmp\\pooled_qrels_next.jsonl --output .tmp\\active_qrels_next.jsonl",
         },
         {
             "step": 4,
@@ -2501,25 +2501,25 @@ def retrieval_flywheel_guide() -> dict[str, Any]:
             "step": 5,
             "name": "evaluate-fuzzy-multirelevance",
             "purpose": "Evaluate fuzzy variants with graded relevance instead of exact target only.",
-            "command": "python -m mocktesting.mock_retriever evaluate-fuzzy-multirelevance --split test --limit 60 --query-planner multi_query --ranking-key hybrid_rrf_constraints --qrels .tmp\\pooled_qrels_adjudicated.jsonl --output .tmp\\fuzzy_multi_next.json --markdown-output .tmp\\fuzzy_multi_next.md",
+            "command": "python -m mocktesting.mock_retriever evaluate-fuzzy-multirelevance --split test.md --limit 60 --query-planner multi_query --ranking-key hybrid_rrf_constraints --qrels .tmp\\pooled_qrels_adjudicated.jsonl --output .tmp\\fuzzy_multi_next.json --markdown-output .tmp\\fuzzy_multi_next.md",
         },
         {
             "step": 6,
             "name": "compare-strong-baselines",
             "purpose": "Compare baseline, signature/adaptive, rule rerank, oracle rerank, and optional LLM sample rerank.",
-            "command": "python -m mocktesting.mock_retriever compare-strong-baselines --split test --limit 60 --qrels .tmp\\pooled_qrels_adjudicated.jsonl --output .tmp\\strong_baselines_next.json --markdown-output .tmp\\strong_baselines_next.md",
+            "command": "python -m mocktesting.mock_retriever compare-strong-baselines --split test.md --limit 60 --qrels .tmp\\pooled_qrels_adjudicated.jsonl --output .tmp\\strong_baselines_next.json --markdown-output .tmp\\strong_baselines_next.md",
         },
         {
             "step": 7,
             "name": "compare-rerank-upper-bound",
             "purpose": "Decide whether the next bottleneck is recall, rerank quality, or candidate summaries.",
-            "command": "python -m mocktesting.mock_retriever compare-rerank-upper-bound --split test --limit 60 --qrels .tmp\\pooled_qrels_adjudicated.jsonl --output .tmp\\rerank_upper_bound_next.json --markdown-output .tmp\\rerank_upper_bound_next.md",
+            "command": "python -m mocktesting.mock_retriever compare-rerank-upper-bound --split test.md --limit 60 --qrels .tmp\\pooled_qrels_adjudicated.jsonl --output .tmp\\rerank_upper_bound_next.json --markdown-output .tmp\\rerank_upper_bound_next.md",
         },
         {
             "step": 8,
             "name": "analyze-failures",
             "purpose": "Attribute miss cases to query understanding, recall, fusion/ranking, constraints, or weak labels.",
-            "command": "python -m mocktesting.mock_retriever analyze-failures --split test --limit 60 --output .tmp\\failure_analysis_next.json --markdown-output .tmp\\failure_analysis_next.md",
+            "command": "python -m mocktesting.mock_retriever analyze-failures --split test.md --limit 60 --output .tmp\\failure_analysis_next.json --markdown-output .tmp\\failure_analysis_next.md",
         },
         {
             "step": 9,
@@ -2964,7 +2964,7 @@ def capability_recommendations(raw_metrics: dict[str, Any], capabilities: dict[s
                 "priority": 1,
                 "title": "Improve qrels trust",
                 "reason": "qrels_trust_level is low, so capability deltas are still bootstrap-guided.",
-                "command": "python -m mocktesting.mock_retriever sample-active-qrels --split test --limit 60 --sample-size 80 --qrels .tmp\\pooled_qrels_next.jsonl --output .tmp\\active_qrels_next.jsonl",
+                "command": "python -m mocktesting.mock_retriever sample-active-qrels --split test.md --limit 60 --sample-size 80 --qrels .tmp\\pooled_qrels_next.jsonl --output .tmp\\active_qrels_next.jsonl",
             }
         )
     if (optional_float(raw_metrics.get("rerank_opportunity_ndcg_at_10")) or 0.0) >= 0.15:
@@ -2973,7 +2973,7 @@ def capability_recommendations(raw_metrics: dict[str, Any], capabilities: dict[s
                 "priority": 2,
                 "title": "Run real reranker sample",
                 "reason": "oracle rerank has a large nDCG@10 opportunity.",
-                "command": "python -m mocktesting.mock_retriever compare-rerank-upper-bound --split test --limit 60 --qrels .tmp\\pooled_qrels_next.jsonl --llm-rerank-sample-size 10",
+                "command": "python -m mocktesting.mock_retriever compare-rerank-upper-bound --split test.md --limit 60 --qrels .tmp\\pooled_qrels_next.jsonl --llm-rerank-sample-size 10",
             }
         )
     if (optional_float(raw_metrics.get("style_violation_at_3")) or 0.0) > 0.05:
@@ -2982,7 +2982,7 @@ def capability_recommendations(raw_metrics: dict[str, Any], capabilities: dict[s
                 "priority": 3,
                 "title": "Tighten style negative handling",
                 "reason": "style_violation_at_3 is above the first-stage target.",
-                "command": "python -m mocktesting.mock_retriever validate-style-risk-mining --split test --limit 60",
+                "command": "python -m mocktesting.mock_retriever validate-style-risk-mining --split test.md --limit 60",
             }
         )
     scene_recall = optional_float(raw_metrics.get("scene_level_recall_at_10")) or 0.0
@@ -2993,7 +2993,7 @@ def capability_recommendations(raw_metrics: dict[str, Any], capabilities: dict[s
                 "priority": 4,
                 "title": "Revisit recall and query understanding",
                 "reason": "scene recall is low and oracle rerank is not high enough to fix it alone.",
-                "command": "python -m mocktesting.mock_retriever compare-query-understanding --split test --limit 60",
+                "command": "python -m mocktesting.mock_retriever compare-query-understanding --split test.md --limit 60",
             }
         )
     if not recommendations:
@@ -5249,7 +5249,7 @@ def case_split(case_id: str) -> str:
     if bucket <= 3:
         return "dev"
     if bucket <= 7:
-        return "test"
+        return "test.md"
     return "hidden"
 
 

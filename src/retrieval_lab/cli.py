@@ -147,19 +147,20 @@ Modern command groups:
   planner plan | compare | audit-cache
   index build | compact-cache
   retrieval search
+  tune-constraints | evaluate-leave-one-fixture-out
 
 Examples:
   python -m retrieval_lab flywheel guide
   python -m retrieval_lab qrels audit --qrels .tmp\\pooled_qrels_next.jsonl
   python -m retrieval_lab migration audit --round-id round_001
   python -m retrieval_lab planner plan --planner multi_query --query "need grounded setup without product pitch"
-  python -m retrieval_lab index manifest --split test --limit 60
-  python -m retrieval_lab retrieval run --split test --limit 60 --planner multi_query
+  python -m retrieval_lab index manifest --split test.md --limit 60
+  python -m retrieval_lab retrieval run --split test.md --limit 60 --planner multi_query
   python -m retrieval_lab workflow compare-runs --runs .tmp\\retrieval_lab\\retrieval_run_latest.json
   python -m retrieval_lab rerank export-features --runs .tmp\\retrieval_lab\\retrieval_run_latest.json --qrels .tmp\\retrieval_lab\\pooled_qrels.jsonl
-  python -m retrieval_lab graph build-manifest --split test --limit 60
+  python -m retrieval_lab graph build-manifest --split test.md --limit 60
   python -m retrieval_lab schema catalog
-  python -m retrieval_lab eval fuzzy --split test --limit 60
+  python -m retrieval_lab eval fuzzy --split test.md --limit 60
   python -m retrieval_lab cycle record --cycle-id cycle_002 --reports .tmp\\qrels_audit_next.json
 
 Compatibility:
@@ -588,7 +589,7 @@ def llm_status_parser() -> argparse.ArgumentParser:
 def llm_generate_natural_fuzzy_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="retrieval_lab llm generate-natural-fuzzy")
     parser.add_argument("--dataset", type=Path, default=DEFAULT_DATASET_PATH)
-    parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test")
+    parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test.md")
     parser.add_argument("--limit", type=int, default=0)
     parser.add_argument("--output", type=Path, default=DEFAULT_LLM_NATURAL_FUZZY_OUTPUT)
     parser.add_argument("--report-output", type=Path, default=DEFAULT_LLM_NATURAL_FUZZY_REPORT)
@@ -750,7 +751,7 @@ def judge_calibration_parser() -> argparse.ArgumentParser:
 def graph_build_manifest_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="retrieval_lab graph build-manifest")
     parser.add_argument("--dataset", type=Path, default=DEFAULT_DATASET_PATH)
-    parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test")
+    parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test.md")
     parser.add_argument("--limit", type=int, default=0)
     parser.add_argument("--output", type=Path, default=DEFAULT_SCENE_GRAPH_MANIFEST)
     parser.add_argument("--report-output", type=Path, default=DEFAULT_SCENE_GRAPH_REPORT)
@@ -832,14 +833,16 @@ def migration_certify_parser() -> argparse.ArgumentParser:
     parser.add_argument("--output", type=Path, default=DEFAULT_MIGRATION_CERTIFICATION_REPORT_PATH)
     parser.add_argument("--markdown-output", type=Path, default=None)
     parser.add_argument("--parity-reports", type=Path, nargs="*", default=[])
-    parser.add_argument("--test-reports", type=Path, nargs="*", default=[])
+    parser.add_argument("--test.md-reports", type=Path, nargs="*", default=[])
     return parser
 
 
 def native_core_parser(command: str) -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog=f"retrieval_lab {command}")
     parser.add_argument("--dataset", type=Path, default=DEFAULT_DATASET_PATH)
-    parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test")
+    parser.add_argument("--inputs", type=Path, dest="dataset")
+    default_split = "dev" if command == "tune-constraints" else ("all" if command == "evaluate-leave-one-fixture-out" else "test.md")
+    parser.add_argument("--split", choices=sorted(VALID_SPLITS), default=default_split)
     parser.add_argument("--limit", type=int, default=0)
     parser.add_argument("--planner", choices=PLANNER_NAMES, default="multi_query")
     parser.add_argument("--query-planner", choices=PLANNER_NAMES, default="")
@@ -847,6 +850,17 @@ def native_core_parser(command: str) -> argparse.ArgumentParser:
     parser.add_argument("--planners", default="")
     parser.add_argument("--planner-cache", type=Path, default=DEFAULT_PLANNER_CACHE_PATH)
     parser.add_argument("--no-cache", action="store_true")
+    parser.add_argument("--index", type=Path, default=None)
+    parser.add_argument("--cache", type=Path, default=None)
+    parser.add_argument("--matrix-cache", type=Path, default=None)
+    parser.add_argument("--model", default="")
+    parser.add_argument("--dimension", type=int, default=0)
+    parser.add_argument("--embedding-batch-size", type=int, default=0)
+    parser.add_argument("--cache-load-mode", choices=["lazy", "full"], default="lazy")
+    parser.add_argument("--cache-format", choices=["jsonl", "matrix"], default="matrix")
+    parser.add_argument("--matrix-dtype", choices=["float16", "float32"], default="float16")
+    parser.add_argument("--constraint-profile", type=Path, default=None)
+    parser.add_argument("--profile-output", type=Path, default=None)
     parser.add_argument("--query", action="append", default=[])
     parser.add_argument("--ranking-key", choices=sorted(WORKFLOW_RANKING_KEYS), default="hybrid_rrf_constraints_signature")
     parser.add_argument("--ranking-keys", default="")
@@ -898,7 +912,7 @@ def native_core_parser(command: str) -> argparse.ArgumentParser:
 def retrieval_benchmark_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="retrieval_lab benchmark retrieval")
     parser.add_argument("--dataset", type=Path, default=DEFAULT_DATASET_PATH)
-    parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test")
+    parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test.md")
     parser.add_argument("--limit", type=int, default=0)
     parser.add_argument("--repeat-to", type=int, default=1000)
     parser.add_argument("--planner", choices=PLANNER_NAMES, default="multi_query")
@@ -943,7 +957,9 @@ def planner_audit_cache_parser() -> argparse.ArgumentParser:
 def index_manifest_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="retrieval_lab index manifest")
     parser.add_argument("--dataset", type=Path, default=DEFAULT_DATASET_PATH)
-    parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test")
+    parser.add_argument("--cards", type=Path, action="append", default=[])
+    parser.add_argument("--channel-policy", default="combined")
+    parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test.md")
     parser.add_argument("--limit", type=int, default=0)
     parser.add_argument("--index-id", default="")
     parser.add_argument("--output", type=Path, default=DEFAULT_INDEX_MANIFEST_PATH)
@@ -953,10 +969,15 @@ def index_manifest_parser() -> argparse.ArgumentParser:
 def retrieval_run_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="retrieval_lab retrieval run")
     parser.add_argument("--dataset", type=Path, default=DEFAULT_DATASET_PATH)
-    parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test")
+    parser.add_argument("--cards", type=Path, action="append", default=[])
+    parser.add_argument("--query", action="append", default=[])
+    parser.add_argument("--query-file", type=Path, default=None)
+    parser.add_argument("--channel-policy", default="combined")
+    parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test.md")
     parser.add_argument("--limit", type=int, default=0)
     parser.add_argument("--planner", choices=PLANNER_NAMES, default="multi_query")
     parser.add_argument("--planner-cache", type=Path, default=DEFAULT_PLANNER_CACHE_PATH)
+    parser.add_argument("--ranking-key", choices=sorted(WORKFLOW_RANKING_KEYS), default="hybrid_rrf_constraints_signature")
     parser.add_argument("--top-k", type=int, default=10)
     parser.add_argument("--candidate-depth", type=int, default=100)
     parser.add_argument("--run-name", default="")
@@ -976,7 +997,7 @@ def add_planner_query_args(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--query", action="append", default=[])
     parser.add_argument("--input-file", type=Path, default=None)
     parser.add_argument("--dataset", type=Path, default=None)
-    parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test")
+    parser.add_argument("--split", choices=sorted(VALID_SPLITS), default="test.md")
     parser.add_argument("--limit", type=int, default=0)
 
 

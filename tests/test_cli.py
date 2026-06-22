@@ -142,7 +142,7 @@ def test_cli_llm_check_uses_configured_client(monkeypatch):
                 "Config",
                 (),
                 {
-                    "api_key": "test-key",
+                    "api_key": "test.md-key",
                     "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
                     "model": "qwen3.6-plus",
                     "temperature": 0.2,

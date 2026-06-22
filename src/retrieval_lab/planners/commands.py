@@ -24,7 +24,7 @@ def planner_plan_command(args: Any) -> dict[str, Any]:
         queries=list(getattr(args, "query", []) or []),
         input_file=getattr(args, "input_file", None),
         dataset_path=getattr(args, "dataset", None),
-        split=str(getattr(args, "split", "test")),
+        split=str(getattr(args, "split", "test.md")),
         limit=int(getattr(args, "limit", 0)),
     )
     report = plan_many(
@@ -51,7 +51,7 @@ def planner_compare_command(args: Any) -> dict[str, Any]:
         queries=list(getattr(args, "query", []) or []),
         input_file=getattr(args, "input_file", None),
         dataset_path=getattr(args, "dataset", None),
-        split=str(getattr(args, "split", "test")),
+        split=str(getattr(args, "split", "test.md")),
         limit=int(getattr(args, "limit", 0)),
     )
     planners = parse_planner_names(str(getattr(args, "planners", "rule,multi_query,hyde_card")))

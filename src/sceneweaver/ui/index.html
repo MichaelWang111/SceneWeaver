@@ -1,0 +1,1609 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SceneWeaver Console</title>
+  <link rel="stylesheet" href="https://unpkg.com/element-ui@2.15.14/lib/theme-chalk/index.css" />
+  <style>
+    :root {
+      --blue-950: #102f4d;
+      --blue-850: #1d5f8c;
+      --blue-700: #2389c8;
+      --blue-500: #4ab9eb;
+      --blue-300: #a7e4ff;
+      --blue-100: #edf9ff;
+      --cyan: #68dccc;
+      --peach: #ffb28f;
+      --ink: #1d3044;
+      --muted: #68849a;
+      --line: rgba(184, 226, 247, 0.82);
+      --glass: rgba(255, 255, 255, 0.76);
+      --white: #ffffff;
+      --shadow: 0 34px 90px rgba(28, 103, 158, 0.20);
+      --soft-shadow: 0 16px 42px rgba(48, 132, 188, 0.13);
+    }
+
+    * { box-sizing: border-box; }
+    html { min-height: 100%; }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      color: var(--ink);
+      font-family: "Nunito", "Avenir Next Rounded", "Segoe UI", "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
+      letter-spacing: 0;
+      background:
+        linear-gradient(115deg, rgba(230, 248, 255, 0.95), rgba(250, 253, 255, 0.98) 40%, rgba(222, 245, 255, 0.92) 100%),
+        repeating-linear-gradient(90deg, rgba(40, 142, 205, 0.08) 0 1px, transparent 1px 76px),
+        repeating-linear-gradient(0deg, rgba(40, 142, 205, 0.07) 0 1px, transparent 1px 76px);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 12% 8%, rgba(74, 185, 235, 0.45), transparent 30%),
+        radial-gradient(circle at 88% 10%, rgba(104, 220, 204, 0.30), transparent 28%),
+        linear-gradient(118deg, transparent 0 20%, rgba(80, 181, 230, 0.24) 21%, transparent 45%),
+        linear-gradient(292deg, transparent 0 58%, rgba(104, 220, 204, 0.18) 60%, transparent 88%);
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background-image:
+        linear-gradient(90deg, rgba(25, 102, 153, 0.09) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(25, 102, 153, 0.08) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.76), transparent 78%);
+    }
+
+    [v-cloak] { display: none; }
+
+    .shell {
+      min-height: 100vh;
+      padding: 18px;
+      position: relative;
+    }
+
+    .app-frame {
+      width: min(1420px, 100%);
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 12px;
+      z-index: 20;
+      display: grid;
+      grid-template-columns: minmax(270px, 0.92fr) minmax(400px, 1.18fr) minmax(220px, auto);
+      gap: 16px;
+      align-items: center;
+      min-height: 78px;
+      padding: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.76);
+      border-radius: 28px;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(231, 248, 255, 0.74)) padding-box,
+        linear-gradient(135deg, rgba(74, 185, 235, 0.58), rgba(255, 255, 255, 0.82), rgba(104, 220, 204, 0.42)) border-box;
+      box-shadow: 0 28px 74px rgba(28, 103, 158, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(22px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      min-width: 0;
+      padding-left: 6px;
+    }
+
+    .brand-mark {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      color: var(--white);
+      border-radius: 16px;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.28), transparent 38%),
+        linear-gradient(145deg, #48b9ec, #1f72ad 58%, #68dccc);
+      box-shadow: 0 18px 34px rgba(31, 105, 158, 0.28);
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .brand-text { min-width: 0; }
+
+    .brand-text h1 {
+      margin: 0;
+      color: var(--blue-950);
+      font-size: 22px;
+      line-height: 1.1;
+      font-weight: 900;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brand-text span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 850;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .top-nav {
+      min-width: 0;
+      border: 0;
+      background: transparent;
+    }
+
+    .top-nav.el-menu--horizontal {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      border-bottom: 0;
+    }
+
+    .top-nav.el-menu--horizontal > .el-menu-item {
+      float: none;
+      height: 52px;
+      line-height: 52px;
+      margin: 0;
+      padding: 0 21px;
+      border-bottom: 0;
+      border-radius: 18px;
+      color: #55758d;
+      font-size: 15px;
+      font-weight: 900;
+      transition: background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+    }
+
+    .top-nav.el-menu--horizontal > .el-menu-item i {
+      color: inherit;
+      font-size: 17px;
+      margin-right: 7px;
+      font-weight: 900;
+    }
+
+    .top-nav.el-menu--horizontal > .el-menu-item:not(.is-disabled):focus,
+    .top-nav.el-menu--horizontal > .el-menu-item:not(.is-disabled):hover {
+      color: var(--blue-850);
+      background: rgba(226, 247, 255, 0.78);
+    }
+
+    .top-nav.el-menu--horizontal > .el-menu-item.is-active {
+      color: var(--blue-950);
+      background: linear-gradient(180deg, #ffffff, #eaf8ff);
+      box-shadow: 0 14px 28px rgba(48, 132, 188, 0.18);
+      transform: translateY(-1px);
+      border-bottom: 0;
+    }
+
+    .topbar-status {
+      justify-self: end;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      max-width: 310px;
+      padding: 10px 13px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(238, 249, 255, 0.94), rgba(255, 255, 255, 0.72));
+      border: 1px solid rgba(203, 233, 247, 0.96);
+    }
+
+    .pulse {
+      width: 10px;
+      height: 10px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 0 7px rgba(104, 220, 204, 0.2);
+    }
+
+    .status-text { min-width: 0; }
+
+    .status-text b {
+      display: block;
+      color: var(--blue-950);
+      font-size: 13px;
+      line-height: 1.15;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .status-text span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.25;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .page-shell { margin-top: 18px; }
+
+    .page-hero {
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.74fr);
+      gap: 30px;
+      align-items: stretch;
+      min-height: 354px;
+      padding: 44px;
+      border: 1px solid rgba(255, 255, 255, 0.72);
+      border-radius: 34px;
+      background:
+        linear-gradient(130deg, rgba(255, 255, 255, 0.96), rgba(232, 248, 255, 0.90) 45%, rgba(197, 232, 249, 0.82)) padding-box,
+        linear-gradient(135deg, rgba(74, 185, 235, 0.64), rgba(255, 255, 255, 0.80), rgba(104, 220, 204, 0.52)) border-box;
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    }
+
+    .page-hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, rgba(41, 132, 188, 0.10) 1px, transparent 1px) 0 0 / 54px 54px,
+        linear-gradient(0deg, rgba(41, 132, 188, 0.09) 1px, transparent 1px) 0 0 / 54px 54px,
+        linear-gradient(115deg, transparent 0 56%, rgba(80, 187, 235, 0.20) 57%, transparent 78%);
+      opacity: 0.84;
+    }
+
+    .page-hero::after {
+      content: "";
+      position: absolute;
+      right: -90px;
+      top: -80px;
+      width: 440px;
+      height: 520px;
+      transform: rotate(18deg);
+      pointer-events: none;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.34), transparent);
+      filter: blur(2px);
+    }
+
+    .hero-copy,
+    .hero-visual {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 0;
+    }
+
+    .eyebrow {
+      width: fit-content;
+      padding: 7px 11px;
+      border: 1px solid rgba(74, 185, 235, 0.22);
+      border-radius: 999px;
+      color: var(--blue-850);
+      background: rgba(255, 255, 255, 0.68);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .page-hero h2 {
+      max-width: 860px;
+      margin: 13px 0 12px;
+      color: var(--blue-950);
+      font-size: clamp(38px, 5vw, 68px);
+      line-height: 1.02;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .page-hero p {
+      max-width: 800px;
+      margin: 0;
+      color: #526f85;
+      font-size: 16px;
+      line-height: 1.78;
+      font-weight: 680;
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 20px;
+    }
+
+    .hero-badge {
+      padding: 8px 11px;
+      border: 1px solid rgba(74, 185, 235, 0.24);
+      border-radius: 999px;
+      color: #2b668d;
+      background: rgba(255, 255, 255, 0.70);
+      box-shadow: 0 10px 24px rgba(31, 105, 158, 0.08);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .hero-visual {
+      display: grid;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .signal-card {
+      min-height: 100%;
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.76);
+      border-radius: 28px;
+      background: linear-gradient(155deg, rgba(255, 255, 255, 0.78), rgba(232, 248, 255, 0.60));
+      box-shadow: 0 22px 56px rgba(31, 105, 158, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(18px);
+    }
+
+    .signal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .signal-head b {
+      color: var(--blue-950);
+      font-size: 16px;
+      font-weight: 900;
+    }
+
+    .signal-head span {
+      padding: 5px 9px;
+      border-radius: 999px;
+      color: #1e719a;
+      background: rgba(231, 248, 255, 0.86);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .signal-line {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .signal-step {
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr) auto;
+      gap: 11px;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid rgba(196, 230, 246, 0.90);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.68);
+    }
+
+    .signal-index {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      color: var(--white);
+      border-radius: 12px;
+      background: linear-gradient(145deg, #4ab5e8, #2678b2);
+      box-shadow: 0 10px 20px rgba(31, 105, 158, 0.20);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .signal-copy { min-width: 0; }
+
+    .signal-copy strong {
+      display: block;
+      color: var(--blue-950);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .signal-copy small {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .signal-chip {
+      padding: 5px 8px;
+      border-radius: 999px;
+      color: #2e7ba1;
+      background: rgba(223, 245, 255, 0.92);
+      font-family: "Cascadia Mono", "Consolas", monospace;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .signal-meter {
+      display: grid;
+      gap: 9px;
+      padding: 14px;
+      border-radius: 20px;
+      background: rgba(243, 251, 255, 0.78);
+      border: 1px solid rgba(196, 230, 246, 0.82);
+    }
+
+    .meter-row {
+      display: grid;
+      grid-template-columns: 90px minmax(0, 1fr) 44px;
+      gap: 10px;
+      align-items: center;
+      color: #47718a;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .meter-track {
+      height: 8px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(191, 226, 244, 0.72);
+    }
+
+    .meter-fill {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #42b5e9, #70dbcf);
+      box-shadow: 0 0 16px rgba(66, 181, 233, 0.35);
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: minmax(390px, 500px) minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+      margin-top: 18px;
+    }
+
+    .search-grid {
+      display: grid;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .panel {
+      border: 1px solid rgba(198, 232, 248, 0.96);
+      border-radius: 28px;
+      background: var(--glass);
+      box-shadow: var(--soft-shadow);
+      overflow: hidden;
+      backdrop-filter: blur(16px);
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 20px 22px 16px;
+      border-bottom: 1px solid rgba(212, 237, 249, 0.92);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.62), transparent);
+    }
+
+    .panel-title { min-width: 0; }
+
+    .panel-title h3 {
+      margin: 0;
+      color: var(--blue-950);
+      font-size: 20px;
+      line-height: 1.18;
+      font-weight: 900;
+    }
+
+    .panel-title span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      font-weight: 760;
+    }
+
+    .panel-body { padding: 20px 22px 22px; }
+
+    .soft-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 13px;
+    }
+
+    .note {
+      min-height: 154px;
+      padding: 17px;
+      border: 1px solid rgba(198, 232, 248, 0.96);
+      border-radius: 22px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.86), rgba(238, 249, 255, 0.86));
+      box-shadow: var(--soft-shadow);
+    }
+
+    .note b {
+      display: block;
+      color: var(--blue-950);
+      margin-bottom: 8px;
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .note p,
+    .note span {
+      display: block;
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.72;
+      word-break: break-all;
+    }
+
+    .form-columns {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .switch-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px 12px;
+      margin-top: 2px;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .run-log {
+      min-height: 164px;
+      max-height: 288px;
+      margin-top: 16px;
+      padding: 14px 15px;
+      overflow: auto;
+      border: 1px solid rgba(198, 232, 248, 0.96);
+      border-radius: 20px;
+      background: #f8fdff;
+      color: #2d506a;
+      font-family: "Cascadia Mono", "Consolas", monospace;
+      font-size: 12px;
+      line-height: 1.65;
+      white-space: pre-wrap;
+    }
+
+    .search-panel-body {
+      display: grid;
+      gap: 13px;
+    }
+
+    .search-main {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 172px;
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .search-main .el-button { min-height: 62px; }
+
+    .filter-bar {
+      display: grid;
+      grid-template-columns: minmax(240px, 1.35fr) repeat(3, minmax(142px, 0.6fr)) 106px;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .metric {
+      padding: 17px 18px;
+      border: 1px solid rgba(198, 232, 248, 0.96);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: var(--soft-shadow);
+    }
+
+    .metric b {
+      display: block;
+      color: var(--blue-950);
+      font-size: 28px;
+      line-height: 1.04;
+      font-weight: 900;
+    }
+
+    .metric span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+      font-weight: 850;
+    }
+
+    .results {
+      display: grid;
+      gap: 16px;
+    }
+
+    .result-card {
+      border: 1px solid rgba(198, 232, 248, 0.96);
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.88);
+      box-shadow: var(--soft-shadow);
+      overflow: hidden;
+    }
+
+    .result-head {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: center;
+      padding: 16px 18px;
+      border-bottom: 1px solid rgba(212, 237, 249, 0.92);
+    }
+
+    .rank {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      color: var(--white);
+      border-radius: 16px;
+      background: linear-gradient(145deg, #5fc0eb, #2f83bb);
+      box-shadow: 0 12px 24px rgba(49, 129, 183, 0.22);
+      font-weight: 900;
+    }
+
+    .result-title { min-width: 0; }
+
+    .result-title strong {
+      display: block;
+      color: var(--blue-950);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 15px;
+      line-height: 1.25;
+      font-weight: 900;
+    }
+
+    .result-title span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .score {
+      color: var(--blue-850);
+      font-family: "Cascadia Mono", "Consolas", monospace;
+      font-size: 15px;
+      font-weight: 900;
+      text-align: right;
+    }
+
+    .frames {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 11px;
+      padding: 15px;
+      background: #f3fbff;
+    }
+
+    .frame {
+      position: relative;
+      min-height: 178px;
+      border: 1px solid #ceeaf7;
+      border-radius: 18px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #dff4ff, #ffffff);
+    }
+
+    .frame img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 178px;
+      object-fit: cover;
+    }
+
+    .frame-label {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      color: var(--white);
+      background: rgba(23, 52, 81, 0.78);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .empty-frame {
+      min-height: 178px;
+      display: grid;
+      place-items: center;
+      padding: 16px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .result-body {
+      display: grid;
+      gap: 12px;
+      padding: 16px 18px 18px;
+    }
+
+    .summary {
+      margin: 0;
+      color: #34536a;
+      font-size: 14px;
+      line-height: 1.76;
+    }
+
+    .tagline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      padding: 5px 10px;
+      border: 1px solid #c9e8f8;
+      border-radius: 999px;
+      color: #426d89;
+      background: #eaf7ff;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .source-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 14px;
+    }
+
+    .source-card {
+      padding: 17px;
+      border: 1px solid rgba(198, 232, 248, 0.96);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.84);
+      box-shadow: var(--soft-shadow);
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    }
+
+    .source-card:hover {
+      transform: translateY(-2px);
+      border-color: #aee0f6;
+      box-shadow: 0 16px 34px rgba(49, 129, 183, 0.18);
+    }
+
+    .source-card h3 {
+      margin: 0 0 9px;
+      color: var(--blue-950);
+      font-size: 16px;
+      line-height: 1.25;
+      font-weight: 900;
+    }
+
+    .source-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.65;
+      word-break: break-all;
+    }
+
+    .empty-state {
+      min-height: 300px;
+      display: grid;
+      place-items: center;
+      padding: 34px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .empty-state h3 {
+      margin: 0 0 9px;
+      color: var(--blue-950);
+      font-size: 26px;
+      line-height: 1.2;
+      font-weight: 900;
+    }
+
+    .empty-state p {
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .el-input__inner,
+    .el-textarea__inner {
+      border-color: #c7e7f6;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.94);
+      color: var(--ink);
+      font-family: inherit;
+      font-weight: 650;
+    }
+
+    .el-input__inner:focus,
+    .el-textarea__inner:focus {
+      border-color: var(--blue-500);
+      box-shadow: 0 0 0 4px rgba(74, 185, 235, 0.14);
+    }
+
+    .el-form-item { margin-bottom: 14px; }
+
+    .el-form-item__label {
+      color: #395a72;
+      font-weight: 900;
+      padding-bottom: 7px;
+    }
+
+    .el-button {
+      border-radius: 14px;
+      font-family: inherit;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .el-button--primary {
+      border-color: #3b9bcf;
+      background: linear-gradient(135deg, #4bb2e2, #2f86c1);
+      box-shadow: 0 12px 24px rgba(49, 129, 183, 0.24);
+    }
+
+    .el-button--primary:hover,
+    .el-button--primary:focus {
+      border-color: #318abe;
+      background: linear-gradient(135deg, #42a7d7, #2879b1);
+    }
+
+    .el-button--default {
+      border-color: #c7e7f6;
+      color: #426982;
+      background: rgba(255, 255, 255, 0.86);
+    }
+
+    .el-tabs__nav-wrap::after {
+      height: 1px;
+      background: #d7edf7;
+    }
+
+    .el-tabs__item {
+      color: var(--muted);
+      font-weight: 900;
+    }
+
+    .el-tabs__item.is-active { color: var(--blue-850); }
+
+    .el-tabs__active-bar {
+      background: var(--blue-500);
+      border-radius: 999px;
+    }
+
+    .el-checkbox { margin-right: 0; }
+
+    .el-checkbox__label,
+    .el-radio__label {
+      color: #4a6b82;
+      font-weight: 760;
+      white-space: normal;
+    }
+
+    .el-checkbox__input.is-checked .el-checkbox__inner {
+      border-color: var(--blue-500);
+      background: var(--blue-500);
+    }
+
+    .el-checkbox__input.is-checked + .el-checkbox__label { color: var(--blue-850); }
+
+    .el-upload,
+    .el-upload-dragger { width: 100%; }
+
+    .el-upload-dragger {
+      border-color: #aeddf3;
+      border-radius: 20px;
+      background: linear-gradient(180deg, #f8fdff, #eff9ff);
+    }
+
+    .el-tag {
+      border-radius: 999px;
+      font-weight: 900;
+    }
+
+    .json-popover pre {
+      max-height: 420px;
+      margin: 0;
+      overflow: auto;
+      font-family: "Cascadia Mono", "Consolas", monospace;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .fade-slide-enter-active,
+    .fade-slide-leave-active {
+      transition: opacity 0.16s ease, transform 0.16s ease;
+    }
+
+    .fade-slide-enter,
+    .fade-slide-leave-to {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    @media (max-width: 1180px) {
+      .topbar,
+      .page-hero,
+      .content-grid,
+      .search-main,
+      .filter-bar {
+        grid-template-columns: 1fr;
+      }
+
+      .top-nav.el-menu--horizontal {
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: 2px;
+      }
+
+      .topbar-status {
+        justify-self: stretch;
+        max-width: none;
+      }
+
+      .hero-visual { display: none; }
+      .soft-list { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 760px) {
+      .shell { padding: 12px; }
+      .topbar { top: 8px; border-radius: 22px; }
+      .brand-text h1 { font-size: 18px; }
+      .top-nav.el-menu--horizontal > .el-menu-item { padding: 0 14px; }
+      .page-hero { min-height: 0; padding: 26px; border-radius: 24px; }
+      .page-hero h2 { font-size: 32px; }
+      .page-hero p { font-size: 14px; }
+      .panel-header { align-items: flex-start; flex-direction: column; }
+      .form-columns,
+      .switch-row,
+      .metrics,
+      .frames { grid-template-columns: 1fr; }
+      .frame,
+      .frame img,
+      .empty-frame { min-height: 214px; }
+      .result-head { grid-template-columns: auto minmax(0, 1fr); }
+      .score { grid-column: 2; text-align: left; }
+    }
+  </style>
+</head>
+<body>
+  <div id="app" class="shell" v-cloak>
+    <div class="app-frame">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-mark">SW</div>
+          <div class="brand-text">
+            <h1>导演经验检索工作台</h1>
+            <span>SceneWeaver AI Retrieval OS</span>
+          </div>
+        </div>
+
+        <el-menu :default-active="activePage" :active-text-color="'var(--blue-950)'" mode="horizontal" class="top-nav" @select="activePage = $event">
+          <el-menu-item index="ingest"><i class="el-icon-upload2"></i>视频入库</el-menu-item>
+          <el-menu-item index="search"><i class="el-icon-search"></i>关键词找帧</el-menu-item>
+          <el-menu-item index="sources"><i class="el-icon-folder-opened"></i>数据源</el-menu-item>
+          <el-menu-item index="script"><i class="el-icon-edit-outline"></i>生成脚本</el-menu-item>
+        </el-menu>
+
+        <aside class="topbar-status">
+          <span class="pulse"></span>
+          <div class="status-text">
+            <b>{{ status.status || 'checking' }}</b>
+            <span :title="status.workspace_root">{{ status.workspace_root || 'local workspace' }}</span>
+          </div>
+        </aside>
+      </header>
+
+      <main class="page-shell">
+        <transition name="fade-slide" mode="out-in">
+          <section v-if="activePage === 'ingest'" key="ingest" class="page-view">
+            <div class="page-hero">
+              <div class="hero-copy">
+                <div class="eyebrow">SceneWeaver Ingest</div>
+                <h2>把视频变成可检索的导演经验库</h2>
+                <p>上传视频或填写本地路径，先生成场景包和关键帧，再按需要接入 Vision LLM 分析与经验卡片提取。核心目标是稳定产出可被 Retrieval Lab 使用的数据源。</p>
+                <div class="hero-badges">
+                  <span class="hero-badge">本地视频优先</span>
+                  <span class="hero-badge">三帧场景预览</span>
+                  <span class="hero-badge">Retrieval Lab Ready</span>
+                </div>
+                <div class="hero-actions">
+                  <el-button icon="el-icon-refresh" @click="refreshSources">刷新数据源</el-button>
+                  <el-button type="primary" icon="el-icon-video-play" :loading="ingesting" @click="runIngest">开始入库</el-button>
+                </div>
+              </div>
+              <div class="hero-visual">
+                <div class="signal-card">
+                  <div class="signal-head"><b>Core Flow</b><span>LIVE API</span></div>
+                  <div class="signal-line">
+                    <div class="signal-step"><span class="signal-index">01</span><div class="signal-copy"><strong>Video Source</strong><small>file / upload / local path</small></div><span class="signal-chip">input</span></div>
+                    <div class="signal-step"><span class="signal-index">02</span><div class="signal-copy"><strong>Scene Package</strong><small>cuts, frames, subtitles</small></div><span class="signal-chip">parse</span></div>
+                    <div class="signal-step"><span class="signal-index">03</span><div class="signal-copy"><strong>Experience Cards</strong><small>analysis to retrieval corpus</small></div><span class="signal-chip">ready</span></div>
+                  </div>
+                  <div class="signal-meter">
+                    <div class="meter-row"><span>packaging</span><span class="meter-track"><i class="meter-fill" style="width:92%"></i></span><span>92%</span></div>
+                    <div class="meter-row"><span>frames</span><span class="meter-track"><i class="meter-fill" style="width:86%"></i></span><span>86%</span></div>
+                    <div class="meter-row"><span>retrieval</span><span class="meter-track"><i class="meter-fill" style="width:78%"></i></span><span>78%</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="content-grid">
+              <section class="panel">
+                <div class="panel-header">
+                  <div class="panel-title">
+                    <h3>入库配置</h3>
+                    <span>传入一个视频，生成可检索数据源。</span>
+                  </div>
+                  <el-tag size="small" type="success" effect="plain">SceneWeaver</el-tag>
+                </div>
+                <div class="panel-body">
+                  <el-tabs v-model="ingestMode">
+                    <el-tab-pane label="本地路径" name="path">
+                      <el-form label-position="top" size="small">
+                        <el-form-item label="视频文件路径">
+                          <el-input v-model="ingest.source" placeholder="D:\\Videos\\case.mp4"></el-input>
+                        </el-form-item>
+                        <el-form-item label="Video ID">
+                          <el-input v-model="ingest.video_id" placeholder="可选，例如 case_001"></el-input>
+                        </el-form-item>
+                        <el-form-item label="输出目录">
+                          <el-input v-model="ingest.output_dir" placeholder="留空则写入 outputs/film_analysis/{video_id}"></el-input>
+                        </el-form-item>
+                      </el-form>
+                    </el-tab-pane>
+                    <el-tab-pane label="上传视频" name="upload">
+                      <el-upload ref="upload" drag action="#" :auto-upload="false" :limit="1" :on-change="onUploadChange" :on-remove="onUploadRemove">
+                        <i class="el-icon-upload"></i>
+                        <div class="el-upload__text">拖入视频文件，或 <em>点击选择</em></div>
+                        <div class="el-upload__tip" slot="tip">文件会先保存到工作区 .tmp/user_uploads，再进入同一条入库链路。</div>
+                      </el-upload>
+                      <el-form label-position="top" size="small" style="margin-top:14px">
+                        <el-form-item label="Video ID">
+                          <el-input v-model="ingest.video_id" placeholder="可选，例如 uploaded_case"></el-input>
+                        </el-form-item>
+                      </el-form>
+                    </el-tab-pane>
+                  </el-tabs>
+
+                  <el-form label-position="top" size="small">
+                    <div class="form-columns">
+                      <el-form-item label="切场阈值">
+                        <el-input-number v-model="ingest.scene_threshold" :min="1" :max="80" :step="1" style="width:100%"></el-input-number>
+                      </el-form-item>
+                      <el-form-item label="并发分析">
+                        <el-input-number v-model="ingest.concurrency" :min="1" :max="8" style="width:100%"></el-input-number>
+                      </el-form-item>
+                      <el-form-item label="分析上限">
+                        <el-input-number v-model="ingest.limit" :min="0" :max="999" style="width:100%"></el-input-number>
+                      </el-form-item>
+                      <el-form-item label="抽帧线程">
+                        <el-input-number v-model="ingest.frame_workers" :min="0" :max="16" style="width:100%"></el-input-number>
+                      </el-form-item>
+                    </div>
+                    <el-form-item label="字幕文件路径">
+                      <el-input v-model="ingest.subtitle_path" placeholder="可选：srt / vtt / json"></el-input>
+                    </el-form-item>
+                    <div class="switch-row">
+                      <el-checkbox v-model="ingest.analyze">运行 Vision LLM 场景分析</el-checkbox>
+                      <el-checkbox v-model="ingest.extract_cards" :disabled="!ingest.analyze">提取 experience cards</el-checkbox>
+                      <el-checkbox v-model="ingest.force">强制重建</el-checkbox>
+                      <el-checkbox v-model="ingest.burn_subtitles">把字幕烧进抽样帧</el-checkbox>
+                    </div>
+                  </el-form>
+
+                  <div class="button-row">
+                    <el-button type="primary" icon="el-icon-video-play" :loading="ingesting" @click="runIngest">开始入库</el-button>
+                    <el-button icon="el-icon-refresh" @click="refreshSources">刷新数据源</el-button>
+                  </div>
+                  <div class="run-log">{{ ingestLog || '等待入库任务。完整分析会调用 Vision LLM，耗时取决于场景数量和模型响应。' }}</div>
+                </div>
+              </section>
+
+              <aside class="soft-list">
+                <div class="note"><b>轻量验收方式</b><p>不勾选 Vision LLM 时，只生成 packages 和三帧，适合先检查切场和抽帧是否正常。</p></div>
+                <div class="note"><b>完整核心链路</b><p>勾选 Vision LLM 与 experience cards 后，数据源会进入 Retrieval Lab 检索。</p></div>
+                <div class="note"><b>当前默认输出</b><span>{{ status.default_output_root || 'outputs/film_analysis' }}</span></div>
+              </aside>
+            </div>
+          </section>
+
+          <section v-else-if="activePage === 'search'" key="search" class="page-view">
+            <div class="page-hero">
+              <div class="hero-copy">
+                <div class="eyebrow">Retrieval Lab Search</div>
+                <h2>输入关键词，找到目标场景帧</h2>
+                <p>选择已入库的 SceneWeaver 数据源，用实验链路进行多通道检索。结果会带上场景时间段、首中尾帧和卡片摘要，方便快速判断是不是你要的画面。</p>
+                <div class="hero-badges">
+                  <span class="hero-badge">multi-query planner</span>
+                  <span class="hero-badge">hybrid ranking</span>
+                  <span class="hero-badge">frame context</span>
+                </div>
+                <div class="hero-actions">
+                  <el-button icon="el-icon-folder-opened" @click="activePage = 'sources'">选择数据源</el-button>
+                  <el-button type="primary" icon="el-icon-search" :loading="searching" @click="runSearch">立即检索</el-button>
+                  <el-button icon="el-icon-edit-outline" :disabled="!search.query.trim()" @click="adoptSearchForScript">用这些结果生成脚本</el-button>
+                </div>
+              </div>
+              <div class="hero-visual">
+                <div class="signal-card">
+                  <div class="signal-head"><b>Retrieval Stack</b><span>EXPERIMENT CORE</span></div>
+                  <div class="signal-line">
+                    <div class="signal-step"><span class="signal-index">Q</span><div class="signal-copy"><strong>Keyword Intent</strong><small>natural language query</small></div><span class="signal-chip">query</span></div>
+                    <div class="signal-step"><span class="signal-index">R</span><div class="signal-copy"><strong>Ranked Scenes</strong><small>hybrid signals + constraints</small></div><span class="signal-chip">rank</span></div>
+                    <div class="signal-step"><span class="signal-index">F</span><div class="signal-copy"><strong>Scene Frames</strong><small>start / middle / end</small></div><span class="signal-chip">frame</span></div>
+                  </div>
+                  <div class="signal-meter">
+                    <div class="meter-row"><span>semantic</span><span class="meter-track"><i class="meter-fill" style="width:88%"></i></span><span>88%</span></div>
+                    <div class="meter-row"><span>constraints</span><span class="meter-track"><i class="meter-fill" style="width:81%"></i></span><span>81%</span></div>
+                    <div class="meter-row"><span>frame link</span><span class="meter-track"><i class="meter-fill" style="width:94%"></i></span><span>94%</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="search-grid">
+              <section class="panel">
+                <div class="panel-header">
+                  <div class="panel-title">
+                    <h3>场景检索</h3>
+                    <span>主生产链路和实验链路上层的统一操作入口。</span>
+                  </div>
+                  <el-tag size="small" effect="plain">Retrieval Lab</el-tag>
+                </div>
+                <div class="panel-body search-panel-body">
+                  <div class="search-main">
+                    <el-input v-model="search.query" type="textarea" :rows="2" placeholder="例如：真实但有力量的开场，科技向善，不要大厂感"></el-input>
+                    <el-button type="primary" icon="el-icon-search" :loading="searching" @click="runSearch">检索</el-button>
+                  </div>
+                  <div class="filter-bar">
+                    <el-select v-model="selectedSource" filterable placeholder="选择数据源" @change="applySelectedSource">
+                      <el-option label="outputs/film_analysis 全部" value="outputs/film_analysis"></el-option>
+                      <el-option v-for="source in sources" :key="source.path" :label="source.video_id + ' - ' + source.card_count + ' cards'" :value="source.path"></el-option>
+                    </el-select>
+                    <el-input-number v-model="search.top_k" :min="1" :max="20" style="width:100%"></el-input-number>
+                    <el-select v-model="search.channel_policy"><el-option label="all" value="all"></el-option><el-option label="combined" value="combined"></el-option><el-option label="script_experience" value="script_experience"></el-option><el-option label="summary_tags" value="summary_tags"></el-option></el-select>
+                    <el-select v-model="search.planner"><el-option label="multi_query" value="multi_query"></el-option><el-option label="rule" value="rule"></el-option><el-option label="hyde_card" value="hyde_card"></el-option></el-select>
+                    <el-button icon="el-icon-document" @click="showJson(searchResult || {})">JSON</el-button>
+                    <el-button icon="el-icon-edit-outline" :disabled="!search.query.trim()" @click="adoptSearchForScript">生成脚本</el-button>
+                  </div>
+                </div>
+              </section>
+
+              <section class="metrics">
+                <div class="metric"><b>{{ resultCount }}</b><span>命中结果</span></div>
+                <div class="metric"><b>{{ summary.index_item_count || 0 }}</b><span>索引卡片</span></div>
+                <div class="metric"><b>{{ summary.elapsed_seconds || 0 }}</b><span>检索秒数</span></div>
+                <div class="metric"><b>{{ summary.low_confidence_rate || 0 }}</b><span>低置信率</span></div>
+              </section>
+
+              <section v-if="!matches.length" class="panel empty-state">
+                <div>
+                  <h3>还没有场景结果</h3>
+                  <p>先入库一个视频，或选择已有的 SceneWeaver 输出目录，然后输入关键词检索。</p>
+                </div>
+              </section>
+
+              <section v-else class="results">
+                <article v-for="match in matches" :key="match.item_id" class="result-card">
+                  <div class="result-head">
+                    <div class="rank">{{ match.rank }}</div>
+                    <div class="result-title">
+                      <strong>{{ match.video_id }} / {{ match.scene_id }} / {{ match.card_id }}</strong>
+                      <span>{{ formatTime(match.time_range) }}</span>
+                    </div>
+                    <div class="score">{{ score(match) }}</div>
+                  </div>
+                  <div class="frames">
+                    <div v-for="label in frameLabels" :key="label" class="frame">
+                      <template v-if="frame(match, label) && frame(match, label).exists">
+                        <img :src="fileUrl(frame(match, label).path)" :alt="label + ' frame'" />
+                        <span class="frame-label">{{ label }}</span>
+                      </template>
+                      <div v-else class="empty-frame">{{ label }} frame<br />未生成或不可访问</div>
+                    </div>
+                  </div>
+                  <div class="result-body">
+                    <p class="summary">{{ match.summary_text || '无摘要文本' }}</p>
+                    <div class="tagline">
+                      <span class="pill">stage: {{ match.metadata.script_stage || 'general' }}</span>
+                      <span class="pill">score: {{ score(match) }}</span>
+                      <span class="pill">style: {{ match.diagnostics.style_guardrail_action || 'none' }}</span>
+                      <span class="pill">{{ match.source.package_path ? 'package linked' : 'package missing' }}</span>
+                    </div>
+                    <div class="button-row">
+                      <el-button size="mini" icon="el-icon-view" @click="showJson(match)">详情 JSON</el-button>
+                      <el-button size="mini" icon="el-icon-copy-document" @click="copyPath(match.source.package_path)">复制 package 路径</el-button>
+                    </div>
+                  </div>
+                </article>
+              </section>
+            </div>
+          </section>
+
+          <section v-else-if="activePage === 'sources'" key="sources" class="page-view">
+            <div class="page-hero">
+              <div class="hero-copy">
+                <div class="eyebrow">Data Sources</div>
+                <h2>管理已入库的视频数据源</h2>
+                <p>这里显示 outputs/film_analysis 下的可检索目录。点击任意数据源会带入检索页，直接进入关键词找帧流程。</p>
+                <div class="hero-badges">
+                  <span class="hero-badge">cards status</span>
+                  <span class="hero-badge">package path</span>
+                  <span class="hero-badge">one-click search</span>
+                </div>
+                <div class="hero-actions">
+                  <el-button icon="el-icon-upload2" @click="activePage = 'ingest'">新增入库</el-button>
+                  <el-button type="primary" icon="el-icon-refresh" @click="refreshSources">刷新</el-button>
+                </div>
+              </div>
+              <div class="hero-visual">
+                <div class="signal-card">
+                  <div class="signal-head"><b>Source Registry</b><span>{{ sources.length }} SOURCES</span></div>
+                  <div class="signal-line">
+                    <div class="signal-step"><span class="signal-index">A</span><div class="signal-copy"><strong>Film Analysis Root</strong><small>{{ status.default_output_root || 'outputs/film_analysis' }}</small></div><span class="signal-chip">root</span></div>
+                    <div class="signal-step"><span class="signal-index">B</span><div class="signal-copy"><strong>Cards Index</strong><small>experience_cards.jsonl</small></div><span class="signal-chip">cards</span></div>
+                    <div class="signal-step"><span class="signal-index">C</span><div class="signal-copy"><strong>Search Target</strong><small>selected source to Retrieval Lab</small></div><span class="signal-chip">use</span></div>
+                  </div>
+                  <div class="signal-meter">
+                    <div class="meter-row"><span>registry</span><span class="meter-track"><i class="meter-fill" style="width:90%"></i></span><span>90%</span></div>
+                    <div class="meter-row"><span>packages</span><span class="meter-track"><i class="meter-fill" style="width:84%"></i></span><span>84%</span></div>
+                    <div class="meter-row"><span>handoff</span><span class="meter-track"><i class="meter-fill" style="width:96%"></i></span><span>96%</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="search-grid">
+              <section class="panel">
+                <div class="panel-header">
+                  <div class="panel-title">
+                    <h3>已入库数据源</h3>
+                    <span>{{ sources.length }} 个数据源</span>
+                  </div>
+                  <el-button size="small" icon="el-icon-refresh" @click="refreshSources">刷新</el-button>
+                </div>
+                <div class="panel-body">
+                  <div v-if="!sources.length" class="empty-state">
+                    <div><h3>暂无数据源</h3><p>完成一次入库后，这里会显示可检索的视频目录。</p></div>
+                  </div>
+                  <div v-else class="source-grid">
+                    <div v-for="source in sources" :key="source.path" class="source-card" @click="selectSourceAndSearch(source.path)">
+                      <h3>{{ source.video_id }}</h3>
+                      <p>{{ source.card_count }} cards - {{ source.cards_exists ? 'ready' : 'cards missing' }}</p>
+                      <p>{{ source.path }}</p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </section>
+
+          <section v-else key="script" class="page-view">
+            <div class="page-hero">
+              <div class="hero-copy">
+                <div class="eyebrow">Director Script</div>
+                <h2>用真实导演经验生成新脚本</h2>
+                <p>检索帧和经验卡片会作为创意参考，而不是画面硬约束。模型会提炼情绪、节奏、镜头和叙事方法，再生成新的脚本草稿。</p>
+                <div class="hero-badges">
+                  <span class="hero-badge">soft creative constraints</span>
+                  <span class="hero-badge">Director.md</span>
+                  <span class="hero-badge">reference takeaways</span>
+                </div>
+                <div class="hero-actions">
+                  <el-button icon="el-icon-search" @click="activePage = 'search'">先找参考帧</el-button>
+                  <el-button type="primary" icon="el-icon-magic-stick" :loading="scripting" @click="runScript">生成脚本</el-button>
+                </div>
+              </div>
+              <div class="hero-visual">
+                <div class="signal-card">
+                  <div class="signal-head"><b>Script Stack</b><span>SOFT REFERENCE</span></div>
+                  <div class="signal-line">
+                    <div class="signal-step"><span class="signal-index">01</span><div class="signal-copy"><strong>Retrieve Frames</strong><small>keyword to director references</small></div><span class="signal-chip">search</span></div>
+                    <div class="signal-step"><span class="signal-index">02</span><div class="signal-copy"><strong>Extract Takeaways</strong><small>emotion, rhythm, camera, tone</small></div><span class="signal-chip">learn</span></div>
+                    <div class="signal-step"><span class="signal-index">03</span><div class="signal-copy"><strong>Generate Script</strong><small>new creative draft</small></div><span class="signal-chip">write</span></div>
+                  </div>
+                  <div class="signal-meter">
+                    <div class="meter-row"><span>references</span><span class="meter-track"><i class="meter-fill" style="width:86%"></i></span><span>86%</span></div>
+                    <div class="meter-row"><span>strategy</span><span class="meter-track"><i class="meter-fill" style="width:91%"></i></span><span>91%</span></div>
+                    <div class="meter-row"><span>draft</span><span class="meter-track"><i class="meter-fill" style="width:79%"></i></span><span>79%</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="search-grid">
+              <section class="panel">
+                <div class="panel-header">
+                  <div class="panel-title">
+                    <h3>脚本生成配置</h3>
+                    <span>关键词用于召回经验参考，brief 用于定义这次要写的新脚本。</span>
+                  </div>
+                  <el-tag size="small" effect="plain">Director.md</el-tag>
+                </div>
+                <div class="panel-body search-panel-body">
+                  <div class="search-main">
+                    <el-input v-model="scriptForm.query" type="textarea" :rows="2" placeholder="用于召回参考经验的关键词，例如：真实团队、低广告感、年轻人成长"></el-input>
+                    <el-button type="primary" icon="el-icon-magic-stick" :loading="scripting" @click="runScript">生成脚本</el-button>
+                  </div>
+                  <div class="filter-bar">
+                    <el-select v-model="scriptSelectedSource" filterable placeholder="选择数据源" @change="applyScriptSource">
+                      <el-option label="outputs/film_analysis 全部" value="outputs/film_analysis"></el-option>
+                      <el-option v-for="source in sources" :key="source.path" :label="source.video_id + ' - ' + source.card_count + ' cards'" :value="source.path"></el-option>
+                    </el-select>
+                    <el-input-number v-model="scriptForm.top_k" :min="1" :max="12" style="width:100%"></el-input-number>
+                    <el-input-number v-model="scriptForm.duration_seconds" :min="15" :max="600" style="width:100%"></el-input-number>
+                    <el-input v-model="scriptForm.tone" placeholder="语气：真实、克制、热血"></el-input>
+                    <el-button icon="el-icon-document" @click="showJson(scriptResult || {})">JSON</el-button>
+                  </div>
+                  <el-form label-position="top" size="small">
+                    <el-form-item label="脚本目标 / Brief">
+                      <el-input v-model="scriptForm.script_brief" type="textarea" :rows="3" placeholder="例如：为一家 AI 工具公司写 60 秒招聘品牌片，强调真实成长和团队协作"></el-input>
+                    </el-form-item>
+                    <div class="form-columns">
+                      <el-form-item label="目标受众"><el-input v-model="scriptForm.audience" placeholder="例如：应届生、研发工程师、创业团队"></el-input></el-form-item>
+                      <el-form-item label="必须包含"><el-input v-model="scriptForm.must_include" placeholder="例如：产品名、团队协作、真实问题"></el-input></el-form-item>
+                    </div>
+                    <el-form-item label="避免事项">
+                      <el-input v-model="scriptForm.avoid" placeholder="例如：不要大厂感、不要空泛口号、不要夸张成功学"></el-input>
+                    </el-form-item>
+                  </el-form>
+                </div>
+              </section>
+
+              <section v-if="!scriptResult" class="panel empty-state">
+                <div>
+                  <h3>还没有生成脚本</h3>
+                  <p>输入关键词和脚本目标后，系统会先检索导演经验参考，再基于这些软约束生成新脚本。</p>
+                </div>
+              </section>
+
+              <section v-else class="results">
+                <article class="result-card">
+                  <div class="result-head">
+                    <div class="rank"><i class="el-icon-edit-outline"></i></div>
+                    <div class="result-title"><strong>{{ scriptResult.script.title || '生成脚本' }}</strong><span>{{ scriptResult.script.logline || scriptResult.query }}</span></div>
+                    <div class="score">{{ scriptResult.reference_items.length }} refs</div>
+                  </div>
+                  <div class="result-body">
+                    <p class="summary"><b>创作策略：</b>{{ scriptResult.script.creative_strategy || '无' }}</p>
+                    <div class="run-log">{{ scriptResult.script.script_markdown || '无脚本正文' }}</div>
+                    <div class="button-row">
+                      <el-button size="mini" icon="el-icon-document" @click="showJson(scriptResult)">完整 JSON</el-button>
+                      <el-button size="mini" icon="el-icon-copy-document" @click="copyScriptMarkdown">复制脚本正文</el-button>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="result-card">
+                  <div class="result-head">
+                    <div class="rank">R</div>
+                    <div class="result-title"><strong>参考经验</strong><span>这些帧和卡片是创作方向，不是画面硬约束。</span></div>
+                    <div class="score">soft</div>
+                  </div>
+                  <div class="result-body">
+                    <div class="source-grid">
+                      <div v-for="item in scriptResult.reference_items" :key="item.reference_id" class="source-card" @click="showJson(item)">
+                        <h3>{{ item.reference_id }} / {{ item.scene_id }}</h3>
+                        <p>{{ item.summary_text || item.director_strategy || item.reuse_condition || '参考经验' }}</p>
+                        <p>{{ item.frame_label }} frame - {{ item.card_id }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              </section>
+            </div>
+          </section>
+        </transition>
+      </main>
+    </div>
+
+    <el-dialog title="JSON 详情" :visible.sync="jsonDialog.visible" width="72%" custom-class="json-popover">
+      <pre>{{ jsonDialog.text }}</pre>
+      <span slot="footer"><el-button @click="jsonDialog.visible = false">关闭</el-button></span>
+    </el-dialog>
+  </div>
+
+  <script src="https://unpkg.com/vue@2.7.16/dist/vue.js"></script>
+  <script src="https://unpkg.com/element-ui@2.15.14/lib/index.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data() {
+        return {
+          activePage: 'ingest',
+          status: {},
+          sources: [],
+          selectedSource: 'outputs/film_analysis',
+          ingestMode: 'path',
+          uploadFile: null,
+          ingesting: false,
+          searching: false,
+          scripting: false,
+          ingestLog: '',
+          ingest: {
+            source: '', video_id: '', output_dir: '', subtitle_path: '', scene_threshold: 27,
+            concurrency: 1, limit: 0, frame_workers: 0, analyze: false,
+            extract_cards: true, force: false, burn_subtitles: false
+          },
+          search: {
+            query: '', sources: ['outputs/film_analysis'], top_k: 5, candidate_depth: 100,
+            planner: 'multi_query', ranking_key: 'hybrid_rrf_constraints_signature', channel_policy: 'all'
+          },
+          searchResult: null,
+          scriptSelectedSource: 'outputs/film_analysis',
+          scriptForm: {
+            query: '', sources: ['outputs/film_analysis'], top_k: 5, duration_seconds: 60,
+            script_brief: '', tone: '', audience: '', must_include: '', avoid: '',
+            candidate_depth: 100, planner: 'multi_query', ranking_key: 'hybrid_rrf_constraints_signature', channel_policy: 'all'
+          },
+          scriptResult: null,
+          jsonDialog: { visible: false, text: '' },
+          frameLabels: ['start', 'middle', 'end']
+        }
+      },
+      computed: {
+        matches() { return (this.searchResult && this.searchResult.matches) || [] },
+        summary() { return (this.searchResult && this.searchResult.summary) || {} },
+        resultCount() { return this.matches.length }
+      },
+      mounted() { this.loadStatus(); this.refreshSources() },
+      methods: {
+        async loadStatus() { this.status = await this.request('/api/status') },
+        async refreshSources() { const data = await this.request('/api/sources'); this.sources = data.sources || [] },
+        applySelectedSource(value) { this.search.sources = [value] },
+        applyScriptSource(value) { this.scriptForm.sources = [value] },
+        selectSourceAndSearch(path) { this.selectedSource = path; this.search.sources = [path]; this.activePage = 'search' },
+        onUploadChange(file) { this.uploadFile = file.raw },
+        onUploadRemove() { this.uploadFile = null },
+        ingestPayload() {
+          return {
+            source: this.ingest.source,
+            source_type: 'auto',
+            video_id: this.clean(this.ingest.video_id),
+            output_dir: this.clean(this.ingest.output_dir),
+            subtitle_path: this.clean(this.ingest.subtitle_path),
+            scene_threshold: this.ingest.scene_threshold,
+            concurrency: this.ingest.concurrency,
+            limit: this.ingest.limit || null,
+            frame_workers: this.ingest.frame_workers || null,
+            analyze: this.ingest.analyze,
+            extract_cards: this.ingest.extract_cards,
+            force: this.ingest.force,
+            burn_subtitles: this.ingest.burn_subtitles
+          }
+        },
+        async runIngest() {
+          this.ingesting = true; this.ingestLog = '任务开始...'
+          try {
+            let result
+            if (this.ingestMode === 'upload') {
+              if (!this.uploadFile) throw new Error('请先选择一个视频文件')
+              const form = new FormData()
+              form.append('video', this.uploadFile)
+              form.append('options', JSON.stringify(this.ingestPayload()))
+              result = await this.request('/api/upload-ingest', { method: 'POST', body: form, rawBody: true })
+            } else {
+              result = await this.request('/api/ingest', { method: 'POST', body: this.ingestPayload() })
+            }
+            this.ingestLog = JSON.stringify(result, null, 2)
+            this.$message.success('入库任务完成')
+            await this.refreshSources()
+            if (result.output_dir) { this.selectedSource = result.output_dir; this.search.sources = [result.output_dir] }
+          } catch (error) { this.ingestLog = error.message; this.$message.error(error.message) }
+          finally { this.ingesting = false }
+        },
+        async runSearch() {
+          if (!this.search.query.trim()) { this.$message.warning('请输入关键词'); return }
+          this.searching = true
+          try { this.searchResult = await this.request('/api/search', { method: 'POST', body: this.search }); this.$message.success('检索完成') }
+          catch (error) { this.$message.error(error.message) }
+          finally { this.searching = false }
+        },
+        adoptSearchForScript() {
+          if (!this.search.query.trim()) { this.$message.warning('请先输入关键词'); return }
+          this.scriptForm.query = this.search.query
+          this.scriptForm.sources = [...this.search.sources]
+          this.scriptSelectedSource = this.selectedSource
+          this.scriptForm.top_k = this.search.top_k
+          this.scriptForm.planner = this.search.planner
+          this.scriptForm.ranking_key = this.search.ranking_key
+          this.scriptForm.channel_policy = this.search.channel_policy
+          this.activePage = 'script'
+          this.$message.success('已带入当前检索条件')
+        },
+        async runScript() {
+          if (!this.scriptForm.query.trim()) { this.$message.warning('请输入关键词'); return }
+          this.scripting = true
+          try {
+            this.scriptResult = await this.request('/api/generate-script', { method: 'POST', body: this.scriptForm })
+            this.$message.success('脚本生成完成')
+          } catch (error) { this.$message.error(error.message) }
+          finally { this.scripting = false }
+        },
+        async request(url, options = {}) {
+          const config = { method: options.method || 'GET', headers: options.headers || {} }
+          if (options.body !== undefined) {
+            if (options.rawBody) config.body = options.body
+            else { config.headers['Content-Type'] = 'application/json'; config.body = JSON.stringify(options.body) }
+          }
+          const response = await fetch(url, config)
+          const text = await response.text()
+          let data = {}
+          try { data = text ? JSON.parse(text) : {} } catch (error) { throw new Error(text || '响应解析失败') }
+          if (!response.ok || data.status === 'error') throw new Error(data.error || '请求失败')
+          return data
+        },
+        fileUrl(path) { return '/api/file?path=' + encodeURIComponent(path) },
+        frame(match, label) { return match.frames && match.frames[label] },
+        formatTime(range) { return range && range.start ? `${range.start} - ${range.end} - ${range.duration_seconds}s` : 'time range unavailable' },
+        score(match) { return Number(match.final_score || match.score || 0).toFixed(3) },
+        showJson(value) { this.jsonDialog.text = JSON.stringify(value, null, 2); this.jsonDialog.visible = true },
+        async copyPath(path) { if (!path) return; await navigator.clipboard.writeText(path); this.$message.success('路径已复制') },
+        async copyScriptMarkdown() { const text = this.scriptResult && this.scriptResult.script && this.scriptResult.script.script_markdown; if (!text) return; await navigator.clipboard.writeText(text); this.$message.success('脚本正文已复制') },
+        clean(value) { return value && String(value).trim() ? String(value).trim() : null }
+      }
+    })
+  </script>
+</body>
+</html>

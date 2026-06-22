@@ -19,6 +19,7 @@ from retrieval_lab.retrieval.service import (
     compare_run_artifacts,
     retrieval_run,
     retrieval_run_from_cases,
+    retrieval_run_from_items,
     score_item,
 )
 
@@ -35,6 +36,7 @@ __all__ = [
     "retrieval_benchmark_command",
     "retrieval_run",
     "retrieval_run_from_cases",
+    "retrieval_run_from_items",
     "retrieval_run_command",
     "retrieval_run_config_contract",
     "run_row_contract",

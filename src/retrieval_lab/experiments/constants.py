@@ -29,6 +29,8 @@ CORE_EXPERIMENT_COMMANDS = {
     "analyze-recall-bound",
     "build-index",
     "compact-embedding-cache",
+    "tune-constraints",
+    "evaluate-leave-one-fixture-out",
 }
 
 

@@ -67,8 +67,8 @@ def _tags(
             {
                 "source_id": "scene_001",
                 "source_type": "scene",
-                "field": "test",
-                "quote": "test evidence",
+                "field": "test.md",
+                "quote": "test.md evidence",
             }
         ],
         confidence=0.8,

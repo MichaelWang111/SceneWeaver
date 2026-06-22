@@ -261,7 +261,7 @@ def certification_recommendations(summary: dict[str, Any], critical_compat: list
         rows.append(
             {
                 "priority": "P1",
-                "title": "Run parity and full test reports",
+                "title": "Run parity and full test.md reports",
                 "reason": "Core commands are native; final confidence depends on parity artifacts and full pytest output.",
             }
         )

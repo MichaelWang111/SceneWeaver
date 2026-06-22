@@ -112,7 +112,16 @@ _DEFAULT_BASE_URLS = {
 
 _DEFAULT_MODELS = {
     "deepseek": "deepseek-v4-flash",
-    "dashscope": "qwen3.6-flash",
+    "dashscope": "qwen3.6-plus",
+}
+
+_MODEL_ALIASES = {
+    "qwen-3.6plus": "qwen3.6-plus",
+    "qwen-3.6-plus": "qwen3.6-plus",
+    "qwen3.6plus": "qwen3.6-plus",
+    "qwen-3.6flash": "qwen3.6-flash",
+    "qwen-3.6-flash": "qwen3.6-flash",
+    "qwen3.6flash": "qwen3.6-flash",
 }
 
 _STATIC_MODEL_IDS = {
@@ -172,6 +181,11 @@ def normalize_provider(provider: str | None) -> str:
     return normalized
 
 
+def normalize_model_id(model: str | None) -> str:
+    value = str(model or "").strip()
+    return _MODEL_ALIASES.get(value.lower(), value)
+
+
 def infer_provider_from_env(env: Mapping[str, str] | None = None) -> str:
     values = env or os.environ
     explicit = normalize_provider(values.get("SCENEWEAVER_LLM_PROVIDER", "auto"))
@@ -207,7 +221,7 @@ def infer_provider_from_base_url(base_url: str) -> str | None:
 
 
 def infer_provider_from_model(model: str) -> str | None:
-    value = str(model or "").lower()
+    value = normalize_model_id(model).lower()
     if value.startswith("deepseek"):
         return "deepseek"
     if value.startswith(("qwen", "qwq", "qvq", "wan", "text-embedding", "tongyi")):
@@ -262,7 +276,8 @@ def resolve_base_url(provider: str, env: Mapping[str, str] | None = None) -> str
 
 def resolve_model(provider: str, env: Mapping[str, str] | None = None) -> str:
     normalized = normalize_provider(provider)
-    return first_env_value(_PROVIDER_MODEL_ENV_NAMES.get(normalized, ()), env or os.environ) or default_model(normalized)
+    model = first_env_value(_PROVIDER_MODEL_ENV_NAMES.get(normalized, ()), env or os.environ) or default_model(normalized)
+    return normalize_model_id(model)
 
 
 def first_env_value(names: Iterable[str], env: Mapping[str, str]) -> str:
@@ -515,7 +530,7 @@ def model_pricing(provider: str, model: str, *, required: bool = True) -> ModelP
 
 
 def deepseek_pricing(model: str, *, required: bool = True) -> ModelPricing | None:
-    normalized = model.lower()
+    normalized = normalize_model_id(model).lower()
     if normalized in {"deepseek-v4-flash", "deepseek-chat", "deepseek-reasoner"}:
         return ModelPricing(
             input_cny_per_million=Decimal("1"),
@@ -536,7 +551,7 @@ def deepseek_pricing(model: str, *, required: bool = True) -> ModelPricing | Non
 
 
 def dashscope_pricing(model: str, *, required: bool = True) -> ModelPricing | None:
-    normalized = model.lower()
+    normalized = normalize_model_id(model).lower()
     env_pricing = pricing_from_env(normalized)
     if env_pricing is not None:
         return env_pricing
@@ -595,7 +610,7 @@ def model_limits(provider: str, model: str) -> ProviderLimits:
 
 
 def deepseek_limits(model: str) -> ProviderLimits:
-    normalized = model.lower()
+    normalized = normalize_model_id(model).lower()
     if normalized in {"deepseek-v4-flash", "deepseek-chat", "deepseek-reasoner"}:
         return ProviderLimits(concurrency=2500, source="deepseek_zh_rate_limit_doc_2026_06")
     if normalized == "deepseek-v4-pro":
@@ -604,7 +619,7 @@ def deepseek_limits(model: str) -> ProviderLimits:
 
 
 def dashscope_limits(model: str) -> ProviderLimits:
-    normalized = model.lower()
+    normalized = normalize_model_id(model).lower()
     if normalized in _DASHSCOPE_LIMITS:
         return _DASHSCOPE_LIMITS[normalized]
     for prefix, limits in _DASHSCOPE_LIMITS.items():
@@ -766,6 +781,7 @@ __all__ = [
     "list_models",
     "model_limits",
     "model_pricing",
+    "normalize_model_id",
     "normalize_provider",
     "provider_docs",
     "provider_limits_dict",

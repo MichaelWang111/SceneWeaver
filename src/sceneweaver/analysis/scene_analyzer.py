@@ -8,6 +8,7 @@ from typing import Callable, Protocol
 
 from sceneweaver.analysis.tags import add_tags_to_scene_raw, read_scene_analysis_with_tags
 from sceneweaver.llm.client import VisionLLMClient
+from sceneweaver.llm.runtime import LLMRunOptions, effective_concurrency
 from sceneweaver.schemas import SceneAnalysis, ScenePackage, ScenesAnalysis
 from sceneweaver.storage.json_store import read_json, write_json
 
@@ -16,7 +17,17 @@ SCENE_PACKAGE_FILENAME_RE = re.compile(r"^scene_\d{3}\.json$")
 
 
 class SceneLLMClient(Protocol):
-    def analyze_images_json(self, *, system_prompt: str, user_prompt: str, image_paths: list[Path]) -> dict:
+    def analyze_images_json(
+        self,
+        *,
+        system_prompt: str,
+        user_prompt: str,
+        image_paths: list[Path],
+        timeout_seconds: float | None = None,
+        retries: int = 0,
+        enable_thinking: bool | None = None,
+        thinking_budget: int | None = None,
+    ) -> dict:
         ...
 
 
@@ -35,6 +46,9 @@ def analyze_scene_packages(
     limit: int | None = None,
     force: bool = False,
     max_workers: int = 1,
+    timeout_seconds: float | None = None,
+    retries: int = 0,
+    llm_options: LLMRunOptions | None = None,
     log: LogFn | None = None,
 ) -> ScenesAnalysis:
     output_dir = output_dir.resolve()
@@ -45,8 +59,17 @@ def analyze_scene_packages(
     if max_workers < 1:
         raise ValueError("max_workers must be >= 1")
 
+    options = llm_options or LLMRunOptions(
+        concurrency=max_workers,
+        timeout_seconds=timeout_seconds,
+        retries=retries,
+    )
+    options.validate()
+
     system_prompt = load_scene_analysis_prompt(prompt_path)
     llm_client = client or VisionLLMClient()
+    configured_workers = options.concurrency
+    effective_workers = scene_effective_workers(configured_workers, llm_client)
     package_paths = sorted(
         path
         for path in packages_dir.glob("scene_*.json")
@@ -57,7 +80,13 @@ def analyze_scene_packages(
 
     total_count = len(package_paths)
     if log:
-        log(f"Preparing {total_count} scene(s) for analysis with concurrency={max_workers}.")
+        if effective_workers != configured_workers:
+            log(
+                f"Preparing {total_count} scene(s) for analysis with concurrency={effective_workers} "
+                f"(requested={configured_workers}, provider_limit_applied)."
+            )
+        else:
+            log(f"Preparing {total_count} scene(s) for analysis with concurrency={effective_workers}.")
 
     analyses: list[SceneAnalysis | None] = [None] * total_count
     pending_tasks: list[SceneTask] = []
@@ -84,19 +113,20 @@ def analyze_scene_packages(
         log(f"Submitting {len(pending_tasks)} new scene request(s).")
 
     if pending_tasks:
-        if max_workers == 1:
+        if effective_workers == 1:
             for task in pending_tasks:
                 analyses[task.index] = _analyze_single_scene(
                     output_dir=output_dir,
                     task=task,
                     system_prompt=system_prompt,
                     client=llm_client,
+                    options=options,
                 )
                 completed_count += 1
                 if log:
                     log(f"[{completed_count}/{total_count}] Finished {task.package.scene_id}.")
         else:
-            with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            with ThreadPoolExecutor(max_workers=effective_workers) as executor:
                 futures = {
                     executor.submit(
                         _analyze_single_scene,
@@ -104,6 +134,7 @@ def analyze_scene_packages(
                         task=task,
                         system_prompt=system_prompt,
                         client=llm_client,
+                        options=options,
                     ): task
                     for task in pending_tasks
                 }
@@ -136,6 +167,7 @@ def _analyze_single_scene(
     task: SceneTask,
     system_prompt: str,
     client: SceneLLMClient,
+    options: LLMRunOptions,
 ) -> SceneAnalysis:
     frame_paths = _resolve_frame_paths(output_dir, task.package)
     user_prompt = build_scene_user_prompt(task.package)
@@ -143,11 +175,24 @@ def _analyze_single_scene(
         system_prompt=system_prompt,
         user_prompt=user_prompt,
         image_paths=frame_paths,
+        timeout_seconds=options.timeout_seconds,
+        retries=options.retries,
+        enable_thinking=options.enable_thinking,
+        thinking_budget=options.thinking_budget,
     )
     raw = add_tags_to_scene_raw(raw, candidate_log_path=task.output_path.parent / "tag_candidates.jsonl")
     analysis = SceneAnalysis.model_validate(raw)
     write_json(task.output_path, analysis)
     return analysis
+
+
+def scene_effective_workers(requested: int, client: SceneLLMClient) -> int:
+    config = getattr(client, "config", None)
+    if config is None:
+        return requested
+    provider = str(getattr(config, "provider", "auto") or "auto")
+    model = str(getattr(config, "model", "") or "")
+    return effective_concurrency(requested, provider=provider, model=model)
 
 
 def load_scene_analysis_prompt(prompt_path: Path | None = None) -> str:

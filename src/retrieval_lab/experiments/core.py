@@ -39,6 +39,7 @@ from retrieval_lab.retrieval.service import (
     retrieve_case,
     retrieval_run_from_cases,
 )
+from retrieval_lab.experiments.tuning import leave_one_fixture_out_report, tune_constraints_report
 
 
 DEFAULT_CORE_REPORT_PATH = Path(".tmp") / "retrieval_lab" / "core_experiment_latest.json"
@@ -200,6 +201,10 @@ def native_core_experiment_command(args: Any, command: str) -> dict[str, Any]:
         report = native_build_index_report(args)
     elif command == "compact-embedding-cache":
         report = native_compact_cache_report(args)
+    elif command == "tune-constraints":
+        report = tune_constraints_report(args)
+    elif command == "evaluate-leave-one-fixture-out":
+        report = leave_one_fixture_out_report(args)
     else:
         raise ValueError(f"unsupported native core command: {command}")
     report.setdefault("elapsed_seconds", round(time.perf_counter() - started, 6))
@@ -1109,7 +1114,7 @@ def native_recall_bound_report(args: Any) -> dict[str, Any]:
 def native_build_index_report(args: Any) -> dict[str, Any]:
     manifest = build_index_manifest(
         dataset_path=Path(getattr(args, "dataset", DEFAULT_DATASET_PATH)),
-        split=str(getattr(args, "split", "test")),
+        split=str(getattr(args, "split", "test.md")),
         limit=int(getattr(args, "limit", 0)),
         index_id=str(getattr(args, "index_id", "") or ""),
     )
@@ -1144,7 +1149,7 @@ def run_retrieval_cases(
     return retrieval_run_from_cases(
         cases,
         dataset=str(getattr(args, "dataset", DEFAULT_DATASET_PATH)),
-        split=str(getattr(args, "split", "test")),
+        split=str(getattr(args, "split", "test.md")),
         limit=int(getattr(args, "limit", 0)),
         planner=planner or planner_name(args),
         planner_cache=planner_cache(args),
@@ -1188,7 +1193,7 @@ def workflow_runs_from_retrieval(retrieval: dict[str, Any], *, ranking_keys: lis
 def load_command_cases(args: Any) -> list[dict[str, Any]]:
     return read_cases(
         Path(getattr(args, "dataset", DEFAULT_DATASET_PATH)),
-        split=str(getattr(args, "split", "test")),
+        split=str(getattr(args, "split", "test.md")),
         limit=int(getattr(args, "limit", 0)),
     )
 

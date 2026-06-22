@@ -47,12 +47,13 @@ No external service is required by default. Real LLM use remains opt-in.
   - Native planner registry, planner cache, rule/multi-query/HyDE/fake-LLM planners, and a legacy adapter for parity checks.
   - Native in-memory retrieval runtime with BM25-style lexical scoring, local hash-vector semantic fallback, RRF fusion, constraint scoring, style safety, and scene-signature signals.
   - Native core experiment commands for search/evaluate/hybrid workflow comparison, fuzzy/paraphrase validation, graded and pooled evaluation, rerank upper-bound analysis, style-risk validation, and hard-negative mining.
+  - Native constraint-profile tuning and leave-one-fixture-out holdout evaluation over Retrieval Lab run rows.
   - Native migration certification for core experiment replacement.
   - Artifact IO, SHA256 fingerprints, and experiment artifact manifests.
   - Capability cycle registry, Markdown reports, and SVG charts.
 - Compatibility backend:
   - `mocktesting` remains available as a baseline and parity backend.
-  - Low-priority historical commands can remain compatibility-backed when they are outside the core experiment chain.
+  - Historical command names remain accepted, but the legacy retrieval experiment command surface is expected to resolve to native Retrieval Lab implementations before falling back to compatibility-only baselines.
   - Core daily retrieval experiments are expected to use native Retrieval Lab commands first.
 
 This lets each migration round compare the new lab against `mocktesting` without
@@ -82,6 +83,8 @@ python -m retrieval_lab evaluate-hybrid --split test --limit 60 --output .tmp\re
 python -m retrieval_lab validate-fuzzy-understanding --split test --limit 60 --query-planner multi_query --output .tmp\retrieval_lab\fuzzy_next.json
 python -m retrieval_lab validate-paraphrase-stress --split test --limit 60 --query-planner multi_query --output .tmp\retrieval_lab\paraphrase_next.json
 python -m retrieval_lab compare-rerank-upper-bound --split test --limit 60 --output .tmp\retrieval_lab\rerank_upper_bound_next.json
+python -m retrieval_lab tune-constraints --split dev --limit 60 --profile-output .tmp\retrieval_lab\constraint_profile.json --output .tmp\retrieval_lab\constraint_tuning.json
+python -m retrieval_lab evaluate-leave-one-fixture-out --limit 0 --output .tmp\retrieval_lab\leave_one_fixture.json
 python -m retrieval_lab mine-hard-negatives --split test --limit 60 --output .tmp\retrieval_lab\hard_negatives_next.json
 python -m retrieval_lab schema catalog --include-json-schema --output .tmp\retrieval_lab\schema_catalog.json
 python -m retrieval_lab schema show query_plan
@@ -102,6 +105,27 @@ Legacy commands still work through the compatibility bridge:
 python -m retrieval_lab retrieval-flywheel-guide
 python -m retrieval_lab evaluate-fuzzy-multirelevance --split test --limit 60
 ```
+
+## SceneWeaver Card Corpus
+
+Retrieval Lab can run directly on SceneWeaver `analysis/experience_cards.jsonl` outputs. In this mode the Retrieval Lab index remains the experiment harness, while each retrieved item keeps the full SceneWeaver payload for human review and downstream reuse.
+
+```powershell
+python -m retrieval_lab index manifest --cards .tmp\sceneweaver_run --channel-policy summary_tags --output .tmp\retrieval_lab\cards_manifest.json
+python -m retrieval_lab retrieval run --cards .tmp\sceneweaver_run --query "technology capability interface" --channel-policy all --top-k 5 --output .tmp\retrieval_lab\cards_run.json
+python -m retrieval_lab retrieval run --cards .tmp\sceneweaver_run --query-file .tmp\retrieval_lab\queries.jsonl --channel-policy script_experience --ranking-key hybrid_rrf_constraints_signature
+```
+
+Channel policies let experiments compare which SceneWeaver signals should feed the primary index text:
+
+- `summary`: one-line reuse summary from `script_usecase.best_usage` and `reuse_condition`.
+- `script_use`: script stage, creative purpose, best usage, risk, and reuse condition.
+- `experience`: director strategy, narrative logic, emotion, shooting technique, and copywriting tone.
+- `visual_tags`: keywords, visual symbols, and tag text.
+- `tags`: structured TagProfile labels only.
+- `combined`, `summary_tags`, `script_experience`, `all`: preset mixtures for ablation runs.
+
+Search results include `channels`, `channel_scores`, `payload`, and `payload_ref`, so users can inspect why a card matched without losing the richer director language that should be returned as the data layer.
 
 ## Migration Rule
 

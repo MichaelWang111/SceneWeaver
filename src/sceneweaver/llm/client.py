@@ -233,17 +233,37 @@ class VisionLLMClient:
                     f"model={self.config.model!r}. {ping_note} Error: {exc}"
                 ) from exc
 
-    def analyze_images_json(self, *, system_prompt: str, user_prompt: str, image_paths: list[Path]) -> dict[str, Any]:
+    def analyze_images_json(
+        self,
+        *,
+        system_prompt: str,
+        user_prompt: str,
+        image_paths: list[Path],
+        timeout_seconds: float | None = None,
+        retries: int = 0,
+        enable_thinking: bool | None = None,
+        thinking_budget: int | None = None,
+    ) -> dict[str, Any]:
         try:
+            from openai import APIConnectionError
             from openai import APIStatusError
+            from openai import APITimeoutError
             from openai import OpenAI
         except ImportError as exc:
             raise RuntimeError("openai package is required for API mode") from exc
 
         if not self.config.api_key:
             raise RuntimeError(_missing_api_key_message(self.config))
+        if retries < 0:
+            raise ValueError("retries must be >= 0")
 
-        client = OpenAI(api_key=self.config.api_key, base_url=self.config.base_url)
+        request_timeout = timeout_seconds or self.config.request_timeout_seconds
+        client = OpenAI(
+            api_key=self.config.api_key,
+            base_url=self.config.base_url,
+            timeout=request_timeout,
+            max_retries=0,
+        )
         content: list[dict[str, Any]] = [{"type": "text", "text": user_prompt}]
         for image_path in image_paths:
             content.append(
@@ -253,21 +273,47 @@ class VisionLLMClient:
                 }
             )
 
-        try:
-            response = client.chat.completions.create(
-                model=self.config.model,
-                messages=[
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": content},
-                ],
-                response_format={"type": "json_object"},
-                temperature=self.config.temperature,
-                max_tokens=self.config.max_tokens,
-            )
-        except APIStatusError as exc:
-            raise RuntimeError(_format_api_status_error(exc, self.config)) from exc
-        text = response.choices[0].message.content or ""
-        return extract_json_object(text)
+        request_enable_thinking = self.config.enable_thinking if enable_thinking is None else enable_thinking
+        request_thinking_budget = self.config.thinking_budget if thinking_budget is None else thinking_budget
+        extra_body: dict[str, Any] = {}
+        if request_enable_thinking is not None:
+            extra_body["enable_thinking"] = request_enable_thinking
+        if request_thinking_budget is not None:
+            extra_body["thinking_budget"] = request_thinking_budget
+
+        attempts = retries + 1
+        for attempt_index in range(attempts):
+            try:
+                request_kwargs: dict[str, Any] = {
+                    "model": self.config.model,
+                    "messages": [
+                        {"role": "system", "content": system_prompt},
+                        {"role": "user", "content": content},
+                    ],
+                    "response_format": {"type": "json_object"},
+                    "temperature": self.config.temperature,
+                    "max_tokens": self.config.max_tokens,
+                }
+                if extra_body:
+                    request_kwargs["extra_body"] = extra_body
+                response = client.chat.completions.create(**request_kwargs)
+                text = response.choices[0].message.content or ""
+                return extract_json_object(text)
+            except APIStatusError as exc:
+                if _should_retry_status(exc) and attempt_index < retries:
+                    time.sleep(_retry_delay_seconds(attempt_index))
+                    continue
+                raise RuntimeError(_format_api_status_error(exc, self.config)) from exc
+            except (APIConnectionError, APITimeoutError, ValueError) as exc:
+                if attempt_index < retries:
+                    time.sleep(_retry_delay_seconds(attempt_index))
+                    continue
+                raise RuntimeError(
+                    "LLM image JSON request failed. "
+                    f"attempts={attempts}, base_url={self.config.base_url!r}, "
+                    f"model={self.config.model!r}. Error: {exc}"
+                ) from exc
+        raise RuntimeError("LLM image JSON request failed without returning a response")
 
 
 class PartialStreamError(RuntimeError):

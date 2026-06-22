@@ -54,7 +54,7 @@ def _valid_association_data(input_text: str = "青年逆光奔跑") -> dict:
                     "source_type": "query",
                     "field": "input_text",
                     "quote": input_text,
-                    "note": "test query tags",
+                    "note": "test.md query tags",
                 }
             ],
             "confidence": 0.75,

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from types import SimpleNamespace
 import shutil
 from pathlib import Path
 
@@ -13,8 +14,28 @@ class FakeVisionClient:
     def __init__(self) -> None:
         self.calls = []
 
-    def analyze_images_json(self, *, system_prompt: str, user_prompt: str, image_paths: list[Path]) -> dict:
-        self.calls.append((system_prompt, user_prompt, image_paths))
+    def analyze_images_json(
+        self,
+        *,
+        system_prompt: str,
+        user_prompt: str,
+        image_paths: list[Path],
+        timeout_seconds: float | None = None,
+        retries: int = 0,
+        enable_thinking=None,
+        thinking_budget=None,
+    ) -> dict:
+        self.calls.append(
+            {
+                "system_prompt": system_prompt,
+                "user_prompt": user_prompt,
+                "image_paths": image_paths,
+                "timeout_seconds": timeout_seconds,
+                "retries": retries,
+                "enable_thinking": enable_thinking,
+                "thinking_budget": thinking_budget,
+            }
+        )
         return {
             "scene_id": "scene_001",
             "time_range": {
@@ -68,7 +89,7 @@ def test_analyze_scene_packages_writes_valid_outputs(tmp_path):
 
     assert scenes.scene_count == 1
     assert len(client.calls) == 1
-    assert len(client.calls[0][2]) == 3
+    assert len(client.calls[0]["image_paths"]) == 3
     assert read_json(output_dir / "analysis" / "scene_001.json", SceneAnalysis)
     assert read_json(output_dir / "analysis" / "scenes.json", ScenesAnalysis)
 
@@ -111,13 +132,9 @@ def test_analyze_scene_packages_supports_parallel_execution(tmp_path):
         frame_path.write_bytes(b"fake image")
 
     class ParallelFakeVisionClient(FakeVisionClient):
-        def analyze_images_json(self, *, system_prompt: str, user_prompt: str, image_paths: list[Path]) -> dict:
-            result = super().analyze_images_json(
-                system_prompt=system_prompt,
-                user_prompt=user_prompt,
-                image_paths=image_paths,
-            )
-            scene_id = "scene_002" if "scene_002" in user_prompt else "scene_001"
+        def analyze_images_json(self, **kwargs) -> dict:
+            result = super().analyze_images_json(**kwargs)
+            scene_id = "scene_002" if "scene_002" in kwargs["user_prompt"] else "scene_001"
             result["scene_id"] = scene_id
             if scene_id == "scene_002":
                 result["time_range"] = {
@@ -133,3 +150,47 @@ def test_analyze_scene_packages_supports_parallel_execution(tmp_path):
     assert scenes.scene_count == 2
     assert [scene.scene_id for scene in scenes.scenes] == ["scene_001", "scene_002"]
     assert len(client.calls) == 2
+
+
+def test_analyze_scene_packages_passes_llm_runtime_options(tmp_path):
+    package, *_ = build_mock_artifacts()
+    output_dir = tmp_path / "video"
+    write_json(output_dir / "packages" / "scene_001.json", package)
+    for frame in [package.frames.start, package.frames.middle, package.frames.end]:
+        frame_path = output_dir / frame
+        frame_path.parent.mkdir(parents=True, exist_ok=True)
+        frame_path.write_bytes(b"fake image")
+
+    client = FakeVisionClient()
+    analyze_scene_packages(output_dir, client=client, timeout_seconds=12, retries=2)
+
+    assert client.calls[0]["timeout_seconds"] == 12
+    assert client.calls[0]["retries"] == 2
+
+
+def test_analyze_scene_packages_applies_provider_concurrency_limit(monkeypatch, tmp_path):
+    monkeypatch.setenv("SCENEWEAVER_QWEN3_6_FLASH_CONCURRENCY_LIMIT", "1")
+    package, *_ = build_mock_artifacts()
+    output_dir = tmp_path / "video"
+    package_1 = package.model_copy(deep=True)
+    package_2 = package.model_copy(deep=True)
+    package_2.scene_id = "scene_002"
+    package_2.frames.start = "frames/scene_002_start.jpg"
+    package_2.frames.middle = "frames/scene_002_middle.jpg"
+    package_2.frames.end = "frames/scene_002_end.jpg"
+    write_json(output_dir / "packages" / "scene_001.json", package_1)
+    write_json(output_dir / "packages" / "scene_002.json", package_2)
+    for item in [package_1, package_2]:
+        for frame in [item.frames.start, item.frames.middle, item.frames.end]:
+            frame_path = output_dir / frame
+            frame_path.parent.mkdir(parents=True, exist_ok=True)
+            frame_path.write_bytes(b"fake image")
+
+    client = FakeVisionClient()
+    client.config = SimpleNamespace(provider="dashscope", model="qwen3.6-flash")
+    logs: list[str] = []
+
+    scenes = analyze_scene_packages(output_dir, client=client, max_workers=4, log=logs.append)
+
+    assert scenes.scene_count == 2
+    assert any("concurrency=1" in line and "provider_limit_applied" in line for line in logs)

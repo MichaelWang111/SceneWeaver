@@ -665,7 +665,7 @@ def capability_recommendations(raw_metrics: dict[str, Any]) -> list[dict[str, An
                 "priority": 1,
                 "title": "Improve qrels trust",
                 "reason": "qrels_trust_level is low, so capability deltas are still bootstrap-guided.",
-                "command": "python -m retrieval_lab qrels sample-active --split test --limit 60 --sample-size 80 --qrels .tmp\\pooled_qrels_next.jsonl --output .tmp\\active_qrels_next.jsonl",
+                "command": "python -m retrieval_lab qrels sample-active --split test.md --limit 60 --sample-size 80 --qrels .tmp\\pooled_qrels_next.jsonl --output .tmp\\active_qrels_next.jsonl",
             }
         )
     if (optional_float(raw_metrics.get("rerank_opportunity_ndcg_at_10")) or 0.0) >= 0.15:
@@ -674,7 +674,7 @@ def capability_recommendations(raw_metrics: dict[str, Any]) -> list[dict[str, An
                 "priority": 2,
                 "title": "Run real reranker sample",
                 "reason": "oracle rerank has a large nDCG@10 opportunity.",
-                "command": "python -m retrieval_lab eval rerank-upper-bound --split test --limit 60 --qrels .tmp\\pooled_qrels_next.jsonl --llm-rerank-sample-size 10",
+                "command": "python -m retrieval_lab eval rerank-upper-bound --split test.md --limit 60 --qrels .tmp\\pooled_qrels_next.jsonl --llm-rerank-sample-size 10",
             }
         )
     if (optional_float(raw_metrics.get("style_violation_at_3")) or 0.0) > 0.05:
@@ -683,7 +683,7 @@ def capability_recommendations(raw_metrics: dict[str, Any]) -> list[dict[str, An
                 "priority": 3,
                 "title": "Tighten style negative handling",
                 "reason": "style_violation_at_3 is above the first-stage target.",
-                "command": "python -m retrieval_lab eval style-risk --split test --limit 60",
+                "command": "python -m retrieval_lab eval style-risk --split test.md --limit 60",
             }
         )
     return sorted(recommendations, key=lambda row: int(row["priority"])) or [

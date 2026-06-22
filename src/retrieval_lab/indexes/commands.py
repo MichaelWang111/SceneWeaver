@@ -14,9 +14,11 @@ from retrieval_lab.indexes.service import (
 def index_manifest_command(args: Any) -> dict[str, Any]:
     manifest = build_index_manifest(
         dataset_path=Path(getattr(args, "dataset")),
-        split=str(getattr(args, "split", "test")),
+        split=str(getattr(args, "split", "test.md")),
         limit=int(getattr(args, "limit", 0)),
         index_id=str(getattr(args, "index_id", "") or ""),
+        card_sources=[Path(path) for path in getattr(args, "cards", []) or []] or None,
+        channel_policy=str(getattr(args, "channel_policy", "combined") or "combined"),
     )
     output = Path(getattr(args, "output", DEFAULT_INDEX_MANIFEST_PATH))
     write_index_manifest(output, manifest)

@@ -26,6 +26,7 @@ from sceneweaver.analysis.tags import (
 )
 from sceneweaver.input.bilibili import extract_bvid
 from sceneweaver.llm.client import LLMConfig
+from sceneweaver.llm.runtime import LLMRunOptions
 from sceneweaver.pipeline.mock_pipeline import run_mock_pipeline
 from sceneweaver.pipeline.package_video import run_package_video
 from sceneweaver.analysis.scene_analyzer import analyze_scene_packages
@@ -92,6 +93,43 @@ def package_video(
         "--force",
         help="Regenerate video and frame artifacts even if files exist.",
     ),
+    frame_workers: Optional[int] = typer.Option(
+        None,
+        "--frame-workers",
+        min=1,
+        help="Number of parallel ffmpeg frame extraction workers. Defaults to a capped CPU-based value.",
+    ),
+    burn_subtitles: bool = typer.Option(
+        False,
+        "--burn-subtitles",
+        help="Also burn subtitle text into sampled frame images. Subtitles are still included as text by default.",
+    ),
+    browser_profile_subtitles: bool = typer.Option(
+        False,
+        "--browser-profile-subtitles",
+        help="Reuse a local Chrome session to fetch logged-in Bilibili subtitles. Prefers Chrome CDP, then falls back to a Playwright-launched profile.",
+    ),
+    browser_cdp_url: Optional[str] = typer.Option(
+        None,
+        "--browser-cdp-url",
+        help="Chrome remote debugging URL for Bilibili browser reuse, such as http://127.0.0.1:9222.",
+    ),
+    browser_user_data_dir: Optional[Path] = typer.Option(
+        None,
+        "--browser-user-data-dir",
+        help="Chrome User Data directory used with --browser-profile-subtitles.",
+    ),
+    browser_profile_directory: Optional[str] = typer.Option(
+        None,
+        "--browser-profile-directory",
+        help="Chrome profile directory name used with --browser-profile-subtitles, such as Default or Profile 1.",
+    ),
+    browser_profile_timeout_seconds: float = typer.Option(
+        30.0,
+        "--browser-profile-timeout-seconds",
+        min=1.0,
+        help="Seconds to wait for reused Chrome profile login state and subtitle API responses.",
+    ),
 ) -> None:
     """Download and package a real Bilibili video into validated scene packages."""
     output_dir = run_package_video(
@@ -101,6 +139,13 @@ def package_video(
         subtitle_path=subtitle_path,
         split_video=split_video,
         force=force,
+        frame_workers=frame_workers,
+        burn_subtitles=burn_subtitles,
+        browser_profile_subtitles=browser_profile_subtitles,
+        browser_cdp_url=browser_cdp_url,
+        browser_profile_timeout_seconds=browser_profile_timeout_seconds,
+        browser_user_data_dir=browser_user_data_dir,
+        browser_profile_directory=browser_profile_directory,
         log=typer.echo,
     )
     typer.echo(f"Scene packages written to: {output_dir / 'packages'}")
@@ -132,6 +177,18 @@ def analyze_scenes(
         min=1,
         help="Number of scene analysis requests to run in parallel.",
     ),
+    timeout_seconds: float = typer.Option(
+        DEFAULT_TIMEOUT_SECONDS,
+        "--timeout-seconds",
+        min=1.0,
+        help="LLM request timeout in seconds for each scene analysis request.",
+    ),
+    retries: int = typer.Option(
+        DEFAULT_RETRIES,
+        "--retries",
+        min=0,
+        help="Retry count for timeout, connection, rate-limit, and 5xx failures.",
+    ),
 ) -> None:
     """Send scene packages and frames to a vision LLM and write validated scene analyses."""
     scenes = analyze_scene_packages(
@@ -140,6 +197,8 @@ def analyze_scenes(
         force=update,
         prompt_path=prompt_path,
         max_workers=concurrency,
+        timeout_seconds=timeout_seconds,
+        retries=retries,
         log=typer.echo,
     )
     typer.echo(f"Scene analysis written to: {output.resolve() / 'analysis'}")
@@ -530,6 +589,18 @@ def run_pipeline(
         min=1,
         help="Number of scene analysis requests to run in parallel.",
     ),
+    timeout_seconds: float = typer.Option(
+        DEFAULT_TIMEOUT_SECONDS,
+        "--timeout-seconds",
+        min=1.0,
+        help="LLM request timeout in seconds for each scene analysis request.",
+    ),
+    retries: int = typer.Option(
+        DEFAULT_RETRIES,
+        "--retries",
+        min=0,
+        help="Retry count for timeout, connection, rate-limit, and 5xx failures.",
+    ),
     scene_threshold: float = typer.Option(
         27.0,
         "--scene-threshold",
@@ -544,6 +615,43 @@ def run_pipeline(
         False,
         "--split-video",
         help="Also split scene clips with PySceneDetect. Slower and not required for packages.",
+    ),
+    frame_workers: Optional[int] = typer.Option(
+        None,
+        "--frame-workers",
+        min=1,
+        help="Number of parallel ffmpeg frame extraction workers. Defaults to a capped CPU-based value.",
+    ),
+    burn_subtitles: bool = typer.Option(
+        False,
+        "--burn-subtitles",
+        help="Also burn subtitle text into sampled frame images. Subtitles are still included as text by default.",
+    ),
+    browser_profile_subtitles: bool = typer.Option(
+        False,
+        "--browser-profile-subtitles",
+        help="Reuse a local Chrome session to fetch logged-in Bilibili subtitles. Prefers Chrome CDP, then falls back to a Playwright-launched profile.",
+    ),
+    browser_cdp_url: Optional[str] = typer.Option(
+        None,
+        "--browser-cdp-url",
+        help="Chrome remote debugging URL for Bilibili browser reuse, such as http://127.0.0.1:9222.",
+    ),
+    browser_user_data_dir: Optional[Path] = typer.Option(
+        None,
+        "--browser-user-data-dir",
+        help="Chrome User Data directory used with --browser-profile-subtitles.",
+    ),
+    browser_profile_directory: Optional[str] = typer.Option(
+        None,
+        "--browser-profile-directory",
+        help="Chrome profile directory name used with --browser-profile-subtitles, such as Default or Profile 1.",
+    ),
+    browser_profile_timeout_seconds: float = typer.Option(
+        30.0,
+        "--browser-profile-timeout-seconds",
+        min=1.0,
+        help="Seconds to wait for reused Chrome profile login state and subtitle API responses.",
     ),
     prompt_path: Optional[Path] = typer.Option(
         None,
@@ -565,6 +673,13 @@ def run_pipeline(
         subtitle_path=subtitle_path,
         split_video=split_video,
         force=update,
+        frame_workers=frame_workers,
+        burn_subtitles=burn_subtitles,
+        browser_profile_subtitles=browser_profile_subtitles,
+        browser_cdp_url=browser_cdp_url,
+        browser_profile_timeout_seconds=browser_profile_timeout_seconds,
+        browser_user_data_dir=browser_user_data_dir,
+        browser_profile_directory=browser_profile_directory,
         log=typer.echo,
     )
 
@@ -575,6 +690,11 @@ def run_pipeline(
         force=update,
         prompt_path=prompt_path,
         max_workers=concurrency,
+        llm_options=LLMRunOptions(
+            concurrency=concurrency,
+            timeout_seconds=timeout_seconds,
+            retries=retries,
+        ),
         log=typer.echo,
     )
     typer.echo("Phase 3/3: Extracting experience cards...")

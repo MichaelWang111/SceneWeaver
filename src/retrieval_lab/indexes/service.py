@@ -34,28 +34,47 @@ STYLE_TRAIT_ALIASES = {
 def build_index_manifest(
     *,
     dataset_path: Path = DEFAULT_DATASET_PATH,
-    split: str = "test",
+    split: str = "test.md",
     limit: int = 0,
     index_id: str = "",
+    card_sources: list[Path] | None = None,
+    channel_policy: str = "combined",
 ) -> dict[str, Any]:
     dataset_path = Path(dataset_path)
-    cases = read_cases(dataset_path, split=split, limit=limit)
-    items = index_items_from_cases(cases)
+    if card_sources:
+        from retrieval_lab.corpora import sceneweaver_items_from_sources
+
+        sources = [Path(source) for source in card_sources]
+        items = sceneweaver_items_from_sources(sources, channel_policy=channel_policy)
+        source_dataset_id = "sceneweaver_experience_cards"
+        index_fingerprint = data_sha256({"card_sources": [str(source) for source in sources], "channel_policy": channel_policy, "items": items})
+        dataset_value = ""
+        source_cards = [str(source) for source in sources]
+    else:
+        cases = read_cases(dataset_path, split=split, limit=limit)
+        items = index_items_from_cases(cases)
+        source_dataset_id = dataset_path.stem
+        index_fingerprint = data_sha256({"dataset": str(dataset_path), "source_sha256": file_sha256(dataset_path), "items": items})
+        dataset_value = str(dataset_path)
+        source_cards = []
     manifest = {
-        "index_id": index_id or f"dataset::{dataset_path.stem}::{split}::{limit or 'all'}",
-        "source_dataset_id": dataset_path.stem,
+        "index_id": index_id or (f"sceneweaver::{channel_policy}::{len(items)}" if card_sources else f"dataset::{dataset_path.stem}::{split}::{limit or 'all'}"),
+        "source_dataset_id": source_dataset_id,
         "item_count": len(items),
         "channels": INDEX_CHANNELS,
         "embedding_model": "",
         "lexical_tokenizer": "retrieval_lab_cjk_bigram_ascii_v1",
-        "fingerprint": data_sha256({"dataset": str(dataset_path), "source_sha256": file_sha256(dataset_path), "items": items}),
+        "fingerprint": index_fingerprint,
         "cache_paths": [],
         "created_at": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
-        "dataset_path": str(dataset_path),
+        "dataset_path": dataset_value,
+        "card_sources": source_cards,
+        "channel_policy": channel_policy if card_sources else "",
         "split": split,
         "limit": limit,
         "stage_counts": dict(sorted(Counter(str(item["metadata"].get("script_stage", "")) for item in items).items())),
         "fixture_counts": dict(sorted(Counter(str(item["metadata"].get("fixture_id", "")) for item in items).items())),
+        "video_counts": dict(sorted(Counter(str(item["metadata"].get("video_id", "")) for item in items).items())),
     }
     return IndexManifestModel.model_validate(manifest).model_dump(mode="json", exclude_none=True)
 

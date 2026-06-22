@@ -67,12 +67,16 @@ class _MockChat:
 
 
 class _MockOpenAI:
-    def __init__(self, **_kwargs) -> None:
+    init_kwargs = []
+
+    def __init__(self, **kwargs) -> None:
+        type(self).init_kwargs.append(kwargs)
         self.chat = _MockChat()
 
 
 def _install_mock_openai(monkeypatch) -> None:
     _MockCompletions.calls = 0
+    _MockOpenAI.init_kwargs = []
     module = types.SimpleNamespace(
         OpenAI=_MockOpenAI,
         APIConnectionError=RuntimeError,
@@ -178,6 +182,28 @@ def test_llm_client_ping_on_parse_failure_is_explicit(monkeypatch):
     assert "Ping ok" in str(exc_info.value)
 
 
+def test_llm_client_image_json_uses_timeout_and_retries(monkeypatch, tmp_path):
+    from sceneweaver.llm.client import VisionLLMClient
+
+    _install_mock_openai(monkeypatch)
+    image_path = tmp_path / "frame.jpg"
+    image_path.write_bytes(b"fake image")
+    config = LLMConfig(api_key="key", base_url="https://example.test", model="mock-model")
+
+    result = VisionLLMClient(config).analyze_images_json(
+        system_prompt="return json",
+        user_prompt="look",
+        image_paths=[image_path],
+        timeout_seconds=12,
+        retries=1,
+    )
+
+    assert result == {"reply": "pong"}
+    assert _MockCompletions.calls == 2
+    assert _MockOpenAI.init_kwargs[0]["timeout"] == 12
+    assert _MockOpenAI.init_kwargs[0]["max_retries"] == 0
+
+
 def test_llm_config_reads_dashscope_aliases(monkeypatch):
     monkeypatch.delenv("SCENEWEAVER_LLM_PROVIDER", raising=False)
     monkeypatch.delenv("SCENEWEAVER_API_KEY", raising=False)
@@ -204,6 +230,38 @@ def test_llm_config_reads_dashscope_aliases(monkeypatch):
     assert config.stream_idle_timeout_seconds == 7.0
 
 
+def test_llm_config_defaults_dashscope_to_qwen_plus(monkeypatch):
+    monkeypatch.delenv("SCENEWEAVER_LLM_PROVIDER", raising=False)
+    monkeypatch.delenv("SCENEWEAVER_API_KEY", raising=False)
+    monkeypatch.delenv("SCENEWEAVER_BASE_URL", raising=False)
+    monkeypatch.delenv("SCENEWEAVER_MODEL", raising=False)
+    monkeypatch.delenv("DASHSCOPE_BASE_URL", raising=False)
+    monkeypatch.delenv("DASHSCOPE_MODEL", raising=False)
+    monkeypatch.delenv("VIDEO_ANALYZER_API_KEY", raising=False)
+    monkeypatch.delenv("VIDEO_ANALYZER_MODEL", raising=False)
+    monkeypatch.delenv("DEEPSEEK_API_KEY", raising=False)
+    monkeypatch.delenv("DEEPSEEK_MODEL", raising=False)
+    monkeypatch.setenv("DASHSCOPE_API_KEY", "dash-key")
+
+    config = LLMConfig.from_env()
+
+    assert config.provider == "dashscope"
+    assert config.model == "qwen3.6-plus"
+
+
+def test_llm_config_normalizes_qwen_plus_alias(monkeypatch):
+    monkeypatch.setenv("SCENEWEAVER_LLM_PROVIDER", "dashscope")
+    monkeypatch.delenv("SCENEWEAVER_API_KEY", raising=False)
+    monkeypatch.delenv("SCENEWEAVER_BASE_URL", raising=False)
+    monkeypatch.delenv("SCENEWEAVER_MODEL", raising=False)
+    monkeypatch.setenv("DASHSCOPE_API_KEY", "dash-key")
+    monkeypatch.setenv("DASHSCOPE_MODEL", "qwen-3.6plus")
+
+    config = LLMConfig.from_env()
+
+    assert config.model == "qwen3.6-plus"
+
+
 def test_llm_config_reads_deepseek_provider_aliases(monkeypatch):
     monkeypatch.delenv("DASHSCOPE_API_KEY", raising=False)
     monkeypatch.delenv("VIDEO_ANALYZER_API_KEY", raising=False)
@@ -226,19 +284,21 @@ def test_provider_inference_and_status_do_not_expose_key_values(monkeypatch):
     assert infer_provider_from_base_url("https://dashscope.aliyuncs.com/compatible-mode/v1") == "dashscope"
     assert infer_provider_from_model("deepseek-v4-pro") == "deepseek"
     assert infer_provider_from_model("qwen3.6-flash") == "dashscope"
+    assert infer_provider_from_model("qwen-3.6plus") == "dashscope"
 
     monkeypatch.setenv("SCENEWEAVER_LLM_PROVIDER", "dashscope")
     monkeypatch.delenv("SCENEWEAVER_API_KEY", raising=False)
     monkeypatch.delenv("SCENEWEAVER_BASE_URL", raising=False)
     monkeypatch.delenv("SCENEWEAVER_MODEL", raising=False)
     monkeypatch.setenv("DASHSCOPE_API_KEY", "secret-key-value")
-    monkeypatch.setenv("DASHSCOPE_MODEL", "qwen3.6-flash")
+    monkeypatch.setenv("DASHSCOPE_MODEL", "qwen-3.6plus")
     status = provider_status(provider="auto", env=dict(os.environ), check_balance=False, live_models=False)
     data = provider_status_dict(status, include_models=False)
 
     assert data["provider"] == "dashscope"
     assert data["api_key"]["configured"] is True
     assert data["api_key"]["active_env_name"] == "DASHSCOPE_API_KEY"
+    assert data["configured_model"] == "qwen3.6-plus"
     assert "secret-key-value" not in repr(data)
     assert data["model_count"] >= 1
     assert data["limits"]["rpm"] == 30000

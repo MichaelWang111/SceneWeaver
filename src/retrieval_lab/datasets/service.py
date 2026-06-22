@@ -8,7 +8,7 @@ from typing import Any
 from retrieval_lab.artifacts import file_sha256, read_json
 
 
-VALID_SPLITS = {"dev", "test", "hidden", "all"}
+VALID_SPLITS = {"dev", "test.md", "hidden", "all"}
 DEFAULT_DATASET_PATH = Path(__file__).resolve().parents[2] / "mocktesting" / "eval_inputs" / "review_generated_inputs.json"
 
 
@@ -42,7 +42,7 @@ def case_split(case_id: str) -> str:
     if bucket <= 3:
         return "dev"
     if bucket <= 7:
-        return "test"
+        return "test.md"
     return "hidden"
 
 

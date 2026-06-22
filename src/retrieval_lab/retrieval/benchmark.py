@@ -30,7 +30,7 @@ def retrieval_benchmark_command(args: Any) -> dict[str, Any]:
     load_started = time.perf_counter()
     base_cases = read_cases(
         Path(getattr(args, "dataset", DEFAULT_DATASET_PATH)),
-        split=str(getattr(args, "split", "test")),
+        split=str(getattr(args, "split", "test.md")),
         limit=int(getattr(args, "limit", 0)),
     )
     load_seconds = time.perf_counter() - load_started
@@ -51,7 +51,7 @@ def retrieval_benchmark_command(args: Any) -> dict[str, Any]:
         cache_path=Path(getattr(args, "planner_cache", DEFAULT_PLANNER_CACHE_PATH))
         if not bool(getattr(args, "no_cache", False))
         else None,
-        config={"command": "benchmark-retrieval", "repeat_to": len(cases), "split": getattr(args, "split", "test")},
+        config={"command": "benchmark-retrieval", "repeat_to": len(cases), "split": getattr(args, "split", "test.md")},
     )
     planner_seconds = time.perf_counter() - planner_started
 

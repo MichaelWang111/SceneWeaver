@@ -632,8 +632,8 @@ def test_qrels_oracle_rerank_promotes_judged_relevant_candidate():
         ],
     }
     qrels = [
-        {"query_id": "q1", "item_id": "bad", "grade": 0, "reason": "bad", "source": "test"},
-        {"query_id": "q1", "item_id": "target", "grade": 3, "reason": "target", "source": "test"},
+        {"query_id": "q1", "item_id": "bad", "grade": 0, "reason": "bad", "source": "test.md"},
+        {"query_id": "q1", "item_id": "target", "grade": 3, "reason": "target", "source": "test.md"},
     ]
 
     reranked = rerank_row_by_qrels(row, qrels, rerank_depth=2, top_k=2)
@@ -1274,7 +1274,7 @@ def test_case_splits_are_stable_disjoint_and_cover_all_cases():
         for index in range(300)
     ]
     dev = split_cases(cases, "dev")
-    test = split_cases(cases, "test")
+    test = split_cases(cases, "test.md")
     hidden = split_cases(cases, "hidden")
 
     assert case_split("case_001") == case_split("case_001")

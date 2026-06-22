@@ -14,7 +14,7 @@ from retrieval_lab.schemas import SCHEMA_VERSION, QueryPlanModel, validate_recor
 from sceneweaver.retrieval.query_plan import build_query_plan
 
 
-PLANNER_VERSION = "retrieval_lab_planner_v8"
+PLANNER_VERSION = "retrieval_lab_planner_v9"
 DEFAULT_PLANNER_CACHE_PATH = Path(".tmp") / "retrieval_lab" / "planner_cache.jsonl"
 DEFAULT_PLANNER_PLAN_OUTPUT = Path(".tmp") / "retrieval_lab" / "planner_plan.json"
 DEFAULT_PLANNER_COMPARE_OUTPUT = Path(".tmp") / "retrieval_lab" / "planner_compare.json"
@@ -23,7 +23,7 @@ DEFAULT_REAL_LLM_PLANNER_MAX_TOKENS = 800
 DEFAULT_REAL_LLM_PLANNER_TIMEOUT_SECONDS = 45.0
 
 NEGATIVE_SPAN_RE = re.compile(
-    r"(不要做成|不要|别|避免|不想|不是|拒绝|without|avoid|exclude|do not|don't|not|no)\s*([^,;，。；]*)",
+    r"(不要做成|不要|别|避免|不想|不是|拒绝|\b(?:without|avoid|exclude|do not|don't|not|no)\b)\s*([^,;，。；]*)",
     flags=re.IGNORECASE,
 )
 
@@ -855,7 +855,7 @@ def load_queries(
     queries: list[str] | None = None,
     input_file: Path | None = None,
     dataset_path: Path | None = None,
-    split: str = "test",
+    split: str = "test.md",
     limit: int = 0,
 ) -> list[str]:
     values = [query for query in queries or [] if query]

@@ -31,6 +31,7 @@ NATIVE_COMMANDS = {
     "index-inspect",
     "index-manifest",
     "benchmark-retrieval",
+    "llm-status",
     "llm-adjudicate-qrels",
     "llm-generate-natural-fuzzy",
     "migration-audit",
@@ -74,7 +75,7 @@ LAYER_EXPECTATIONS = {
     "planners": "native query understanding planners and cache",
     "indexes": "native prepared index/cache metadata",
     "retrieval": "native recall/search workflows",
-    "fixtures": "test fixture registry",
+    "fixtures": "test.md fixture registry",
     "llm": "optional LLM client adapters and fake clients",
 }
 

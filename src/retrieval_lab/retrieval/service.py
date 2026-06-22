@@ -3,7 +3,9 @@ from __future__ import annotations
 from pathlib import Path
 from collections import Counter
 import hashlib
+import json
 import math
+import re
 import time
 from typing import Any
 
@@ -22,12 +24,16 @@ DEFAULT_RETRIEVAL_RUN_OUTPUT = Path(".tmp") / "retrieval_lab" / "retrieval_run_l
 DEFAULT_RETRIEVAL_LEGACY_COMPARISON_OUTPUT = Path(".tmp") / "retrieval_lab" / "retrieval_legacy_comparison_latest.json"
 HARD_FORBIDDEN_STAGE_VETO = 1000.0
 RRF_K = 60
+NEGATIVE_QUERY_MARKER_RE = re.compile(
+    r"不要做成|不要|别|避免|不想|不是|拒绝|\b(?:without|avoid|exclude|do not|don't|not|no)\b",
+    flags=re.IGNORECASE,
+)
 
 
 def retrieval_run(
     *,
     dataset_path: Path = DEFAULT_DATASET_PATH,
-    split: str = "test",
+    split: str = "test.md",
     limit: int = 0,
     planner: str = "multi_query",
     planner_cache: Path | None = DEFAULT_PLANNER_CACHE_PATH,
@@ -35,7 +41,31 @@ def retrieval_run(
     candidate_depth: int = 100,
     run_name: str = "",
     ranking_key: str = "hybrid_rrf_constraints_signature",
+    card_sources: list[Path] | None = None,
+    queries: list[str] | None = None,
+    query_file: Path | None = None,
+    channel_policy: str = "combined",
 ) -> dict[str, Any]:
+    if card_sources:
+        from retrieval_lab.corpora import sceneweaver_items_from_sources
+
+        active_queries = load_query_texts(queries=queries, query_file=query_file)
+        items = sceneweaver_items_from_sources(card_sources, channel_policy=channel_policy)
+        return retrieval_run_from_items(
+            items,
+            queries=active_queries,
+            dataset=f"sceneweaver_cards::{','.join(str(path) for path in card_sources)}",
+            split="cards",
+            limit=len(active_queries),
+            planner=planner,
+            planner_cache=planner_cache,
+            top_k=top_k,
+            candidate_depth=candidate_depth,
+            run_name=run_name,
+            ranking_key=ranking_key,
+            channel_policy=channel_policy,
+            corpus_sources=[str(path) for path in card_sources],
+        )
     cases = read_cases(dataset_path, split=split, limit=limit)
     return retrieval_run_from_cases(
         cases,
@@ -55,7 +85,7 @@ def retrieval_run_from_cases(
     cases: list[dict[str, Any]],
     *,
     dataset: str,
-    split: str = "test",
+    split: str = "test.md",
     limit: int = 0,
     planner: str = "multi_query",
     planner_cache: Path | None = DEFAULT_PLANNER_CACHE_PATH,
@@ -121,6 +151,94 @@ def retrieval_run_from_cases(
             "constraints_enabled": True,
             "llm_enabled": False,
             "parameters": {"split": split, "limit": limit},
+        },
+        "planner_summary": plans_report["summary"],
+        "run_rows": run_rows,
+        "cases": cases_from_run_rows(run_rows),
+        "summary": summary,
+        "fingerprint": data_sha256({"run_rows": run_rows, "summary": summary}),
+    }
+    return artifact
+
+
+def retrieval_run_from_items(
+    items: list[dict[str, Any]],
+    *,
+    queries: list[str],
+    dataset: str,
+    split: str = "cards",
+    limit: int = 0,
+    planner: str = "multi_query",
+    planner_cache: Path | None = DEFAULT_PLANNER_CACHE_PATH,
+    top_k: int = 10,
+    candidate_depth: int = 100,
+    run_name: str = "",
+    ranking_key: str = "hybrid_rrf_constraints_signature",
+    planner_config: dict[str, Any] | None = None,
+    channel_policy: str = "combined",
+    corpus_sources: list[str] | None = None,
+) -> dict[str, Any]:
+    if not queries:
+        raise ValueError("retrieval_run_from_items requires at least one query")
+    started = time.perf_counter()
+    prepared_index = prepare_retrieval_index(items)
+    plans_report = plan_many(
+        queries,
+        planner=planner,
+        cache_path=planner_cache,
+        config={"command": "retrieval_run_items", "split": split, "limit": limit, **(planner_config or {})},
+    )
+    rows = []
+    for index, (query, plan) in enumerate(zip(queries, plans_report["plans"], strict=False), start=1):
+        rows.append(
+            retrieve_case(
+                {
+                    "case_id": f"query_{index:03d}",
+                    "case_type": "sceneweaver_search",
+                    "user_input": query,
+                    "target": {},
+                },
+                plan=plan,
+                items=items,
+                prepared_index=prepared_index,
+                top_k=top_k,
+                candidate_depth=candidate_depth,
+                ranking_key=ranking_key,
+            )
+        )
+    run_rows = {run_name or f"{planner}::{ranking_key}::{channel_policy}": rows}
+    summary = {
+        **run_artifact_summary(run_rows, cases_from_run_rows(run_rows)),
+        "dataset": dataset,
+        "split": split,
+        "limit": limit,
+        "planner": planner,
+        "top_k": top_k,
+        "candidate_depth": candidate_depth,
+        "ranking_key": ranking_key,
+        "channel_policy": channel_policy,
+        "corpus_sources": corpus_sources or [],
+        "query_count": len(queries),
+        "index_item_count": len(items),
+        "retrieval_runtime": "native_in_memory_sceneweaver_cards_bm25_hash_dense_rrf",
+        "dense_source": "local_hash_vector_fallback",
+        "planner_negative_leak_rate": plans_report["summary"].get("negative_leak_rate", 0.0),
+        "mean_top1_top2_margin": mean_top_margin(rows),
+        "low_confidence_rate": low_confidence_rate(rows),
+        "elapsed_seconds": round(time.perf_counter() - started, 6),
+    }
+    artifact = {
+        "method": "retrieval_lab_native_sceneweaver_retrieval_run",
+        "created_at": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
+        "run_config": {
+            "workflow": "native_sceneweaver_card_retrieval_runtime",
+            "ranking_key": ranking_key,
+            "query_planner": planner,
+            "top_k": top_k,
+            "candidate_depth": candidate_depth,
+            "constraints_enabled": True,
+            "llm_enabled": False,
+            "parameters": {"split": split, "limit": limit, "channel_policy": channel_policy},
         },
         "planner_summary": plans_report["summary"],
         "run_rows": run_rows,
@@ -212,6 +330,7 @@ def prepare_retrieval_index(items: list[dict[str, Any]]) -> dict[str, Any]:
     vectors = {}
     token_sets = []
     visual_token_sets = []
+    channel_token_sets = []
     token_to_indices: dict[str, list[int]] = {}
     item_ids = []
     for index, item in enumerate(items):
@@ -226,6 +345,8 @@ def prepare_retrieval_index(items: list[dict[str, Any]]) -> dict[str, Any]:
         metadata = item.get("metadata", {})
         visual_tokens = lexical_tokens(" ".join(str(value) for value in metadata.values()))
         visual_token_sets.append(set(visual_tokens))
+        channels = item.get("channels", {}) if isinstance(item.get("channels"), dict) else {}
+        channel_token_sets.append({name: set(lexical_tokens(text)) for name, text in channels.items() if isinstance(text, str)})
     vector_matrix = np.asarray([vectors[item_id] for item_id in item_ids], dtype=np.float32) if item_ids else np.zeros((0, 64), dtype=np.float32)
     doc_lengths_np = np.asarray(doc_lengths, dtype=np.float32) if doc_lengths else np.zeros((0,), dtype=np.float32)
     return {
@@ -238,6 +359,7 @@ def prepare_retrieval_index(items: list[dict[str, Any]]) -> dict[str, Any]:
         "doc_lengths_np": doc_lengths_np,
         "token_sets": token_sets,
         "visual_token_sets": visual_token_sets,
+        "channel_token_sets": channel_token_sets,
         "token_to_indices": {token: np.asarray(indices, dtype=np.int32) for token, indices in token_to_indices.items()},
         "item_ids": item_ids,
     }
@@ -278,6 +400,7 @@ def rows_with_rrf_scores(base_rows: list[dict[str, Any]]) -> list[dict[str, Any]
             "combined": round(float(row.get("embedding_score", 0.0)), 6),
             "experience": round(float(row.get("signature_score", 0.0)), 6),
             "visual_tags": round(float(row.get("visual_score", 0.0)), 6),
+            **(row.get("channel_scores", {}) if isinstance(row.get("channel_scores"), dict) else {}),
         }
     return base_rows
 
@@ -288,11 +411,7 @@ def fast_score_items(
     plan: dict[str, Any],
     prepared_index: dict[str, Any],
 ) -> list[dict[str, Any]]:
-    query_texts = [str(plan.get("positive_query", ""))]
-    query_texts.extend(str(row.get("text", "")) for row in plan.get("rewrites", []) if isinstance(row, dict))
-    if plan.get("hyde_text"):
-        query_texts.append(str(plan["hyde_text"]))
-    query_tokens = lexical_tokens(" ".join(query_texts))
+    query_tokens = query_tokens_for_scoring(plan)
     query_token_set = set(query_tokens)
     count = len(items)
     lexical_scores = bm25_scores_for_query(query_tokens, prepared_index, count)
@@ -302,6 +421,7 @@ def fast_score_items(
     visual_scores = np.zeros(count, dtype=np.float32)
     token_sets = prepared_index.get("token_sets", [])
     visual_token_sets = prepared_index.get("visual_token_sets", [])
+    channel_token_sets = prepared_index.get("channel_token_sets", [])
     for index in range(count):
         item_tokens = token_sets[index] if index < len(token_sets) else set(items[index].get("tokens", []))
         signature_scores[index] = overlap_from_sets(signature_tokens, item_tokens)
@@ -319,6 +439,7 @@ def fast_score_items(
         dense = float(dense_scores[index])
         signature = float(signature_scores[index])
         visual = float(visual_scores[index])
+        channel_scores = channel_scores_for_query(query_token_set, channel_token_sets[index] if index < len(channel_token_sets) else {})
         final_score = lexical + dense + constraint + purpose + signature * 0.25 + style
         base_rows.append(
             result_with_style_diagnostics(
@@ -335,6 +456,11 @@ def fast_score_items(
                     "style_score": round(style, 6),
                     "visual_score": round(visual, 6),
                     "metadata": metadata,
+                    "channels": item.get("channels", {}),
+                    "payload": item.get("payload", {}),
+                    "payload_ref": item.get("payload_ref", ""),
+                    "channel_policy": item.get("channel_policy", ""),
+                    "channel_scores": channel_scores,
                     "constraint_hits": hits,
                     "explanation": explain_score(lexical, constraint, purpose, signature, dense, style, hits),
                 }
@@ -349,11 +475,7 @@ def fast_score_arrays(
     plan: dict[str, Any],
     prepared_index: dict[str, Any],
 ) -> dict[str, Any]:
-    query_texts = [str(plan.get("positive_query", ""))]
-    query_texts.extend(str(row.get("text", "")) for row in plan.get("rewrites", []) if isinstance(row, dict))
-    if plan.get("hyde_text"):
-        query_texts.append(str(plan["hyde_text"]))
-    query_tokens = lexical_tokens(" ".join(query_texts))
+    query_tokens = query_tokens_for_scoring(plan)
     count = len(items)
     lexical_scores = bm25_scores_for_query(query_tokens, prepared_index, count)
     dense_scores = dense_scores_for_query(query_tokens, prepared_index, count)
@@ -433,6 +555,10 @@ def compact_result_for_index(item: dict[str, Any], signals: dict[str, Any], inde
         "signature_score": round(float(signals["signature_score"][index]), 6),
         "style_score": round(float(signals["style_score"][index]), 6),
         "metadata": item.get("metadata", {}),
+        "channels": item.get("channels", {}),
+        "payload": item.get("payload", {}),
+        "payload_ref": item.get("payload_ref", ""),
+        "channel_policy": item.get("channel_policy", ""),
         "constraint_hits": signals["hits_by_index"][index],
         }
     )
@@ -496,13 +622,39 @@ def overlap_from_sets(query: set[str], item: set[str]) -> float:
     return len(query & item) / math.sqrt(max(1, len(query)) * max(1, len(item)))
 
 
+def query_tokens_for_scoring(plan: dict[str, Any]) -> list[str]:
+    return lexical_tokens(" ".join(query_texts_for_scoring(plan)))
+
+
+def query_texts_for_scoring(plan: dict[str, Any]) -> list[str]:
+    texts = [str(plan.get("positive_query", ""))]
+    texts.extend(str(row.get("text", "")) for row in plan.get("rewrites", []) if isinstance(row, dict))
+    if plan.get("hyde_text"):
+        texts.append(str(plan["hyde_text"]))
+    original_text = str(plan.get("original_text", "")).strip()
+    if should_include_original_query_for_scoring(original_text, texts):
+        texts.append(original_text)
+    return [text for text in texts if text.strip()]
+
+
+def should_include_original_query_for_scoring(original_text: str, planned_texts: list[str]) -> bool:
+    if not original_text or NEGATIVE_QUERY_MARKER_RE.search(original_text):
+        return False
+    planned_tokens = set(lexical_tokens(" ".join(planned_texts)))
+    original_tokens = set(lexical_tokens(original_text))
+    return bool(original_tokens - planned_tokens) or len(planned_tokens) < 2
+
+
+def channel_scores_for_query(query_tokens: set[str], channel_tokens: dict[str, set[str]]) -> dict[str, float]:
+    return {
+        channel: round(overlap_from_sets(query_tokens, tokens), 6)
+        for channel, tokens in sorted(channel_tokens.items())
+    }
+
+
 def score_item(item: dict[str, Any], *, plan: dict[str, Any], prepared_index: dict[str, Any] | None = None) -> dict[str, Any]:
     metadata = item.get("metadata", {})
-    query_texts = [str(plan.get("positive_query", ""))]
-    query_texts.extend(str(row.get("text", "")) for row in plan.get("rewrites", []) if isinstance(row, dict))
-    if plan.get("hyde_text"):
-        query_texts.append(str(plan["hyde_text"]))
-    query_tokens = lexical_tokens(" ".join(query_texts))
+    query_tokens = query_tokens_for_scoring(plan)
     item_tokens = item.get("tokens", []) or lexical_tokens(item.get("text", ""))
     prepared = prepared_index or prepare_retrieval_index([item])
     lexical = bm25_score(query_tokens, item_tokens, prepared)
@@ -666,6 +818,45 @@ def expected_target(case: dict[str, Any]) -> dict[str, Any]:
     return target if isinstance(target, dict) else {}
 
 
+def load_query_texts(*, queries: list[str] | None = None, query_file: Path | None = None) -> list[str]:
+    values = [str(query).strip() for query in queries or [] if str(query).strip()]
+    if query_file:
+        values.extend(load_query_file(Path(query_file)))
+    return [value for value in values if value]
+
+
+def load_query_file(path: Path) -> list[str]:
+    if path.suffix.lower() == ".jsonl":
+        rows = []
+        for line in path.read_text(encoding="utf-8-sig").splitlines():
+            if line.strip():
+                rows.append(query_from_record(json.loads(line)))
+        return [row for row in rows if row]
+    if path.suffix.lower() == ".json":
+        data = json.loads(path.read_text(encoding="utf-8-sig"))
+        if isinstance(data, list):
+            return [query for query in (query_from_record(row) for row in data) if query]
+        if isinstance(data, dict):
+            for key in ("queries", "cases"):
+                rows = data.get(key)
+                if isinstance(rows, list):
+                    return [query for query in (query_from_record(row) for row in rows) if query]
+            query = query_from_record(data)
+            return [query] if query else []
+    return [line.strip() for line in path.read_text(encoding="utf-8-sig").splitlines() if line.strip()]
+
+
+def query_from_record(row: Any) -> str:
+    if isinstance(row, str):
+        return row.strip()
+    if isinstance(row, dict):
+        for key in ("user_input", "query", "text", "original_text"):
+            value = row.get(key)
+            if value:
+                return str(value).strip()
+    return ""
+
+
 def target_recall(rows: list[dict[str, Any]], k: int) -> float:
     hits = sum(1 for row in rows if target_in_top_k(row, k))
     return round(hits / max(1, len(rows)), 6)
@@ -800,6 +991,7 @@ __all__ = [
     "compare_run_artifacts",
     "prepare_retrieval_index",
     "retrieval_run",
+    "retrieval_run_from_items",
     "retrieval_run_from_cases",
     "score_item",
     "score_items",

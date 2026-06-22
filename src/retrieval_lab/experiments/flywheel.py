@@ -16,13 +16,13 @@ def retrieval_lab_flywheel_guide() -> dict:
             "step": 2,
             "name": "planner compare",
             "purpose": "Compare native rule, multi-query, HyDE, and legacy-adapter query understanding without calling real LLMs.",
-            "command": "python -m retrieval_lab planner compare --dataset src\\mocktesting\\eval_inputs\\review_generated_inputs.json --split test --limit 60 --planners rule,multi_query,hyde_card,legacy_adapter --output .tmp\\retrieval_lab\\planner_compare_next.json",
+            "command": "python -m retrieval_lab planner compare --dataset src\\mocktesting\\eval_inputs\\review_generated_inputs.json --split test.md --limit 60 --planners rule,multi_query,hyde_card,legacy_adapter --output .tmp\\retrieval_lab\\planner_compare_next.json",
         },
         {
             "step": 3,
             "name": "qrels build-pooled",
             "purpose": "Build a pooled bootstrap relevance set from multiple workflows.",
-            "command": "python -m retrieval_lab qrels build-pooled --split test --limit 60 --qrels-output .tmp\\pooled_qrels_next.jsonl",
+            "command": "python -m retrieval_lab qrels build-pooled --split test.md --limit 60 --qrels-output .tmp\\pooled_qrels_next.jsonl",
         },
         {
             "step": 4,
@@ -34,7 +34,7 @@ def retrieval_lab_flywheel_guide() -> dict:
             "step": 5,
             "name": "qrels sample-active",
             "purpose": "Sample disagreement, low-confidence, and style-risk examples for review.",
-            "command": "python -m retrieval_lab qrels sample-active --split test --limit 60 --sample-size 80 --qrels .tmp\\pooled_qrels_next.jsonl --output .tmp\\active_qrels_next.jsonl",
+            "command": "python -m retrieval_lab qrels sample-active --split test.md --limit 60 --sample-size 80 --qrels .tmp\\pooled_qrels_next.jsonl --output .tmp\\active_qrels_next.jsonl",
         },
         {
             "step": 6,
@@ -46,19 +46,19 @@ def retrieval_lab_flywheel_guide() -> dict:
             "step": 7,
             "name": "eval fuzzy",
             "purpose": "Evaluate fuzzy multi-answer retrieval with graded relevance metrics.",
-            "command": "python -m retrieval_lab eval fuzzy --split test --limit 60 --query-planner multi_query --ranking-key hybrid_rrf_constraints --qrels .tmp\\pooled_qrels_adjudicated.jsonl --output .tmp\\fuzzy_multi_next.json --markdown-output .tmp\\fuzzy_multi_next.md",
+            "command": "python -m retrieval_lab eval fuzzy --split test.md --limit 60 --query-planner multi_query --ranking-key hybrid_rrf_constraints --qrels .tmp\\pooled_qrels_adjudicated.jsonl --output .tmp\\fuzzy_multi_next.json --markdown-output .tmp\\fuzzy_multi_next.md",
         },
         {
             "step": 8,
             "name": "retrieval run",
             "purpose": "Run the native Retrieval Lab in-memory hybrid retrieval runtime and emit reusable run rows.",
-            "command": "python -m retrieval_lab retrieval run --split test --limit 60 --planner multi_query --output .tmp\\retrieval_lab\\run_rows_next.json",
+            "command": "python -m retrieval_lab retrieval run --split test.md --limit 60 --planner multi_query --output .tmp\\retrieval_lab\\run_rows_next.json",
         },
         {
             "step": 9,
             "name": "eval paraphrase",
             "purpose": "Stress exact scene ranking under natural language paraphrases using the native retrieval runtime.",
-            "command": "python -m retrieval_lab eval paraphrase --split test --limit 60 --query-planner multi_query --output .tmp\\paraphrase_next.json --markdown-output .tmp\\paraphrase_next.md",
+            "command": "python -m retrieval_lab eval paraphrase --split test.md --limit 60 --query-planner multi_query --output .tmp\\paraphrase_next.json --markdown-output .tmp\\paraphrase_next.md",
         },
         {
             "step": 10,
@@ -82,7 +82,7 @@ def retrieval_lab_flywheel_guide() -> dict:
             "step": 13,
             "name": "eval rerank-upper-bound",
             "purpose": "Compare baseline, rule rerank, oracle rerank, and optional LLM sample rerank.",
-            "command": "python -m retrieval_lab eval rerank-upper-bound --split test --limit 60 --qrels .tmp\\pooled_qrels_adjudicated.jsonl --output .tmp\\rerank_upper_bound_next.json --markdown-output .tmp\\rerank_upper_bound_next.md",
+            "command": "python -m retrieval_lab eval rerank-upper-bound --split test.md --limit 60 --qrels .tmp\\pooled_qrels_adjudicated.jsonl --output .tmp\\rerank_upper_bound_next.json --markdown-output .tmp\\rerank_upper_bound_next.md",
         },
         {
             "step": 14,
@@ -100,7 +100,7 @@ def retrieval_lab_flywheel_guide() -> dict:
             "step": 16,
             "name": "eval failures",
             "purpose": "Run native fresh failure attribution when saved artifacts are not enough.",
-            "command": "python -m retrieval_lab eval failures --split test --limit 60 --output .tmp\\failure_analysis_next.json --markdown-output .tmp\\failure_analysis_next.md",
+            "command": "python -m retrieval_lab eval failures --split test.md --limit 60 --output .tmp\\failure_analysis_next.json --markdown-output .tmp\\failure_analysis_next.md",
         },
         {
             "step": 17,

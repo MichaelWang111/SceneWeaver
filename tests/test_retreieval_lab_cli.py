@@ -1279,12 +1279,12 @@ def test_retreieval_lab_run_export_cli_feeds_pool_from_runs(tmp_path):
 
 
 def test_retreieval_lab_legacy_bridge_replaces_output_option():
-    assert with_output_option(["--split", "test"], "x.json") == ["--split", "test", "--output", "x.json"]
-    assert with_output_option(["--output", "old.json", "--split", "test"], "new.json") == [
+    assert with_output_option(["--split", "test.md"], "x.json") == ["--split", "test.md", "--output", "x.json"]
+    assert with_output_option(["--output", "old.json", "--split", "test.md"], "new.json") == [
         "--output",
         "new.json",
         "--split",
-        "test",
+        "test.md",
     ]
     assert with_output_option(["--output=old.json"], "new.json") == ["--output=new.json"]
 
@@ -2629,7 +2629,7 @@ def test_retreieval_lab_migration_audit_reports_mocktesting_clean(tmp_path):
     report = json.loads(output.read_text(encoding="utf-8"))
 
     assert summary["mocktesting_clean"] is True
-    assert summary["compat_only_command_count"] > 0
+    assert summary["compat_only_command_count"] == 0
     assert report["self_check_contract"]["mocktesting_must_remain_clean"] is True
     assert markdown.read_text(encoding="utf-8").startswith("# Retrieval Lab Migration Audit")
 
@@ -3337,7 +3337,58 @@ def test_retreieval_lab_retrieval_cli_writes_run_artifact(tmp_path):
     assert artifact["run_rows"]
 
 
-def test_retreieval_lab_infra_audit_reports_native_and_compat_gaps(tmp_path):
+def test_retreieval_lab_tune_constraints_cli_is_native(tmp_path):
+    dataset = small_retrieval_dataset(tmp_path / "dataset.json")
+    output = tmp_path / "tuning.json"
+    profile = tmp_path / "profile.json"
+
+    summary = run_module(
+        "tune-constraints",
+        "--inputs",
+        str(dataset),
+        "--split",
+        "all",
+        "--planner-cache",
+        str(tmp_path / "planner_cache.jsonl"),
+        "--profile-output",
+        str(profile),
+        "--output",
+        str(output),
+    )
+    report = json.loads(output.read_text(encoding="utf-8"))
+    profile_report = json.loads(profile.read_text(encoding="utf-8"))
+
+    assert summary["compat_backend_used"] is False
+    assert summary["candidate_count"] > 0
+    assert report["method"] == "retrieval_lab_native_constraint_tuning"
+    assert profile_report["method"] == "retrieval_lab_native_constraint_profile"
+    assert "selected_weights" in summary
+
+
+def test_retreieval_lab_leave_one_fixture_out_cli_is_native(tmp_path):
+    dataset = small_retrieval_dataset(tmp_path / "dataset.json")
+    output = tmp_path / "leave_one_fixture.json"
+
+    summary = run_module(
+        "evaluate-leave-one-fixture-out",
+        "--dataset",
+        str(dataset),
+        "--split",
+        "all",
+        "--planner-cache",
+        str(tmp_path / "planner_cache.jsonl"),
+        "--output",
+        str(output),
+    )
+    report = json.loads(output.read_text(encoding="utf-8"))
+
+    assert summary["compat_backend_used"] is False
+    assert summary["fixture_count"] == 1
+    assert report["method"] == "retrieval_lab_native_leave_one_fixture_out"
+    assert report["fixtures"][0]["test_case_count"] == 2
+
+
+def test_retreieval_lab_infra_audit_reports_native_without_compat_gaps(tmp_path):
     output = tmp_path / "infra.json"
     markdown = tmp_path / "infra.md"
 
@@ -3345,12 +3396,12 @@ def test_retreieval_lab_infra_audit_reports_native_and_compat_gaps(tmp_path):
     report = json.loads(output.read_text(encoding="utf-8"))
 
     assert summary["legacy_command_count"] > 0
-    assert summary["compat_only_legacy_command_count"] > 0
+    assert summary["compat_only_legacy_command_count"] == 0
     assert summary["empty_layer_count"] == 0
     assert any(row["command"] == "compare-experiments" and row["status"] in {"native", "partial"} for row in report["command_coverage"])
     assert any(row["command"] == "schema-catalog" and row["status"] == "native_only" for row in report["command_coverage"])
     assert any(row["layer"] == "planners" and row["status"] == "implemented" for row in report["layer_coverage"])
-    assert any("compat_only_commands" in gap for gap in summary["top_gaps"])
+    assert not any("compat_only_commands" in gap for gap in summary["top_gaps"])
     assert markdown.read_text(encoding="utf-8").startswith("# Infra Coverage Audit")
 
 

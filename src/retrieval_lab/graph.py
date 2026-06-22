@@ -17,7 +17,7 @@ def build_scene_graph_manifest_command(args: Any) -> dict[str, Any]:
     started = time.perf_counter()
     cases = read_cases(
         Path(getattr(args, "dataset", DEFAULT_DATASET_PATH)),
-        split=str(getattr(args, "split", "test")),
+        split=str(getattr(args, "split", "test.md")),
         limit=int(getattr(args, "limit", 0)),
     )
     graph = scene_graph_from_cases(cases)

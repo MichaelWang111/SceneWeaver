@@ -62,7 +62,7 @@ def test_scene_tags_override_llm_injected_tags_and_log_candidates(tmp_path):
                 "emotion": "quiet",
                 "narrative_logic": "hold attention",
                 "techniques": ["locked shot"],
-                "reuse_condition": "new expression test",
+                "reuse_condition": "new expression test.md",
             }
         ],
         "emotion_temperature": 0.4,

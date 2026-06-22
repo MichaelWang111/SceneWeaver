@@ -80,7 +80,6 @@ INTERNAL_LABELS = set(NATURAL_PURPOSE_TEXT) | {
     "ending",
 }
 
-
 @dataclass(frozen=True)
 class JudgeBatchRequest:
     batch_id: int
@@ -508,7 +507,7 @@ def llm_generate_natural_fuzzy_command(args: Any) -> dict[str, Any]:
     started = time.perf_counter()
     cases = read_cases(
         Path(getattr(args, "dataset", DEFAULT_DATASET_PATH)),
-        split=str(getattr(args, "split", "test")),
+        split=str(getattr(args, "split", "test.md")),
         limit=int(getattr(args, "limit", 0)),
     )
     sample_size = int(getattr(args, "llm_sample_size", 0) or 0)
