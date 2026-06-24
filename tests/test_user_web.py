@@ -13,6 +13,8 @@ from sceneweaver.user_web import (
     list_sources,
     ping_llm_from_payload,
     safe_filename,
+    script_agent_from_payload,
+    search_scenes_from_payload,
     start_ingest_job,
     status_payload,
 )
@@ -33,6 +35,23 @@ def test_safe_filename_strips_unsafe_characters():
 
 def test_list_sources_returns_list():
     assert isinstance(list_sources(), list)
+
+
+def test_search_payload_preserves_zero_top_k(monkeypatch):
+    called = {}
+
+    def fake_search_scenes(*args, **kwargs):
+        called["args"] = args
+        called["kwargs"] = kwargs
+        return {"status": "ok", "matches": []}
+
+    monkeypatch.setattr("sceneweaver.user_web.search_scenes", fake_search_scenes)
+
+    result = search_scenes_from_payload({"query": "真实生活", "top_k": 0, "candidate_depth": 0})
+
+    assert result["status"] == "ok"
+    assert called["kwargs"]["top_k"] == 0
+    assert called["kwargs"]["candidate_depth"] == 100
 
 
 def test_ingest_payload_passes_log_callback(monkeypatch):
@@ -143,6 +162,11 @@ def test_generate_script_payload_calls_core(monkeypatch):
             "top_k": 3,
             "duration_seconds": 60,
             "max_tokens": 7000,
+            "creator_intent_prompt": "先询问创作者真实意图",
+            "prompt_revision_rounds": 2,
+            "fine_tune_instruction": "更克制一点",
+            "variant_index": 2,
+            "variant_count": 3,
         }
     )
 
@@ -152,6 +176,76 @@ def test_generate_script_payload_calls_core(monkeypatch):
     assert called["kwargs"]["top_k"] == 3
     assert called["kwargs"]["duration_seconds"] == 60
     assert called["kwargs"]["max_tokens"] == 7000
+    assert called["kwargs"]["creator_intent_prompt"] == "先询问创作者真实意图"
+    assert called["kwargs"]["prompt_revision_rounds"] == 2
+    assert called["kwargs"]["fine_tune_instruction"] == "更克制一点"
+    assert called["kwargs"]["variant_index"] == 2
+    assert called["kwargs"]["variant_count"] == 3
+    assert called["kwargs"]["reference_matches"] is None
+
+
+def test_generate_script_payload_accepts_manual_reference_matches(monkeypatch):
+    called = {}
+    reference_matches = [{"item_id": "match-1", "rank": 1}]
+
+    def fake_generate_script(*args, **kwargs):
+        called["args"] = args
+        called["kwargs"] = kwargs
+        return {"status": "ok", "generation_contract": {"reference_mode": "manual_reference_matches"}}
+
+    monkeypatch.setattr("sceneweaver.user_web.generate_script", fake_generate_script)
+
+    result = generate_script_from_payload(
+        {
+            "query": "真实团队",
+            "sources": ["outputs/film_analysis"],
+            "top_k": 1,
+            "reference_matches": reference_matches,
+        }
+    )
+
+    assert result["status"] == "ok"
+    assert called["args"][0] == "真实团队"
+    assert called["kwargs"]["top_k"] == 1
+    assert called["kwargs"]["reference_matches"] == reference_matches
+
+
+def test_generate_script_payload_rejects_invalid_manual_reference_matches():
+    with pytest.raises(ValueError, match="reference_matches must be a list"):
+        generate_script_from_payload({"query": "真实团队", "reference_matches": {"item_id": "match-1"}})
+
+
+def test_script_agent_payload_calls_core(monkeypatch):
+    called = {}
+
+    def fake_run_script_agent_task(mode, **kwargs):
+        called["mode"] = mode
+        called["kwargs"] = kwargs
+        return {"status": "ok", "mode": mode, "reply": "建议保留真实感"}
+
+    monkeypatch.setattr("sceneweaver.user_web.run_script_agent_task", fake_run_script_agent_task)
+
+    result = script_agent_from_payload(
+        {
+            "mode": "intent",
+            "user_input": "我想要更真实一点",
+            "context": {"script_form": {"query": "真实团队"}},
+            "history": [{"role": "user", "content": "偏纪实"}],
+            "max_tokens": 1200,
+        }
+    )
+
+    assert result["reply"] == "建议保留真实感"
+    assert called["mode"] == "intent"
+    assert called["kwargs"]["user_input"] == "我想要更真实一点"
+    assert called["kwargs"]["context"] == {"script_form": {"query": "真实团队"}}
+    assert called["kwargs"]["history"] == [{"role": "user", "content": "偏纪实"}]
+    assert called["kwargs"]["max_tokens"] == 1200
+
+
+def test_script_agent_payload_rejects_invalid_context():
+    with pytest.raises(ValueError, match="context must be an object"):
+        script_agent_from_payload({"mode": "intent", "context": []})
 
 
 def test_ping_llm_payload_requires_profile():

@@ -20,6 +20,7 @@ from sceneweaver.user_api import (
     DEFAULT_OUTPUT_ROOT,
     generate_script,
     ingest_video,
+    run_script_agent_task,
     search_scenes,
 )
 
@@ -115,6 +116,11 @@ class SceneWeaverUIHandler(BaseHTTPRequestHandler):
             if parsed.path == "/api/generate-script":
                 payload = self._read_json_body()
                 result = generate_script_from_payload(payload)
+                self._send_json(result)
+                return
+            if parsed.path == "/api/script-agent":
+                payload = self._read_json_body()
+                result = script_agent_from_payload(payload)
                 self._send_json(result)
                 return
             if parsed.path == "/api/llm-settings":
@@ -396,7 +402,7 @@ def search_scenes_from_payload(payload: dict[str, Any]) -> dict[str, Any]:
     return search_scenes(
         query,
         sources,
-        top_k=int(payload.get("top_k") or 5),
+        top_k=int(payload.get("top_k", 5) if payload.get("top_k") not in {None, ""} else 5),
         candidate_depth=int(payload.get("candidate_depth") or 100),
         planner=str(payload.get("planner") or "multi_query"),
         planner_cache=optional_path(payload.get("planner_cache")),
@@ -417,16 +423,24 @@ def generate_script_from_payload(payload: dict[str, Any]) -> dict[str, Any]:
         sources = [sources]
     if not isinstance(sources, list):
         raise ValueError("sources must be a list")
+    reference_matches = payload.get("reference_matches")
+    if reference_matches is not None and not isinstance(reference_matches, list):
+        raise ValueError("reference_matches must be a list")
     return generate_script(
         query,
         sources,
         script_brief=str(payload.get("script_brief") or payload.get("brief") or ""),
-        top_k=int(payload.get("top_k") or 5),
+        top_k=int(payload.get("top_k", 5) if payload.get("top_k") not in {None, ""} else 5),
         duration_seconds=optional_int(payload.get("duration_seconds")),
         tone=str(payload.get("tone") or ""),
         audience=str(payload.get("audience") or ""),
         must_include=str(payload.get("must_include") or ""),
         avoid=str(payload.get("avoid") or ""),
+        creator_intent_prompt=str(payload.get("creator_intent_prompt") or ""),
+        prompt_revision_rounds=int(payload.get("prompt_revision_rounds") or 0),
+        fine_tune_instruction=str(payload.get("fine_tune_instruction") or ""),
+        variant_index=int(payload.get("variant_index") or 1),
+        variant_count=int(payload.get("variant_count") or 1),
         candidate_depth=int(payload.get("candidate_depth") or 100),
         planner=str(payload.get("planner") or "multi_query"),
         planner_cache=optional_path(payload.get("planner_cache")),
@@ -434,6 +448,32 @@ def generate_script_from_payload(payload: dict[str, Any]) -> dict[str, Any]:
         channel_policy=str(payload.get("channel_policy") or "all"),
         run_name=str(payload.get("run_name") or "ui_script_generation"),
         prompt_path=optional_path(payload.get("prompt_path")),
+        timeout_seconds=optional_float(payload.get("timeout_seconds")),
+        retries=int(payload.get("retries") or 0),
+        max_tokens=optional_int(payload.get("max_tokens")),
+        reference_matches=reference_matches,
+    )
+
+
+def script_agent_from_payload(payload: dict[str, Any]) -> dict[str, Any]:
+    mode = str(payload.get("mode") or "").strip()
+    if not mode:
+        raise ValueError("mode is required")
+    context = payload.get("context", {})
+    if context is None:
+        context = {}
+    if not isinstance(context, dict):
+        raise ValueError("context must be an object")
+    history = payload.get("history", [])
+    if history is None:
+        history = []
+    if not isinstance(history, list):
+        raise ValueError("history must be a list")
+    return run_script_agent_task(
+        mode,
+        context=context,
+        user_input=str(payload.get("user_input") or ""),
+        history=history,
         timeout_seconds=optional_float(payload.get("timeout_seconds")),
         retries=int(payload.get("retries") or 0),
         max_tokens=optional_int(payload.get("max_tokens")),

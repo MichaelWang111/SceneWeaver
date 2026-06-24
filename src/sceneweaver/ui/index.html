@@ -495,6 +495,32 @@
       margin-top: 18px;
     }
 
+    .ingest-side {
+      display: grid;
+      gap: 18px;
+      align-items: start;
+      min-width: 0;
+    }
+
+    .ingest-status .panel-body {
+      padding-top: 16px;
+    }
+
+    .ingest-status .run-log {
+      min-height: 256px;
+      max-height: 430px;
+      margin-top: 0;
+    }
+
+    .ingest-side .soft-list {
+      grid-template-columns: 1fr;
+    }
+
+    .ingest-side .note {
+      min-height: 0;
+      padding: 15px 16px;
+    }
+
     .search-grid {
       display: grid;
       gap: 18px;
@@ -807,6 +833,13 @@
       overflow: hidden;
     }
 
+    .result-card.is-ignored {
+      border-color: rgba(217, 230, 236, 0.96);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.74);
+      box-shadow: none;
+    }
+
     .result-head {
       display: grid;
       grid-template-columns: auto minmax(0, 1fr) auto;
@@ -814,6 +847,12 @@
       align-items: center;
       padding: 16px 18px;
       border-bottom: 1px solid rgba(212, 237, 249, 0.92);
+    }
+
+    .result-card.is-ignored .result-head {
+      gap: 10px;
+      padding: 10px 12px;
+      border-bottom: 0;
     }
 
     .rank {
@@ -826,6 +865,16 @@
       background: linear-gradient(145deg, #5fc0eb, #2f83bb);
       box-shadow: 0 12px 24px rgba(49, 129, 183, 0.22);
       font-weight: 900;
+    }
+
+    .result-card.is-ignored .rank {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: #eef7fb;
+      color: #5e7f95;
+      box-shadow: none;
+      font-size: 12px;
     }
 
     .result-title { min-width: 0; }
@@ -841,12 +890,24 @@
       font-weight: 900;
     }
 
+    .result-card.is-ignored .result-title strong {
+      color: #486d84;
+      white-space: normal;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
     .result-title span {
       display: block;
       margin-top: 5px;
       color: var(--muted);
       font-size: 12px;
       font-weight: 800;
+    }
+
+    .result-card.is-ignored .result-title span {
+      margin-top: 2px;
+      color: #8aa1b0;
     }
 
     .score {
@@ -856,6 +917,407 @@
       font-weight: 900;
       text-align: right;
     }
+
+    .curation-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 7px;
+      min-width: 132px;
+    }
+
+    .result-card.is-ignored .curation-actions {
+      min-width: 32px;
+    }
+
+    .card-toggle {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      border: 1px solid rgba(184, 209, 224, 0.95);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.82);
+      color: #52758f;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 900;
+      line-height: 1;
+      transition: transform 0.16s ease, border-color 0.16s ease, background 0.16s ease, color 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    .card-toggle:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 18px rgba(49, 129, 183, 0.14);
+    }
+
+    .star-toggle {
+      border-color: rgba(246, 184, 70, 0.88);
+      background: rgba(255, 255, 255, 0.86);
+      color: #d89a12;
+      font-size: 16px;
+    }
+
+    .star-toggle i {
+      color: currentColor;
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .star-toggle.is-active {
+      border-color: rgba(246, 184, 70, 0.96);
+      background: rgba(255, 255, 255, 0.90);
+      color: #f2b51e;
+      box-shadow: 0 8px 16px rgba(211, 146, 24, 0.10);
+    }
+
+    .ignore-toggle {
+      border-color: rgba(236, 180, 58, 0.82);
+      background: rgba(255, 255, 255, 0.86);
+      color: #a36a00;
+      font-size: 19px;
+    }
+
+    .ignore-toggle.is-active {
+      border-color: rgba(236, 180, 58, 0.92);
+      background: rgba(255, 255, 255, 0.92);
+      color: #d89a12;
+      box-shadow: none;
+    }
+
+    .manual-strip {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 13px;
+      border: 1px solid rgba(198, 232, 248, 0.96);
+      border-radius: 18px;
+      background: rgba(246, 252, 255, 0.82);
+    }
+
+    .manual-strip span {
+      color: #426d89;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .manual-strip b {
+      color: var(--blue-950);
+      font-weight: 900;
+    }
+
+    .result-pager {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 11px 13px;
+      border: 1px solid rgba(198, 232, 248, 0.96);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.78);
+    }
+
+    .pager-summary {
+      color: #426d89;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .pager-summary b {
+      color: var(--blue-950);
+    }
+
+    .pager-controls {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .pager-controls .el-select {
+      width: 98px;
+    }
+
+    .pager-controls .el-input-number--mini {
+      width: 92px;
+    }
+
+    .collapsible-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .script-panel-header {
+      cursor: default;
+    }
+
+    .script-panel-title {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .script-mode-copy {
+      will-change: transform, opacity;
+    }
+
+    .script-panel-title.is-wheel-next .script-mode-copy {
+      animation: scriptModeWheelNext 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .script-panel-title.is-wheel-prev .script-mode-copy {
+      animation: scriptModeWheelPrev 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes scriptModeWheelNext {
+      0% { opacity: 0.55; transform: translateY(7px); }
+      62% { opacity: 1; transform: translateY(-1px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes scriptModeWheelPrev {
+      0% { opacity: 0.55; transform: translateY(-7px); }
+      62% { opacity: 1; transform: translateY(1px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .script-panel-title:hover h3 {
+      color: var(--blue-850);
+    }
+
+    .script-mode-menu {
+      position: absolute;
+      left: 0;
+      top: calc(100% + 10px);
+      z-index: 18;
+      display: grid;
+      gap: 4px;
+      width: 164px;
+      padding: 7px;
+      border: 1px solid rgba(183, 220, 239, 0.96);
+      border-radius: 14px;
+      background: rgba(248, 253, 255, 0.98);
+      box-shadow: 0 18px 38px rgba(49, 129, 183, 0.18);
+      backdrop-filter: blur(12px);
+    }
+
+    .script-mode-menu button {
+      width: 100%;
+      padding: 9px 10px;
+      border: 0;
+      border-radius: 10px;
+      background: transparent;
+      color: #426d89;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 900;
+      text-align: left;
+    }
+
+    .script-mode-menu button:hover,
+    .script-mode-menu button.is-active {
+      background: #eaf7ff;
+      color: var(--blue-950);
+    }
+
+    .script-panel-header .el-button,
+    .script-panel-header button {
+      cursor: pointer;
+    }
+
+    .collapsed-script-panel .panel-header {
+      border-bottom: 0;
+    }
+
+    .collapsed-script-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .script-config-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .script-config-grid .wide {
+      grid-column: 1 / -1;
+    }
+
+    .script-stable-body {
+      min-height: 430px;
+      transition: min-height 0.18s ease;
+    }
+
+    .script-mode-panel {
+      display: grid;
+      gap: 14px;
+    }
+
+    .script-agent-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(280px, 1.05fr);
+      gap: 14px;
+      align-items: start;
+    }
+
+    .script-agent-main {
+      display: grid;
+      gap: 10px;
+    }
+
+    .agent-result-panel {
+      min-height: 172px;
+      max-height: 360px;
+      overflow: auto;
+      padding: 13px;
+      border: 1px solid rgba(198, 232, 248, 0.96);
+      border-radius: 16px;
+      background: #f8fdff;
+      color: #34536a;
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .agent-result-panel p {
+      margin: 0 0 10px;
+      font-weight: 760;
+    }
+
+    .agent-result-panel ul {
+      margin: 8px 0 0;
+      padding-left: 18px;
+    }
+
+    .agent-empty {
+      min-height: 140px;
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 760;
+    }
+
+    .agent-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 8px 0;
+    }
+
+    .agent-chip-row span {
+      padding: 4px 8px;
+      border: 1px solid #c9e8f8;
+      border-radius: 999px;
+      background: #eaf7ff;
+      color: #426d89;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .agent-material-row {
+      display: grid;
+      grid-template-columns: 92px minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: center;
+      padding: 8px 0;
+      border-top: 1px solid rgba(212, 237, 249, 0.86);
+    }
+
+    .agent-material-row b {
+      color: var(--blue-950);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .agent-material-row span {
+      min-width: 0;
+      word-break: break-word;
+    }
+
+    .agent-material-row button {
+      padding: 5px 8px;
+      border: 1px solid #c7e7f6;
+      border-radius: 9px;
+      background: #fff;
+      color: #426982;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .script-reference-strip {
+      position: relative;
+      border: 1px solid rgba(198, 232, 248, 0.96);
+      border-radius: 18px;
+      background: rgba(247, 253, 255, 0.84);
+      overflow: hidden;
+    }
+
+    .script-reference-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 13px;
+    }
+
+    .script-reference-summary {
+      min-width: 0;
+      flex: 1;
+      cursor: pointer;
+    }
+
+    .script-reference-head span {
+      color: #426d89;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .script-reference-head b {
+      color: var(--blue-950);
+    }
+
+    .script-reference-body {
+      padding: 0 13px 13px;
+    }
+
+    .script-pager {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 6px;
+      min-width: 120px;
+    }
+
+    .page-dot {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      border: 1px solid rgba(184, 209, 224, 0.95);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.82);
+      color: #54748c;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .page-dot.is-active {
+      border-color: rgba(74, 185, 235, 0.96);
+      background: linear-gradient(145deg, #eefaff, #d7f1ff);
+      color: var(--blue-950);
+      box-shadow: 0 8px 18px rgba(49, 129, 183, 0.14);
+    }
+
 
     .frames {
       display: grid;
@@ -934,6 +1396,240 @@
       font-weight: 900;
     }
 
+    .pill.warning {
+      border-color: rgba(236, 180, 58, 0.82);
+      background: #fff3c4;
+      color: #8a5c00;
+    }
+
+    .curation-list {
+      display: grid;
+      gap: 0;
+      max-height: 58vh;
+      overflow: auto;
+      padding-right: 4px;
+      padding-bottom: 110px;
+    }
+
+    .sort-list { position: relative; }
+
+    .curation-sort-move {
+      transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    body.is-sorting-drag .curation-sort-move {
+      transition: none !important;
+    }
+
+    .curation-row {
+      position: relative;
+      display: grid;
+      grid-template-columns: 40px minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      padding: 11px;
+      border: 1px solid rgba(198, 232, 248, 0.96);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.84);
+      will-change: transform;
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .curation-row + .curation-row {
+      margin-top: -1px;
+    }
+
+    .sort-list .curation-row {
+      border-width: 1px 0;
+      border-style: solid;
+      border-color: rgba(178, 218, 239, 0.78);
+      border-radius: 0;
+      background: rgba(255, 255, 255, 0.48);
+      box-shadow: none;
+      cursor: grab;
+      touch-action: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    .sort-list .curation-row:hover {
+      background: rgba(239, 249, 255, 0.82);
+      border-color: rgba(111, 190, 229, 0.88);
+    }
+
+    .sort-list .curation-row.is-dragging {
+      cursor: grabbing;
+      border-color: rgba(74, 185, 235, 0.96);
+      background: rgba(235, 249, 255, 0.96);
+      box-shadow: 0 10px 24px rgba(49, 129, 183, 0.16);
+    }
+
+    .sort-list .curation-copy,
+    .sort-list .curation-index,
+    .sort-list .curation-preview,
+    .sort-list .curation-preview * {
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    .curation-row.is-dragging {
+      border-color: rgba(74, 185, 235, 0.90);
+      background: rgba(242, 251, 255, 0.96);
+      box-shadow: 0 18px 38px rgba(49, 129, 183, 0.22);
+      transform: scale(1.01);
+      z-index: 2;
+    }
+
+    .curation-row:hover {
+      z-index: 6;
+    }
+
+    .curation-preview {
+      position: absolute;
+      left: 10px;
+      right: 10px;
+      top: calc(100% - 1px);
+      z-index: 7;
+      opacity: 0;
+      visibility: hidden;
+      overflow: visible;
+      transform: translateY(-5px) scale(0.985);
+      pointer-events: none;
+      will-change: opacity, transform;
+      transition:
+        opacity 0.18s ease,
+        transform 0.24s cubic-bezier(0.16, 1, 0.3, 1),
+        visibility 0s linear 0.18s;
+    }
+
+    .curation-row:hover .curation-preview {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      transition-delay: 0s;
+    }
+
+    .curation-row.is-dragging .curation-preview {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-5px) scale(0.985);
+      transition-delay: 0s;
+    }
+
+    .curation-row.preview-dismissed .curation-preview {
+      opacity: 0 !important;
+      visibility: hidden !important;
+      transform: translateY(-5px) scale(0.985) !important;
+      transition-delay: 0s !important;
+    }
+
+    body.is-sorting-drag .curation-preview {
+      opacity: 0 !important;
+      visibility: hidden !important;
+      transform: translateY(-5px) scale(0.985) !important;
+      transition-delay: 0s !important;
+    }
+
+    .curation-preview-inner {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      padding: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(188, 226, 245, 0.96);
+      border-radius: 14px;
+      background: rgba(247, 253, 255, 0.98);
+      box-shadow: 0 18px 38px rgba(49, 129, 183, 0.18);
+    }
+
+    body.is-sorting-drag {
+      cursor: grabbing;
+      user-select: none;
+    }
+
+    body.is-sorting-drag .sort-list .curation-row {
+      cursor: grabbing;
+    }
+
+    .mini-frame {
+      position: relative;
+      min-height: 92px;
+      overflow: hidden;
+      border: 1px solid #ceeaf7;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #dff4ff, #ffffff);
+    }
+
+    .mini-frame img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 92px;
+      object-fit: cover;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .mini-frame span {
+      position: absolute;
+      left: 8px;
+      top: 8px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      color: #fff;
+      background: rgba(23, 52, 81, 0.72);
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .mini-empty {
+      min-height: 92px;
+      display: grid;
+      place-items: center;
+      padding: 10px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
+    .curation-index {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: #eaf7ff;
+      color: var(--blue-850);
+      font-family: "Cascadia Mono", "Consolas", monospace;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .curation-copy {
+      min-width: 0;
+      color: #34536a;
+      font-size: 13px;
+      line-height: 1.55;
+      font-weight: 800;
+      word-break: break-word;
+    }
+
+    .curation-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .curation-controls .el-button--mini {
+      padding: 7px 8px;
+    }
+
+    .ignored-card {
+      border-color: rgba(236, 180, 58, 0.74);
+      background: rgba(255, 251, 239, 0.88);
+    }
+
     .source-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
@@ -970,6 +1666,71 @@
       font-size: 12px;
       line-height: 1.65;
       word-break: break-all;
+    }
+
+    .preview-dialog-body {
+      display: grid;
+      gap: 14px;
+    }
+
+    .preview-dialog-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .preview-dialog-head h3 {
+      margin: 0;
+      color: var(--blue-950);
+      font-size: 18px;
+      line-height: 1.3;
+      font-weight: 900;
+    }
+
+    .preview-dialog-head p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .preview-frame-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .preview-frame {
+      position: relative;
+      min-height: 210px;
+      overflow: hidden;
+      border: 1px solid #ceeaf7;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #dff4ff, #ffffff);
+    }
+
+    .preview-frame img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 210px;
+      object-fit: cover;
+    }
+
+    .preview-json {
+      max-height: 60vh;
+      margin: 0;
+      padding: 14px 15px;
+      overflow: auto;
+      border: 1px solid rgba(198, 232, 248, 0.96);
+      border-radius: 16px;
+      background: #f8fdff;
+      color: #2d506a;
+      font-family: "Cascadia Mono", "Consolas", monospace;
+      font-size: 12px;
+      line-height: 1.65;
+      white-space: pre-wrap;
     }
 
     .empty-state {
@@ -1134,6 +1895,7 @@
 
       .hero-visual { display: none; }
       .soft-list { grid-template-columns: 1fr; }
+      .script-agent-panel { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 760px) {
@@ -1154,6 +1916,8 @@
       .empty-frame { min-height: 214px; }
       .result-head { grid-template-columns: auto minmax(0, 1fr); }
       .score { grid-column: 2; text-align: left; }
+      .script-mode-menu { width: min(164px, calc(100vw - 48px)); }
+      .agent-material-row { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -1171,7 +1935,7 @@
 
         <el-menu :default-active="activePage" :active-text-color="'var(--blue-950)'" mode="horizontal" class="top-nav" @select="activePage = $event">
           <el-menu-item index="ingest"><i class="el-icon-upload2"></i>视频入库</el-menu-item>
-          <el-menu-item index="search"><i class="el-icon-search"></i>关键词找帧</el-menu-item>
+          <el-menu-item index="search"><i class="el-icon-search"></i>经验检索</el-menu-item>
           <el-menu-item index="sources"><i class="el-icon-folder-opened"></i>数据源</el-menu-item>
           <el-menu-item index="script"><i class="el-icon-edit-outline"></i>生成脚本</el-menu-item>
           <el-menu-item index="llm"><i class="el-icon-connection"></i>LLM 管理</el-menu-item>
@@ -1290,14 +2054,27 @@
                     <el-button :type="ingesting ? 'danger' : 'primary'" :icon="ingesting ? 'el-icon-close' : 'el-icon-video-play'" :loading="cancelingIngest" @click="ingesting ? cancelIngest() : runIngest()">{{ ingesting ? '终止处理' : '开始入库' }}</el-button>
                     <el-button icon="el-icon-refresh" @click="refreshSources">刷新数据源</el-button>
                   </div>
-                  <div class="run-log">{{ ingestLog || '等待入库任务。提交后会持续刷新执行状态，完整分析会调用 Vision LLM。' }}</div>
                 </div>
               </section>
 
-              <aside class="soft-list">
-                <div class="note"><b>轻量验收方式</b><p>不勾选 Vision LLM 时，只生成 packages 和三帧，适合先检查切场和抽帧是否正常。</p></div>
-                <div class="note"><b>完整核心链路</b><p>勾选 Vision LLM 与 experience cards 后，数据源会进入 Retrieval Lab 检索。</p></div>
-                <div class="note"><b>当前默认输出</b><span>{{ status.default_output_root || 'outputs/film_analysis' }}</span></div>
+              <aside class="ingest-side">
+                <section class="panel ingest-status">
+                  <div class="panel-header">
+                    <div class="panel-title">
+                      <h3>入库状态</h3>
+                      <span>任务提交后会在这里持续刷新执行状态。</span>
+                    </div>
+                    <el-tag size="small" :type="ingesting ? 'warning' : 'info'" effect="plain">{{ ingesting ? 'Running' : 'Standby' }}</el-tag>
+                  </div>
+                  <div class="panel-body">
+                    <div class="run-log">{{ ingestLog || '等待入库任务。提交后会持续刷新执行状态，完整分析会调用 Vision LLM。' }}</div>
+                  </div>
+                </section>
+                <div class="soft-list">
+                  <div class="note"><b>轻量验收方式</b><p>不勾选 Vision LLM 时，只生成 packages 和三帧，适合先检查切场和抽帧是否正常。</p></div>
+                  <div class="note"><b>完整核心链路</b><p>勾选 Vision LLM 与 experience cards 后，数据源会进入 Retrieval Lab 检索。</p></div>
+                  <div class="note"><b>当前默认输出</b><span>{{ status.default_output_root || 'outputs/film_analysis' }}</span></div>
+                </div>
               </aside>
             </div>
           </section>
@@ -1306,24 +2083,24 @@
             <div class="page-hero">
               <div class="hero-copy">
                 <div class="eyebrow">Retrieval Lab Search</div>
-                <h2>输入关键词，找到目标场景帧</h2>
-                <p>选择已入库的 SceneWeaver 数据源，用实验链路进行多通道检索。结果会带上场景时间段、首中尾帧和卡片摘要，方便快速判断是不是你要的画面。</p>
+                <h2>经验检索模块</h2>
+                <p>先用机器召回足够多的导演经验帧，再人工星标、忽略和排序。筛选后的结果可以直接作为脚本生成的数据源，不再做二次检索。</p>
                 <div class="hero-badges">
                   <span class="hero-badge">multi-query planner</span>
                   <span class="hero-badge">hybrid ranking</span>
-                  <span class="hero-badge">frame context</span>
+                  <span class="hero-badge">manual curation</span>
                 </div>
                 <div class="hero-actions">
                   <el-button icon="el-icon-folder-opened" @click="activePage = 'sources'">选择数据源</el-button>
                   <el-button type="primary" icon="el-icon-search" :loading="searching" @click="runSearch">立即检索</el-button>
-                  <el-button icon="el-icon-edit-outline" :disabled="!search.query.trim()" @click="adoptSearchForScript">用这些结果生成脚本</el-button>
+                  <el-button icon="el-icon-edit-outline" :disabled="!manualAvailableMatches.length" @click="adoptSearchForScript">用筛选结果生成脚本</el-button>
                 </div>
               </div>
               <div class="hero-visual">
                 <div class="signal-card">
                   <div class="signal-head"><b>Retrieval Stack</b><span>EXPERIMENT CORE</span></div>
                   <div class="signal-line">
-                    <div class="signal-step"><span class="signal-index">Q</span><div class="signal-copy"><strong>Keyword Intent</strong><small>natural language query</small></div><span class="signal-chip">query</span></div>
+                    <div class="signal-step"><span class="signal-index">Q</span><div class="signal-copy"><strong>Experience Intent</strong><small>natural language query</small></div><span class="signal-chip">query</span></div>
                     <div class="signal-step"><span class="signal-index">R</span><div class="signal-copy"><strong>Ranked Scenes</strong><small>hybrid signals + constraints</small></div><span class="signal-chip">rank</span></div>
                     <div class="signal-step"><span class="signal-index">F</span><div class="signal-copy"><strong>Scene Frames</strong><small>start / middle / end</small></div><span class="signal-chip">frame</span></div>
                   </div>
@@ -1340,8 +2117,8 @@
               <section class="panel">
                 <div class="panel-header">
                   <div class="panel-title">
-                    <h3>场景检索</h3>
-                    <span>主生产链路和实验链路上层的统一操作入口。</span>
+                    <h3>经验检索</h3>
+                    <span>检索上限用于召回候选，脚本上传数量在生成脚本模块单独控制。</span>
                   </div>
                   <el-tag size="small" effect="plain">Retrieval Lab</el-tag>
                 </div>
@@ -1355,11 +2132,27 @@
                       <el-option label="outputs/film_analysis 全部" value="outputs/film_analysis"></el-option>
                       <el-option v-for="source in sources" :key="source.path" :label="source.video_id + ' - ' + source.card_count + ' cards'" :value="source.path"></el-option>
                     </el-select>
-                    <el-input-number v-model="search.top_k" :min="1" :max="20" style="width:100%"></el-input-number>
+                    <el-input-number v-model="search.top_k" :min="0" controls-position="right" style="width:100%" title="召回上限，0 表示全部索引"></el-input-number>
                     <el-select v-model="search.channel_policy"><el-option label="all" value="all"></el-option><el-option label="combined" value="combined"></el-option><el-option label="script_experience" value="script_experience"></el-option><el-option label="summary_tags" value="summary_tags"></el-option></el-select>
                     <el-select v-model="search.planner"><el-option label="multi_query" value="multi_query"></el-option><el-option label="rule" value="rule"></el-option><el-option label="hyde_card" value="hyde_card"></el-option></el-select>
                     <el-button icon="el-icon-document" @click="showJson(searchResult || {})">JSON</el-button>
-                    <el-button icon="el-icon-edit-outline" :disabled="!search.query.trim()" @click="adoptSearchForScript">生成脚本</el-button>
+                    <el-button icon="el-icon-edit-outline" :disabled="!manualAvailableMatches.length" @click="adoptSearchForScript">生成脚本</el-button>
+                  </div>
+                  <div class="manual-strip" v-if="matches.length">
+                    <span>当前保留 <b>{{ manualAvailableMatches.length }}</b></span>
+                    <span>已忽略 <b>{{ ignoredMatches.length }}</b></span>
+                    <span>星标必选 <b>{{ starredMatches.length }}</b></span>
+                    <el-button size="mini" icon="el-icon-warning-outline" :disabled="!ignoredMatches.length" @click="ignoredDialog.visible = true">取回忽略帧</el-button>
+                    <el-button size="mini" icon="el-icon-sort" :disabled="!manualAvailableMatches.length" @click="openSortDialog">自定义排序</el-button>
+                  </div>
+                  <div class="result-pager" v-if="allVisibleMatches.length">
+                    <div class="pager-summary"><b>{{ searchPageStart }}-{{ searchPageEnd }}</b> / {{ allVisibleMatches.length }} · 第 {{ normalizedSearchPage }} / {{ searchPageCount }} 页</div>
+                    <div class="pager-controls">
+                      <el-select size="mini" v-model="searchPaging.pageSize" @change="onSearchPageSizeChange"><el-option v-for="size in searchPaging.pageSizes" :key="size" :label="size + ' / 页'" :value="size"></el-option></el-select>
+                      <el-button size="mini" icon="el-icon-arrow-left" :disabled="normalizedSearchPage <= 1" @click="setSearchPage(normalizedSearchPage - 1)"></el-button>
+                      <el-input-number size="mini" v-model="searchPaging.page" :min="1" :max="searchPageCount" controls-position="right" @change="setSearchPage"></el-input-number>
+                      <el-button size="mini" icon="el-icon-arrow-right" :disabled="normalizedSearchPage >= searchPageCount" @click="setSearchPage(normalizedSearchPage + 1)"></el-button>
+                    </div>
                   </div>
                 </div>
               </section>
@@ -1367,11 +2160,11 @@
               <section class="metrics">
                 <div class="metric"><b>{{ resultCount }}</b><span>命中结果</span></div>
                 <div class="metric"><b>{{ summary.index_item_count || 0 }}</b><span>索引卡片</span></div>
-                <div class="metric"><b>{{ summary.elapsed_seconds || 0 }}</b><span>检索秒数</span></div>
-                <div class="metric"><b>{{ summary.low_confidence_rate || 0 }}</b><span>低置信率</span></div>
+                <div class="metric"><b>{{ ignoredMatches.length }}</b><span>已忽略</span></div>
+                <div class="metric"><b>{{ starredMatches.length }}</b><span>星标必选</span></div>
               </section>
 
-              <section v-if="!matches.length" class="panel empty-state">
+              <section v-if="!visibleMatches.length" class="panel empty-state">
                 <div>
                   <h3>还没有场景结果</h3>
                   <p>先入库一个视频，或选择已有的 SceneWeaver 输出目录，然后输入关键词检索。</p>
@@ -1379,16 +2172,25 @@
               </section>
 
               <section v-else class="results">
-                <article v-for="match in matches" :key="match.item_id" class="result-card">
+                <article v-for="match in visibleMatches" :key="match.item_id" class="result-card" :class="{ 'is-ignored': isIgnored(match) }">
                   <div class="result-head">
                     <div class="rank">{{ match.rank }}</div>
                     <div class="result-title">
-                      <strong>{{ match.video_id }} / {{ match.scene_id }} / {{ match.card_id }}</strong>
-                      <span>{{ formatTime(match.time_range) }}</span>
+                      <template v-if="isIgnored(match)">
+                        <strong>{{ match.summary_text || curationText(match) || '无摘要文本' }}</strong>
+                      </template>
+                      <template v-else>
+                        <strong>{{ match.video_id }} / {{ match.scene_id }} / {{ match.card_id }}</strong>
+                        <span>{{ formatTime(match.time_range) }}</span>
+                      </template>
                     </div>
-                    <div class="score">{{ score(match) }}</div>
+                    <div class="curation-actions">
+                      <button v-if="!isIgnored(match)" class="card-toggle star-toggle" :class="{ 'is-active': isStarred(match) }" :title="isStarred(match) ? '取消必须加入' : '必须加入这个镜头'" @click="toggleStar(match)"><i :class="isStarred(match) ? 'el-icon-star-on' : 'el-icon-star-off'"></i></button>
+                      <button class="card-toggle ignore-toggle" :class="{ 'is-active': isIgnored(match) }" :title="isIgnored(match) ? '恢复这个候选帧' : '收起这个候选帧'" @click="toggleIgnore(match)">{{ isIgnored(match) ? '+' : '-' }}</button>
+                      <div v-if="!isIgnored(match)" class="score">{{ score(match) }}</div>
+                    </div>
                   </div>
-                  <div class="frames">
+                  <div v-if="!isIgnored(match)" class="frames">
                     <div v-for="label in frameLabels" :key="label" class="frame">
                       <template v-if="frame(match, label) && frame(match, label).exists">
                         <img :src="fileUrl(frame(match, label).path)" :alt="label + ' frame'" />
@@ -1397,11 +2199,12 @@
                       <div v-else class="empty-frame">{{ label }} frame<br />未生成或不可访问</div>
                     </div>
                   </div>
-                  <div class="result-body">
+                  <div v-if="!isIgnored(match)" class="result-body">
                     <p class="summary">{{ match.summary_text || '无摘要文本' }}</p>
                     <div class="tagline">
                       <span class="pill">stage: {{ match.metadata.script_stage || 'general' }}</span>
                       <span class="pill">score: {{ score(match) }}</span>
+                      <span v-if="isStarred(match)" class="pill warning">star: must include</span>
                       <span class="pill">style: {{ match.diagnostics.style_guardrail_action || 'none' }}</span>
                       <span class="pill">{{ match.source.package_path ? 'package linked' : 'package missing' }}</span>
                     </div>
@@ -1420,7 +2223,7 @@
               <div class="hero-copy">
                 <div class="eyebrow">Data Sources</div>
                 <h2>管理已入库的视频数据源</h2>
-                <p>这里显示 outputs/film_analysis 下的可检索目录。点击任意数据源会带入检索页，直接进入关键词找帧流程。</p>
+                <p>这里显示 outputs/film_analysis 下的可检索目录。点击任意数据源会带入检索页，直接进入经验检索流程。</p>
                 <div class="hero-badges">
                   <span class="hero-badge">cards status</span>
                   <span class="hero-badge">package path</span>
@@ -1485,15 +2288,16 @@
                   <span class="hero-badge">reference takeaways</span>
                 </div>
                 <div class="hero-actions">
-                  <el-button icon="el-icon-search" @click="activePage = 'search'">先找参考帧</el-button>
-                  <el-button type="primary" icon="el-icon-magic-stick" :loading="scripting" @click="runScript">生成脚本</el-button>
+                  <el-button icon="el-icon-search" @click="activePage = 'search'">先做经验检索</el-button>
+                  <el-button icon="el-icon-warning-outline" :disabled="!ignoredMatches.length" @click="ignoredDialog.visible = true">取回忽略帧</el-button>
+                  <el-button icon="el-icon-sort" :disabled="!manualAvailableMatches.length" @click="openSortDialog">自定义排序</el-button>
                 </div>
               </div>
               <div class="hero-visual">
                 <div class="signal-card">
                   <div class="signal-head"><b>Script Stack</b><span>SOFT REFERENCE</span></div>
                   <div class="signal-line">
-                    <div class="signal-step"><span class="signal-index">01</span><div class="signal-copy"><strong>Retrieve Frames</strong><small>keyword to director references</small></div><span class="signal-chip">search</span></div>
+                    <div class="signal-step"><span class="signal-index">01</span><div class="signal-copy"><strong>Curate References</strong><small>experience matches to script references</small></div><span class="signal-chip">curate</span></div>
                     <div class="signal-step"><span class="signal-index">02</span><div class="signal-copy"><strong>Extract Takeaways</strong><small>emotion, rhythm, camera, tone</small></div><span class="signal-chip">learn</span></div>
                     <div class="signal-step"><span class="signal-index">03</span><div class="signal-copy"><strong>Generate Script</strong><small>new creative draft</small></div><span class="signal-chip">write</span></div>
                   </div>
@@ -1507,28 +2311,60 @@
             </div>
 
             <div class="search-grid">
-              <section class="panel">
-                <div class="panel-header">
-                  <div class="panel-title">
-                    <h3>脚本生成配置</h3>
-                    <span>关键词用于召回经验参考，brief 用于定义这次要写的新脚本。</span>
+              <section class="panel" :class="{ 'collapsed-script-panel': scriptUi.configCollapsed }">
+                <div class="panel-header collapsible-head script-panel-header">
+                  <div class="panel-title script-panel-title" :class="scriptModeWheelClass" @click.stop="toggleScriptModeMenu" @wheel.prevent.stop="onScriptModeWheel">
+                    <div class="script-mode-copy" :key="scriptUi.mode + '-' + scriptUi.wheelPulse">
+                      <h3>{{ scriptModeLabel }}</h3>
+                      <span>{{ scriptModeDescription }}</span>
+                    </div>
+                    <transition name="fade-slide">
+                      <div v-if="scriptUi.modeMenuOpen" class="script-mode-menu" @click.stop>
+                        <button v-for="option in scriptModeOptions" :key="option.value" type="button" :class="{ 'is-active': scriptUi.mode === option.value }" @click.stop="setScriptMode(option.value)">{{ option.label }}</button>
+                      </div>
+                    </transition>
                   </div>
-                  <el-tag size="small" effect="plain">Director.md</el-tag>
+                  <div class="collapsed-script-actions">
+                    <el-button type="primary" icon="el-icon-magic-stick" :loading="scripting" @click.stop="runScript">生成脚本</el-button>
+                  </div>
                 </div>
-                <div class="panel-body search-panel-body">
+                <div v-if="!scriptUi.configCollapsed" class="panel-body search-panel-body script-stable-body" :style="{ minHeight: scriptUi.stableMinHeight + 'px' }">
+                  <div v-if="scriptUi.mode === 'config'" class="script-mode-panel">
                   <div class="search-main">
                     <el-input v-model="scriptForm.query" type="textarea" :rows="2" placeholder="用于召回参考经验的关键词，例如：真实团队、低广告感、年轻人成长"></el-input>
-                    <el-button type="primary" icon="el-icon-magic-stick" :loading="scripting" @click="runScript">生成脚本</el-button>
                   </div>
-                  <div class="filter-bar">
+                  <div class="script-config-grid">
                     <el-select v-model="scriptSelectedSource" filterable placeholder="选择数据源" @change="applyScriptSource">
                       <el-option label="outputs/film_analysis 全部" value="outputs/film_analysis"></el-option>
                       <el-option v-for="source in sources" :key="source.path" :label="source.video_id + ' - ' + source.card_count + ' cards'" :value="source.path"></el-option>
                     </el-select>
-                    <el-input-number v-model="scriptForm.top_k" :min="1" :max="12" style="width:100%"></el-input-number>
+                    <el-input-number v-model="scriptForm.script_count" :min="1" :max="6" controls-position="right" style="width:100%"></el-input-number>
+                    <el-input-number v-model="scriptForm.reference_allow" :min="0" controls-position="right" style="width:100%"></el-input-number>
                     <el-input-number v-model="scriptForm.duration_seconds" :min="15" :max="600" style="width:100%"></el-input-number>
                     <el-input v-model="scriptForm.tone" placeholder="语气：真实、克制、热血"></el-input>
-                    <el-button icon="el-icon-document" @click="showJson(scriptResult || {})">JSON</el-button>
+                  </div>
+                  <div class="script-reference-strip">
+                    <div class="script-reference-head">
+                      <div class="script-reference-summary" @click="scriptUi.refsCollapsed = !scriptUi.refsCollapsed">
+                        <span>将上传 <b>{{ scriptUploadMatches.length }}</b> 个参考帧</span>
+                        <span> · 星标 <b>{{ starredMatches.length }}</b></span>
+                        <span> · 普通补足 <b>{{ Math.max(0, scriptUploadMatches.length - starredMatches.length) }}</b> / {{ scriptForm.reference_allow }}</span>
+                        <span v-if="ignoredMatches.length"> · 已忽略 <b>{{ ignoredMatches.length }}</b></span>
+                      </div>
+                      <div class="button-row" style="margin-top:0">
+                        <el-button size="mini" icon="el-icon-warning-outline" :disabled="!ignoredMatches.length" @click="ignoredDialog.visible = true">取回忽略帧</el-button>
+                        <el-button size="mini" icon="el-icon-sort" :disabled="!manualAvailableMatches.length" @click="openSortDialog">自定义排序</el-button>
+                      </div>
+                    </div>
+                    <div v-if="!scriptUi.refsCollapsed && scriptUploadMatches.length" class="script-reference-body">
+                      <div class="source-grid">
+                        <div v-for="match in scriptUploadMatches" :key="match.item_id" class="source-card" @click="showFramePreview(match)">
+                          <h3>{{ isStarred(match) ? '⭐ ' : '' }}{{ match.scene_id }} / {{ match.card_id }}</h3>
+                          <p>{{ curationText(match) }}</p>
+                          <p>score {{ score(match) }} - {{ formatTime(match.time_range) }}</p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <el-form label-position="top" size="small">
                     <el-form-item label="脚本目标 / Brief">
@@ -1542,13 +2378,35 @@
                       <el-input v-model="scriptForm.avoid" placeholder="例如：不要大厂感、不要空泛口号、不要夸张成功学"></el-input>
                     </el-form-item>
                   </el-form>
+                  </div>
+                  <div v-else-if="scriptUi.mode === 'intent'" class="script-agent-panel">
+                    <div class="script-agent-main">
+                      <el-input v-model="scriptAgents.intent.input" type="textarea" :rows="4" placeholder="和 agent 讨论创作者意图、偏好、真正想表达的东西"></el-input>
+                      <div class="button-row"><el-button type="primary" size="small" icon="el-icon-chat-line-round" :loading="scriptAgents.intent.loading" @click="runScriptAgent('intent')">推断意图</el-button><el-button size="small" :disabled="!scriptAgents.intent.result" @click="adoptAgentSuggestion('intent')">采纳到配置</el-button></div>
+                    </div>
+                    <div class="agent-result-panel"><div class="agent-empty" v-if="!scriptAgents.intent.result">等待意图推断。</div><template v-else><p>{{ scriptAgents.intent.result.reply || scriptAgents.intent.result.summary }}</p><div class="agent-chip-row"><span v-for="item in scriptAgents.intent.result.preferences" :key="item">{{ item }}</span></div><ul><li v-for="item in scriptAgents.intent.result.questions" :key="item">{{ item }}</li></ul></template></div>
+                  </div>
+                  <div v-else-if="scriptUi.mode === 'tune'" class="script-agent-panel">
+                    <div class="script-agent-main">
+                      <el-input v-model="scriptForm.fine_tune_instruction" type="textarea" :rows="4" placeholder="输入想调整的感觉，例如更克制、更像纪录片、减少口号、加强人物关系"></el-input>
+                      <div class="button-row"><span class="field-hint">提示词自修改轮次</span><el-input-number v-model="scriptForm.prompt_revision_rounds" :min="0" :max="5" controls-position="right"></el-input-number><el-button type="primary" size="small" icon="el-icon-magic-stick" :loading="scriptAgents.tune.loading" @click="runScriptAgent('tune')">生成微调方向</el-button></div>
+                    </div>
+                    <div class="agent-result-panel"><div class="agent-empty" v-if="!scriptAgents.tune.result">等待微调建议。</div><template v-else><p>{{ scriptAgents.tune.result.summary || scriptAgents.tune.result.reply }}</p><div v-for="(variant, index) in scriptAgents.tune.result.variants" :key="index + variant.label + variant.instruction" class="agent-material-row"><b>{{ variant.label }}</b><span>{{ variant.instruction }}</span><button type="button" @click="appendFineTuneInstruction(variant.instruction)">加入</button></div></template></div>
+                  </div>
+                  <div v-else-if="scriptUi.mode === 'assets'" class="script-agent-panel">
+                    <div class="script-agent-main">
+                      <el-input v-model="scriptForm.material_instruction" type="textarea" :rows="4" placeholder="输入希望联想的素材，例如分镜提纲、旁白方向、拍摄清单、标题备选"></el-input>
+                      <div class="button-row"><el-button type="primary" size="small" icon="el-icon-collection" :loading="scriptAgents.assets.loading" @click="runScriptAgent('assets')">生成素材</el-button><el-button size="small" :disabled="!scriptAgents.assets.result" @click="adoptAgentSuggestion('assets')">加入素材配置</el-button></div>
+                    </div>
+                    <div class="agent-result-panel"><div class="agent-empty" v-if="!scriptAgents.assets.result">等待素材联想。</div><template v-else><p>{{ scriptAgents.assets.result.summary || scriptAgents.assets.result.reply }}</p><div v-for="(material, index) in scriptAgents.assets.result.materials" :key="index + material.type + material.content" class="agent-material-row"><b>{{ material.type }}</b><span>{{ material.content }}</span><button type="button" @click="applyGeneratedMaterial(material)">加入</button></div></template></div>
+                  </div>
                 </div>
               </section>
 
-              <section v-if="!scriptResult" class="panel empty-state">
+              <section v-if="!activeScriptResult" class="panel empty-state">
                 <div>
                   <h3>还没有生成脚本</h3>
-                  <p>输入关键词和脚本目标后，系统会先检索导演经验参考，再基于这些软约束生成新脚本。</p>
+                  <p>可以一次生成多个版本；生成后用 ①② 切换不同脚本，标题、策略和正文会同步翻页。</p>
                 </div>
               </section>
 
@@ -1556,32 +2414,15 @@
                 <article class="result-card">
                   <div class="result-head">
                     <div class="rank"><i class="el-icon-edit-outline"></i></div>
-                    <div class="result-title"><strong>{{ scriptResult.script.title || '生成脚本' }}</strong><span>{{ scriptResult.script.logline || scriptResult.query }}</span></div>
-                    <div class="score">{{ scriptResult.reference_items.length }} refs</div>
+                    <div class="result-title"><strong>{{ activeScriptResult.script.title || '生成脚本' }}</strong><span>{{ activeScriptResult.script.logline || activeScriptResult.query }}</span></div>
+                    <div class="script-pager"><button v-for="(result, index) in scriptResults" :key="scriptPageLabel(index)" class="page-dot" :class="{ 'is-active': scriptUi.activeIndex === index }" @click="scriptUi.activeIndex = index">{{ scriptPageLabel(index) }}</button><span class="score">{{ activeScriptResult.reference_items.length }} refs</span></div>
                   </div>
                   <div class="result-body">
-                    <p class="summary"><b>创作策略：</b>{{ scriptResult.script.creative_strategy || '无' }}</p>
-                    <div class="run-log">{{ scriptResult.script.script_markdown || '无脚本正文' }}</div>
+                    <p class="summary"><b>创作策略：</b>{{ activeScriptResult.script.creative_strategy || '无' }}</p>
+                    <div class="run-log">{{ activeScriptResult.script.script_markdown || '无脚本正文' }}</div>
                     <div class="button-row">
-                      <el-button size="mini" icon="el-icon-document" @click="showJson(scriptResult)">完整 JSON</el-button>
+                      <el-button size="mini" icon="el-icon-document" @click="showJson(activeScriptResult)">完整 JSON</el-button>
                       <el-button size="mini" icon="el-icon-copy-document" @click="copyScriptMarkdown">复制脚本正文</el-button>
-                    </div>
-                  </div>
-                </article>
-
-                <article class="result-card">
-                  <div class="result-head">
-                    <div class="rank">R</div>
-                    <div class="result-title"><strong>参考经验</strong><span>这些帧和卡片是创作方向，不是画面硬约束。</span></div>
-                    <div class="score">soft</div>
-                  </div>
-                  <div class="result-body">
-                    <div class="source-grid">
-                      <div v-for="item in scriptResult.reference_items" :key="item.reference_id" class="source-card" @click="showJson(item)">
-                        <h3>{{ item.reference_id }} / {{ item.scene_id }}</h3>
-                        <p>{{ item.summary_text || item.director_strategy || item.reuse_condition || '参考经验' }}</p>
-                        <p>{{ item.frame_label }} frame - {{ item.card_id }}</p>
-                      </div>
                     </div>
                   </div>
                 </article>
@@ -1659,9 +2500,76 @@
       </main>
     </div>
 
-    <el-dialog title="JSON 详情" :visible.sync="jsonDialog.visible" width="72%" custom-class="json-popover">
-      <pre>{{ jsonDialog.text }}</pre>
+    <el-dialog title="JSON 详情" :visible.sync="jsonDialog.visible" width="72%" custom-class="json-popover" @contextmenu.native.prevent="closePreviews">
+      <pre @contextmenu.prevent="closePreviews">{{ jsonDialog.text }}</pre>
       <span slot="footer"><el-button @click="jsonDialog.visible = false">关闭</el-button></span>
+    </el-dialog>
+
+    <el-dialog title="参考帧预览" :visible.sync="previewDialog.visible" width="82%" custom-class="json-popover" @contextmenu.native.prevent="closePreviews">
+      <div class="preview-dialog-body" v-if="previewDialog.item">
+        <div class="preview-dialog-head">
+          <div>
+            <h3>{{ previewTitle(previewDialog.item) }}</h3>
+            <p>{{ previewSubtitle(previewDialog.item) }}</p>
+          </div>
+          <el-button-group>
+            <el-button size="mini" :type="previewDialog.mode === 'frames' ? 'primary' : 'default'" icon="el-icon-picture-outline" @click="previewDialog.mode = 'frames'">图片</el-button>
+            <el-button size="mini" :type="previewDialog.mode === 'json' ? 'primary' : 'default'" icon="el-icon-document" @click="previewDialog.mode = 'json'">JSON</el-button>
+          </el-button-group>
+        </div>
+        <div v-if="previewDialog.mode === 'frames'" class="preview-frame-grid">
+          <div v-for="label in frameLabels" :key="label" class="preview-frame">
+            <template v-if="previewFrame(previewDialog.item, label) && previewFrame(previewDialog.item, label).exists"><img :src="fileUrl(previewFrame(previewDialog.item, label).path)" :alt="label + ' frame'" /><span class="frame-label">{{ label }}</span></template>
+            <div v-else class="empty-frame">{{ label }} frame<br />未生成或不可访问</div>
+          </div>
+        </div>
+        <pre v-else class="preview-json">{{ previewJson }}</pre>
+      </div>
+      <span slot="footer"><el-button @click="previewDialog.visible = false">关闭</el-button></span>
+    </el-dialog>
+
+    <el-dialog title="自定义参考顺序" :visible.sync="sortDialog.visible" width="760px" custom-class="json-popover" @contextmenu.native.prevent="closeFloatingPreviews">
+      <transition-group name="curation-sort" tag="div" class="curation-list sort-list" ref="sortList">
+        <div v-for="(match, index) in sortableMatches" :key="matchKey(match)" class="curation-row" :class="{ 'is-dragging': isDraggingMatch(match), 'preview-dismissed': isPreviewDismissed(match) }" :data-match-id="matchKey(match)" @mouseenter="armHoverPreview(match)" @mouseleave="cancelHoverPreview(match)" @pointerdown="startSortDrag($event, match)">
+          <span class="curation-index">{{ index + 1 }}</span>
+          <div class="curation-copy">{{ curationText(match) }}</div>
+          <div class="curation-controls" @pointerdown.stop>
+            <button class="card-toggle star-toggle" :class="{ 'is-active': isStarred(match) }" :title="isStarred(match) ? '取消必须加入' : '必须加入这个镜头'" @click="toggleStar(match)"><i :class="isStarred(match) ? 'el-icon-star-on' : 'el-icon-star-off'"></i></button>
+          </div>
+          <div class="curation-preview">
+            <div v-if="shouldRenderHoverPreview(match)" class="curation-preview-inner" @contextmenu.prevent.stop="dismissHoverPreview(match)">
+              <div v-for="label in frameLabels" :key="label" class="mini-frame">
+                <template v-if="previewFrame(match, label) && previewFrame(match, label).exists"><img :src="fileUrl(previewFrame(match, label).path)" :alt="label + ' frame'" /><span>{{ label }}</span></template>
+                <div v-else class="mini-empty">{{ label }}<br />不可访问</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </transition-group>
+      <span slot="footer"><el-button @click="sortDialog.visible = false">完成</el-button></span>
+    </el-dialog>
+
+    <el-dialog title="被忽略的帧" :visible.sync="ignoredDialog.visible" width="720px" custom-class="json-popover" @contextmenu.native.prevent="closeFloatingPreviews">
+      <div v-if="!ignoredMatches.length" class="empty-state"><div><h3>没有被忽略的帧</h3><p>在经验检索结果里点击黄色减号即可先移出列表。</p></div></div>
+      <div v-else class="curation-list">
+        <div v-for="match in ignoredMatches" :key="match.item_id" class="curation-row ignored-card" :class="{ 'preview-dismissed': isPreviewDismissed(match) }" @mouseenter="armHoverPreview(match)" @mouseleave="cancelHoverPreview(match)">
+          <span class="curation-index">{{ match.rank }}</span>
+          <div class="curation-copy">{{ curationText(match) }}</div>
+          <div class="curation-controls">
+            <el-button size="mini" icon="el-icon-refresh-left" @click="restoreIgnored(match)">复原</el-button>
+            <el-button size="mini" icon="el-icon-view" @click="showJson(match)">JSON</el-button>
+          </div>
+          <div class="curation-preview">
+            <div v-if="shouldRenderHoverPreview(match)" class="curation-preview-inner" @contextmenu.prevent.stop="dismissHoverPreview(match)">
+              <div v-for="label in frameLabels" :key="label" class="mini-frame">
+                <template v-if="previewFrame(match, label) && previewFrame(match, label).exists"><img :src="fileUrl(previewFrame(match, label).path)" :alt="label + ' frame'" /><span>{{ label }}</span></template>
+                <div v-else class="mini-empty">{{ label }}<br />不可访问</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span slot="footer"><el-button @click="ignoredDialog.visible = false">关闭</el-button></span>
     </el-dialog>
   </div>
 
@@ -1695,17 +2603,32 @@
             extract_cards: true, force: false, burn_subtitles: false
           },
           search: {
-            query: '', sources: ['outputs/film_analysis'], top_k: 5, candidate_depth: 100,
+            query: '', sources: ['outputs/film_analysis'], top_k: 0, candidate_depth: 100,
             planner: 'multi_query', ranking_key: 'hybrid_rrf_constraints_signature', channel_policy: 'all'
           },
           searchResult: null,
+          searchPaging: { page: 1, pageSize: 30, pageSizes: [20, 30, 50] },
+          preloadedFrameUrls: {},
+          preloadFrameQueue: [],
+          preloadingFrameUrls: {},
+          framePreloadTimer: null,
+          manualOrder: [],
+          ignoredIds: [],
+          starredIds: [],
           scriptSelectedSource: 'outputs/film_analysis',
           scriptForm: {
-            query: '', sources: ['outputs/film_analysis'], top_k: 5, duration_seconds: 60,
-            script_brief: '', tone: '', audience: '', must_include: '', avoid: '',
+            query: '', sources: ['outputs/film_analysis'], top_k: 5, reference_allow: 5, duration_seconds: 60, script_count: 1,
+            script_brief: '', tone: '', audience: '', must_include: '', avoid: '', creator_intent_prompt: '', fine_tune_instruction: '', material_instruction: '', prompt_revision_rounds: 1,
             candidate_depth: 100, planner: 'multi_query', ranking_key: 'hybrid_rrf_constraints_signature', channel_policy: 'all'
           },
           scriptResult: null,
+          scriptResults: [],
+          scriptUi: { configCollapsed: false, refsCollapsed: true, activeIndex: 0, mode: 'config', modeMenuOpen: false, stableMinHeight: 430, wheelAccumulator: 0, wheelDirection: '', wheelPulse: 0, wheelTimer: null },
+          scriptAgents: {
+            intent: { input: '', loading: false, result: null, history: [] },
+            tune: { input: '', loading: false, result: null, history: [] },
+            assets: { input: '', loading: false, result: null, history: [] }
+          },
           llmConfigPath: '',
           providerSchemes: [],
           llmProfiles: {
@@ -1714,6 +2637,13 @@
           },
           llmPingResults: {},
           jsonDialog: { visible: false, text: '' },
+          previewDialog: { visible: false, mode: 'frames', item: null },
+          sortDialog: { visible: false },
+          sortDrag: { id: '', startY: 0, currentY: 0, active: false, scrollFrame: 0, pointerId: null, handle: null, lastSwapY: 0 },
+          dismissedPreviewIds: [],
+          hoverPreviewId: '',
+          hoverPreviewTimer: null,
+          ignoredDialog: { visible: false },
           frameLabels: ['start', 'middle', 'end']
         }
       },
@@ -1721,12 +2651,111 @@
         matches() { return (this.searchResult && this.searchResult.matches) || [] },
         summary() { return (this.searchResult && this.searchResult.summary) || {} },
         resultCount() { return this.matches.length },
+        manualOrderedMatches() {
+          const byId = new Map(this.matches.map((match) => [this.matchKey(match), match]))
+          const seen = new Set()
+          const ordered = []
+          this.manualOrder.forEach((id) => {
+            if (byId.has(id) && !seen.has(id)) { ordered.push(byId.get(id)); seen.add(id) }
+          })
+          this.matches.forEach((match) => { const id = this.matchKey(match); if (!seen.has(id)) ordered.push(match) })
+          return ordered
+        },
+        ignoredMatches() { return this.manualOrderedMatches.filter((match) => this.isIgnored(match)) },
+        allVisibleMatches() { return this.manualOrderedMatches },
+        allAvailableMatches() { return this.manualOrderedMatches.filter((match) => !this.isIgnored(match)) },
+        searchPageCount() { return Math.max(1, Math.ceil(this.allVisibleMatches.length / Number(this.searchPaging.pageSize || 30))) },
+        normalizedSearchPage() { return Math.min(Math.max(1, Number(this.searchPaging.page || 1)), this.searchPageCount) },
+        pagedVisibleMatches() {
+          const pageSize = Number(this.searchPaging.pageSize || 30)
+          const start = (this.normalizedSearchPage - 1) * pageSize
+          return this.allVisibleMatches.slice(start, start + pageSize)
+        },
+        visibleMatches() { return this.pagedVisibleMatches },
+        searchPageStart() { return this.allVisibleMatches.length ? ((this.normalizedSearchPage - 1) * Number(this.searchPaging.pageSize || 30)) + 1 : 0 },
+        searchPageEnd() { return Math.min(this.allVisibleMatches.length, this.normalizedSearchPage * Number(this.searchPaging.pageSize || 30)) },
+        searchPreloadPages() {
+          const pages = new Set([1, 2])
+          const current = this.normalizedSearchPage
+          for (let page = current - 2; page <= current + 2; page += 1) {
+            if (page >= 1 && page <= this.searchPageCount) pages.add(page)
+          }
+          return Array.from(pages).sort((a, b) => a - b)
+        },
+        manualAvailableMatches() { return this.allAvailableMatches },
+        starredMatches() { return this.manualAvailableMatches.filter((match) => this.isStarred(match)) },
+        sortableMatches() { return this.manualAvailableMatches },
+        scriptUploadMatches() {
+          const starred = this.starredMatches
+          const starredIds = new Set(starred.map((match) => this.matchKey(match)))
+          const rawAllow = this.scriptForm.reference_allow
+          const allow = Math.max(0, Number(rawAllow === '' || rawAllow === null || rawAllow === undefined ? (this.scriptForm.top_k || 0) : rawAllow))
+          const allowed = this.manualAvailableMatches.filter((match) => !starredIds.has(this.matchKey(match))).slice(0, allow)
+          return [...starred, ...allowed]
+        },
+        previewJson() { return this.previewDialog.item ? JSON.stringify(this.previewDialog.item, null, 2) : '' },
+        activeScriptResult() { return this.scriptResults[this.scriptUi.activeIndex] || this.scriptResult || null },
+        scriptModeOptions() {
+          return [
+            { value: 'config', label: '生成配置', description: '设置脚本目标、参考帧和生成数量' },
+            { value: 'intent', label: '推断意图', description: '和 agent 多轮整理创作者偏好' },
+            { value: 'tune', label: '微调', description: '基于脚本原型生成调整方向' },
+            { value: 'assets', label: '生成素材', description: '从脚本和场景联想补充素材' }
+          ]
+        },
+        scriptModeLabel() { return (this.scriptModeOptions.find((option) => option.value === this.scriptUi.mode) || this.scriptModeOptions[0]).label },
+        scriptModeDescription() { return (this.scriptModeOptions.find((option) => option.value === this.scriptUi.mode) || this.scriptModeOptions[0]).description },
+        scriptModeWheelClass() { return this.scriptUi.wheelDirection ? `is-wheel-${this.scriptUi.wheelDirection}` : '' },
         ingestLimitDisplay() { return Number(this.ingest.limit || 0) === 0 ? '当前：不设限' : `当前：最多 ${this.ingest.limit} 个场景` },
         llmProfileList() { return [this.llmProfiles.basic, this.llmProfiles.vision] }
       },
-      mounted() { this.loadStatus(); this.refreshSources(); this.loadLlmSettings() },
-      beforeDestroy() { this.stopIngestPolling() },
+      watch: {
+        selectedSource() { this.saveDefaultForms() },
+        search: { deep: true, handler() { this.saveDefaultForms() } },
+        scriptSelectedSource() { this.saveDefaultForms() },
+        scriptForm: { deep: true, handler() { this.saveDefaultForms() } },
+        activePage() { this.scriptUi.modeMenuOpen = false }
+      },
+      mounted() { this.loadDefaultForms(); this.loadStatus(); this.refreshSources(); this.loadLlmSettings() },
+      beforeDestroy() {
+        this.stopIngestPolling()
+        this.stopSortDrag()
+        if (this.scriptUi.wheelTimer) window.clearTimeout(this.scriptUi.wheelTimer)
+        this.clearFramePreloadQueue()
+        this.cancelHoverPreview()
+      },
       methods: {
+        defaultFormStorageKey() { return 'sceneweaver.user.forms.v1' },
+        loadDefaultForms() {
+          try {
+            const raw = window.localStorage && window.localStorage.getItem(this.defaultFormStorageKey())
+            if (!raw) return
+            const saved = JSON.parse(raw)
+            if (saved.search && typeof saved.search === 'object' && !Array.isArray(saved.search)) this.search = this.mergeStoredForm(this.search, saved.search)
+            if (saved.selectedSource) this.selectedSource = String(saved.selectedSource)
+            if (Array.isArray(this.search.sources) && this.search.sources.length) this.selectedSource = this.search.sources[0]
+            if (saved.scriptForm && typeof saved.scriptForm === 'object' && !Array.isArray(saved.scriptForm)) this.scriptForm = this.mergeStoredForm(this.scriptForm, saved.scriptForm)
+            if (saved.scriptSelectedSource) this.scriptSelectedSource = String(saved.scriptSelectedSource)
+            if (Array.isArray(this.scriptForm.sources) && this.scriptForm.sources.length) this.scriptSelectedSource = this.scriptForm.sources[0]
+          } catch (error) {}
+        },
+        mergeStoredForm(base, stored) {
+          const next = { ...base, ...stored }
+          next.sources = Array.isArray(stored.sources) && stored.sources.length ? stored.sources.map((value) => String(value)) : [...(base.sources || [])]
+          return next
+        },
+        saveDefaultForms() {
+          try {
+            if (!window.localStorage) return
+            const payload = {
+              selectedSource: this.selectedSource,
+              search: { ...this.search, sources: [...(this.search.sources || [])] },
+              scriptSelectedSource: this.scriptSelectedSource,
+              scriptForm: { ...this.scriptForm, sources: [...(this.scriptForm.sources || [])] }
+            }
+            window.localStorage.setItem(this.defaultFormStorageKey(), JSON.stringify(payload))
+          } catch (error) {}
+        },
         async loadStatus() { this.status = await this.request('/api/status') },
         async refreshSources() { const data = await this.request('/api/sources'); this.sources = data.sources || [] },
         async loadLlmSettings() {
@@ -1889,6 +2918,397 @@
         },
         applySelectedSource(value) { this.search.sources = [value] },
         applyScriptSource(value) { this.scriptForm.sources = [value] },
+        toggleScriptModeMenu() { this.scriptUi.modeMenuOpen = !this.scriptUi.modeMenuOpen },
+        onScriptModeWheel(event) {
+          if (!event) return
+          const delta = Math.abs(event.deltaY) >= Math.abs(event.deltaX) ? event.deltaY : event.deltaX
+          if (!delta) return
+          this.scriptUi.wheelAccumulator += delta
+          const step = 36
+          if (Math.abs(this.scriptUi.wheelAccumulator) < step) return
+          const direction = this.scriptUi.wheelAccumulator > 0 ? 1 : -1
+          this.scriptUi.wheelAccumulator = 0
+          this.shiftScriptMode(direction)
+        },
+        shiftScriptMode(direction) {
+          const options = this.scriptModeOptions
+          const current = Math.max(0, options.findIndex((option) => option.value === this.scriptUi.mode))
+          const nextIndex = (current + direction + options.length) % options.length
+          this.setScriptMode(options[nextIndex].value, { wheelDirection: direction > 0 ? 'next' : 'prev' })
+        },
+        setScriptMode(mode, options = {}) {
+          this.rememberScriptPanelHeight()
+          this.scriptUi.mode = mode
+          this.scriptUi.modeMenuOpen = false
+          this.scriptUi.configCollapsed = false
+          if (options.wheelDirection) this.pulseScriptModeWheel(options.wheelDirection)
+          this.$nextTick(() => this.rememberScriptPanelHeight())
+        },
+        pulseScriptModeWheel(direction) {
+          this.scriptUi.wheelDirection = direction
+          this.scriptUi.wheelPulse += 1
+          if (this.scriptUi.wheelTimer) window.clearTimeout(this.scriptUi.wheelTimer)
+          this.scriptUi.wheelTimer = window.setTimeout(() => {
+            this.scriptUi.wheelDirection = ''
+            this.scriptUi.wheelTimer = null
+          }, 220)
+        },
+        rememberScriptPanelHeight() {
+          const body = this.$el && this.$el.querySelector ? this.$el.querySelector('.script-stable-body') : null
+          if (!body) return
+          const height = Math.ceil(body.getBoundingClientRect().height)
+          if (height > Number(this.scriptUi.stableMinHeight || 0)) this.scriptUi.stableMinHeight = height
+        },
+        toggleScriptConfig(event) {
+          const target = event && event.target
+          if (target && target.closest && target.closest('button, .el-button, .script-mode-menu')) return
+          this.scriptUi.modeMenuOpen = false
+          // 空白点击收起已停用，保留方法避免旧调用报错。
+        },
+        matchKey(match) { return String(match.item_id || `${match.video_id || ''}:${match.scene_id || ''}:${match.card_id || ''}:${match.rank || ''}`) },
+        resetManualCuration() {
+          this.clearFramePreloadQueue()
+          this.cancelHoverPreview()
+          this.manualOrder = this.matches.map((match) => this.matchKey(match))
+          this.ignoredIds = []
+          this.starredIds = []
+          this.dismissedPreviewIds = []
+          this.searchPaging.page = 1
+          this.preloadedFrameUrls = {}
+        },
+        isIgnored(match) { return this.ignoredIds.includes(this.matchKey(match)) },
+        isStarred(match) { return this.starredIds.includes(this.matchKey(match)) },
+        isPreviewDismissed(match) { return this.dismissedPreviewIds.includes(this.matchKey(match)) },
+        shouldRenderHoverPreview(match) { return this.hoverPreviewId === this.matchKey(match) && !this.isPreviewDismissed(match) && !this.sortDrag.active },
+        clearHoverPreviewTimer() {
+          if (this.hoverPreviewTimer) window.clearTimeout(this.hoverPreviewTimer)
+          this.hoverPreviewTimer = null
+        },
+        armHoverPreview(match) {
+          const id = this.matchKey(match)
+          this.resetPreviewDismissal(match)
+          this.clearHoverPreviewTimer()
+          this.hoverPreviewTimer = window.setTimeout(() => {
+            if (!this.dismissedPreviewIds.includes(id) && !this.sortDrag.active) this.hoverPreviewId = id
+            this.hoverPreviewTimer = null
+          }, 500)
+        },
+        cancelHoverPreview(match) {
+          const id = match ? this.matchKey(match) : ''
+          this.clearHoverPreviewTimer()
+          if (!id || this.hoverPreviewId === id) this.hoverPreviewId = ''
+        },
+        dismissHoverPreview(match) {
+          const id = this.matchKey(match)
+          if (!this.dismissedPreviewIds.includes(id)) this.dismissedPreviewIds = [...this.dismissedPreviewIds, id]
+          this.cancelHoverPreview(match)
+        },
+        resetPreviewDismissal(match) {
+          const id = this.matchKey(match)
+          if (this.dismissedPreviewIds.includes(id)) this.dismissedPreviewIds = this.dismissedPreviewIds.filter((value) => value !== id)
+        },
+        closePreviews() {
+          this.jsonDialog.visible = false
+          this.previewDialog.visible = false
+        },
+        closeFloatingPreviews() {
+          this.cancelHoverPreview()
+          this.dismissedPreviewIds = this.manualAvailableMatches.concat(this.ignoredMatches).map((match) => this.matchKey(match))
+        },
+        setSearchPage(value) {
+          const page = Math.min(Math.max(1, Number(value || 1)), this.searchPageCount)
+          this.searchPaging.page = page
+          this.$nextTick(() => this.preloadSearchPages())
+        },
+        onSearchPageSizeChange() {
+          this.searchPaging.page = 1
+          this.$nextTick(() => this.preloadSearchPages())
+        },
+        clearFramePreloadQueue() {
+          if (this.framePreloadTimer) window.clearTimeout(this.framePreloadTimer)
+          this.framePreloadTimer = null
+          this.preloadFrameQueue = []
+          this.preloadingFrameUrls = {}
+        },
+        preloadSearchPages() {
+          if (!this.allVisibleMatches.length) return
+          const urls = []
+          const pageSize = Number(this.searchPaging.pageSize || 30)
+          this.searchPreloadPages.forEach((page) => {
+            const start = (page - 1) * pageSize
+            this.allVisibleMatches.slice(start, start + pageSize).forEach((match) => {
+              if (this.isIgnored(match)) return
+              this.frameLabels.forEach((label) => {
+                const frame = this.frame(match, label)
+                if (frame && frame.exists && frame.path) urls.push(this.fileUrl(frame.path))
+              })
+            })
+          })
+          const nextUrls = urls.filter((url) => !this.preloadedFrameUrls[url] && !this.preloadingFrameUrls[url])
+          if (!nextUrls.length) return
+          nextUrls.forEach((url) => { this.preloadingFrameUrls[url] = true })
+          this.preloadFrameQueue = [...this.preloadFrameQueue, ...nextUrls]
+          this.drainFramePreloadQueue()
+        },
+        drainFramePreloadQueue() {
+          if (this.framePreloadTimer) return
+          const tick = () => {
+            const batch = this.preloadFrameQueue.splice(0, 8)
+            batch.forEach((url) => {
+              const image = new Image()
+              const done = () => {
+                this.$set(this.preloadedFrameUrls, url, true)
+                this.$delete(this.preloadingFrameUrls, url)
+              }
+              image.onload = done
+              image.onerror = done
+              image.src = url
+            })
+            if (this.preloadFrameQueue.length) this.framePreloadTimer = window.setTimeout(tick, 80)
+            else this.framePreloadTimer = null
+          }
+          this.framePreloadTimer = window.setTimeout(tick, 0)
+        },
+        toggleIgnore(match) {
+          const id = this.matchKey(match)
+          if (this.isIgnored(match)) {
+            this.ignoredIds = this.ignoredIds.filter((value) => value !== id)
+            this.$nextTick(() => this.preloadSearchPages())
+            return
+          }
+          this.ignoredIds = [...this.ignoredIds, id]
+          this.starredIds = this.starredIds.filter((value) => value !== id)
+        },
+        restoreIgnored(match) {
+          this.ignoredIds = this.ignoredIds.filter((value) => value !== this.matchKey(match))
+          this.$nextTick(() => this.preloadSearchPages())
+        },
+        toggleStar(match) {
+          const id = this.matchKey(match)
+          if (this.isStarred(match)) {
+            this.starredIds = this.starredIds.filter((value) => value !== id)
+            return
+          }
+          this.ignoredIds = this.ignoredIds.filter((value) => value !== id)
+          this.starredIds = [...this.starredIds, id]
+        },
+        openSortDialog() {
+          if (!this.manualAvailableMatches.length) { this.$message.warning('没有可排序的帧'); return }
+          this.sortDialog.visible = true
+        },
+        isDraggingMatch(match) { return this.sortDrag.active && this.sortDrag.id === this.matchKey(match) },
+        startSortDrag(event, match) {
+          if (!match || !event) return
+          if (event.button !== undefined && event.button !== 0) return
+          this.cancelHoverPreview(match)
+          const preview = event.currentTarget && event.currentTarget.querySelector ? event.currentTarget.querySelector('.curation-preview') : null
+          const previewStyle = preview ? window.getComputedStyle(preview) : null
+          const previewOpen = previewStyle && previewStyle.visibility !== 'hidden' && Number(previewStyle.opacity || 0) > 0.2
+          if (previewOpen) {
+            event.preventDefault()
+            const selection = window.getSelection && window.getSelection()
+            if (selection) selection.removeAllRanges()
+          }
+          event.preventDefault()
+          this.stopSortDrag()
+          const id = this.matchKey(match)
+          this.sortDrag.id = id
+          this.sortDrag.startY = event.clientY
+          this.sortDrag.currentY = event.clientY
+          this.sortDrag.active = true
+          this.sortDrag.lastSwapY = event.clientY
+          this.sortDrag.pointerId = event.pointerId
+          this.sortDrag.handle = event.currentTarget || null
+          if (this.sortDrag.handle && this.sortDrag.handle.setPointerCapture && event.pointerId !== undefined) {
+            try { this.sortDrag.handle.setPointerCapture(event.pointerId) } catch (error) {}
+          }
+          document.body.classList.add('is-sorting-drag')
+          window.addEventListener('pointermove', this.onSortDragMove)
+          window.addEventListener('pointerup', this.stopSortDrag, { once: true })
+          window.addEventListener('pointercancel', this.stopSortDrag, { once: true })
+          this.startSortAutoScroll()
+        },
+        onSortDragMove(event) {
+          if (!this.sortDrag.active) return
+          event.preventDefault()
+          const direction = event.clientY > this.sortDrag.currentY ? 1 : (event.clientY < this.sortDrag.currentY ? -1 : 0)
+          this.sortDrag.currentY = event.clientY
+          if (direction) this.reorderDraggedMatch(event.clientY, direction)
+        },
+        reorderDraggedMatch(clientY, forcedDirection = 0) {
+          const activeIds = this.sortableMatches.map((match) => this.matchKey(match))
+          const fromIndex = activeIds.indexOf(this.sortDrag.id)
+          if (fromIndex < 0) return
+          const container = this.sortScrollContainer()
+          if (!container) return
+          const rows = Array.from(container.querySelectorAll('.curation-row[data-match-id]'))
+          if (!forcedDirection) return
+          const movingDown = forcedDirection > 0
+          const neighborIndex = movingDown ? fromIndex + 1 : fromIndex - 1
+          if (neighborIndex < 0 || neighborIndex >= rows.length) return
+          const rect = rows[neighborIndex].getBoundingClientRect()
+          const threshold = Math.max(24, Math.min(64, rect.height * 0.58))
+          const shouldSwap = movingDown ? clientY > rect.top + threshold : clientY < rect.bottom - threshold
+          if (!shouldSwap) return
+          const targetIndex = neighborIndex
+          const nextActiveIds = [...activeIds]
+          const [moved] = nextActiveIds.splice(fromIndex, 1)
+          nextActiveIds.splice(targetIndex, 0, moved)
+          this.sortDrag.lastSwapY = clientY
+          this.replaceActiveOrder(nextActiveIds)
+        },
+        replaceActiveOrder(activeIds) {
+          const activeQueue = [...activeIds]
+          this.manualOrder = this.manualOrderedMatches.map((match) => {
+            const id = this.matchKey(match)
+            return this.isIgnored(match) ? id : (activeQueue.shift() || id)
+          })
+        },
+        sortScrollContainer() {
+          const ref = this.$refs.sortList
+          return ref ? (ref.$el || ref) : null
+        },
+        startSortAutoScroll() {
+          if (this.sortDrag.scrollFrame) return
+          const tick = () => {
+            if (!this.sortDrag.active) { this.sortDrag.scrollFrame = 0; return }
+            const container = this.sortScrollContainer()
+            if (container) {
+              const rect = container.getBoundingClientRect()
+              const edge = 82
+              const y = this.sortDrag.currentY
+              const distanceFromStart = Math.abs(y - this.sortDrag.startY)
+              const dragBoost = Math.min(3.4, 1 + distanceFromStart / 180)
+              let velocity = 0
+              if (y < rect.top + edge) velocity = -Math.pow((rect.top + edge - y) / edge, 1.7) * 14 * dragBoost
+              else if (y > rect.bottom - edge) velocity = Math.pow((y - (rect.bottom - edge)) / edge, 1.7) * 14 * dragBoost
+              if (velocity) {
+                container.scrollTop += velocity
+                this.reorderDraggedMatch(this.sortDrag.currentY, velocity > 0 ? 1 : -1)
+              }
+            }
+            this.sortDrag.scrollFrame = window.requestAnimationFrame(tick)
+          }
+          this.sortDrag.scrollFrame = window.requestAnimationFrame(tick)
+        },
+        stopSortDrag() {
+          if (this.sortDrag.scrollFrame) window.cancelAnimationFrame(this.sortDrag.scrollFrame)
+          if (this.sortDrag.handle && this.sortDrag.handle.releasePointerCapture && this.sortDrag.pointerId !== null) {
+            try { this.sortDrag.handle.releasePointerCapture(this.sortDrag.pointerId) } catch (error) {}
+          }
+          this.sortDrag.scrollFrame = 0
+          this.sortDrag.active = false
+          this.sortDrag.id = ''
+          this.sortDrag.pointerId = null
+          this.sortDrag.handle = null
+          this.sortDrag.lastSwapY = 0
+          this.cancelHoverPreview()
+          document.body.classList.remove('is-sorting-drag')
+          window.removeEventListener('pointermove', this.onSortDragMove)
+          window.removeEventListener('pointerup', this.stopSortDrag)
+          window.removeEventListener('pointercancel', this.stopSortDrag)
+        },
+        curationText(match) {
+          const payload = match.payload || {}
+          const usecase = payload.script_usecase || {}
+          const candidates = [
+            usecase.sentence,
+            payload.script_use_sentence,
+            payload.reuse_condition,
+            match.summary_text,
+            payload.director_strategy,
+            usecase.best_usage
+          ]
+          const text = candidates.map((value) => String(value || '').trim()).find((value) => value && /[\u4e00-\u9fff]/.test(value))
+          return text || String(candidates.find((value) => value) || '参考经验')
+        },
+        curatedReferenceMatches() {
+          return this.scriptUploadMatches.map((match, index) => ({
+            ...match,
+            original_rank: match.rank,
+            rank: index + 1,
+            manual_order: index + 1,
+            curation: {
+              starred: this.isStarred(match),
+              ignored: false,
+              note: this.curationText(match)
+            }
+          }))
+        },
+        scriptPayload(variantIndex = 1, variantCount = 1) {
+          const payload = { ...this.scriptForm, variant_index: variantIndex, variant_count: variantCount }
+          delete payload.script_count
+          delete payload.material_instruction
+          if (this.scriptForm.material_instruction) payload.fine_tune_instruction = `${payload.fine_tune_instruction || ''}\n生成素材：${this.scriptForm.material_instruction}`.trim()
+          if (this.scriptUploadMatches.length) {
+            payload.reference_matches = this.curatedReferenceMatches()
+            payload.top_k = payload.reference_matches.length
+          } else {
+            payload.top_k = Math.max(1, Number(payload.reference_allow || payload.top_k || 1))
+            payload.candidate_depth = Math.max(Number(payload.candidate_depth || 0), Number(payload.top_k || 0))
+          }
+          return payload
+        },
+        scriptAgentContext() {
+          return {
+            script_form: { ...this.scriptForm, sources: [...(this.scriptForm.sources || [])] },
+            reference_matches: this.curatedReferenceMatches().slice(0, 24).map((match) => ({
+              rank: match.rank,
+              scene_id: match.scene_id,
+              card_id: match.card_id,
+              summary_text: match.summary_text,
+              curation_note: match.curation && match.curation.note,
+              starred: match.curation && match.curation.starred
+            })),
+            active_script: this.activeScriptResult ? this.activeScriptResult.script : null
+          }
+        },
+        async runScriptAgent(mode) {
+          const agent = this.scriptAgents[mode]
+          if (!agent) return
+          const userInput = mode === 'intent' ? agent.input : (mode === 'tune' ? this.scriptForm.fine_tune_instruction : this.scriptForm.material_instruction)
+          if (!String(userInput || '').trim()) { this.$message.warning('请输入要讨论的内容'); return }
+          agent.loading = true
+          try {
+            const result = await this.request('/api/script-agent', { method: 'POST', body: { mode, user_input: userInput, context: this.scriptAgentContext(), history: agent.history } })
+            agent.result = result
+            agent.history = [...agent.history, { role: 'user', content: userInput }, { role: 'assistant', content: result.reply || result.summary || '' }].slice(-10)
+            this.$message.success('Agent 已生成建议')
+          } catch (error) { this.$message.error(error.message) }
+          finally { agent.loading = false }
+        },
+        adoptAgentSuggestion(mode) {
+          const result = this.scriptAgents[mode] && this.scriptAgents[mode].result
+          if (!result) return
+          if (mode === 'intent') {
+            if (result.suggested_creator_intent_prompt) this.scriptForm.creator_intent_prompt = result.suggested_creator_intent_prompt
+            if (result.suggested_script_brief) this.scriptForm.script_brief = result.suggested_script_brief
+          } else if (mode === 'assets') {
+            if (result.suggested_material_instruction) this.appendTextField('material_instruction', result.suggested_material_instruction)
+          }
+          this.$message.success('已加入生成配置')
+        },
+        appendFineTuneInstruction(text) {
+          this.appendTextField('fine_tune_instruction', text)
+        },
+        applyGeneratedMaterial(material) {
+          const target = String(material && material.target || 'material').toLowerCase()
+          const content = String(material && material.content || '').trim()
+          if (!content) return
+          const fieldMap = { brief: 'script_brief', must_include: 'must_include', avoid: 'avoid', fine_tune: 'fine_tune_instruction', material: 'material_instruction' }
+          this.appendTextField(fieldMap[target] || 'material_instruction', content)
+        },
+        appendTextField(field, text) {
+          const value = String(text || '').trim()
+          if (!value || !Object.prototype.hasOwnProperty.call(this.scriptForm, field)) return
+          const current = String(this.scriptForm[field] || '').trim()
+          this.scriptForm[field] = current ? `${current}\n${value}` : value
+          this.$message.success('已加入配置')
+        },
+        scriptPageLabel(index) {
+          const labels = ['①', '②', '③', '④', '⑤', '⑥', '⑦', '⑧', '⑨']
+          return labels[index] || String(index + 1)
+        },
         selectSourceAndSearch(path) { this.selectedSource = path; this.search.sources = [path]; this.activePage = 'search' },
         onUploadChange(file) { this.uploadFile = file.raw },
         onUploadRemove() { this.uploadFile = null },
@@ -2012,28 +3432,50 @@
         async runSearch() {
           if (!this.search.query.trim()) { this.$message.warning('请输入关键词'); return }
           this.searching = true
-          try { this.searchResult = await this.request('/api/search', { method: 'POST', body: this.search }); this.$message.success('检索完成') }
+          const searchStartedAt = (window.performance && window.performance.now) ? window.performance.now() : Date.now()
+          try {
+            const payload = { ...this.search }
+            payload.candidate_depth = Math.max(Number(payload.candidate_depth || 0), Number(payload.top_k || 0))
+            this.searchResult = await this.request('/api/search', { method: 'POST', body: payload })
+            this.resetManualCuration()
+            this.$nextTick(() => this.preloadSearchPages())
+            const searchFinishedAt = (window.performance && window.performance.now) ? window.performance.now() : Date.now()
+            this.$message.success(`检索完成 · ${((searchFinishedAt - searchStartedAt) / 1000).toFixed(3)}s`)
+          }
           catch (error) { this.$message.error(error.message) }
           finally { this.searching = false }
         },
         adoptSearchForScript() {
           if (!this.search.query.trim()) { this.$message.warning('请先输入关键词'); return }
+          if (!this.manualAvailableMatches.length) { this.$message.warning('请先保留至少一个检索结果'); return }
           this.scriptForm.query = this.search.query
           this.scriptForm.sources = [...this.search.sources]
           this.scriptSelectedSource = this.selectedSource
-          this.scriptForm.top_k = this.search.top_k
           this.scriptForm.planner = this.search.planner
           this.scriptForm.ranking_key = this.search.ranking_key
           this.scriptForm.channel_policy = this.search.channel_policy
           this.activePage = 'script'
-          this.$message.success('已带入当前检索条件')
+          this.$message.success('已带入人工筛选结果')
         },
         async runScript() {
           if (!this.scriptForm.query.trim()) { this.$message.warning('请输入关键词'); return }
+          if (this.matches.length && !this.scriptUploadMatches.length) { this.$message.warning('当前没有可上传的参考帧，请复原或星标至少一个帧'); return }
           this.scripting = true
           try {
-            this.scriptResult = await this.request('/api/generate-script', { method: 'POST', body: this.scriptForm })
-            this.$message.success('脚本生成完成')
+            const count = Math.max(1, Math.min(6, Number(this.scriptForm.script_count || 1)))
+            const results = []
+            for (let index = 1; index <= count; index += 1) {
+              const payload = this.scriptPayload(index, count)
+              const result = await this.request('/api/generate-script', { method: 'POST', body: payload })
+              result.variant_index = index
+              result.variant_count = count
+              results.push(result)
+              this.scriptResults = [...results]
+              this.scriptResult = result
+              this.scriptUi.activeIndex = results.length - 1
+            }
+            this.scriptUi.activeIndex = 0
+            this.$message.success(count > 1 ? `已生成 ${count} 个脚本版本` : '脚本生成完成')
           } catch (error) { this.$message.error(error.message) }
           finally { this.scripting = false }
         },
@@ -2052,11 +3494,33 @@
         },
         fileUrl(path) { return '/api/file?path=' + encodeURIComponent(path) },
         frame(match, label) { return match.frames && match.frames[label] },
+        previewFrame(item, label) {
+          if (!item) return null
+          if (item.frames && item.frames[label]) return item.frames[label]
+          if (item.frame_gallery && item.frame_gallery[label]) return item.frame_gallery[label]
+          if (item.frame_label === label && item.frame_path) return { exists: true, path: item.frame_path, relative_path: item.frame_relative_path || '' }
+          return null
+        },
+        showFramePreview(item) {
+          if (!item) return
+          this.previewDialog.item = item
+          this.previewDialog.mode = 'frames'
+          this.previewDialog.visible = true
+        },
+        previewTitle(item) {
+          if (!item) return '参考帧'
+          if (item.reference_id) return `${item.reference_id} / ${item.scene_id || ''}`
+          return `${item.video_id || ''} / ${item.scene_id || ''} / ${item.card_id || ''}`.replace(/^\s*\/\s*/, '').trim() || '参考帧'
+        },
+        previewSubtitle(item) {
+          if (!item) return ''
+          return item.summary_text || item.director_strategy || item.reuse_condition || this.curationText(item)
+        },
         formatTime(range) { return range && range.start ? `${range.start} - ${range.end} - ${range.duration_seconds}s` : 'time range unavailable' },
         score(match) { return Number(match.final_score || match.score || 0).toFixed(3) },
         showJson(value) { this.jsonDialog.text = JSON.stringify(value, null, 2); this.jsonDialog.visible = true },
         async copyPath(path) { if (!path) return; await navigator.clipboard.writeText(path); this.$message.success('路径已复制') },
-        async copyScriptMarkdown() { const text = this.scriptResult && this.scriptResult.script && this.scriptResult.script.script_markdown; if (!text) return; await navigator.clipboard.writeText(text); this.$message.success('脚本正文已复制') },
+        async copyScriptMarkdown() { const result = this.activeScriptResult; const text = result && result.script && result.script.script_markdown; if (!text) return; await navigator.clipboard.writeText(text); this.$message.success('脚本正文已复制') },
         optionalNumber(value) { return value === null || value === undefined || value === '' || Number(value) === 0 ? null : Number(value) },
         clean(value) { return value && String(value).trim() ? String(value).trim() : null }
       }

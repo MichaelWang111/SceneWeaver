@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Any, Iterable, Literal
 
 from retrieval_lab.retrieval import DEFAULT_RETRIEVAL_RUN_OUTPUT, retrieval_run
+from retrieval_lab.corpora import sceneweaver_items_from_sources
 
 from sceneweaver.analysis.experience_extractor import extract_experience_cards
 from sceneweaver.analysis.scene_analyzer import analyze_scene_packages
@@ -25,6 +26,7 @@ DEFAULT_PLANNER = "multi_query"
 DEFAULT_RANKING_KEY = "hybrid_rrf_constraints_signature"
 DEFAULT_DIRECTOR_PROMPT = Path(__file__).resolve().parents[2] / "prompts" / "Director.md"
 SCRIPT_GENERATION_MAX_TOKENS = 6000
+SCRIPT_AGENT_MAX_TOKENS = 2600
 USER_INGEST_SCENE_ANALYSIS_MODEL = "qwen3.7-plus"
 
 
@@ -174,6 +176,11 @@ def search_scenes(
 ) -> dict[str, Any]:
     """Search SceneWeaver cards through Retrieval Lab and attach scene frame paths."""
     source_paths = [Path(source) for source in (sources or [DEFAULT_OUTPUT_ROOT])]
+    requested_top_k = top_k
+    if top_k <= 0:
+        top_k = len(sceneweaver_items_from_sources(source_paths, channel_policy=channel_policy))
+    top_k = max(1, top_k)
+    candidate_depth = max(candidate_depth, top_k)
     artifact = retrieval_run(
         card_sources=source_paths,
         queries=[query],
@@ -195,6 +202,7 @@ def search_scenes(
         "query": query,
         "sources": [str(path) for path in source_paths],
         "top_k": top_k,
+        "requested_top_k": requested_top_k,
         "planner": planner,
         "ranking_key": ranking_key,
         "channel_policy": channel_policy,
@@ -215,6 +223,11 @@ def generate_script(
     audience: str = "",
     must_include: str = "",
     avoid: str = "",
+    creator_intent_prompt: str = "",
+    prompt_revision_rounds: int = 0,
+    fine_tune_instruction: str = "",
+    variant_index: int = 1,
+    variant_count: int = 1,
     candidate_depth: int = 100,
     planner: str = DEFAULT_PLANNER,
     planner_cache: Path | None = None,
@@ -226,27 +239,46 @@ def generate_script(
     timeout_seconds: float | None = None,
     retries: int = 0,
     max_tokens: int | None = None,
+    reference_matches: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     clean_query = query.strip()
     if not clean_query:
         raise ValueError("query is required")
-    if top_k < 1:
-        raise ValueError("top_k must be >= 1")
-
-    search_result = search_scenes(
-        clean_query,
-        sources,
-        top_k=top_k,
-        candidate_depth=candidate_depth,
-        planner=planner,
-        planner_cache=planner_cache,
-        ranking_key=ranking_key,
-        channel_policy=channel_policy,
-        run_name=run_name,
-        include_payload=True,
-        include_channels=False,
-    )
-    reference_items, _image_paths = build_script_reference_items(search_result.get("matches", []))
+    source_paths = [Path(source) for source in (sources or [DEFAULT_OUTPUT_ROOT])]
+    if reference_matches is None:
+        if top_k < 1:
+            raise ValueError("top_k must be >= 1")
+        search_result = search_scenes(
+            clean_query,
+            source_paths,
+            top_k=top_k,
+            candidate_depth=candidate_depth,
+            planner=planner,
+            planner_cache=planner_cache,
+            ranking_key=ranking_key,
+            channel_policy=channel_policy,
+            run_name=run_name,
+            include_payload=True,
+            include_channels=False,
+        )
+        active_matches = search_result.get("matches", [])
+        generation_mode = "retrieved_then_generated"
+    else:
+        if top_k < 0:
+            raise ValueError("top_k must be >= 0")
+        active_matches = reference_matches
+        search_result = {
+            "query": clean_query,
+            "sources": [str(path) for path in source_paths],
+            "top_k": top_k,
+            "planner": planner,
+            "ranking_key": ranking_key,
+            "channel_policy": channel_policy,
+            "manual_reference_source": True,
+            "matches": active_matches,
+        }
+        generation_mode = "manual_reference_matches"
+    reference_items, _image_paths = build_script_reference_items(active_matches)
     if not reference_items:
         raise ValueError("no usable reference frames were found for script generation")
 
@@ -260,6 +292,11 @@ def generate_script(
         audience=audience,
         must_include=must_include,
         avoid=avoid,
+        creator_intent_prompt=creator_intent_prompt,
+        prompt_revision_rounds=prompt_revision_rounds,
+        fine_tune_instruction=fine_tune_instruction,
+        variant_index=variant_index,
+        variant_count=variant_count,
         reference_items=reference_items,
     )
     generation_tokens = max_tokens or SCRIPT_GENERATION_MAX_TOKENS
@@ -303,15 +340,129 @@ def generate_script(
         "duration_seconds": duration_seconds,
         "tone": tone,
         "audience": audience,
+        "creator_intent_prompt": creator_intent_prompt,
+        "prompt_revision_rounds": prompt_revision_rounds,
+        "fine_tune_instruction": fine_tune_instruction,
+        "variant_index": variant_index,
+        "variant_count": variant_count,
         "script": script,
         "generation_contract": {
             "mode": "shooting_script_from_scene_json_text",
+            "reference_mode": generation_mode,
             "max_tokens": generation_tokens,
+            "variant_index": variant_index,
+            "variant_count": variant_count,
+            "prompt_revision_rounds": prompt_revision_rounds,
         },
         "reference_items": reference_items,
         "search_result": search_result,
         "llm_metadata": llm_metadata,
     }
+
+
+def run_script_agent_task(
+    mode: str,
+    *,
+    context: dict[str, Any] | None = None,
+    user_input: str = "",
+    history: list[dict[str, Any]] | None = None,
+    client: Any | None = None,
+    timeout_seconds: float | None = None,
+    retries: int = 0,
+    max_tokens: int | None = None,
+) -> dict[str, Any]:
+    clean_mode = mode.strip().lower()
+    if clean_mode not in {"intent", "tune", "assets"}:
+        raise ValueError("mode must be one of: intent, tune, assets")
+    llm_client = client or VisionLLMClient(config_for_role_settings(role="script_generation") or None)
+    raw = llm_client.analyze_text_json(
+        system_prompt=script_agent_system_prompt(clean_mode),
+        user_prompt=json.dumps(
+            {
+                "mode": clean_mode,
+                "user_input": user_input.strip(),
+                "conversation_history": script_agent_safe_context(history or []),
+                "context": script_agent_safe_context(context or {}),
+            },
+            ensure_ascii=False,
+            indent=2,
+        ),
+        max_tokens=max_tokens or SCRIPT_AGENT_MAX_TOKENS,
+        timeout_seconds=timeout_seconds,
+        retries=retries,
+    )
+    result = normalize_script_agent_result(clean_mode, raw)
+    llm_metadata: dict[str, Any] = {}
+    config = getattr(llm_client, "config", None)
+    if config is not None:
+        llm_metadata = llm_config_metadata(config)
+    return {"status": "ok", "mode": clean_mode, **result, "llm_metadata": llm_metadata}
+
+
+
+
+def script_agent_system_prompt(mode: str) -> str:
+    schemas = {
+        "intent": "{reply, summary, questions: string[], preferences: string[], suggested_creator_intent_prompt, suggested_script_brief}",
+        "tune": "{reply, summary, variants: [{label, instruction, rationale}], suggested_fine_tune_instruction}",
+        "assets": "{reply, summary, materials: [{type, content, target}], suggested_material_instruction}",
+    }
+    return (
+        "You are a script development agent inside SceneWeaver. "
+        "Answer in concise Chinese, return only a JSON object, and never include markdown fences. "
+        "The current mode is " + mode + ". Expected schema: " + schemas[mode] + ". "
+        "Use the provided script, scenes, references, and prior turns as soft context. "
+        "Do not invent product facts. Keep suggestions actionable enough to paste back into generation settings. "
+        "For intent mode, help the creator understand preferences through inference and useful follow-up questions. "
+        "For tune mode, propose several adjustment directions from the current script prototype. "
+        "For assets mode, imagine useful supporting materials based on the script and scene references. "
+    )
+
+
+def normalize_script_agent_result(mode: str, raw: dict[str, Any]) -> dict[str, Any]:
+    data = raw if isinstance(raw, dict) else {}
+    result: dict[str, Any] = {
+        "reply": str(data.get("reply") or data.get("message") or ""),
+        "summary": str(data.get("summary") or ""),
+    }
+    if mode == "intent":
+        result["questions"] = normalize_string_list(data.get("questions"))
+        result["preferences"] = normalize_string_list(data.get("preferences"))
+        result["suggested_creator_intent_prompt"] = str(data.get("suggested_creator_intent_prompt") or "")
+        result["suggested_script_brief"] = str(data.get("suggested_script_brief") or "")
+    elif mode == "tune":
+        result["variants"] = normalize_dict_list(data.get("variants"), allowed_keys={"label", "instruction", "rationale"})
+        result["suggested_fine_tune_instruction"] = str(data.get("suggested_fine_tune_instruction") or "")
+    elif mode == "assets":
+        result["materials"] = normalize_dict_list(data.get("materials"), allowed_keys={"type", "content", "target"})
+        result["suggested_material_instruction"] = str(data.get("suggested_material_instruction") or "")
+    return result
+
+
+def normalize_string_list(value: Any) -> list[str]:
+    if not isinstance(value, list):
+        return []
+    return [str(item).strip() for item in value if str(item or "").strip()]
+
+
+def normalize_dict_list(value: Any, *, allowed_keys: set[str]) -> list[dict[str, str]]:
+    if not isinstance(value, list):
+        return []
+    rows: list[dict[str, str]] = []
+    for item in value:
+        if not isinstance(item, dict):
+            continue
+        row = {key: str(item.get(key) or "").strip() for key in allowed_keys}
+        if any(row.values()):
+            rows.append(row)
+    return rows
+
+
+def script_agent_safe_context(value: Any, *, limit: int = 12000) -> Any:
+    text = json.dumps(value, ensure_ascii=False, default=str)
+    if len(text) <= limit:
+        return value
+    return {"truncated_json": text[:limit], "truncated": True}
 
 
 def build_scene_match(
@@ -374,6 +525,7 @@ def build_script_reference_items(matches: list[dict[str, Any]]) -> tuple[list[di
             continue
         image_paths.append(Path(frame["path"]))
         payload = match.get("payload", {}) if isinstance(match.get("payload"), dict) else {}
+        curation = match.get("curation", {}) if isinstance(match.get("curation"), dict) else {}
         reference_id = f"reference_{len(reference_items) + 1:03d}"
         reference_items.append(
             {
@@ -388,7 +540,12 @@ def build_script_reference_items(matches: list[dict[str, Any]]) -> tuple[list[di
                 "frame_label": frame.get("label", "middle"),
                 "frame_path": frame.get("path", ""),
                 "frame_relative_path": frame.get("relative_path", ""),
+                "frame_gallery": frame_gallery(match),
                 "package_path": (match.get("source", {}) or {}).get("package_path", ""),
+                "original_rank": match.get("original_rank", match.get("rank", index)),
+                "manual_order": match.get("manual_order", index),
+                "must_include_reference": bool(curation.get("starred", False)),
+                "curation_note": curation.get("note", ""),
                 "director_strategy": payload.get("director_strategy", ""),
                 "narrative_logic": payload.get("narrative_logic", ""),
                 "reuse_condition": payload.get("reuse_condition", ""),
@@ -413,6 +570,21 @@ def preferred_reference_frame(match: dict[str, Any]) -> dict[str, Any] | None:
     return None
 
 
+def frame_gallery(match: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    frames = match.get("frames", {}) if isinstance(match.get("frames"), dict) else {}
+    gallery: dict[str, dict[str, Any]] = {}
+    for label in ("start", "middle", "end"):
+        frame = frames.get(label)
+        if not isinstance(frame, dict):
+            continue
+        gallery[label] = {
+            "relative_path": frame.get("relative_path", ""),
+            "path": frame.get("path", ""),
+            "exists": bool(frame.get("exists", False)),
+        }
+    return gallery
+
+
 def load_director_prompt(prompt_path: Path | None = None) -> str:
     return (prompt_path or DEFAULT_DIRECTOR_PROMPT).read_text(encoding="utf-8")
 
@@ -426,6 +598,11 @@ def build_director_user_prompt(
     audience: str,
     must_include: str,
     avoid: str,
+    creator_intent_prompt: str,
+    prompt_revision_rounds: int,
+    fine_tune_instruction: str,
+    variant_index: int,
+    variant_count: int,
     reference_items: list[dict[str, Any]],
 ) -> str:
     payload = {
@@ -437,10 +614,25 @@ def build_director_user_prompt(
         "audience": audience,
         "must_include": must_include,
         "avoid": avoid,
+        "creator_intent_probe": {
+            "raw_prompt": creator_intent_prompt,
+            "instruction": "If useful, infer the creator's real intention from the prompt, list the clarifying questions you would ask, answer them from available context, and let those inferred answers shape the script.",
+        },
+        "prompt_self_revision": {
+            "rounds": max(0, int(prompt_revision_rounds or 0)),
+            "instruction": "Before writing the final script, internally revise the working prompt for this many rounds. Use the final revised prompt to generate the answer; include only concise revision notes if they materially affect creative_strategy.",
+        },
+        "fine_tune_instruction": fine_tune_instruction,
+        "batch_variant": {
+            "index": max(1, int(variant_index or 1)),
+            "count": max(1, int(variant_count or 1)),
+            "instruction": "When count is greater than 1, make this script a distinct version with a meaningfully different angle, opening, rhythm, or narrative structure while obeying the same references and brief.",
+        },
         "reference_semantics": {
             "mode": "creative_reference_soft_constraint",
             "input_mode": "scene_card_text_only_no_images",
             "meaning": "References provide real directing experience and reusable strategy. The retrieved frame only locates the scene record; no image is sent to the LLM in this step.",
+            "manual_curation": "If reference_scene_items are manually curated, preserve their order. Items with must_include_reference=true are explicit human-selected must-use references.",
         },
         "reference_scene_items": director_prompt_reference_items(reference_items),
     }
@@ -449,7 +641,7 @@ def build_director_user_prompt(
 
 def director_prompt_reference_items(reference_items: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Return scene/card text references for the LLM without image paths."""
-    blocked_keys = {"frame_path", "frame_relative_path", "package_path"}
+    blocked_keys = {"frame_path", "frame_relative_path", "frame_gallery", "package_path"}
     return [{key: value for key, value in item.items() if key not in blocked_keys} for item in reference_items]
 
 
@@ -667,5 +859,6 @@ __all__ = [
     "director_prompt_reference_items",
     "ingest_video",
     "generate_script",
+    "run_script_agent_task",
     "search_scenes",
 ]

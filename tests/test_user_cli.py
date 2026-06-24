@@ -69,6 +69,11 @@ def test_generate_script_uses_retrieved_reference_frames(tmp_path):
         [output_dir],
         script_brief="招聘短片",
         top_k=1,
+        creator_intent_prompt="先判断创作者真正想表达什么",
+        prompt_revision_rounds=2,
+        fine_tune_instruction="更克制，更像纪录片",
+        variant_index=2,
+        variant_count=3,
         client=client,
     )
 
@@ -77,10 +82,61 @@ def test_generate_script_uses_retrieved_reference_frames(tmp_path):
     assert result["reference_items"][0]["frame_label"] == "middle"
     assert "creative_reference_soft_constraint" in client.calls[0]["user_prompt"]
     assert "scene_card_text_only_no_images" in client.calls[0]["user_prompt"]
+    assert "先判断创作者真正想表达什么" in client.calls[0]["user_prompt"]
+    assert "更克制，更像纪录片" in client.calls[0]["user_prompt"]
+    assert '"rounds": 2' in client.calls[0]["user_prompt"]
+    assert '"index": 2' in client.calls[0]["user_prompt"]
+    assert '"count": 3' in client.calls[0]["user_prompt"]
     assert "image_paths" not in client.calls[0]
     assert "frame_path" not in client.calls[0]["user_prompt"]
     assert "scene_001_middle.jpg" not in client.calls[0]["user_prompt"]
     assert client.calls[0]["max_tokens"] == 6000
+
+
+def test_generate_script_can_use_manual_reference_matches_without_search(monkeypatch):
+    client = FakeScriptClient()
+    manual_matches = [
+        {
+            "rank": 1,
+            "original_rank": 7,
+            "manual_order": 1,
+            "item_id": "manual-001",
+            "video_id": "demo",
+            "scene_id": "scene_007",
+            "card_id": "exp_000007",
+            "time_range": {},
+            "frames": {"middle": {"exists": True, "path": "D:/frames/scene_007_middle.jpg", "relative_path": "frames/scene_007_middle.jpg"}},
+            "source": {"package_path": "D:/packages/scene_007.json"},
+            "summary_text": "适合需要展现角色私人生活、放松状态或真实生活质感的场景",
+            "payload": {
+                "director_strategy": "用生活状态建立真实感",
+                "reuse_condition": "适合需要展现角色私人生活、放松状态或真实生活质感的场景",
+            },
+            "curation": {
+                "starred": True,
+                "note": "适合需要展现角色私人生活、放松状态或真实生活质感的场景",
+            },
+        }
+    ]
+
+    def fail_search(*args, **kwargs):
+        raise AssertionError("manual reference matches must not trigger search")
+
+    monkeypatch.setattr("sceneweaver.user_api.search_scenes", fail_search)
+
+    result = generate_script(
+        "真实生活质感",
+        ["outputs/film_analysis"],
+        top_k=1,
+        reference_matches=manual_matches,
+        client=client,
+    )
+
+    assert result["generation_contract"]["reference_mode"] == "manual_reference_matches"
+    assert result["search_result"]["manual_reference_source"] is True
+    assert result["reference_items"][0]["scene_id"] == "scene_007"
+    assert result["reference_items"][0]["must_include_reference"] is True
+    assert result["reference_items"][0]["curation_note"] == "适合需要展现角色私人生活、放松状态或真实生活质感的场景"
 
 
 def test_generate_script_repairs_empty_script_output(tmp_path):
