@@ -28,7 +28,10 @@ class LLMRunOptions:
 def effective_concurrency(requested: int, *, provider: str, model: str) -> int:
     if requested < 1:
         raise ValueError("concurrency must be >= 1")
-    normalized = normalize_provider(provider or "auto")
+    try:
+        normalized = normalize_provider(provider or "auto")
+    except Exception:
+        return requested
     if normalized == "auto":
         normalized = infer_provider_from_env()
     limits = model_limits(normalized, model)

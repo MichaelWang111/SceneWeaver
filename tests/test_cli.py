@@ -166,3 +166,24 @@ def test_cli_llm_check_uses_configured_client(monkeypatch):
     assert captured["user_prompt"] == "ping"
     assert captured["timeout_seconds"] == 12.0
     assert json.loads(result.stdout)["reply"] == "pong"
+
+
+def test_cli_llm_status_uses_central_status_payload(monkeypatch):
+    captured: dict[str, Any] = {}
+
+    def fake_status_payload(**kwargs):
+        captured.update(kwargs)
+        return {
+            "method": "sceneweaver_llm_provider_status",
+            "summary": {"provider": "deepseek", "api_key_configured": True},
+            "status": {"provider": "deepseek"},
+        }
+
+    monkeypatch.setattr("sceneweaver.cli.llm_status_payload", fake_status_payload)
+
+    result = CliRunner().invoke(app, ["llm-status", "--provider", "deepseek", "--include-models"])
+
+    assert result.exit_code == 0
+    assert captured["provider"] == "deepseek"
+    assert captured["include_models"] is True
+    assert json.loads(result.stdout)["summary"]["provider"] == "deepseek"

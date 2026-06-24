@@ -193,7 +193,8 @@ def test_run_ingest_no_analyze_does_not_extract_cards(monkeypatch, tmp_path):
     assert called["scene_analysis_model"] == "qwen3.7-plus"
 
 
-def test_user_ingest_scene_analysis_client_forces_qwen_plus_on_dashscope(monkeypatch):
+def test_user_ingest_scene_analysis_client_forces_qwen_plus_on_dashscope(monkeypatch, tmp_path):
+    monkeypatch.setattr("sceneweaver.llm.settings.DEFAULT_LLM_CONFIG_PATH", tmp_path / "llm_config.json")
     monkeypatch.setenv("SCENEWEAVER_LLM_PROVIDER", "deepseek")
     monkeypatch.setenv("DEEPSEEK_API_KEY", "deepseek-key")
     monkeypatch.setenv("DASHSCOPE_API_KEY", "dashscope-key")

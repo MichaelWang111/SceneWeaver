@@ -580,6 +580,15 @@
       gap: 10px;
     }
 
+    .field-hint {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+      font-weight: 760;
+    }
+
     .switch-row {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -609,6 +618,128 @@
       font-size: 12px;
       line-height: 1.65;
       white-space: pre-wrap;
+    }
+
+    .settings-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      align-items: start;
+      margin-top: 18px;
+    }
+
+    .llm-profile-card {
+      border: 1px solid rgba(198, 232, 248, 0.96);
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: var(--soft-shadow);
+      overflow: hidden;
+    }
+
+    .llm-profile-head {
+      display: grid;
+      grid-template-columns: 48px minmax(0, 1fr) auto;
+      gap: 13px;
+      align-items: center;
+      padding: 18px 20px 14px;
+      border-bottom: 1px solid rgba(212, 237, 249, 0.92);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(239, 250, 255, 0.28));
+    }
+
+    .llm-profile-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      color: var(--white);
+      border-radius: 16px;
+      background: linear-gradient(145deg, #4fb4e4, #2479b3);
+      box-shadow: 0 12px 24px rgba(49, 129, 183, 0.22);
+      font-size: 19px;
+    }
+
+    .llm-profile-title { min-width: 0; }
+
+    .llm-profile-title h3 {
+      margin: 0;
+      color: var(--blue-950);
+      font-size: 18px;
+      line-height: 1.2;
+      font-weight: 900;
+    }
+
+    .llm-profile-title span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      font-weight: 760;
+    }
+
+    .llm-profile-form {
+      display: grid;
+      gap: 4px;
+      padding: 18px 20px 20px;
+    }
+
+    .llm-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 4px;
+    }
+
+    .llm-actions-main {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .llm-save-note {
+      max-width: 360px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+      font-weight: 760;
+    }
+
+    .ping-result {
+      min-height: 70px;
+      margin-top: 12px;
+      padding: 12px 13px;
+      border: 1px solid #c9e8f8;
+      border-radius: 18px;
+      background: #f8fdff;
+      color: #34536a;
+      font-size: 12px;
+      line-height: 1.6;
+      word-break: break-word;
+    }
+
+    .ping-result.ok {
+      border-color: rgba(104, 220, 204, 0.64);
+      background: linear-gradient(135deg, rgba(240, 255, 252, 0.96), rgba(248, 253, 255, 0.94));
+    }
+
+    .ping-result.error {
+      border-color: rgba(245, 167, 167, 0.76);
+      background: linear-gradient(135deg, rgba(255, 247, 247, 0.96), rgba(248, 253, 255, 0.94));
+      color: #8f4545;
+    }
+
+    .config-path {
+      display: block;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: #2f6f95;
+      font-family: "Cascadia Mono", "Consolas", monospace;
+      font-size: 12px;
+      font-weight: 900;
     }
 
     .search-panel-body {
@@ -985,7 +1116,8 @@
       .page-hero,
       .content-grid,
       .search-main,
-      .filter-bar {
+      .filter-bar,
+      .settings-grid {
         grid-template-columns: 1fr;
       }
 
@@ -1042,6 +1174,7 @@
           <el-menu-item index="search"><i class="el-icon-search"></i>关键词找帧</el-menu-item>
           <el-menu-item index="sources"><i class="el-icon-folder-opened"></i>数据源</el-menu-item>
           <el-menu-item index="script"><i class="el-icon-edit-outline"></i>生成脚本</el-menu-item>
+          <el-menu-item index="llm"><i class="el-icon-connection"></i>LLM 管理</el-menu-item>
         </el-menu>
 
         <aside class="topbar-status">
@@ -1068,7 +1201,7 @@
                 </div>
                 <div class="hero-actions">
                   <el-button icon="el-icon-refresh" @click="refreshSources">刷新数据源</el-button>
-                  <el-button type="primary" icon="el-icon-video-play" :loading="ingesting" @click="runIngest">开始入库</el-button>
+                  <el-button :type="ingesting ? 'danger' : 'primary'" :icon="ingesting ? 'el-icon-close' : 'el-icon-video-play'" :loading="cancelingIngest" @click="ingesting ? cancelIngest() : runIngest()">{{ ingesting ? '终止处理' : '开始入库' }}</el-button>
                 </div>
               </div>
               <div class="hero-visual">
@@ -1132,10 +1265,11 @@
                         <el-input-number v-model="ingest.scene_threshold" :min="1" :max="80" :step="1" style="width:100%"></el-input-number>
                       </el-form-item>
                       <el-form-item label="并发分析">
-                        <el-input-number v-model="ingest.concurrency" :min="1" :max="8" style="width:100%"></el-input-number>
+                        <el-input-number v-model="ingest.concurrency" :min="1" :max="40" style="width:100%"></el-input-number>
                       </el-form-item>
                       <el-form-item label="分析上限">
                         <el-input-number v-model="ingest.limit" :min="0" :max="999" style="width:100%"></el-input-number>
+                        <span class="field-hint">{{ ingestLimitDisplay }}</span>
                       </el-form-item>
                       <el-form-item label="抽帧线程">
                         <el-input-number v-model="ingest.frame_workers" :min="0" :max="16" style="width:100%"></el-input-number>
@@ -1153,10 +1287,10 @@
                   </el-form>
 
                   <div class="button-row">
-                    <el-button type="primary" icon="el-icon-video-play" :loading="ingesting" @click="runIngest">开始入库</el-button>
+                    <el-button :type="ingesting ? 'danger' : 'primary'" :icon="ingesting ? 'el-icon-close' : 'el-icon-video-play'" :loading="cancelingIngest" @click="ingesting ? cancelIngest() : runIngest()">{{ ingesting ? '终止处理' : '开始入库' }}</el-button>
                     <el-button icon="el-icon-refresh" @click="refreshSources">刷新数据源</el-button>
                   </div>
-                  <div class="run-log">{{ ingestLog || '等待入库任务。完整分析会调用 Vision LLM，耗时取决于场景数量和模型响应。' }}</div>
+                  <div class="run-log">{{ ingestLog || '等待入库任务。提交后会持续刷新执行状态，完整分析会调用 Vision LLM。' }}</div>
                 </div>
               </section>
 
@@ -1339,7 +1473,7 @@
             </div>
           </section>
 
-          <section v-else key="script" class="page-view">
+          <section v-else-if="activePage === 'script'" key="script" class="page-view">
             <div class="page-hero">
               <div class="hero-copy">
                 <div class="eyebrow">Director Script</div>
@@ -1454,6 +1588,73 @@
               </section>
             </div>
           </section>
+
+          <section v-else-if="activePage === 'llm'" key="llm" class="page-view">
+            <div class="page-hero">
+              <div class="hero-copy">
+                <div class="eyebrow">LLM Control Plane</div>
+                <h2>管理任务使用的模型 API</h2>
+                <p>基础 API 用于脚本生成和文本任务；图片理解 API 用于视频入库时的场景分析。配置会保存到本地工作空间，并被后续任务默认读取。</p>
+                <div class="hero-badges">
+                  <span class="hero-badge">basic text profile</span>
+                  <span class="hero-badge">vision profile</span>
+                  <span class="hero-badge">local config</span>
+                </div>
+                <div class="hero-actions">
+                  <el-button type="primary" icon="el-icon-check" :loading="savingLlm" @click="saveLlmSettings">保存配置</el-button>
+                  <el-button icon="el-icon-refresh" :loading="loadingLlm" @click="loadLlmSettings">重新加载</el-button>
+                </div>
+              </div>
+              <div class="hero-visual">
+                <div class="signal-card">
+                  <div class="signal-head"><b>LLM Profiles</b><span>{{ llmConfigPath ? 'LOCAL' : 'READY' }}</span></div>
+                  <div class="signal-line">
+                    <div class="signal-step"><span class="signal-index">T</span><div class="signal-copy"><strong>基础 API</strong><small>{{ llmProfiles.basic.model || 'model pending' }}</small></div><span class="signal-chip">text</span></div>
+                    <div class="signal-step"><span class="signal-index">V</span><div class="signal-copy"><strong>图片理解 API</strong><small>{{ llmProfiles.vision.model || 'model pending' }}</small></div><span class="signal-chip">vision</span></div>
+                    <div class="signal-step"><span class="signal-index">C</span><div class="signal-copy"><strong>Config Path</strong><small>{{ llmConfigPath || '.tmp/sceneweaver/llm_config.json' }}</small></div><span class="signal-chip">json</span></div>
+                  </div>
+                  <span class="config-path">{{ llmConfigPath || '.tmp/sceneweaver/llm_config.json' }}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-grid">
+              <article class="llm-profile-card" v-for="profile in llmProfileList" :key="profile.name">
+                <div class="llm-profile-head">
+                  <div class="llm-profile-icon"><i :class="profile.name === 'vision' ? 'el-icon-picture-outline' : 'el-icon-chat-dot-round'"></i></div>
+                  <div class="llm-profile-title">
+                    <h3>{{ profile.label }}</h3>
+                    <span>{{ profile.description }}</span>
+                  </div>
+                  <el-tag size="small" :type="profile.saved ? 'success' : 'info'" effect="plain">{{ profile.saved ? '已保存' : '默认值' }}</el-tag>
+                </div>
+                <div class="llm-profile-form">
+                  <el-form label-position="top" size="small">
+                    <div class="form-columns">
+                      <el-form-item v-if="profile.mode !== 'custom'" label="默认方案"><el-select v-model="profile.scheme" filterable placeholder="选择 Provider 方案" style="width:100%" @change="applyPresetScheme(profile.name)"><el-option v-for="scheme in providerSchemes" :key="scheme.name" :label="scheme.label" :value="scheme.name"></el-option></el-select></el-form-item>
+                      <el-form-item v-if="profile.mode !== 'custom'" label="Model"><el-select v-model="profile.model" filterable allow-create default-first-option placeholder="选择或输入模型 ID" style="width:100%" @change="rememberLlmModel(profile.name)"><el-option v-for="model in profile.models" :key="model" :label="model" :value="model"></el-option></el-select></el-form-item>
+                      <el-form-item v-if="profile.mode === 'custom'" label="Provider"><el-input v-model="profile.provider" placeholder="openrouter / siliconflow / custom"></el-input></el-form-item>
+                      <el-form-item v-if="profile.mode === 'custom'" label="Model"><el-input v-model="profile.model" placeholder="输入模型 ID"></el-input></el-form-item>
+                    </div>
+                    <el-form-item label="Base URL"><el-input v-model="profile.base_url" :readonly="profile.mode !== 'custom'" :placeholder="profile.mode === 'custom' ? 'https://api.example.com/v1' : '随默认方案自动填充'"></el-input></el-form-item>
+                    <el-form-item label="API Key"><el-input v-model="profile.api_key" show-password autocomplete="off" :placeholder="profile.api_key_configured ? profile.api_key_mask : '输入 API Key'"></el-input></el-form-item>
+                  </el-form>
+                  <div class="llm-actions">
+                    <div class="llm-actions-main">
+                      <el-button type="primary" icon="el-icon-check" :loading="savingLlm" @click="saveLlmSettings">保存</el-button>
+                      <el-button icon="el-icon-position" :loading="pingingLlm[profile.name]" @click="pingLlm(profile.name)">Ping</el-button>
+                      <el-button icon="el-icon-delete" @click="clearLlmKey(profile.name)">清除密钥</el-button>
+                      <el-button :icon="profile.mode === 'custom' ? 'el-icon-close' : 'el-icon-plus'" @click="toggleCustomLlm(profile.name)">{{ profile.mode === 'custom' ? '取消' : '新增' }}</el-button>
+                    </div>
+                    <span class="llm-save-note">{{ profile.name === 'vision' ? '视频入库的场景分析会读取此配置。' : '脚本生成和文本任务会读取此配置。' }}</span>
+                  </div>
+                  <div v-if="llmPingResults[profile.name]" class="ping-result" :class="llmPingResults[profile.name].status === 'ok' ? 'ok' : 'error'">
+                    {{ llmPingResults[profile.name].message }}
+                  </div>
+                </div>
+              </article>
+            </div>
+          </section>
         </transition>
       </main>
     </div>
@@ -1480,10 +1681,17 @@
           ingesting: false,
           searching: false,
           scripting: false,
+          loadingLlm: false,
+          savingLlm: false,
+          pingingLlm: { basic: false, vision: false },
           ingestLog: '',
+          ingestJobId: '',
+          ingestFinishedJobId: '',
+          cancelingIngest: false,
+          ingestPollTimer: null,
           ingest: {
             source: '', video_id: '', output_dir: '', subtitle_path: '', scene_threshold: 27,
-            concurrency: 1, limit: 0, frame_workers: 0, analyze: false,
+            concurrency: 40, limit: 0, frame_workers: 0, analyze: false,
             extract_cards: true, force: false, burn_subtitles: false
           },
           search: {
@@ -1498,6 +1706,13 @@
             candidate_depth: 100, planner: 'multi_query', ranking_key: 'hybrid_rrf_constraints_signature', channel_policy: 'all'
           },
           scriptResult: null,
+          llmConfigPath: '',
+          providerSchemes: [],
+          llmProfiles: {
+            basic: { name: 'basic', label: '基础 API', description: '文本生成、检索规划和脚本生成任务使用。', mode: 'preset', scheme: 'deepseek', provider: 'deepseek', providers: ['deepseek', 'minimax', 'dashscope'], model: 'deepseek-v4-flash', models: ['deepseek-v4-flash'], base_url: 'https://api.deepseek.com', api_key: '', api_key_configured: false, api_key_mask: '', saved: false },
+            vision: { name: 'vision', label: '图片理解 API', description: '视频入库时的画面理解和场景分析任务使用。', mode: 'preset', scheme: 'dashscope', provider: 'dashscope', providers: ['deepseek', 'minimax', 'dashscope'], model: 'qwen3.7-plus', models: ['qwen3.7-plus'], base_url: 'https://dashscope.aliyuncs.com/compatible-mode/v1', api_key: '', api_key_configured: false, api_key_mask: '', saved: false }
+          },
+          llmPingResults: {},
           jsonDialog: { visible: false, text: '' },
           frameLabels: ['start', 'middle', 'end']
         }
@@ -1505,12 +1720,173 @@
       computed: {
         matches() { return (this.searchResult && this.searchResult.matches) || [] },
         summary() { return (this.searchResult && this.searchResult.summary) || {} },
-        resultCount() { return this.matches.length }
+        resultCount() { return this.matches.length },
+        ingestLimitDisplay() { return Number(this.ingest.limit || 0) === 0 ? '当前：不设限' : `当前：最多 ${this.ingest.limit} 个场景` },
+        llmProfileList() { return [this.llmProfiles.basic, this.llmProfiles.vision] }
       },
-      mounted() { this.loadStatus(); this.refreshSources() },
+      mounted() { this.loadStatus(); this.refreshSources(); this.loadLlmSettings() },
+      beforeDestroy() { this.stopIngestPolling() },
       methods: {
         async loadStatus() { this.status = await this.request('/api/status') },
         async refreshSources() { const data = await this.request('/api/sources'); this.sources = data.sources || [] },
+        async loadLlmSettings() {
+          this.loadingLlm = true
+          try {
+            const data = await this.request('/api/llm-settings')
+            this.applyLlmSettings(data)
+          } catch (error) { this.$message.error(error.message) }
+          finally { this.loadingLlm = false }
+        },
+        applyLlmSettings(data) {
+          this.llmConfigPath = data.config_path || ''
+          this.providerSchemes = Array.isArray(data.provider_schemes) ? data.provider_schemes : []
+          const profiles = data.profiles || {}
+          ;['basic', 'vision'].forEach((name) => {
+            const profile = profiles[name] || {}
+            const merged = { ...this.llmProfiles[name], ...profile, api_key: profile.api_key || '' }
+            merged.mode = merged.mode === 'custom' ? 'custom' : 'preset'
+            merged.scheme = merged.mode === 'custom' ? (merged.scheme || 'custom') : this.validPresetScheme(merged.scheme, name)
+            merged.providers = this.mergeLlmProviders(merged.providers, merged.provider, merged.mode)
+            merged.models = this.mergeLlmModels(merged.models, merged.model)
+            this.$set(this.llmProfiles, name, merged)
+            if (merged.mode !== 'custom') this.applyPresetScheme(name, { keepModel: true })
+          })
+        },
+        schemeByName(name) {
+          const selected = String(name || '').trim().toLowerCase()
+          return this.providerSchemes.find((scheme) => scheme.name === selected) || null
+        },
+        defaultSchemeForProfile(name) {
+          if (name === 'vision' && this.schemeByName('dashscope')) return 'dashscope'
+          return this.schemeByName('deepseek') ? 'deepseek' : ((this.providerSchemes[0] && this.providerSchemes[0].name) || 'deepseek')
+        },
+        validPresetScheme(schemeName, profileName) {
+          const selected = String(schemeName || '').trim().toLowerCase()
+          return this.schemeByName(selected) ? selected : this.defaultSchemeForProfile(profileName)
+        },
+        mergeLlmModels(models, selected) {
+          const values = Array.isArray(models) ? [...models] : []
+          if (selected) values.push(selected)
+          const seen = new Set()
+          return values.map((value) => String(value || '').trim()).filter((value) => {
+            if (!value || seen.has(value)) return false
+            seen.add(value)
+            return true
+          })
+        },
+        mergeLlmProviders(providers, selected, mode = 'preset') {
+          const defaults = mode === 'custom' ? [] : this.providerSchemes.map((scheme) => scheme.provider || scheme.name)
+          const values = Array.isArray(providers) ? [...providers] : defaults
+          if (selected) values.push(selected)
+          const seen = new Set()
+          return values.map((value) => String(value || '').trim().toLowerCase()).filter((value) => {
+            if (!value || seen.has(value)) return false
+            seen.add(value)
+            return true
+          })
+        },
+        applyPresetScheme(name, options = {}) {
+          const profile = this.llmProfiles[name]
+          if (!profile || profile.mode === 'custom') return
+          const schemeName = this.validPresetScheme(profile.scheme, name)
+          const scheme = this.schemeByName(schemeName)
+          if (!scheme) return
+          const schemeModels = this.mergeLlmModels(scheme.models || [], options.keepModel ? profile.model : '')
+          this.$set(profile, 'scheme', scheme.name)
+          this.$set(profile, 'provider', scheme.provider)
+          this.$set(profile, 'base_url', scheme.base_url)
+          this.$set(profile, 'models', schemeModels)
+          if (!options.keepModel || !profile.model) this.$set(profile, 'model', schemeModels[0] || '')
+        },
+        rememberLlmModel(name) {
+          const profile = this.llmProfiles[name]
+          if (!profile) return
+          const models = this.mergeLlmModels(profile.models, profile.model)
+          this.$set(profile, 'models', models)
+        },
+        rememberLlmProvider(name) {
+          const profile = this.llmProfiles[name]
+          if (!profile) return
+          profile.provider = String(profile.provider || '').trim().toLowerCase() || 'auto'
+          const providers = this.mergeLlmProviders(profile.providers, profile.provider, profile.mode)
+          this.$set(profile, 'providers', providers)
+        },
+        toggleCustomLlm(name) {
+          const profile = this.llmProfiles[name]
+          if (!profile) return
+          if (profile.mode === 'custom') {
+            this.$set(profile, 'mode', 'preset')
+            this.$set(profile, 'scheme', this.defaultSchemeForProfile(name))
+            this.applyPresetScheme(name)
+            return
+          }
+          this.$set(profile, 'mode', 'custom')
+          this.$set(profile, 'scheme', 'custom')
+          this.$set(profile, 'provider', String(profile.provider || '').trim().toLowerCase() || 'custom')
+          this.$set(profile, 'models', this.mergeLlmModels(profile.models, profile.model))
+        },
+        llmSavePayload() {
+          const profiles = {}
+          ;['basic', 'vision'].forEach((name) => {
+            const profile = this.llmProfiles[name]
+            if (profile.mode === 'custom') {
+              this.rememberLlmProvider(name)
+              this.rememberLlmModel(name)
+            } else {
+              this.applyPresetScheme(name, { keepModel: true })
+              this.rememberLlmModel(name)
+            }
+            const apiKey = (profile.api_key || '').trim()
+            profiles[name] = {
+              mode: profile.mode === 'custom' ? 'custom' : 'preset',
+              scheme: profile.mode === 'custom' ? 'custom' : profile.scheme,
+              provider: profile.provider,
+              providers: this.mergeLlmProviders(profile.providers, profile.provider, profile.mode),
+              model: profile.model,
+              base_url: profile.base_url,
+              models: this.mergeLlmModels(profile.models, profile.model),
+              api_key: apiKey,
+              clear_api_key: Boolean(profile.clear_api_key && !apiKey)
+            }
+          })
+          return { profiles }
+        },
+        async saveLlmSettings() {
+          this.savingLlm = true
+          try {
+            const data = await this.request('/api/llm-settings', { method: 'POST', body: this.llmSavePayload() })
+            this.applyLlmSettings(data)
+            this.$message.success('LLM 配置已保存')
+          } catch (error) { this.$message.error(error.message) }
+          finally { this.savingLlm = false }
+        },
+        async pingLlm(name) {
+          const profile = this.llmProfiles[name]
+          if (!profile) return
+          this.$set(this.pingingLlm, name, true)
+          this.$set(this.llmPingResults, name, { status: 'ok', message: '正在测试连接...' })
+          try {
+            if (profile.mode === 'custom') this.rememberLlmProvider(name)
+            else this.applyPresetScheme(name, { keepModel: true })
+            this.rememberLlmModel(name)
+            const result = await this.request('/api/llm-ping', { method: 'POST', body: { profile: name, profile_data: profile, timeout_seconds: 20 } })
+            const imageNote = result.image_attached ? '已附带全白 PNG 图片完成检测，' : ''
+            this.$set(this.llmPingResults, name, { status: 'ok', message: `${result.label || name} 连接成功，${imageNote}模型 ${result.model}，耗时 ${result.latency_ms}ms。` })
+            this.$message.success('Ping 成功')
+          } catch (error) {
+            this.$set(this.llmPingResults, name, { status: 'error', message: error.message })
+            this.$message.error(error.message)
+          }
+          finally { this.$set(this.pingingLlm, name, false) }
+        },
+        clearLlmKey(name) {
+          const profile = this.llmProfiles[name]
+          if (!profile) return
+          profile.api_key = ''
+          profile.clear_api_key = true
+          profile.api_key_configured = false
+          profile.api_key_mask = ''
+        },
         applySelectedSource(value) { this.search.sources = [value] },
         applyScriptSource(value) { this.scriptForm.sources = [value] },
         selectSourceAndSearch(path) { this.selectedSource = path; this.search.sources = [path]; this.activePage = 'search' },
@@ -1525,8 +1901,8 @@
             subtitle_path: this.clean(this.ingest.subtitle_path),
             scene_threshold: this.ingest.scene_threshold,
             concurrency: this.ingest.concurrency,
-            limit: this.ingest.limit || null,
-            frame_workers: this.ingest.frame_workers || null,
+            limit: this.optionalNumber(this.ingest.limit),
+            frame_workers: this.optionalNumber(this.ingest.frame_workers),
             analyze: this.ingest.analyze,
             extract_cards: this.ingest.extract_cards,
             force: this.ingest.force,
@@ -1534,7 +1910,12 @@
           }
         },
         async runIngest() {
-          this.ingesting = true; this.ingestLog = '任务开始...'
+          this.stopIngestPolling()
+          this.ingesting = true
+          this.cancelingIngest = false
+          this.ingestJobId = ''
+          this.ingestFinishedJobId = ''
+          this.ingestLog = '正在提交入库任务...'
           try {
             let result
             if (this.ingestMode === 'upload') {
@@ -1542,16 +1923,91 @@
               const form = new FormData()
               form.append('video', this.uploadFile)
               form.append('options', JSON.stringify(this.ingestPayload()))
-              result = await this.request('/api/upload-ingest', { method: 'POST', body: form, rawBody: true })
+              result = await this.request('/api/upload-ingest-jobs', { method: 'POST', body: form, rawBody: true })
             } else {
-              result = await this.request('/api/ingest', { method: 'POST', body: this.ingestPayload() })
+              result = await this.request('/api/ingest-jobs', { method: 'POST', body: this.ingestPayload() })
             }
-            this.ingestLog = JSON.stringify(result, null, 2)
-            this.$message.success('入库任务完成')
-            await this.refreshSources()
-            if (result.output_dir) { this.selectedSource = result.output_dir; this.search.sources = [result.output_dir] }
-          } catch (error) { this.ingestLog = error.message; this.$message.error(error.message) }
-          finally { this.ingesting = false }
+            this.ingestJobId = result.job_id
+            this.updateIngestJob(result.job)
+            if (!result.job || !this.isIngestTerminal(result.job.status)) this.pollIngestJob(result.job_id)
+          } catch (error) {
+            this.ingestLog = error.message
+            this.ingesting = false
+            this.cancelingIngest = false
+            this.$message.error(error.message)
+          }
+        },
+        pollIngestJob(jobId) {
+          if (!jobId) return
+          this.stopIngestPolling()
+          const fetchJob = async () => {
+            try {
+              const data = await this.request('/api/ingest-jobs/' + encodeURIComponent(jobId))
+              this.updateIngestJob(data.job)
+              if (data.job && this.isIngestTerminal(data.job.status)) this.stopIngestPolling()
+            } catch (error) {
+              this.stopIngestPolling()
+              this.ingesting = false
+              this.cancelingIngest = false
+              this.ingestLog = `${this.ingestLog}\n轮询失败：${error.message}`.trim()
+              this.$message.error(error.message)
+            }
+          }
+          this.ingestPollTimer = window.setInterval(fetchJob, 2000)
+          fetchJob()
+        },
+        updateIngestJob(job) {
+          if (!job) return
+          this.ingestLog = this.formatIngestJobLog(job)
+          if (job.status === 'ready') this.finishIngestJob(job)
+          if (job.status === 'error' && this.ingestFinishedJobId !== job.job_id) {
+            this.ingestFinishedJobId = job.job_id
+            this.ingesting = false
+            this.cancelingIngest = false
+            this.$message.error(job.error || '入库任务失败')
+          }
+          if (job.status === 'canceled' && this.ingestFinishedJobId !== job.job_id) {
+            this.ingestFinishedJobId = job.job_id
+            this.ingesting = false
+            this.cancelingIngest = false
+            this.$message.warning('入库任务已终止')
+          }
+        },
+        async finishIngestJob(job) {
+          if (this.ingestFinishedJobId === job.job_id) return
+          this.ingestFinishedJobId = job.job_id
+          this.ingesting = false
+          this.cancelingIngest = false
+          const result = job.result || {}
+          await this.refreshSources()
+          if (result.output_dir) { this.selectedSource = result.output_dir; this.search.sources = [result.output_dir] }
+          this.$message.success('入库任务完成')
+        },
+        stopIngestPolling() {
+          if (!this.ingestPollTimer) return
+          window.clearInterval(this.ingestPollTimer)
+          this.ingestPollTimer = null
+        },
+        async cancelIngest() {
+          if (!this.ingestJobId || this.cancelingIngest) return
+          this.cancelingIngest = true
+          try {
+            const data = await this.request('/api/ingest-jobs/' + encodeURIComponent(this.ingestJobId) + '/cancel', { method: 'POST' })
+            this.updateIngestJob(data.job)
+            this.$message.warning('已请求终止处理')
+          } catch (error) {
+            this.cancelingIngest = false
+            this.$message.error(error.message)
+          }
+        },
+        isIngestTerminal(status) { return ['ready', 'error', 'canceled'].includes(status) },
+        formatIngestJobLog(job) {
+          const labels = { queued: '排队中', running: '执行中', canceling: '终止中', canceled: '已终止', ready: '已完成', error: '失败' }
+          const lines = [`状态：${labels[job.status] || job.status}`, `任务 ID：${job.job_id}`]
+          ;(job.logs || []).forEach((line) => lines.push(line))
+          if (job.error) lines.push(`错误：${job.error}`)
+          if (job.result) lines.push('', JSON.stringify(job.result, null, 2))
+          return lines.join('\n')
         },
         async runSearch() {
           if (!this.search.query.trim()) { this.$message.warning('请输入关键词'); return }
@@ -1601,6 +2057,7 @@
         showJson(value) { this.jsonDialog.text = JSON.stringify(value, null, 2); this.jsonDialog.visible = true },
         async copyPath(path) { if (!path) return; await navigator.clipboard.writeText(path); this.$message.success('路径已复制') },
         async copyScriptMarkdown() { const text = this.scriptResult && this.scriptResult.script && this.scriptResult.script.script_markdown; if (!text) return; await navigator.clipboard.writeText(text); this.$message.success('脚本正文已复制') },
+        optionalNumber(value) { return value === null || value === undefined || value === '' || Number(value) === 0 ? null : Number(value) },
         clean(value) { return value && String(value).trim() ? String(value).trim() : null }
       }
     })

@@ -1,19 +1,23 @@
 from __future__ import annotations
 
 import argparse
+from collections import deque
+from dataclasses import dataclass, field
 import json
 import mimetypes
 import re
 import time
+import uuid
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+from threading import Lock, Thread
 from typing import Any
 from urllib.parse import parse_qs, unquote, urlparse
 
+from sceneweaver.llm.settings import llm_settings_payload, ping_llm_profile, save_llm_settings
 from sceneweaver.user_api import (
     DEFAULT_OUTPUT_ROOT,
-    USER_INGEST_SCENE_ANALYSIS_MODEL,
     generate_script,
     ingest_video,
     search_scenes,
@@ -22,6 +26,24 @@ from sceneweaver.user_api import (
 WORKSPACE_ROOT = Path.cwd().resolve()
 UI_ROOT = Path(__file__).resolve().parent / "ui"
 UPLOAD_ROOT = WORKSPACE_ROOT / ".tmp" / "user_uploads"
+INGEST_LOG_LIMIT = 400
+MAX_INGEST_JOBS = 50
+
+
+@dataclass
+class IngestJob:
+    job_id: str
+    status: str = "queued"
+    created_at: float = field(default_factory=time.time)
+    updated_at: float = field(default_factory=time.time)
+    logs: deque[str] = field(default_factory=lambda: deque(maxlen=INGEST_LOG_LIMIT))
+    result: dict[str, Any] | None = None
+    error: str = ""
+    cancel_requested: bool = False
+
+
+INGEST_JOBS: dict[str, IngestJob] = {}
+INGEST_JOBS_LOCK = Lock()
 
 
 class SceneWeaverUIHandler(BaseHTTPRequestHandler):
@@ -38,6 +60,17 @@ class SceneWeaverUIHandler(BaseHTTPRequestHandler):
         if parsed.path == "/api/sources":
             self._send_json({"sources": list_sources()})
             return
+        if parsed.path.startswith("/api/ingest-jobs/"):
+            job_id = unquote(parsed.path.removeprefix("/api/ingest-jobs/")).strip("/")
+            job = ingest_job_payload(job_id)
+            if not job:
+                self._send_json({"error": "ingest job not found"}, status=HTTPStatus.NOT_FOUND)
+                return
+            self._send_json({"status": "ok", "job": job})
+            return
+        if parsed.path == "/api/llm-settings":
+            self._send_json(llm_settings_payload(include_secrets=True))
+            return
         if parsed.path == "/api/file":
             self._send_workspace_file(parsed.query)
             return
@@ -46,6 +79,24 @@ class SceneWeaverUIHandler(BaseHTTPRequestHandler):
     def do_POST(self) -> None:  # noqa: N802
         parsed = urlparse(self.path)
         try:
+            cancel_match = re.fullmatch(r"/api/ingest-jobs/(?P<job_id>[^/]+)/cancel", parsed.path)
+            if cancel_match:
+                result = cancel_ingest_job(unquote(cancel_match.group("job_id")))
+                if not result:
+                    self._send_json({"error": "ingest job not found"}, status=HTTPStatus.NOT_FOUND)
+                    return
+                self._send_json(result)
+                return
+            if parsed.path == "/api/ingest-jobs":
+                payload = self._read_json_body()
+                result = start_ingest_job(payload)
+                self._send_json(result, status=HTTPStatus.ACCEPTED)
+                return
+            if parsed.path == "/api/upload-ingest-jobs":
+                fields, files = self._read_multipart_body()
+                result = start_uploaded_ingest_job(fields, files)
+                self._send_json(result, status=HTTPStatus.ACCEPTED)
+                return
             if parsed.path == "/api/ingest":
                 payload = self._read_json_body()
                 result = ingest_video_from_payload(payload)
@@ -64,6 +115,15 @@ class SceneWeaverUIHandler(BaseHTTPRequestHandler):
             if parsed.path == "/api/generate-script":
                 payload = self._read_json_body()
                 result = generate_script_from_payload(payload)
+                self._send_json(result)
+                return
+            if parsed.path == "/api/llm-settings":
+                payload = self._read_json_body()
+                self._send_json(save_llm_settings(payload))
+                return
+            if parsed.path == "/api/llm-ping":
+                payload = self._read_json_body()
+                result = ping_llm_from_payload(payload)
                 self._send_json(result)
                 return
         except Exception as exc:  # pragma: no cover - exercised through manual UI flows.
@@ -131,7 +191,7 @@ class SceneWeaverUIHandler(BaseHTTPRequestHandler):
         self._send_file(path)
 
 
-def ingest_video_from_payload(payload: dict[str, Any]) -> dict[str, Any]:
+def ingest_video_from_payload(payload: dict[str, Any], *, log=None, cancel_check=None) -> dict[str, Any]:
     source = str(payload.get("source") or "").strip()
     if not source:
         raise ValueError("source is required")
@@ -153,11 +213,158 @@ def ingest_video_from_payload(payload: dict[str, Any]) -> dict[str, Any]:
         concurrency=int(payload.get("concurrency") or 1),
         timeout_seconds=float(payload.get("timeout_seconds") or 180.0),
         retries=int(payload.get("retries") or 0),
-        scene_analysis_model=str(payload.get("scene_analysis_model") or USER_INGEST_SCENE_ANALYSIS_MODEL),
+        scene_analysis_model=optional_text(payload.get("scene_analysis_model")),
+        log=log,
+        cancel_check=cancel_check,
     )
 
 
-def ingest_uploaded_video(fields: dict[str, str], files: dict[str, dict[str, Any]]) -> dict[str, Any]:
+def start_ingest_job(payload: dict[str, Any], *, run_async: bool = True) -> dict[str, Any]:
+    job_id = uuid.uuid4().hex
+    payload = dict(payload)
+    job = IngestJob(job_id=job_id)
+    with INGEST_JOBS_LOCK:
+        INGEST_JOBS[job_id] = job
+        prune_ingest_jobs_locked()
+    concurrency = int(payload.get("concurrency") or 1)
+    model = optional_text(payload.get("scene_analysis_model")) or "按 LLM 管理配置"
+    append_ingest_job_log(job_id, f"任务已提交：{ingest_payload_summary(payload)}，并发={concurrency}，模型={model}。")
+    if run_async:
+        Thread(target=run_ingest_job, args=(job_id, payload), daemon=True).start()
+    else:
+        run_ingest_job(job_id, payload)
+    return {"status": "ok", "job_id": job_id, "job": ingest_job_payload(job_id)}
+
+
+def start_uploaded_ingest_job(fields: dict[str, str], files: dict[str, dict[str, Any]], *, run_async: bool = True) -> dict[str, Any]:
+    return start_ingest_job(uploaded_video_options(fields, files), run_async=run_async)
+
+
+def run_ingest_job(job_id: str, payload: dict[str, Any]) -> None:
+    update_ingest_job(job_id, status="running")
+    append_ingest_job_log(job_id, "任务开始：准备视频入库。")
+    try:
+        if ingest_job_cancel_requested(job_id):
+            raise RuntimeError("ingest canceled")
+        result = ingest_video_from_payload(
+            payload,
+            log=lambda message: append_ingest_job_log(job_id, message),
+            cancel_check=lambda: ingest_job_cancel_requested(job_id),
+        )
+    except Exception as exc:  # pragma: no cover - exercised by runtime worker threads.
+        if ingest_job_cancel_requested(job_id):
+            append_ingest_job_log(job_id, "任务已终止。")
+            update_ingest_job(job_id, status="canceled", error="")
+            return
+        append_ingest_job_log(job_id, f"入库失败：{exc}")
+        update_ingest_job(job_id, status="error", error=str(exc))
+        return
+    if ingest_job_cancel_requested(job_id):
+        append_ingest_job_log(job_id, "任务已终止。")
+        update_ingest_job(job_id, status="canceled", error="")
+        return
+    append_ingest_job_log(job_id, ingest_result_summary(result))
+    update_ingest_job(job_id, status="ready", result=result, error="")
+
+
+def update_ingest_job(
+    job_id: str,
+    *,
+    status: str | None = None,
+    result: dict[str, Any] | None = None,
+    error: str | None = None,
+) -> None:
+    with INGEST_JOBS_LOCK:
+        job = INGEST_JOBS.get(job_id)
+        if not job:
+            return
+        if status is not None:
+            job.status = status
+        if result is not None:
+            job.result = result
+        if error is not None:
+            job.error = error
+        job.updated_at = time.time()
+
+
+def cancel_ingest_job(job_id: str) -> dict[str, Any] | None:
+    with INGEST_JOBS_LOCK:
+        job = INGEST_JOBS.get(job_id)
+        if not job:
+            return None
+        job.cancel_requested = True
+        if job.status not in {"ready", "error", "canceled"}:
+            job.status = "canceling"
+        job.updated_at = time.time()
+    append_ingest_job_log(job_id, "已请求终止处理；正在停止后续步骤。")
+    return {"status": "ok", "job_id": job_id, "job": ingest_job_payload(job_id)}
+
+
+def ingest_job_cancel_requested(job_id: str) -> bool:
+    with INGEST_JOBS_LOCK:
+        job = INGEST_JOBS.get(job_id)
+        return bool(job and job.cancel_requested)
+
+
+def append_ingest_job_log(job_id: str, message: object) -> None:
+    text = str(message or "").strip()
+    if not text:
+        return
+    line = f"[{time.strftime('%H:%M:%S')}] {text}"
+    with INGEST_JOBS_LOCK:
+        job = INGEST_JOBS.get(job_id)
+        if not job:
+            return
+        job.logs.append(line)
+        job.updated_at = time.time()
+
+
+def ingest_job_payload(job_id: str) -> dict[str, Any] | None:
+    with INGEST_JOBS_LOCK:
+        job = INGEST_JOBS.get(job_id)
+        if not job:
+            return None
+        return {
+            "job_id": job.job_id,
+            "status": job.status,
+            "created_at": job.created_at,
+            "updated_at": job.updated_at,
+            "logs": list(job.logs),
+            "result": job.result,
+            "error": job.error,
+            "cancel_requested": job.cancel_requested,
+        }
+
+
+def prune_ingest_jobs_locked() -> None:
+    if len(INGEST_JOBS) <= MAX_INGEST_JOBS:
+        return
+    removable = sorted(INGEST_JOBS.values(), key=lambda job: job.created_at)[: len(INGEST_JOBS) - MAX_INGEST_JOBS]
+    for job in removable:
+        INGEST_JOBS.pop(job.job_id, None)
+
+
+def ingest_result_summary(result: dict[str, Any]) -> str:
+    video_id = result.get("video_id") or "video"
+    scene_count = result.get("analysis_scene_count") or result.get("scene_count") or 0
+    card_count = result.get("card_count") or 0
+    output_dir = result.get("output_dir") or ""
+    model = result.get("scene_analysis_model") or ""
+    model_text = f"，模型={model}" if model else ""
+    output_text = f"，输出={output_dir}" if output_dir else ""
+    return f"入库完成：{video_id}，场景={scene_count}，卡片={card_count}{model_text}{output_text}"
+
+
+def ingest_payload_summary(payload: dict[str, Any]) -> str:
+    limit = optional_int(payload.get("limit"))
+    frame_workers = optional_int(payload.get("frame_workers"))
+    scene_threshold = float(payload.get("scene_threshold") or 27.0)
+    limit_text = str(limit) if limit is not None else "不限制"
+    frame_workers_text = str(frame_workers) if frame_workers is not None else "自动"
+    return f"切片阈值={scene_threshold:g}，分析上限={limit_text}，抽帧线程={frame_workers_text}"
+
+
+def uploaded_video_options(fields: dict[str, str], files: dict[str, dict[str, Any]]) -> dict[str, Any]:
     upload = files.get("video")
     if not upload:
         raise ValueError("video upload is required")
@@ -170,7 +377,11 @@ def ingest_uploaded_video(fields: dict[str, str], files: dict[str, dict[str, Any
     upload_path.write_bytes(upload.get("content") or b"")
     options["source"] = str(upload_path)
     options["source_type"] = "file"
-    return ingest_video_from_payload(options)
+    return options
+
+
+def ingest_uploaded_video(fields: dict[str, str], files: dict[str, dict[str, Any]]) -> dict[str, Any]:
+    return ingest_video_from_payload(uploaded_video_options(fields, files))
 
 
 def search_scenes_from_payload(payload: dict[str, Any]) -> dict[str, Any]:
@@ -226,6 +437,20 @@ def generate_script_from_payload(payload: dict[str, Any]) -> dict[str, Any]:
         timeout_seconds=optional_float(payload.get("timeout_seconds")),
         retries=int(payload.get("retries") or 0),
         max_tokens=optional_int(payload.get("max_tokens")),
+    )
+
+
+def ping_llm_from_payload(payload: dict[str, Any]) -> dict[str, Any]:
+    profile = str(payload.get("profile") or "").strip()
+    if not profile:
+        raise ValueError("profile is required")
+    profile_data = payload.get("profile_data")
+    if profile_data is not None and not isinstance(profile_data, dict):
+        raise ValueError("profile_data must be an object")
+    return ping_llm_profile(
+        profile,
+        profile_data=profile_data,
+        timeout_seconds=float(payload.get("timeout_seconds") or 20.0),
     )
 
 

@@ -239,6 +239,7 @@ class VisionLLMClient:
         system_prompt: str,
         user_prompt: str,
         image_paths: list[Path],
+        image_labels: list[str] | None = None,
         timeout_seconds: float | None = None,
         retries: int = 0,
         enable_thinking: bool | None = None,
@@ -265,7 +266,19 @@ class VisionLLMClient:
             max_retries=0,
         )
         content: list[dict[str, Any]] = [{"type": "text", "text": user_prompt}]
-        for image_path in image_paths:
+        labels = image_labels or []
+        is_scene_triplet = len(image_paths) == 3 and labels[:3] == ["start", "middle", "end"]
+        if is_scene_triplet:
+            content.append(
+                {
+                    "type": "text",
+                    "text": "Scene frame triplet: treat the following 3 images as one scene input, ordered as start, middle, end. Analyze them together as a single scene.",
+                }
+            )
+        for index, image_path in enumerate(image_paths):
+            label = labels[index] if index < len(labels) else f"image_{index + 1}"
+            if is_scene_triplet:
+                content.append({"type": "text", "text": f"{label} frame of the same scene"})
             content.append(
                 {
                     "type": "image_url",
@@ -324,14 +337,12 @@ class PartialStreamError(RuntimeError):
 
 
 def llm_config_metadata(config: LLMConfig) -> dict[str, Any]:
-    provider = normalize_provider(getattr(config, "provider", "auto") or "auto")
-    if provider == "auto":
-        provider = infer_provider_from_env()
+    provider = _metadata_provider(getattr(config, "provider", "auto") or "auto")
     model = str(getattr(config, "model", ""))
     base_url = str(getattr(config, "base_url", ""))
-    pricing = model_pricing(provider, model, required=False)
-    limits = model_limits(provider, model)
-    key_info = api_key_info(provider)
+    pricing = _safe_model_pricing(provider, model)
+    limits = _safe_model_limits(provider, model)
+    key_info = _safe_api_key_info(provider)
     return {
         "provider": provider,
         "model": model,
@@ -343,12 +354,42 @@ def llm_config_metadata(config: LLMConfig) -> dict[str, Any]:
 
 
 def _missing_api_key_message(config: LLMConfig) -> str:
-    provider = normalize_provider(config.provider or "auto")
-    if provider == "auto":
-        provider = infer_provider_from_env()
-    info = api_key_info(provider)
+    provider = _metadata_provider(config.provider or "auto")
+    info = _safe_api_key_info(provider)
     names = ", ".join(info.accepted_env_names) or "SCENEWEAVER_API_KEY"
     return f"LLM provider {provider!r} requires one of these API key env vars: {names}"
+
+
+def _metadata_provider(provider: str) -> str:
+    raw = str(provider or "auto").strip().lower() or "auto"
+    try:
+        normalized = normalize_provider(raw)
+    except Exception:
+        return raw
+    return infer_provider_from_env() if normalized == "auto" else normalized
+
+
+def _safe_model_pricing(provider: str, model: str):
+    try:
+        return model_pricing(provider, model, required=False)
+    except Exception:
+        return None
+
+
+def _safe_model_limits(provider: str, model: str):
+    try:
+        return model_limits(provider, model)
+    except Exception:
+        return None
+
+
+def _safe_api_key_info(provider: str):
+    try:
+        return api_key_info(provider)
+    except Exception:
+        from sceneweaver.llm.providers import ApiKeyInfo
+
+        return ApiKeyInfo(provider=provider, configured=False, active_env_name=None, accepted_env_names=("SCENEWEAVER_API_KEY",))
 
 
 def _collect_stream_text(

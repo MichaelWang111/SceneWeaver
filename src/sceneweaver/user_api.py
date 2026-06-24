@@ -1,8 +1,7 @@
 from __future__ import annotations
 
-from dataclasses import replace
 import json
-import os
+from collections.abc import Callable
 from pathlib import Path
 from typing import Any, Iterable, Literal
 
@@ -11,8 +10,8 @@ from retrieval_lab.retrieval import DEFAULT_RETRIEVAL_RUN_OUTPUT, retrieval_run
 from sceneweaver.analysis.experience_extractor import extract_experience_cards
 from sceneweaver.analysis.scene_analyzer import analyze_scene_packages
 from sceneweaver.input.bilibili import extract_video_id
-from sceneweaver.llm.client import LLMConfig, VisionLLMClient, llm_config_metadata
-from sceneweaver.llm.providers import default_base_url, infer_provider_from_model, normalize_model_id, normalize_provider
+from sceneweaver.llm import VisionLLMClient, client_for_role, llm_config_metadata
+from sceneweaver.llm.settings import config_for_role_settings
 from sceneweaver.pipeline.local_video import local_video_id, package_local_video
 from sceneweaver.pipeline.package_video import run_package_video
 from sceneweaver.schemas import SceneAnalysis, ScenePackage
@@ -48,13 +47,23 @@ def ingest_video(
     concurrency: int = 1,
     timeout_seconds: float = 180.0,
     retries: int = 0,
-    scene_analysis_model: str = USER_INGEST_SCENE_ANALYSIS_MODEL,
+    scene_analysis_model: str | None = None,
     log=None,
+    cancel_check: Callable[[], bool] | None = None,
 ) -> dict[str, Any]:
     """Ingest a video into SceneWeaver artifacts usable by Retrieval Lab."""
     resolved_source_type = resolve_source_type(source, source_type)
     resolved_video_id = video_id or infer_video_id(source, resolved_source_type)
     target_dir = (output_dir or Path(output_root) / resolved_video_id).resolve()
+    emit_log(
+        log,
+        "Ingest options: "
+        f"scene_threshold={scene_threshold:g}, "
+        f"analysis_limit={limit if limit is not None else 'none'}, "
+        f"frame_workers={frame_workers if frame_workers is not None else 'auto'}, "
+        f"analysis_concurrency={concurrency}.",
+    )
+    raise_if_canceled(cancel_check)
 
     if resolved_source_type == "file":
         packaged_dir = package_local_video(
@@ -81,6 +90,7 @@ def ingest_video(
             burn_subtitles=burn_subtitles,
             log=log,
         )
+    raise_if_canceled(cancel_check)
 
     scene_count = package_scene_count(packaged_dir)
     analysis_scene_count = 0
@@ -100,14 +110,17 @@ def ingest_video(
             timeout_seconds=timeout_seconds,
             retries=retries,
             log=log,
+            cancel_check=cancel_check,
         )
         analysis_scene_count = scenes.scene_count
         status = "analyzed"
         if extract_cards:
+            raise_if_canceled(cancel_check)
             cards = extract_experience_cards(packaged_dir, force=force, log=log)
             card_count = len(cards)
             status = "ready"
     elif extract_cards:
+        raise_if_canceled(cancel_check)
         cards = extract_experience_cards(packaged_dir, force=force, log=log)
         card_count = len(cards)
         status = "ready"
@@ -130,35 +143,19 @@ def ingest_video(
     }
 
 
-def build_scene_analysis_client(model: str = USER_INGEST_SCENE_ANALYSIS_MODEL) -> VisionLLMClient:
-    config = LLMConfig.from_env()
-    normalized_model = normalize_model_id(model)
-    if normalized_model:
-        config = replace(config, model=normalized_model)
-    if infer_provider_from_model(normalized_model) == "dashscope":
-        config = replace(
-            config,
-            provider="dashscope",
-            api_key=_dashscope_scene_analysis_api_key(config),
-            base_url=_dashscope_scene_analysis_base_url(config),
-        )
-    return VisionLLMClient(config)
+def build_scene_analysis_client(model: str | None = None) -> VisionLLMClient:
+    selected_model = model or None
+    return client_for_role(role="scene_analysis", model=selected_model)
 
 
-def _dashscope_scene_analysis_api_key(config: LLMConfig) -> str:
-    return (
-        os.environ.get("DASHSCOPE_API_KEY")
-        or os.environ.get("VIDEO_ANALYZER_API_KEY")
-        or (config.api_key if normalize_provider(config.provider) == "dashscope" else "")
-    )
+def emit_log(log, message: str) -> None:
+    if log:
+        log(message)
 
 
-def _dashscope_scene_analysis_base_url(config: LLMConfig) -> str:
-    return (
-        os.environ.get("DASHSCOPE_BASE_URL")
-        or os.environ.get("VIDEO_ANALYZER_BASE_URL")
-        or (config.base_url if normalize_provider(config.provider) == "dashscope" else default_base_url("dashscope"))
-    )
+def raise_if_canceled(cancel_check: Callable[[], bool] | None) -> None:
+    if cancel_check and cancel_check():
+        raise RuntimeError("ingest canceled")
 
 
 def search_scenes(
@@ -253,7 +250,7 @@ def generate_script(
     if not reference_items:
         raise ValueError("no usable reference frames were found for script generation")
 
-    llm_client = client or VisionLLMClient()
+    llm_client = client or VisionLLMClient(config_for_role_settings(role="script_generation") or None)
     system_prompt = load_director_prompt(prompt_path)
     user_prompt = build_director_user_prompt(
         query=clean_query,

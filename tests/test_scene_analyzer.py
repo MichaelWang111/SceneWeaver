@@ -20,6 +20,7 @@ class FakeVisionClient:
         system_prompt: str,
         user_prompt: str,
         image_paths: list[Path],
+        image_labels: list[str] | None = None,
         timeout_seconds: float | None = None,
         retries: int = 0,
         enable_thinking=None,
@@ -30,6 +31,7 @@ class FakeVisionClient:
                 "system_prompt": system_prompt,
                 "user_prompt": user_prompt,
                 "image_paths": image_paths,
+                "image_labels": image_labels,
                 "timeout_seconds": timeout_seconds,
                 "retries": retries,
                 "enable_thinking": enable_thinking,
@@ -90,6 +92,9 @@ def test_analyze_scene_packages_writes_valid_outputs(tmp_path):
     assert scenes.scene_count == 1
     assert len(client.calls) == 1
     assert len(client.calls[0]["image_paths"]) == 3
+    assert client.calls[0]["image_labels"] == ["start", "middle", "end"]
+    assert "一个 scene 的完整输入证据包" in client.calls[0]["user_prompt"]
+    assert "不要拆成 start/middle/end 三个子场景" in client.calls[0]["user_prompt"]
     assert read_json(output_dir / "analysis" / "scene_001.json", SceneAnalysis)
     assert read_json(output_dir / "analysis" / "scenes.json", ScenesAnalysis)
 

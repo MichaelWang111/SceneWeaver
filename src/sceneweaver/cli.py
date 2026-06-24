@@ -26,6 +26,7 @@ from sceneweaver.analysis.tags import (
 )
 from sceneweaver.input.bilibili import extract_bvid
 from sceneweaver.llm.client import LLMConfig
+from sceneweaver.llm.status import llm_status_payload
 from sceneweaver.llm.runtime import LLMRunOptions
 from sceneweaver.pipeline.mock_pipeline import run_mock_pipeline
 from sceneweaver.pipeline.package_video import run_package_video
@@ -304,6 +305,46 @@ def llm_check(
         user_prompt=prompt,
         timeout_seconds=timeout_seconds,
         retries=0,
+    )
+    typer.echo(json.dumps(result, ensure_ascii=False, indent=2))
+
+
+@app.command("llm-status")
+def llm_status(
+    provider: str = typer.Option(
+        "auto",
+        "--provider",
+        help="Provider to inspect: auto, dashscope, deepseek, aliyun, or bailian.",
+    ),
+    live_models: bool = typer.Option(
+        False,
+        "--live-models",
+        help="Query the provider /models endpoint instead of using the local registry.",
+    ),
+    check_balance: bool = typer.Option(
+        False,
+        "--check-balance",
+        help="Query provider account balance when supported and credentials are configured.",
+    ),
+    include_models: bool = typer.Option(
+        False,
+        "--include-models",
+        help="Include the model registry in the output.",
+    ),
+    timeout_seconds: float = typer.Option(
+        20.0,
+        "--timeout-seconds",
+        min=1.0,
+        help="Timeout for live provider diagnostics.",
+    ),
+) -> None:
+    """Print configured LLM provider, model, key, pricing, and limit diagnostics."""
+    result = llm_status_payload(
+        provider=provider,
+        live_models=live_models,
+        check_balance=check_balance,
+        include_models=include_models,
+        timeout_seconds=timeout_seconds,
     )
     typer.echo(json.dumps(result, ensure_ascii=False, indent=2))
 

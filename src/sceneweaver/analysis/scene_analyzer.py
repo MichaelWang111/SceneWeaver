@@ -23,6 +23,7 @@ class SceneLLMClient(Protocol):
         system_prompt: str,
         user_prompt: str,
         image_paths: list[Path],
+        image_labels: list[str] | None = None,
         timeout_seconds: float | None = None,
         retries: int = 0,
         enable_thinking: bool | None = None,
@@ -50,11 +51,13 @@ def analyze_scene_packages(
     retries: int = 0,
     llm_options: LLMRunOptions | None = None,
     log: LogFn | None = None,
+    cancel_check: Callable[[], bool] | None = None,
 ) -> ScenesAnalysis:
     output_dir = output_dir.resolve()
     packages_dir = output_dir / "packages"
     analysis_dir = output_dir / "analysis"
     analysis_dir.mkdir(parents=True, exist_ok=True)
+    raise_if_canceled(cancel_check)
 
     if max_workers < 1:
         raise ValueError("max_workers must be >= 1")
@@ -77,6 +80,7 @@ def analyze_scene_packages(
     )
     if limit is not None:
         package_paths = package_paths[:limit]
+    raise_if_canceled(cancel_check)
 
     total_count = len(package_paths)
     if log:
@@ -96,6 +100,7 @@ def analyze_scene_packages(
     completed_count = 0
 
     for index, package_path in enumerate(package_paths):
+        raise_if_canceled(cancel_check)
         package = read_json(package_path, ScenePackage)
         source_url = package.metadata.source_url
         video_id = package.source_video_id
@@ -115,35 +120,45 @@ def analyze_scene_packages(
     if pending_tasks:
         if effective_workers == 1:
             for task in pending_tasks:
+                raise_if_canceled(cancel_check)
                 analyses[task.index] = _analyze_single_scene(
                     output_dir=output_dir,
                     task=task,
                     system_prompt=system_prompt,
                     client=llm_client,
                     options=options,
+                    cancel_check=cancel_check,
                 )
                 completed_count += 1
                 if log:
                     log(f"[{completed_count}/{total_count}] Finished {task.package.scene_id}.")
         else:
-            with ThreadPoolExecutor(max_workers=effective_workers) as executor:
-                futures = {
-                    executor.submit(
-                        _analyze_single_scene,
-                        output_dir=output_dir,
-                        task=task,
-                        system_prompt=system_prompt,
-                        client=llm_client,
-                        options=options,
-                    ): task
-                    for task in pending_tasks
-                }
+            executor = ThreadPoolExecutor(max_workers=effective_workers)
+            futures = {
+                executor.submit(
+                    _analyze_single_scene,
+                    output_dir=output_dir,
+                    task=task,
+                    system_prompt=system_prompt,
+                    client=llm_client,
+                    options=options,
+                    cancel_check=cancel_check,
+                ): task
+                for task in pending_tasks
+            }
+            try:
                 for future in as_completed(futures):
+                    raise_if_canceled(cancel_check)
                     task = futures[future]
                     analyses[task.index] = future.result()
                     completed_count += 1
                     if log:
                         log(f"[{completed_count}/{total_count}] Finished {task.package.scene_id}.")
+            except Exception:
+                executor.shutdown(wait=False, cancel_futures=True)
+                raise
+            else:
+                executor.shutdown(wait=True)
 
     completed_analyses = [analysis for analysis in analyses if analysis is not None]
     scenes = ScenesAnalysis(
@@ -168,18 +183,22 @@ def _analyze_single_scene(
     system_prompt: str,
     client: SceneLLMClient,
     options: LLMRunOptions,
+    cancel_check: Callable[[], bool] | None = None,
 ) -> SceneAnalysis:
+    raise_if_canceled(cancel_check)
     frame_paths = _resolve_frame_paths(output_dir, task.package)
     user_prompt = build_scene_user_prompt(task.package)
     raw = client.analyze_images_json(
         system_prompt=system_prompt,
         user_prompt=user_prompt,
         image_paths=frame_paths,
+        image_labels=["start", "middle", "end"],
         timeout_seconds=options.timeout_seconds,
         retries=options.retries,
         enable_thinking=options.enable_thinking,
         thinking_budget=options.thinking_budget,
     )
+    raise_if_canceled(cancel_check)
     raw = add_tags_to_scene_raw(raw, candidate_log_path=task.output_path.parent / "tag_candidates.jsonl")
     analysis = SceneAnalysis.model_validate(raw)
     write_json(task.output_path, analysis)
@@ -201,7 +220,9 @@ def load_scene_analysis_prompt(prompt_path: Path | None = None) -> str:
 
 
 def build_scene_user_prompt(package: ScenePackage) -> str:
-    return f"""请分析这个 scene package。你会收到三张帧图，顺序分别是 start、middle、end。
+    return f"""请分析这个 scene package。你会收到同一个场景的三张帧图，顺序和标签分别是 start（开头）、middle（中段）、end（结尾）。
+这三张图是一个 scene 的完整输入证据包，不是三个独立片段，也不要拆成 start/middle/end 三个子场景分别输出。
+请把三帧合并理解为同一个镜头/场景的时间变化，比较人物动作、构图、镜头运动、情绪和视觉状态变化，产出一个完整 scene analysis。
 scene_id: {package.scene_id}
 source_video_id: {package.source_video_id}
 time_range: {package.time_range.start} - {package.time_range.end}
@@ -221,3 +242,8 @@ def _resolve_frame_paths(output_dir: Path, package: ScenePackage) -> list[Path]:
     if missing:
         raise FileNotFoundError(f"missing frame files: {', '.join(missing)}")
     return paths
+
+
+def raise_if_canceled(cancel_check: Callable[[], bool] | None) -> None:
+    if cancel_check and cancel_check():
+        raise RuntimeError("ingest canceled")
