@@ -35,6 +35,7 @@ SceneWeaver 的目标是做成：
 SceneWeaver 不是一次性写成的。它按四个阶段逐步演进，每一阶段都解决一个具体问题，并沉淀出下一阶段可以继续使用的工程资产。
 
 ### 第一阶段：镜头拆分
+<img width="1279" height="699" alt="image" src="https://github.com/user-attachments/assets/5b63037a-b967-4497-ab9c-c8c8e64cbf17" />
 
 第一阶段解决的是输入问题：真实视频不能直接丢给 LLM，需要先被拆成稳定、可引用、可复查的场景单元。
 
@@ -77,6 +78,8 @@ python -m sceneweaver.user_cli ingest path\to\video.mp4 --video-id demo_video --
 ```
 
 ### 第二阶段：经验检索
+<img width="1279" height="701" alt="image" src="https://github.com/user-attachments/assets/c5d21573-f541-4d72-ad73-d16faa913176" />
+<img width="1321" height="700" alt="image" src="https://github.com/user-attachments/assets/fc13116c-6fd4-4b85-b2d2-589349a0ae0a" />
 
 第二阶段解决的是知识复用问题：只分析视频还不够，系统需要把导演经验抽成可检索的单位。
 
@@ -184,6 +187,7 @@ all
 这一阶段的意义是把“项目内部产物”变成了“检索实验平台可消费的数据合同”。这也让后续调参、评测、失败分析不再依赖临时脚本。
 
 ### 第四阶段：整理为用户端口与 UI
+<img width="1279" height="700" alt="image" src="https://github.com/user-attachments/assets/6a57302e-4fff-4bab-8bc5-8824b7b665bf" />
 
 第四阶段解决的是使用问题：底层 pipeline 跑通之后，需要整理成用户可以操作的入口，而不是只停留在开发者命令集合。
 
